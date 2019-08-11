@@ -19,7 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 
 @Entity
-@Table(name = "CLIENTES")
+@Table(name = "CLIENTE")
 public class Cliente implements Serializable{
 
 	private static final long serialVersionUID = 8088981926287053083L;
