@@ -23,7 +23,8 @@ public class Servico implements Serializable{
 	@Column(name = "id_servico")
 	private Long idServico;
 	
-	@Column(name = "tipo", nullable = true)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo", nullable = true, length = 65)
 	private TipoServicoEnum tipoServico;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
@@ -34,7 +35,8 @@ public class Servico implements Serializable{
 	@Column(name = "horario_conclusao_agendamento")
 	private LocalDateTime horarioConclusaoAgendamento;
 	
-	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status_agendamento", length = 65)
 	private StatusServicoEnum statusAgendamento;
 	
 	@NotNull

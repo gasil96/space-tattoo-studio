@@ -6,18 +6,28 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
-
+/** 
+ * 
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ *
+ */
 @Entity
 @Table(name = "CLIENTE")
 public class Cliente implements Serializable{
@@ -29,13 +39,15 @@ public class Cliente implements Serializable{
 	@Column(name = "id_clientes")
 	private Long id;
 
-	@Column(nullable = true)
-	@Size(min  = 3, max = 45, message = "Nome deve conter no mínimo 3 caracteres e no máximo 45")
+	@NotBlank
+	@Column(nullable = true, length = 65)
 	private String nome;
 	
 	private String telefone;
 	
-	@Column(name = "status", nullable = true)
+	@Enumerated(EnumType.STRING)
+	@NotBlank
+	@Column(name = "status", nullable = true, length = 65)
 	private StatusClienteEnum statusCliente;
 	
 	@Column(name = "numero_servicos")
