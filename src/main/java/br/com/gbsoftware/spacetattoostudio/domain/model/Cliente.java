@@ -1,6 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -8,9 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -19,6 +15,7 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 /** 
  * 
@@ -28,16 +25,10 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
  * @version 2019 - Criação
  *
  */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "CLIENTE")
-public class Cliente implements Serializable{
-
-	private static final long serialVersionUID = 8088981926287053083L;
-	
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_clientes")
-	private Long id;
+public class Cliente extends EntidadeBase<Long>{
 
 	@NotBlank
 	@Column(nullable = true, length = 65)
@@ -66,12 +57,11 @@ public class Cliente implements Serializable{
 		
 	}
 
-	public Cliente(Long id,
+	public Cliente(
 			@Size(min = 3, max = 45, message = "Nome deve conter no mínimo 3 caracteres e no máximo 45") String nome,
 			String telefone, StatusClienteEnum statusCliente, Long numeroServicos, LocalDateTime dataCadastro,
 			Double saldo, List<Servico> servicos) {
 		super();
-		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.statusCliente = statusCliente;
@@ -79,14 +69,6 @@ public class Cliente implements Serializable{
 		this.dataCadastro = dataCadastro;
 		this.saldo = saldo;
 		this.servicos = servicos;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getNome() {
@@ -147,7 +129,7 @@ public class Cliente implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
+		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
 				+ ", numeroServicos=" + numeroServicos + ", dataCadastro=" + dataCadastro + ", saldo=" + saldo
 				+ ", servicos=" + servicos + "]";
 	}

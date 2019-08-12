@@ -1,27 +1,29 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "SERVICO")
-public class Servico implements Serializable{
+public class Servico extends EntidadeBase<Long>{
 
-	private static final long serialVersionUID = 8942989251660620714L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_servico")
-	private Long idServico;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", nullable = true, length = 65)
@@ -48,10 +50,9 @@ public class Servico implements Serializable{
 		
 	}
 
-	public Servico(Long idServico, TipoServicoEnum tipoServico, LocalDateTime horarioAgendametno,
+	public Servico(TipoServicoEnum tipoServico, LocalDateTime horarioAgendametno,
 			LocalDateTime horarioConclusaoAgendamento, StatusServicoEnum statusAgendamento, @NotNull Cliente cliente) {
 		super();
-		this.idServico = idServico;
 		this.tipoServico = tipoServico;
 		this.horarioAgendametno = horarioAgendametno;
 		this.horarioConclusaoAgendamento = horarioConclusaoAgendamento;
@@ -59,13 +60,6 @@ public class Servico implements Serializable{
 		this.cliente = cliente;
 	}
 
-	public Long getIdServico() {
-		return idServico;
-	}
-
-	public void setIdServico(Long idServico) {
-		this.idServico = idServico;
-	}
 
 	public TipoServicoEnum getTipoServico() {
 		return tipoServico;
@@ -109,7 +103,7 @@ public class Servico implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Servico [idServico=" + idServico + ", tipoServico=" + tipoServico + ", horarioAgendametno="
+		return "Servico [tipoServico=" + tipoServico + ", horarioAgendametno="
 				+ horarioAgendametno + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
 				+ ", statusAgendamento=" + statusAgendamento + ", cliente=" + cliente + "]";
 	}
