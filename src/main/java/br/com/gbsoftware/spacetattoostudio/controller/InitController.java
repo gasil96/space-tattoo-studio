@@ -20,5 +20,5 @@ public class InitController {
 		model.addAttribute("lista", servico.buscarTodos());
 		return "index";
 	}
-
+	
 }
