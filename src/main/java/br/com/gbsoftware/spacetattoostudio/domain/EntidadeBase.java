@@ -7,10 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+@SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class EntidadeBase<ID extends Serializable> implements Serializable {
 
-	private static final long serialVersionUID = 1562067219020667240L;
 
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

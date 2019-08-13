@@ -14,7 +14,6 @@ public class SpacetattooApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpacetattooApplication.class, args);
-		
 	}
 	
 }
