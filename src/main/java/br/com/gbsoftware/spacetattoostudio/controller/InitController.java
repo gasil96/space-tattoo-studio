@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 
 @Controller
-@RequestMapping("/teste")
-public class HomeController {
+@RequestMapping("/")
+public class InitController {
 
 	@Autowired
 	private ClienteService servico;
 
-	@GetMapping("/listagem")
-	public String listaClientes(ModelMap model){
+	@GetMapping("/lista")
+	public String listaClientes(ModelMap model) {
 		model.addAttribute("lista", servico.buscarTodos());
-		return "home";
+		return "index";
 	}
-	
+
 }
