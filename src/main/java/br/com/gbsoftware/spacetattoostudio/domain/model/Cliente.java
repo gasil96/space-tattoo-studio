@@ -34,11 +34,13 @@ public class Cliente extends EntidadeBase<Long>{
 	@Column(nullable = true, length = 65)
 	private String nome;
 	
+	
+	@Column(length = 30)
 	private String telefone;
 	
-	@Enumerated(EnumType.STRING)
 	@NotBlank
-	@Column(name = "status", nullable = true, length = 65)
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", nullable = false, length = 65)
 	private StatusClienteEnum statusCliente;
 	
 	@Column(name = "numero_servicos")
@@ -91,9 +93,6 @@ public class Cliente extends EntidadeBase<Long>{
 		return statusCliente;
 	}
 
-	public void setStatusCliente(StatusClienteEnum statusCliente) {
-		this.statusCliente = statusCliente;
-	}
 
 	public Long getNumeroServicos() {
 		return numeroServicos;

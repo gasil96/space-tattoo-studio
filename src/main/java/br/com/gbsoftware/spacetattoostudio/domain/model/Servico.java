@@ -29,9 +29,9 @@ public class Servico extends EntidadeBase<Long>{
 	@Column(name = "tipo", nullable = true, length = 65)
 	private TipoServicoEnum tipoServico;
 	
-	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "horario_agendamento")
-	private LocalDateTime horarioAgendametno;
+	private LocalDateTime horarioAgendamento;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@Column(name = "horario_conclusao_agendamento")
@@ -50,16 +50,23 @@ public class Servico extends EntidadeBase<Long>{
 		
 	}
 
-	public Servico(TipoServicoEnum tipoServico, LocalDateTime horarioAgendametno,
+	public Servico(TipoServicoEnum tipoServico, LocalDateTime horarioAgendamento,
 			LocalDateTime horarioConclusaoAgendamento, StatusServicoEnum statusAgendamento, @NotNull Cliente cliente) {
 		super();
 		this.tipoServico = tipoServico;
-		this.horarioAgendametno = horarioAgendametno;
+		this.horarioAgendamento = horarioAgendamento;
 		this.horarioConclusaoAgendamento = horarioConclusaoAgendamento;
 		this.statusAgendamento = statusAgendamento;
 		this.cliente = cliente;
 	}
 
+	public LocalDateTime getHorarioAgendamento() {
+		return horarioAgendamento;
+	}
+
+	public void setHorarioAgendamento(LocalDateTime horarioAgendamento) {
+		this.horarioAgendamento = horarioAgendamento;
+	}
 
 	public TipoServicoEnum getTipoServico() {
 		return tipoServico;
@@ -69,13 +76,6 @@ public class Servico extends EntidadeBase<Long>{
 		this.tipoServico = tipoServico;
 	}
 
-	public LocalDateTime getHorarioAgendametno() {
-		return horarioAgendametno;
-	}
-
-	public void setHorarioAgendametno(LocalDateTime horarioAgendametno) {
-		this.horarioAgendametno = horarioAgendametno;
-	}
 
 	public LocalDateTime getHorarioConclusaoAgendamento() {
 		return horarioConclusaoAgendamento;
@@ -103,8 +103,8 @@ public class Servico extends EntidadeBase<Long>{
 
 	@Override
 	public String toString() {
-		return "Servico [tipoServico=" + tipoServico + ", horarioAgendametno="
-				+ horarioAgendametno + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
+		return "Servico [tipoServico=" + tipoServico + ", horarioAgendamento="
+				+ horarioAgendamento + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
 				+ ", statusAgendamento=" + statusAgendamento + ", cliente=" + cliente + "]";
 	}
 	

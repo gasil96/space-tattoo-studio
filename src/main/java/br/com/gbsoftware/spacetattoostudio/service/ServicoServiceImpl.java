@@ -5,23 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
-import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
+import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
+import br.com.gbsoftware.spacetattoostudio.repository.ServicoRepository;
 
 @Service
-public class ClienteServiceImpl implements ClienteService{
+public class ServicoServiceImpl implements ServicoService{
 
 	@Autowired
-	private ClienteRepository clienteRepository;
-	
+	private ServicoRepository servicoDao;
+
 	@Override
-	public void salvar(Cliente cliente) {
-		// TODO Auto-generated method stub
+	public void salvar(Servico servico) {
 		
 	}
 
 	@Override
-	public void editar(Cliente cliente) {
+	public void editar(Servico servico) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -33,14 +32,16 @@ public class ClienteServiceImpl implements ClienteService{
 	}
 
 	@Override
-	public Cliente buscarPorId(Long id) {
+	public Servico buscarPorId(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Cliente> buscarTodos() {
-		return clienteRepository.findAll();
+	public List<Servico> buscarTodos() {
+		return servicoDao.findAll();
 	}
+	
 
+	
 }
