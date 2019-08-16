@@ -18,7 +18,7 @@ import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping("cliente")
 public class ClienteController {
 
 	@Autowired
@@ -27,7 +27,7 @@ public class ClienteController {
 	private ServicoService servicoServico;
 
 
-	@GetMapping("/cadastrar")
+	@GetMapping("cadastrar")
 	public String Cadastrar(Cliente cliente) {
 		return "cliente";
 	}
@@ -44,7 +44,7 @@ public class ClienteController {
 		model.addAttribute("listaServico", servicoServico.buscarTodos());
 		return "index";
 	}
-	@PostMapping("/salvar")
+	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 	
 		servicoCliente.salvar(cliente);

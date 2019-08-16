@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+</head>
+<meta charset="UTF-8" />
+<body>
+	<div class="container">
+	
+	<br/><br/><br/>
+		<fieldset>
+		<div class="container" id="servico">
+			<form th:action="@{/servico/salvar}" th:object="${servico}" method="POST">
+				<div class="form-group">
+					<label for="nome">Status do Agendametno</label> 
+					<input
+						type="text" class="form-control" id="statusAgendamento"
+						placeholder="ATIVO ou INATIVO ou PENDENTE" th:field="*{statusAgendamento}"> <small
+						id="statusAgendamento" class="form-text text-muted"></small>
+				</div>
+	
+				<input type="hidden" id="id" th:field="*{id}" />
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+		</div>
+
+		</fieldset>
+
+
+
+
+
+
+	</div>
+</body>
+</html>

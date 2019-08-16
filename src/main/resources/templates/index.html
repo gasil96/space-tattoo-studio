@@ -44,6 +44,16 @@
 						<td th:text="${c.telefone}">-</td>
 						<td th:text="${c.StatusCliente}">-</td>
 						<td th:text="${c.saldo}">-</td>
+						<td colspan="2">
+							<button th:href="@{/}" type="button" class="btn btn-info btn-sm">
+								<span class="oi oi-circle-x" title="Excluir" aria-hidden="true">Editar</span>
+							</button> <a class="btn btn-danger btn-sm"
+							th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"
+							role="button"> <span class="oi oi-brush" title="Excluir"
+								aria-hidden="true">Excluir</span>
+						</a>
+						</td>
+						
 					</tr>
 				</tbody>
 			</table>
@@ -74,15 +84,6 @@
 							th:text="${#temporals.format(s.horarioAgendamento, 'dd-MM-yyyy')}">-</td>
 						<td th:text="${s.cliente.nome}">-</td>
 						<td th:text="${s.cliente.id}">-</td>
-						<td colspan="2">
-							<button th:href="@{/}" type="button" class="btn btn-info btn-sm">
-								<span class="oi oi-circle-x" title="Excluir" aria-hidden="true">Editar</span>
-							</button> <a class="btn btn-danger btn-sm"
-							th:href="@{/cliente/excluir-cliente/{id} (id=${s.cliente.id})}"
-							role="button"> <span class="oi oi-brush" title="Excluir"
-								aria-hidden="true">Excluir</span>
-						</a>
-						</td>
 
 					</tr>
 				</tbody>
@@ -92,8 +93,12 @@
 			<span title="Listar"></span> <span>Listar Clientes e Serviços</span>
 		</a>
 		
-		<a class="btn btn-primary" href="/cliente/cadastrar" role="button">
+		<a class="btn btn-warning" href="/cliente/cadastrar" role="button">
 			<span title="Listar"></span> <span>Novo Cliente</span>
+		</a>
+		
+		<a class="btn btn-warning" href="/servico/cadastrar" role="button">
+			<span title="Listar"></span> <span>Novo Agendamento</span>
 		</a>
 	</div>
 </body>
