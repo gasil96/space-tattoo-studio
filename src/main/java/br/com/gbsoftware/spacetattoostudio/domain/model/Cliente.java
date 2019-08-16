@@ -10,14 +10,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
-/** 
+
+/**
  * 
  * <b>GB Software</b>
  * 
@@ -28,49 +28,58 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "CLIENTE")
-public class Cliente extends EntidadeBase<Long>{
+public class Cliente extends EntidadeBase<Long> {
 
-	@NotBlank
+	//@NotBlank //impede pessistencia de elementos vazios
 	@Column(nullable = true, length = 65)
 	private String nome;
-	
-	
+
 	@Column(length = 30)
 	private String telefone;
-	
-	@NotBlank
+
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false, length = 65)
+	@Column(name = "status", nullable = true, length = 65)
 	private StatusClienteEnum statusCliente;
-	
+
 	@Column(name = "numero_servicos")
 	private Long numeroServicos;
-	
+
 	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "data_cadastro")
 	private LocalDateTime dataCadastro;
+
+	@Column(length = 30)
+	private String instagram;
 	
 	private Double saldo;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Servico> servicos;
-	
+
 	public Cliente() {
-		
+
 	}
 
-	public Cliente(
-			@Size(min = 3, max = 45, message = "Nome deve conter no mínimo 3 caracteres e no máximo 45") String nome,
-			String telefone, StatusClienteEnum statusCliente, Long numeroServicos, LocalDateTime dataCadastro,
-			Double saldo, List<Servico> servicos) {
+	public Cliente(@NotBlank String nome, String telefone, @NotBlank StatusClienteEnum statusCliente,
+			Long numeroServicos, LocalDateTime dataCadastro, String instagram, Double saldo, List<Servico> servicos) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
 		this.statusCliente = statusCliente;
 		this.numeroServicos = numeroServicos;
 		this.dataCadastro = dataCadastro;
+		this.instagram = instagram;
 		this.saldo = saldo;
 		this.servicos = servicos;
+	}
+
+	
+	public String getInstagram() {
+		return instagram;
+	}
+	
+	public void setInstagram(String instagram) {
+		this.instagram = instagram;
 	}
 
 	public String getNome() {
@@ -92,7 +101,6 @@ public class Cliente extends EntidadeBase<Long>{
 	public StatusClienteEnum getStatusCliente() {
 		return statusCliente;
 	}
-
 
 	public Long getNumeroServicos() {
 		return numeroServicos;
@@ -132,5 +140,5 @@ public class Cliente extends EntidadeBase<Long>{
 				+ ", numeroServicos=" + numeroServicos + ", dataCadastro=" + dataCadastro + ", saldo=" + saldo
 				+ ", servicos=" + servicos + "]";
 	}
-	
+
 }

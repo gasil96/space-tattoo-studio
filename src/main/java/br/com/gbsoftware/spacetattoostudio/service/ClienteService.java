@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
@@ -12,9 +13,11 @@ public interface ClienteService {
 
 	void excluir(Long id);
 
-	Cliente buscarPorId(Long id);
+	Optional<Cliente> buscarPorId(Long id);
+
+	List<Cliente> buscarPorNome(String nome);
+	
+	List<Cliente> buscarPorInstagram(String instagram);
 	
 	List<Cliente> buscarTodos();
-	
-	
 }

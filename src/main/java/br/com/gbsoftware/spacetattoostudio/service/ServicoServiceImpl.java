@@ -9,39 +9,35 @@ import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.repository.ServicoRepository;
 
 @Service
-public class ServicoServiceImpl implements ServicoService{
+public class ServicoServiceImpl implements ServicoService {
 
 	@Autowired
-	private ServicoRepository servicoDao;
+	private ServicoRepository servicoRepository;
 
 	@Override
 	public void salvar(Servico servico) {
-		
+		servicoRepository.save(servico);
 	}
 
 	@Override
 	public void editar(Servico servico) {
-		// TODO Auto-generated method stub
-		
+		servicoRepository.save(servico);
+
 	}
 
 	@Override
 	public void excluir(Long id) {
-		// TODO Auto-generated method stub
-		
+		servicoRepository.deleteById(id);
 	}
 
 	@Override
 	public Servico buscarPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return null; // TODO - servicoRepository.findById(id);
 	}
 
 	@Override
 	public List<Servico> buscarTodos() {
-		return servicoDao.findAll();
+		return servicoRepository.findAll();
 	}
-	
 
-	
 }
