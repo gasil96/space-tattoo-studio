@@ -12,28 +12,89 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
 </head>
 <meta charset="UTF-8" />
 <body>
 	<div class="container">
 		<fieldset>
+			<div class="alert alert-primary" role="alert">
+				<span>CLIENTES</span>
+			</div>
+
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<td>ID</td>
+						<td>CÓDIGO</td>
 						<td>NOME</td>
-						<td>STATUS</td>
+						<td>INSTAGRAM</td>
+						<td>DATA-CADASTRO</td>
+						<td>TELEFONE</td>
+						<td>SITUACAO</td>
+						<td>SALDO_ATUAL R$</td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="c : ${lista}">
-						<td th:text="${c.id}">1</td>
-						<td th:text="${c.nome}">Nome</td>
-						<td th:text="${c.statusCliente}">Nome</td>
+					<tr th:each="c : ${listaCliente}">
+						<td th:text="${c.id}">-</td>
+						<td th:text="${c.nome}">-</td>
+						<td th:text="${c.instagram}">-</td>
+						<td th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">-</td>
+						<td th:text="${c.telefone}">-</td>
+						<td th:text="${c.StatusCliente}">-</td>
+						<td th:text="${c.saldo}">-</td>
 					</tr>
 				</tbody>
 			</table>
 		</fieldset>
+
+
+
+		<fieldset>
+			<div class="alert alert-primary" role="alert">
+				<span>AGENDAMENTOS</span>
+			</div>
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<td>STATUS</td>
+						<td>TIPO_SERVIÇO</td>
+						<td>DATA</td>
+						<td>CLIENTE</td>
+						<td>CÓDIGO_CLIENTE</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="s : ${listaServico}">
+						<td th:text="${s.statusAgendamento}">-</td>
+						<td th:text="${s.tipoServico}">-</td>
+						<td
+							th:text="${#temporals.format(s.horarioAgendamento, 'dd-MM-yyyy')}">-</td>
+						<td th:text="${s.cliente.nome}">-</td>
+						<td th:text="${s.cliente.id}">-</td>
+						<td colspan="2">
+							<button th:href="@{/}" type="button" class="btn btn-info btn-sm">
+								<span class="oi oi-circle-x" title="Excluir" aria-hidden="true">Editar</span>
+							</button> <a class="btn btn-danger btn-sm"
+							th:href="@{/cliente/excluir-cliente/{id} (id=${s.cliente.id})}"
+							role="button"> <span class="oi oi-brush" title="Excluir"
+								aria-hidden="true">Excluir</span>
+						</a>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+		<a class="btn btn-primary" href="/cliente/listar-todos" role="button">
+			<span title="Listar"></span> <span>Listar Clientes e Serviços</span>
+		</a>
+		
+		<a class="btn btn-primary" href="/cliente/cadastrar" role="button">
+			<span title="Listar"></span> <span>Novo Cliente</span>
+		</a>
 	</div>
 </body>
 </html>
