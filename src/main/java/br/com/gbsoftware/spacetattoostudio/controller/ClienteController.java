@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,18 @@ public class ClienteController {
 	}
 	
 	@GetMapping("listar-todos")
-	public String listaClientes(ModelMap model) {
+	public String listaClientes(ModelMap model,Long id) {
+		id = (long) 3;
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
 		model.addAttribute("listaServico", servicoServico.buscarTodos());
+		model.addAttribute("lista", servicoCliente.buscarPorId(id).orElseThrow(()-> new EntityNotFoundException())); // TODO - Faltando ajustar
+		
 		return "index";
 	}
+	
+	
+	
+	
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 	

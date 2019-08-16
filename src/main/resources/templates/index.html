@@ -36,7 +36,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="c : ${listaCliente}">
+					<tr th:each="c : ${lista}">
 						<td th:text="${c.id}">-</td>
 						<td th:text="${c.nome}">-</td>
 						<td th:text="${c.instagram}">-</td>
@@ -58,8 +58,7 @@
 				</tbody>
 			</table>
 		</fieldset>
-
-
+		
 
 		<fieldset>
 			<div class="alert alert-primary" role="alert">
@@ -89,6 +88,11 @@
 				</tbody>
 			</table>
 		</fieldset>
+		
+		<a class="btn btn-warning" href="/servico/cadastrar" role="button">
+			<span title="Listar"></span> <span>Novo Agendamento</span>
+		</a>
+		
 		<a class="btn btn-primary" href="/cliente/listar-todos" role="button">
 			<span title="Listar"></span> <span>Listar Clientes e Serviços</span>
 		</a>
