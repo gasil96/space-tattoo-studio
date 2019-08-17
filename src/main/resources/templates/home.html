@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+<body>
+
+	<div layout:fragment="titulosubCabecalho">
+		<h2 class="h5 no-margin-bottom">Testes :: valor cabeçalho aqui</h2>
+	</div>
+
+	<ul layout:fragment="caminho">
+		<li class="breadcrumb-item"><a href="#">Testes :: valor do
+				link anterior aqui </a></li>
+		<li class="breadcrumb-item active">Testes :: valor da sessão
+			atual aqui</li>
+	</ul>
+
+
+	<div layout:fragment="corpo">
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="block margin-bottom-sm">
+							<div class="title">
+								<strong>Lista de Clientes</strong>
+							</div>
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Código</th>
+											<th>Nome</th>
+											<th>Instagram</th>
+											<th>Data do Cadastro</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="c : ${listaCliente}">
+											<td th:text="${c.id}">-</td>
+											<td th:text="${c.nome}">-</td>
+											<td th:text="${c.instagram}">-</td>
+											<td
+												th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">-</td>
+											<td colspan="2">
+												<a class="btn btn-danger btn-sm"
+												th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"
+												role="button"> <span class="oi oi-brush" title="Excluir"
+													aria-hidden="true">Excluir</span>
+											</a>
+											</td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="block margin-bottom-sm">
+							<div class="title">
+								<strong>Striped Table</strong>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>First Name</th>
+											<th>Last Name</th>
+											<th>Username</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">1</th>
+											<td>Mark</td>
+											<td>Otto</td>
+											<td>@mdo</td>
+										</tr>
+										<tr>
+											<th scope="row">2</th>
+											<td>Jacob</td>
+											<td>Thornton</td>
+											<td>@fat</td>
+										</tr>
+										<tr>
+											<th scope="row">3</th>
+											<td>Larry</td>
+											<td>the Bird</td>
+											<td>@twitter</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="block">
+							<div class="title">
+								<strong>Striped table with hover effect</strong>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-striped table-hover">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>First Name</th>
+											<th>Last Name</th>
+											<th>Username</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">1</th>
+											<td>Mark</td>
+											<td>Otto</td>
+											<td>@mdo</td>
+										</tr>
+										<tr>
+											<th scope="row">2</th>
+											<td>Jacob</td>
+											<td>Thornton</td>
+											<td>@fat</td>
+										</tr>
+										<tr>
+											<th scope="row">3</th>
+											<td>Larry</td>
+											<td>the Bird</td>
+											<td>@twitter</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="block">
+							<div class="title">
+								<strong>Compact Table</strong>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-striped table-sm">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>First Name</th>
+											<th>Last Name</th>
+											<th>Username</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">1</th>
+											<td>Mark</td>
+											<td>Otto</td>
+											<td>@mdo</td>
+										</tr>
+										<tr>
+											<th scope="row">2</th>
+											<td>Jacob</td>
+											<td>Thornton</td>
+											<td>@fat</td>
+										</tr>
+										<tr>
+											<th scope="row">3</th>
+											<td>Larry</td>
+											<td>the Bird</td>
+											<td>@twitter</td>
+										</tr>
+										<tr>
+											<th scope="row">4</th>
+											<td>Mark</td>
+											<td>Otto</td>
+											<td>@mdo</td>
+										</tr>
+										<tr>
+											<th scope="row">5</th>
+											<td>Jacob</td>
+											<td>Thornton</td>
+											<td>@fat</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+	</div>
+</body>
+</html>

@@ -46,7 +46,7 @@ public class ClienteController {
 		model.addAttribute("listaServico", servicoServico.buscarTodos());
 		model.addAttribute("lista", servicoCliente.buscarPorId(id).orElseThrow(()-> new EntityNotFoundException())); // TODO - Faltando ajustar
 		
-		return "index";
+		return "home";
 	}
 	
 	

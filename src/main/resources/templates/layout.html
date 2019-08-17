@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Spacetatto Studio</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<!-- Bootstrap CSS-->
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome CSS-->
+<link rel="stylesheet"
+	href="vendor/font-awesome/css/font-awesome.min.css">
+<!-- Custom Font Icons CSS-->
+<link rel="stylesheet" href="css/font.css">
+<!-- Google fonts - Muli-->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+<!-- theme stylesheet-->
+<link rel="stylesheet" href="css/style.default.css"
+	id="theme-stylesheet">
+<!-- Custom stylesheet - for your changes-->
+<link rel="stylesheet" href="css/custom.css">
+<!-- Favicon-->
+<link rel="shortcut icon" href="img/favicon.ico">
+<!-- Tweaks for older IEs-->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<body>
+	<header th:replace="fragments/header :: cabecalho">
+		<div>header</div>
+	</header>
+
+	<div class="d-flex align-items-stretch">
+		<nav th:replace="fragments/sidebar :: menuLateral">
+			<span>menu</span>
+		</nav>
+		<div class="page-content">
+
+			<div class="page-header no-margin-bottom">
+				<div class="container-fluid" layout:fragment="titulosubCabecalho">
+					<h2 class="h5 no-margin-bottom">Titulo do sub menu aqui</h2>
+				</div>
+			</div>
+
+			<div class="container-fluid">
+				<ul class="breadcrumb" layout:fragment="caminho">
+					<li class="breadcrumb-item"><a href="index.html">Caminho
+							anterio link</a></li>
+					<li class="breadcrumb-item active">Caminho atual</li>
+				</ul>
+			</div>
+			<div layout:fragment="corpo">
+				<div>conteudo principal das paginas</div>
+			</div>
+
+			<footer th:replace="fragments/footer :: rodape">
+				<div>footer</div>
+			</footer>
+		</div>
+	</div>
+
+	<!-- JavaScript files-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/popper.js/umd/popper.min.js">
+		
+	</script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+	<script src="vendor/chart.js/Chart.min.js"></script>
+	<script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+	<script src="js/charts-home.js"></script>
+	<script src="js/front.js"></script>
+
+</body>
+</html>
