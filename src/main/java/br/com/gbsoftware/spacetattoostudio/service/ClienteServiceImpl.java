@@ -24,18 +24,15 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void editar(Cliente cliente) {
+		Optional<Cliente> clienteLocalizado = clienteRepository.findById(cliente.getId());
+		if(clienteLocalizado.isPresent()) {
 		clienteRepository.save(cliente);
+		}
 	}
 
 	@Override
 	public void excluir(Long id) {
 		clienteRepository.deleteById(id);
-	}
-
-	@Override
-	public Optional<Cliente> buscarPorId(Long id) {
-
-		return clienteRepository.findById(id);
 	}
 
 	@Override
@@ -46,6 +43,12 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public List<Cliente> buscarPorNome(String nome) {
 		return clienteRepository.findByNome(nome);
+	}
+	
+	@Override
+	public Optional<Cliente> buscarPorId(Long id) {
+		
+		return clienteRepository.findById(id);
 	}
 
 	@Override

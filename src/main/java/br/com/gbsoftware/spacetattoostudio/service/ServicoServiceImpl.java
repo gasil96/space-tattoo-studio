@@ -28,22 +28,11 @@ public class ServicoServiceImpl implements ServicoService {
 	@Override
 	public void editar(Servico servico) {
 		servicoRepository.save(servico);
-
 	}
 
 	@Override
 	public void excluir(Long id) {
 		servicoRepository.deleteById(id);
-	}
-
-	@Override
-	public Optional<Servico> buscarPorId(Long id) {
-		return servicoRepository.findById(id);
-	}
-
-	@Override
-	public List<Servico> buscarTodos() {
-		return servicoRepository.findAll();
 	}
 
 	@Override
@@ -66,4 +55,14 @@ public class ServicoServiceImpl implements ServicoService {
 		return servicoRepository.findByStatusAgendamento(statusAgendamento);
 	}
 
+	@Override
+	public Optional<Servico> buscarPorId(Long id) {
+		return servicoRepository.findById(id);
+	}
+
+	@Override
+	public List<Servico> buscarTodos() {
+		return servicoRepository.findAll();
+	}
+	
 }

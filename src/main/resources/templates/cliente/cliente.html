@@ -16,18 +16,20 @@
 		<div class="col-lg-12">
 			<div class="block">
 				<div class="title">
-					<strong>Novo Usuário</strong>
+					<strong>Novo Usuários</strong>
 				</div>
-				<div class="block-body">
-					<form class="form-horizontal">
+				<div class="block-body" id="cliente">
+					<form class="form-horizontal" th:action="@{/cliente/editar}" th:object="${cliente}" method="POST">
 						<div class="form-group row">
-							<label class="col-sm-3 form-control-label">Nome</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control">
-							</div>
-
-
+							<label for="nome">Nome</label> 
+							<input type="text" class="form-control" id="nome"
+								placeholder="nome primeiro e segundo" th:field="*{nome}">
+							<small id="nome" class="form-text text-muted"></small>
+						<input type="number" class="form-control" id="id" th:field="*{id}" placeholder="id aqui">
+						
 						</div>
+
+						<button type="submit" class="btn btn-primary">Salvar</button>
 					</form>
 				</div>
 			</div>

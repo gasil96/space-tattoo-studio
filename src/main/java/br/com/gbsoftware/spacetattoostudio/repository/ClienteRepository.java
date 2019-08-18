@@ -14,6 +14,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	List<Cliente> findByInstagram(String instagram);
 
+	
 }
 
 
