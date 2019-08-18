@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<ul layout:fragment="caminho">
+		<li class="breadcrumb-item"><a href="#">Testes :: valor do
+				link anterior aqui </a></li>
+		<li class="breadcrumb-item active">Testes :: valor da sessão
+			atual aqui</li>
+	</ul>
+
+	<div layout:fragment="corpo">
+		<div class="col-lg-12">
+			<div class="block">
+				<div class="title">
+					<strong>Novo Usuário</strong>
+				</div>
+				<div class="block-body">
+					<form class="form-horizontal">
+						<div class="form-group row">
+							<label class="col-sm-3 form-control-label">Nome</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control">
+							</div>
+
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+</html>
