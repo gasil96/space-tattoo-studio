@@ -29,156 +29,26 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Código</th>
 											<th>Nome</th>
 											<th>Instagram</th>
-											<th>Data do Cadastro</th>
+											<th>Saldo</th>
+											<th>Nº Serviços</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="c : ${listaCliente}">
-											<td th:text="${c.id}">-</td>
 											<td th:text="${c.nome}">-</td>
 											<td th:text="${c.instagram}">-</td>
+											<td th:text="${c.telefone}">-</td>
+											<td th:text="${c.statusCliente}">-</td>
 											<td
 												th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">-</td>
-											<td colspan="2">
-												<a class="btn btn-danger btn-sm"
+											<td colspan="2"><a class="btn btn-danger btn-sm"
 												th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"
 												role="button"> <span class="oi oi-brush" title="Excluir"
 													aria-hidden="true">Excluir</span>
-											</a>
-											</td>
+											</a></td>
 
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="block margin-bottom-sm">
-							<div class="title">
-								<strong>Striped Table</strong>
-							</div>
-							<div class="table-responsive">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>First Name</th>
-											<th>Last Name</th>
-											<th>Username</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th scope="row">1</th>
-											<td>Mark</td>
-											<td>Otto</td>
-											<td>@mdo</td>
-										</tr>
-										<tr>
-											<th scope="row">2</th>
-											<td>Jacob</td>
-											<td>Thornton</td>
-											<td>@fat</td>
-										</tr>
-										<tr>
-											<th scope="row">3</th>
-											<td>Larry</td>
-											<td>the Bird</td>
-											<td>@twitter</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="block">
-							<div class="title">
-								<strong>Striped table with hover effect</strong>
-							</div>
-							<div class="table-responsive">
-								<table class="table table-striped table-hover">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>First Name</th>
-											<th>Last Name</th>
-											<th>Username</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th scope="row">1</th>
-											<td>Mark</td>
-											<td>Otto</td>
-											<td>@mdo</td>
-										</tr>
-										<tr>
-											<th scope="row">2</th>
-											<td>Jacob</td>
-											<td>Thornton</td>
-											<td>@fat</td>
-										</tr>
-										<tr>
-											<th scope="row">3</th>
-											<td>Larry</td>
-											<td>the Bird</td>
-											<td>@twitter</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="block">
-							<div class="title">
-								<strong>Compact Table</strong>
-							</div>
-							<div class="table-responsive">
-								<table class="table table-striped table-sm">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>First Name</th>
-											<th>Last Name</th>
-											<th>Username</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th scope="row">1</th>
-											<td>Mark</td>
-											<td>Otto</td>
-											<td>@mdo</td>
-										</tr>
-										<tr>
-											<th scope="row">2</th>
-											<td>Jacob</td>
-											<td>Thornton</td>
-											<td>@fat</td>
-										</tr>
-										<tr>
-											<th scope="row">3</th>
-											<td>Larry</td>
-											<td>the Bird</td>
-											<td>@twitter</td>
-										</tr>
-										<tr>
-											<th scope="row">4</th>
-											<td>Mark</td>
-											<td>Otto</td>
-											<td>@mdo</td>
-										</tr>
-										<tr>
-											<th scope="row">5</th>
-											<td>Jacob</td>
-											<td>Thornton</td>
-											<td>@fat</td>
 										</tr>
 									</tbody>
 								</table>
@@ -187,6 +57,8 @@
 					</div>
 				</div>
 			</div>
+
+
 		</section>
 
 

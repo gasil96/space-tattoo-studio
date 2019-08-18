@@ -14,24 +14,23 @@ import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 
 @Controller
-@RequestMapping("servico")
 public class ServicoController {
 
 	@Autowired
 	private ServicoService servicoSevice;
 	
 	
-	@GetMapping("cadastrar")
+	@GetMapping("cadastrar-servico")
 	public String Cadastrar(Servico servico) {
-		return "servico";
+		return "cliente/cliente";
 	}
 	
 	
-	@PostMapping("salvar")
+	@PostMapping("salvar-servico")
 	public String salvar(@Valid Servico servico, BindingResult result, RedirectAttributes attr) {
 	
 		servicoSevice.salvar(servico);
-		return "index";
+		return "home";
 		
 	}
 	
