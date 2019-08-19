@@ -5,6 +5,15 @@ import java.util.Optional;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
+/**
+ * 
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ *
+ */
+
 public interface ClienteService {
 
 	void salvar(Cliente cliente);

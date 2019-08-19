@@ -8,7 +8,7 @@
       <nav id="sidebar" th:fragment="menuLateral">
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
+          <div class="avatar"><img th:src="@{/img/avatar-6.jpg}" alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
             <h1 class="h5">Gabriel Silva</h1>
             <p>Developer</p>
@@ -18,7 +18,7 @@
         <ul class="list-unstyled">
           <li><a href="/"> <i class="icon-home"></i>Principal </a></li>
 <!--  TODO        AQUI ESTAVA ATIVADA COM A TAG ACTIV -->
-          <li><a href="tables.html"> <i class="icon-grid"></i>Tabelas Teste </a></li>
+          <li><a th:href="@{/tables.html}"> <i class="icon-grid"></i>Tabelas Teste </a></li>
           <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts Teste* </a></li>
           <li><a href="forms.html"> <i class="icon-padnote"></i>Formularios Teste </a></li>
           <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i> Detalhamentos </a>

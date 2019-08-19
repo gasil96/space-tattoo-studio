@@ -11,7 +11,14 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.repository.ServicoRepository;
-
+/**
+ * 
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ *
+ */
 @Service
 public class ServicoServiceImpl implements ServicoService {
 
@@ -20,14 +27,15 @@ public class ServicoServiceImpl implements ServicoService {
 
 	@Override
 	public void salvar(Servico servico) {
-		//TODO - AINDA QUEBRADO E ARUMENTO NOW ESTA INCORRETO DIANTE DA REGRA DE NEGOCIO
-		servico.setHorarioAgendamento(LocalDateTime.now());
 		servicoRepository.save(servico);
 	}
 
 	@Override
 	public void editar(Servico servico) {
-		servicoRepository.save(servico);
+		Optional<Servico> servicoLocalizado = servicoRepository.findById(servico.getId());
+		if(servicoLocalizado.isPresent()) {
+			servicoRepository.save(servico);
+		}
 	}
 
 	@Override

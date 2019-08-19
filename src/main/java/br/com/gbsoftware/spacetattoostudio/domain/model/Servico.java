@@ -17,7 +17,14 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
-
+/**
+ * 
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "SERVICO")

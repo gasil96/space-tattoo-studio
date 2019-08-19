@@ -7,7 +7,14 @@ import java.util.Optional;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
-
+/**
+ * 
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ *
+ */
 
 public interface ServicoService {
 
