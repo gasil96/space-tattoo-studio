@@ -29,7 +29,12 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 @SuppressWarnings("serial")
 @Table(name = "CLIENTE")
 public class Cliente extends EntidadeBase<Long> {
-
+/**
+ * TODO
+ * Faltando @Notblank's
+ * Faltando passar os nullable, lenght's e uniques 
+ * 
+ * */
 	//@NotBlank //impede pessistencia de elementos vazios TODO - FALTA COLOCAR OS NOTNULL @NOTBLACK LENGHT ETC...
 	@Column(nullable = true, length = 65)
 	private String nome;

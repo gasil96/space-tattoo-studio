@@ -80,7 +80,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("busca/todos")
-	public String buscarClientesNome(ModelMap model, String nome, RedirectAttributes attr) {
+	public String buscar(ModelMap model, String nome, RedirectAttributes attr) {
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
 		return "home";
 		// TODO - aqui vai a  *tabela* com a lista de clientes localizados

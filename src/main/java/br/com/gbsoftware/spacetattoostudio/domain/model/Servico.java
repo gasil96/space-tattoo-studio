@@ -29,7 +29,12 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 @Entity
 @Table(name = "SERVICO")
 public class Servico extends EntidadeBase<Long>{
-
+	/**
+	 * TODO
+	 * Faltando @Notblank's
+	 * Faltando passar os nullable, lenght's e uniques 
+	 * 
+	 * */
 
 	
 	@Enumerated(EnumType.STRING)

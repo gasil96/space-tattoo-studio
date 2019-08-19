@@ -18,16 +18,16 @@
 					<strong>Novo Usuários</strong>
 				</div>
 				<div class="block-body" id="cliente">
-					<form class="form-horizontal" th:action="@{/cliente/editar}" th:object="${cliente}" method="POST">
+					<form class="form-horizontal" th:action="@{/cliente/salvar}" th:object="${cliente}" method="POST">
 						<div class="form-group row">
 							<label for="nome">Nome</label> 
 							<input type="text" class="form-control" id="nome"
 								placeholder="nome primeiro e segundo" th:field="*{nome}">
 							<small id="nome" class="form-text text-muted"></small>
-						<input type="number" class="form-control" id="id" th:field="*{id}" placeholder="id aqui">
 						
 						</div>
 
+						<input type="hidden" class="form-control" id="id" th:field="*{id}" placeholder="id aqui">
 						<button type="submit" class="btn btn-primary">Salvar</button>
 					</form>
 				</div>
