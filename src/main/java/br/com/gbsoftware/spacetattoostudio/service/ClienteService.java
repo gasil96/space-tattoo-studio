@@ -5,11 +5,18 @@ import java.util.Optional;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
+/**
+ * 
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ *
+ */
+
 public interface ClienteService {
 
 	void salvar(Cliente cliente);
-
-	void editar(Cliente cliente);
 
 	void excluir(Long id);
 
@@ -20,4 +27,6 @@ public interface ClienteService {
 	List<Cliente> buscarPorInstagram(String instagram);
 	
 	List<Cliente> buscarTodos();
+
+	void editar(Cliente cliente);
 }

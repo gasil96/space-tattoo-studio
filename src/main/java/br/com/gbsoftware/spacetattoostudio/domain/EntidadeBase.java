@@ -2,6 +2,7 @@ package br.com.gbsoftware.spacetattoostudio.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ public abstract class EntidadeBase<ID extends Serializable> implements Serializa
 
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "Long(4) ZEROFILL")
 	private ID id;
 
 	

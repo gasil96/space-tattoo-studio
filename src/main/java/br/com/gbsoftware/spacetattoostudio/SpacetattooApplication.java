@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 2019
  * 
  * */
- 
+
 @SpringBootApplication
 public class SpacetattooApplication {
 

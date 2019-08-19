@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+
+	<div layout:fragment="titulosubCabecalho">
+		<h2 class="h5 no-margin-bottom">Testes :: valor cabeçalho aqui</h2>
+	</div>
+
+	<ul layout:fragment="caminho">
+		<li class="breadcrumb-item"><a href="#">Testes :: valor do
+				link anterior aqui </a></li>
+		<li class="breadcrumb-item active">Testes :: valor da sessão
+			atual aqui</li>
+	</ul>
+
+
+	<div layout:fragment="corpo">
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- 					<div class="col-lg-6">    @TODO - PATA TESTE  -->
+					<div class="col-lg-12">
+						<div class="block margin-bottom-sm">
+							<div class="title">
+								<strong>Lista de Clientes</strong>
+							</div>
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Nome</th>
+											<th>Instagram</th>
+											<th>Saldo</th>
+											<th>Nº Serviços</th>
+											<th>Nº Serviços</th>
+											<th>Data</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="c : ${listaCliente}">
+											<td th:text="${c.id}">0</td>
+											<td th:text="${c.nome}">Gabriel</td>
+											<td th:text="${c.instagram}">@gasil96</td>
+											<td th:text="${c.saldo}">2565</td>
+											<td th:text="${c.telefone}">+55 (91) 981987035</td>
+											<td th:text="${c.statusCliente}">ATIVO</td>
+											<td
+												th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">11-11-2019</td>
+											<td colspan="2"><a class="btn btn-danger btn-sm"
+												th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"
+												role="button"> <span class="oi oi-brush" title="Excluir"
+													aria-hidden="true">Excluir</span>
+											</a> <a class="btn btn-warning btn-sm"
+												th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"
+												role="button"> <span class="oi oi-brush" title="Excluir"
+													aria-hidden="true">Editar</span>
+											</a></td>
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</section>
+
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="block margin-bottom-sm">
+
+							<div class="title">
+								<strong>Buttons Teste</strong>
+							</div>
+							<div>
+							<a class="btn btn-primary" href="/cliente/cadastrar" role="button">Novo Cliente </a>
+							<a class="btn btn-info" href="#" role="button">Novo Agendamento</a>
+							<a class="btn btn-warning" href="/cliente/busca/todos" role="button">Listar Todos Clientes </a>
+							<button class="btn btn-danger">Listar Todos Agendamentos</button>
+							<button class="btn btn-success">ABRE MODAL</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</div>
+</body>
+</html>

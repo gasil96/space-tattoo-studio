@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
 
@@ -25,18 +24,15 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void editar(Cliente cliente) {
+		Optional<Cliente> clienteLocalizado = clienteRepository.findById(cliente.getId());
+		if(clienteLocalizado.isPresent()) {
 		clienteRepository.save(cliente);
+		}
 	}
 
 	@Override
 	public void excluir(Long id) {
 		clienteRepository.deleteById(id);
-	}
-
-	@Override
-	public Optional<Cliente> buscarPorId(Long id) {
-
-		return clienteRepository.findById(id);
 	}
 
 	@Override
@@ -47,6 +43,12 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public List<Cliente> buscarPorNome(String nome) {
 		return clienteRepository.findByNome(nome);
+	}
+	
+	@Override
+	public Optional<Cliente> buscarPorId(Long id) {
+		
+		return clienteRepository.findById(id);
 	}
 
 	@Override
