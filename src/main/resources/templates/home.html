@@ -86,13 +86,16 @@
 							<a class="btn btn-info" href="#" role="button">Novo Agendamento</a>
 							<a class="btn btn-warning" href="/cliente/busca/todos" role="button">Listar Todos Clientes </a>
 							<button class="btn btn-danger">Listar Todos Agendamentos</button>
-							<button class="btn btn-success">ABRE MODAL</button>
+							<button class="btn btn-success" type="button" data-toggle="modal"  data-target="#novoCliente">ABRE MODAL</button>
 							</div>
+							
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
+							<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
 
 	</div>
 </body>
