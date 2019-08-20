@@ -114,7 +114,6 @@ public class ClienteController {
 		}else if (cliente.getId() != null) {
 			servicoCliente.editar(cliente);
 			attr.addAttribute("sucessoMenssagemEditar", "Cliente editado com sucesso!");
-			// TODO - CLOSE O MODAL DE EDICAO
 		}
 		return "home";
 	}
