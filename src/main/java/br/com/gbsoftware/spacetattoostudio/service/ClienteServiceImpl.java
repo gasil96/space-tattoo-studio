@@ -18,6 +18,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void salvar(Cliente cliente) {
+		cliente.setInstagram("@"+cliente.getInstagram());
 		cliente.setDataCadastro(LocalDateTime.now());
 		clienteRepository.save(cliente);
 	}

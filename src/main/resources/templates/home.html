@@ -34,9 +34,9 @@
 											<th>Nome</th>
 											<th>Instagram</th>
 											<th>Saldo</th>
+											<th>Telefone</th>
 											<th>Nº Serviços</th>
-											<th>Nº Serviços</th>
-											<th>Data</th>
+											<th>Data Cadastro</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -82,11 +82,11 @@
 								<strong>Buttons Teste</strong>
 							</div>
 							<div>
-							<a class="btn btn-primary" href="/cliente/cadastrar" role="button">Novo Cliente </a>
+<!-- 							<button class="btn btn-success" type="button" data-toggle="modal"  data-target="#novoCliente">ABRE MODAL</button> -->
+							<button  class="btn btn-success" type="button" data-toggle="modal"  data-target="#novoCliente">Novo Cliente </button>
 							<a class="btn btn-info" href="#" role="button">Novo Agendamento</a>
 							<a class="btn btn-warning" href="/cliente/busca/todos" role="button">Listar Todos Clientes </a>
 							<button class="btn btn-danger">Listar Todos Agendamentos</button>
-							<button class="btn btn-success" type="button" data-toggle="modal"  data-target="#novoCliente">ABRE MODAL</button>
 							</div>
 							
 							
@@ -95,7 +95,7 @@
 				</div>
 			</div>
 		</section>
-							<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
+			<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
 
 	</div>
 </body>

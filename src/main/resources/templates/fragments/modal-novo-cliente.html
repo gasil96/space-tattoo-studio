@@ -17,15 +17,15 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form>
+					<form th:action="@{/cliente/salvar}" th:object="${cliente}" method="POST">
 						<div class="form-group">
-							<label>Nome</label> <input type="text"
+							<label>Nome</label> <input type="text" id="nome"
 								placeholder="Digite o nome" class="form-control"
-								required="required">
+								th:field="*{nome}">
 						</div>
 						<div class="form-group">
-							<label>Telefone</label> <input type="text"
-								placeholder="Digite o telefone" class="form-control">
+							<label>Telefone</label> <input type="text" id="telefone"
+								placeholder="Digite o celular" class="form-control" th:field="*{telefone}">
 						</div>
 						<div class="form-group">
 							<label>Instagram</label>
@@ -34,7 +34,7 @@
 									<span class="input-group-text">@</span>
 								</div>
 								<input type="text" placeholder="Digite o Instagram"
-									class="form-control">
+									class="form-control" id="instagram" th:field="*{instagram}">
 							</div>
 						</div>
 						<div class="form-group">
@@ -45,12 +45,15 @@
 								<option>INADIPLEMTE</option>
 							</select>
 						</div>
-					</form>
-				</div>
+					<input type="hidden" class="form-control" id="id" th:field="*{id}">
+						
+						
 				<div class="modal-footer">
 					<button type="button" data-dismiss="modal"
 						class="btn btn-secondary">Cancelar</button>
-					<button type="button" class="btn btn-primary">Confirmar</button>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+					</form>
 				</div>
 			</div>
 		</div>

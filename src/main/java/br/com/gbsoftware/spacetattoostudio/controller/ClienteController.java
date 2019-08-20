@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +45,8 @@ public class ClienteController {
 	
 
 	@GetMapping("cadastrar")
-	public String cadastrar(Cliente cliente) {
+	public String cadastrar(Cliente cliente, Model model) {
+		model.addAttribute("classActiveCliente","active"); 
 		return "cliente/cliente";
 		// TODO - retorno e a tela de especificacoes de cliente
 	}
@@ -54,7 +56,7 @@ public class ClienteController {
 		servicoCliente.excluir(id);
 		attr.addFlashAttribute("successoExcluir", "Cliente excluido com sucesso!");
 		// TODO - logica de excluir sem relacionametno
-		return "home";
+		return "redirect:/";
 	}
 
 	@GetMapping("busca/id")
@@ -80,7 +82,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("busca/todos")
-	public String buscar(ModelMap model, String nome, RedirectAttributes attr) {
+	public String buscar(ModelMap model, String nome, RedirectAttributes attr, Cliente cliente) {
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
 		return "home";
 		// TODO - aqui vai a  *tabela* com a lista de clientes localizados
