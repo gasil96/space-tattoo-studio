@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +29,7 @@ import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
  *
  */
 @Controller
-@RequestMapping("/servico")
+@RequestMapping("servico")
 public class ServicoController {
 
 	@Autowired
@@ -38,9 +39,15 @@ public class ServicoController {
 	private ClienteService servicoCliente;
 	
 	
-	@GetMapping("cadastrar-servico")
+	@GetMapping("detalhamento-servico")
+	public String servico(ModelMap model, Cliente cliente) {
+		model.addAttribute("classActiveSubAgendamento","active");
+		return "detalhamento/servico";
+	}
+	
+	@GetMapping("cadastrar")
 	public String Cadastrar(Servico servico) {
-		return "cliente/cliente";
+		return "detalhamento/servico";
 	}
 	
 	

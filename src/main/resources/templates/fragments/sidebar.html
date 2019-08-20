@@ -14,10 +14,10 @@
           <li th:class="${classActivePrincipal}"><a th:href="@{/}"><i class="icon-home"></i>Principal</a></li>
           <li th:class="${classActiveCaixa}"><a th:href="@{/}"><i class="icon-grid"></i>Caixa</a></li>
           <li th:class="${classActiveCliente}"><a th:href="@{/cliente/cadastrar}"><i class="icon icon-presentation"></i>Promocional</a></li>
-          <li th:class="${classActiveDetalhamentos}"><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamentos</a>
+          <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamento</a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled">
               <li th:class="${classActiveSubCliente}"><a th:href="@{/#}">Clientes</a></li>
-              <li th:class="${classActiveSubAgendamento}"><a th:href="@{/#}">Agendamentos</a></li>
+              <li th:class="${classActiveSubAgendamento}"><a th:href="@{/servico/detalhamento-servico}">Agendamentos</a></li>
               <li th:class="${classActiveSubFinanceiro}"><a th:href="@{/#}">Financeiro</a></li>
             </ul>
           </li>

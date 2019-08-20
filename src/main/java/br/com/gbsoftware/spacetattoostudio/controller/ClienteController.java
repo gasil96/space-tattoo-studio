@@ -47,7 +47,7 @@ public class ClienteController {
 	@GetMapping("cadastrar")
 	public String cadastrar(Cliente cliente, Model model) {
 		model.addAttribute("classActiveCliente","active"); 
-		return "cliente/cliente";
+		return "detalhamento/cliente";
 		// TODO - retorno e a tela de especificacoes de cliente
 	}
 
@@ -99,7 +99,7 @@ public class ClienteController {
 	@GetMapping("/edita/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
-		return "cliente/cliente";
+		return "detalhamento/cliente";
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
 	
@@ -109,7 +109,7 @@ public class ClienteController {
 		if (result.hasErrors()) {
 			attr.addAttribute("erroMenssagemEditar", "Não foi possivel editar o cliente");
 			
-			return "cliente/cliente";
+			return "detalhamento/cliente";
 			
 		}else if (cliente.getId() != null) {
 			servicoCliente.editar(cliente);
