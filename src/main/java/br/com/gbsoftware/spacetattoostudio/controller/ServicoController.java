@@ -33,7 +33,7 @@ import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 public class ServicoController {
 
 	private static final String PAGINA_INICIAL = "home";
-	private static final String PAGINA_PROMOCIONAL = "detalhamento/servico-detalhado";
+	private static final String PAGINA_AGENDAMENTO_DETALHADO = "detalhamento/servico-detalhado";
 	
 	
 	
@@ -45,10 +45,13 @@ public class ServicoController {
 	
 	
 	@GetMapping("detalhamento")
-	public String servico(ModelMap model, Cliente cliente, Servico agendamento) {
+	public String servico( Servico agendamento, ModelMap model, Cliente cliente) {
+		
+		
+		model.addAttribute("listaServico", servicoCliente.buscarTodos());
 		model.addAttribute("classActiveSubAgendamento","active");
 		
-		return PAGINA_PROMOCIONAL;
+		return PAGINA_AGENDAMENTO_DETALHADO;
 	}
 	
 	@GetMapping("cadastrar")

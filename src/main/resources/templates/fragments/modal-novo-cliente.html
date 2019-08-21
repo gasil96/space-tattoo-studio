@@ -42,7 +42,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="selectStatus">Selecione o Status do Cliente</label> <select
+							<label for="selectStatus">Selecione o Status do Cliente</label> 
+							<select
 								id="selectStatus" class="form-control"
 								th:field="*{statusCliente}">
 								<option th:each="sc : ${statuscliente}" th:value="${sc}"
