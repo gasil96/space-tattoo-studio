@@ -15,7 +15,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 
-								<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#novoCliente"><i></i>Novo Cliente</button>
+								<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#novoCliente"><i class="icon icon-user"></i> Novo Cliente</button>
 								<button class="btn btn-secundary" type="button" data-toggle="modal" data-target="#editCliente" style="color: red">Editar Cliente</button>
 								<br><br>
 					</div>
@@ -46,29 +46,13 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<th scope="row">1</th>
-											<td>Breno</td>
-											<td>+55 91 989568730</td>
-											<td>@brenomarques__</td>
-											<td>2</td>
-											<td>Ativo</td>
-										</tr>
-										<tr>
-											<th scope="row">2</th>
-											<td>Gabriel</td>
-											<td>+55 91 988524524</td>
-											<td>@gasil96</td>
-											<td>1</td>
-											<td>Inativo</td>
-										</tr>
-										<tr>
-											<th scope="row">3</th>
-											<td>Bianca</td>
-											<td>+55 91 986458545</td>
-											<td>@biancabribeiro</td>
-											<td>3</td>
-											<td>Inadiplente</td>
+										<tr th:each="c :${listaCliente}">
+											<th scope="row" th:text="${c.id}" >1</th>
+											<td th:text="${c.nome}">Breno</td>
+											<td th:text="${c.telefone}">+55 91 989568730</td>
+											<td th:text="${c.instagram}">@brenomarques__</td>
+											<td th:text="${c.numeroServicos}">2</td>
+											<td th:text="${c.statusCliente}">Ativo</td>
 										</tr>
 									</tbody>
 								</table>

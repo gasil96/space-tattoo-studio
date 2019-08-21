@@ -46,8 +46,7 @@
 							<select
 								id="selectStatus" class="form-control"
 								th:field="*{statusCliente}">
-								<option th:each="sc : ${statuscliente}" th:value="${sc}"
-									th:text="${sc.statusCliente}">ATIVO</option>
+								<option th:each="sc : ${statuscliente}" th:value="${sc}" th:text="${sc.statusCliente}">ATIVO</option>
 							</select>
 						</div>
 						<input type="hidden" class="form-control" id="id" th:field="*{id}">
