@@ -11,7 +11,7 @@ public class FluxoCaixaController {
 
 	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
-	private static final String PAGINA = "promocinal/desconto-promocoes";
+	private static final String PAGINA_FINANCEIRO_DETALHADO = "detalhamento/financeiro-detalhado";
 	
 	@GetMapping("fluxo")
 	public String caixa(Model model) {
@@ -22,7 +22,7 @@ public class FluxoCaixaController {
 	@GetMapping("detalhamento")
 	public String detalhamento(Model model) {
 		model.addAttribute("");
-		return PAGINA;
+		return PAGINA_FINANCEIRO_DETALHADO;
 	}
 	
 	

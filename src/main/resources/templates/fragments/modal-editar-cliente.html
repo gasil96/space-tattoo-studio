@@ -5,7 +5,7 @@
 <body>
 
 
-	<div id="novoCliente" tabindex="-1" role="dialog"	aria-labelledby="exampleModalLabel" aria-hidden="true"		class="modal fade text-left" th:fragment="modalNovoCliente">
+	<div id="editCliente" tabindex="-1" role="dialog"	aria-labelledby="exampleModalLabel" aria-hidden="true"		class="modal fade text-left" th:fragment="modalEditCliente">
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -17,7 +17,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form th:action="@{/cliente/salvar}" th:object="${cliente}" method="POST">
+					<form th:action="@{/cliente/editar}" th:object="${cliente}" method="POST">
 						<div class="form-group">
 							<label>Nome</label> <input type="text" id="nome"
 								placeholder="Digite o nome" class="form-control"
@@ -43,7 +43,7 @@
 							 <option th:each="sc : ${statuscliente}" th:value="${sc}" th:text="${sc.statusCliente}">ATIVO</option>
 							</select>
 						</div>
-					<input type="hidden" class="form-control" id="id" th:field="*{id}">
+					<input type="text" class="form-control" id="id" th:field="*{id}">
 						
 						
 				<div class="modal-footer">

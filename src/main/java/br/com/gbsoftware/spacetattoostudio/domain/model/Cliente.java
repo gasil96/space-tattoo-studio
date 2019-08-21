@@ -9,7 +9,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -65,7 +64,7 @@ public class Cliente extends EntidadeBase<Long> {
 
 	}
 
-	public Cliente(@NotBlank String nome, String telefone, @NotBlank StatusClienteEnum statusCliente,
+	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente,
 			Long numeroServicos, LocalDateTime dataCadastro, String instagram, Double saldo, List<Servico> servicos) {
 		super();
 		this.nome = nome;

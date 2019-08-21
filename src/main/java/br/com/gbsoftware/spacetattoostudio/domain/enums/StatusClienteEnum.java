@@ -11,17 +11,16 @@ package br.com.gbsoftware.spacetattoostudio.domain.enums;
 public enum StatusClienteEnum {
 	ATIVO("ATIVO"),
 	INATIVO("INATIVO"),
-	CANCELADO("CANCELADO"),
 	INADIMPLENTE("INADIMPLENTE");
 
 	private String statusCliente;
 
-	private StatusClienteEnum(String statusCliente) {
-		this.statusCliente = statusCliente;
-	}
-
+	
 	public String getStatusCliente() {
 		return statusCliente;
+	}
+	private StatusClienteEnum(String statusCliente) {
+		this.statusCliente = statusCliente;
 	}
 
 }

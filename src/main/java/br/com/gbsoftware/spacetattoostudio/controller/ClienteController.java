@@ -50,19 +50,19 @@ public class ClienteController {
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Model model) {
 		model.addAttribute("classActiveSubCliente","active"); 
+		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
 		return PAGINA_CLIENTE_DETALHADO;
-		// TODO - retorno e a tela de especificacoes de cliente
 	}
 
 	@GetMapping("/excluir-cliente/{id}")
 	public String excluirCliente(@PathVariable("id") Long id, RedirectAttributes attr) {
 		servicoCliente.excluir(id);
 		attr.addFlashAttribute("successoExcluir", "Cliente excluido com sucesso!");
-		// TODO - logica de excluir sem relacionametno
+		// TODO - logica de excluir somente cliente sem relacionametno
 		return PAGINA_INICIAL;
 	}
 
-	@GetMapping("busca/id")
+	@GetMapping("busca-id")
 	public String buscarClienteId(@PathVariable("id") ModelMap model, Long id) {
 		model.addAttribute("lista", servicoCliente.buscarPorId(id).orElseThrow(() -> new EntityNotFoundException()));
 		return PAGINA_INICIAL;
@@ -70,24 +70,24 @@ public class ClienteController {
 	}
 
 	// TODO - DEFAUTL
-	@GetMapping("/busca/nome")
+	@GetMapping("/busca-nome")
 	public String buscarClienteNome(@RequestParam("nome") ModelMap model, String nome) {
 		model.addAttribute("lista", servicoCliente.buscarPorNome(nome));
 		return PAGINA_INICIAL;
 		// TODO - aqui vai a a *section* com o clietne localizado
 	}
 
-	@GetMapping("busca/instagram")
+	@GetMapping("busca-instagram")
 	public String buscarClienteInstagram(ModelMap model, String instagram) {
 		model.addAttribute("lista", servicoCliente.buscarPorInstagram(instagram));
 		return PAGINA_INICIAL;
 		// TODO - aqui vai a a *section* com o clietne localizado
 	}
 
-	@GetMapping("busca/todos")
+	@GetMapping("busca-todos")
 	public String buscar(ModelMap model, String nome, RedirectAttributes attr, Cliente cliente) {
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
-		return PAGINA_INICIAL;
+		return PAGINA_CLIENTE_DETALHADO;
 		// TODO - aqui vai a  *tabela* com a lista de clientes localizados
 	}
 
