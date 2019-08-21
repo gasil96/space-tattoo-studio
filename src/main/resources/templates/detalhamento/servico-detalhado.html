@@ -47,36 +47,21 @@
 											<th>#</th>
 											<th>Tipo</th>
 											<th>Cliente</th>
-											<th>Data/Horário</th>
-											<th>Quantidade</th>
+											<th>Inicio</th>
+											<th>Término</th>
 											<th>Status</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<th scope="row">1</th>
-											<td>Tatuagem</td>
-											<td>Breno</td>
-											<td>9:00 AM</td>
-											<td>2</td>
-											<td>Ativo</td>
+										<tr th:each="a : ${listaServico}">
+											<th scope="row" th:text="${a.id}" >1</th>
+											<td th:text="${a.tipoServico}">Tatuagem</td>
+											<td th:text="${a.cliente.nome}">Breno</td>
+											<td th:text="${a.horarioAgendamento}">9:00 AM</td>
+											<td th:text="${a.horarioConclusaoAgendamento}">2</td>
+											<td th:text="${a.statusAgendamento}">Ativo</td>
 										</tr>
-										<tr>
-											<th scope="row">2</th>
-											<td>Barbearia</td>
-											<td>Gabriel</td>
-											<td>11:30 AM</td>
-											<td>1</td>
-											<td>Pendente</td>
-										</tr>
-										<tr>
-											<th scope="row">3</th>
-											<td>Piercing</td>
-											<td>Bianca</td>
-											<td>15:25 AM</td>
-											<td>1</td>
-											<td>Cancelado</td>
-										</tr>
+										
 									</tbody>
 								</table>
 							</div>

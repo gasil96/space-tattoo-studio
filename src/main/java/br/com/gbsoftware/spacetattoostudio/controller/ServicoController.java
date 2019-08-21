@@ -48,7 +48,7 @@ public class ServicoController {
 	public String servico( Servico agendamento, ModelMap model, Cliente cliente) {
 		
 		
-		model.addAttribute("listaServico", servicoCliente.buscarTodos());
+		model.addAttribute("listaServico", servicoSevice.buscarTodos());
 		model.addAttribute("classActiveSubAgendamento","active");
 		
 		return PAGINA_AGENDAMENTO_DETALHADO;
