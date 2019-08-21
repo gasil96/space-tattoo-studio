@@ -5,7 +5,9 @@
 <body>
 
 
-	<div id="novoCliente" tabindex="-1" role="dialog"	aria-labelledby="exampleModalLabel" aria-hidden="true"		class="modal fade text-left" th:fragment="modalNovoCliente">
+	<div id="novoCliente" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true"
+		class="modal fade text-left" th:fragment="modalNovoCliente">
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -17,7 +19,8 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form th:action="@{/cliente/salvar}" th:object="${cliente}" method="POST">
+					<form th:action="@{/cliente/salvar}" th:object="${cliente}"
+						method="POST">
 						<div class="form-group">
 							<label>Nome</label> <input type="text" id="nome"
 								placeholder="Digite o nome" class="form-control"
@@ -25,7 +28,8 @@
 						</div>
 						<div class="form-group">
 							<label>Telefone</label> <input type="text" id="telefone"
-								placeholder="Digite o celular" class="form-control" th:field="*{telefone}">
+								placeholder="Digite o celular" class="form-control"
+								th:field="*{telefone}">
 						</div>
 						<div class="form-group">
 							<label>Instagram</label>
@@ -38,19 +42,21 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="selectStatus">Selecione o Status do Cliente</label>
-							 <select id="selectStatus"	class="form-control" th:field="*{statusCliente}">
-							 <option th:each="sc : ${statuscliente}" th:value="${sc}" th:text="${sc.statusCliente}">ATIVO</option>
+							<label for="selectStatus">Selecione o Status do Cliente</label> <select
+								id="selectStatus" class="form-control"
+								th:field="*{statusCliente}">
+								<option th:each="sc : ${statuscliente}" th:value="${sc}"
+									th:text="${sc.statusCliente}">ATIVO</option>
 							</select>
 						</div>
-					<input type="hidden" class="form-control" id="id" th:field="*{id}">
-						
-						
-				<div class="modal-footer">
-					<button type="button" data-dismiss="modal"
-						class="btn btn-secondary">Cancelar</button>
-					<button type="submit" class="btn btn-primary">Salvar</button>
-				</div>
+						<input type="hidden" class="form-control" id="id" th:field="*{id}">
+
+
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal"
+								class="btn btn-secondary">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Salvar</button>
+						</div>
 					</form>
 				</div>
 			</div>

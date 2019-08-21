@@ -45,8 +45,9 @@ public class ServicoController {
 	
 	
 	@GetMapping("detalhamento")
-	public String servico(ModelMap model, Cliente cliente) {
+	public String servico(ModelMap model, Cliente cliente, Servico agendamento) {
 		model.addAttribute("classActiveSubAgendamento","active");
+		
 		return PAGINA_PROMOCIONAL;
 	}
 	
