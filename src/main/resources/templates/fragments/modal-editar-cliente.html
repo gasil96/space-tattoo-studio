@@ -9,14 +9,14 @@
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<strong id="tituloModalNovoCliente" class="modal-title">Novo
+					<strong id="tituloModalEditarCliente" class="modal-title">Editar
 						Cliente</strong>
 					<button type="button" data-dismiss="modal" aria-label="Close"
 						class="close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" id="cliente">
 					<form th:action="@{/cliente/editar}" th:object="${cliente}" method="POST">
 						<div class="form-group">
 							<label>Nome</label> <input type="text" id="nome"

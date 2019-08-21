@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
@@ -54,43 +57,7 @@ public class ClienteController {
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
-	@GetMapping("/excluir-cliente/{id}")
-	public String excluirCliente(@PathVariable("id") Long id, RedirectAttributes attr) {
-		servicoCliente.excluir(id);
-		attr.addFlashAttribute("successoExcluir", "Cliente excluido com sucesso!");
-		// TODO - logica de excluir somente cliente sem relacionametno
-		return PAGINA_INICIAL;
-	}
-
-	@GetMapping("busca-id")
-	public String buscarClienteId(@PathVariable("id") ModelMap model, Long id) {
-		model.addAttribute("lista", servicoCliente.buscarPorId(id).orElseThrow(() -> new EntityNotFoundException()));
-		return PAGINA_INICIAL;
-		// TODO - aqui vai a a *section* com o clietne localizado
-	}
-
-	// TODO - DEFAUTL
-	@GetMapping("/busca-nome")
-	public String buscarClienteNome(@RequestParam("nome") ModelMap model, String nome) {
-		model.addAttribute("lista", servicoCliente.buscarPorNome(nome));
-		return PAGINA_INICIAL;
-		// TODO - aqui vai a a *section* com o clietne localizado
-	}
-
-	@GetMapping("busca-instagram")
-	public String buscarClienteInstagram(ModelMap model, String instagram) {
-		model.addAttribute("lista", servicoCliente.buscarPorInstagram(instagram));
-		return PAGINA_INICIAL;
-		// TODO - aqui vai a a *section* com o clietne localizado
-	}
-
-	@GetMapping("busca-todos")
-	public String buscar(ModelMap model, String nome, RedirectAttributes attr, Cliente cliente) {
-		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
-		return PAGINA_CLIENTE_DETALHADO;
-		// TODO - aqui vai a  *tabela* com a lista de clientes localizados
-	}
-
+	/*SALVAR NOVO CLIENTE*/
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		servicoCliente.salvar(cliente);
@@ -98,27 +65,61 @@ public class ClienteController {
 		return PAGINA_INICIAL;
 		//TODO - FECHA O MODAL e madna msg 
 	}
+	
+	/*EXCLUIR POR ID*/
+	@GetMapping("/excluir-cliente/{id}")
+	public String excluirCliente(@PathVariable("id") Long id, RedirectAttributes attr) {
+		servicoCliente.excluir(id);
+		attr.addFlashAttribute("successoExcluir", "Cliente excluido com sucesso!");
+		// TODO - logica de excluir somente cliente sem relacionametno
+		return PAGINA_INICIAL;
+	}
+	/*BUSCAR POR ID*/
+	@GetMapping("busca-id")
+	public String buscarClienteId(@PathVariable("id") ModelMap model, Long id) {
+		model.addAttribute("lista", servicoCliente.buscarPorId(id).orElseThrow(() -> new EntityNotFoundException()));
+		return PAGINA_INICIAL;
+		// TODO - aqui vai a a *section* com o clietne localizado
+	}
 
-	@GetMapping("/edita/{id}")
+	/*BUSCAR POR NOME*/
+	@GetMapping("/busca-nome")
+	public String buscarClienteNome(@RequestParam("nome") ModelMap model, String nome) {
+		model.addAttribute("lista", servicoCliente.buscarPorNome(nome));
+		return PAGINA_INICIAL;
+		// TODO - aqui vai a a *section* com o clietne localizado
+	}
+	
+	/*BUSCAR POR INSTAGRAM*/
+	@GetMapping("busca-instagram")
+	public String buscarClienteInstagram(ModelMap model, String instagram) {
+		model.addAttribute("lista", servicoCliente.buscarPorInstagram(instagram));
+		return PAGINA_INICIAL;
+		// TODO - aqui vai a a *section* com o clietne localizado
+	}
+	
+	/*BUSCAR TODOS*/
+	@GetMapping("busca-todos")
+	public String buscar(ModelMap model, String nome, RedirectAttributes attr, Cliente cliente) {
+		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
+		return PAGINA_CLIENTE_DETALHADO;
+		// TODO - aqui vai a  *tabela* com a lista de clientes localizados
+	}
+
+	/*EDITAR PASSANDO CAMPOS*/
+	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
 		return PAGINA_CLIENTE_DETALHADO;
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
 	
-	
-	@PostMapping("/editar")
+	/*EDITAR*/
+	@PostMapping("editar")
 	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		if (result.hasErrors()) {
 			attr.addAttribute("erroMenssagemEditar", "Não foi possivel editar o cliente");
-			
-			return PAGINA_CLIENTE_DETALHADO;
-			
-		}else if (cliente.getId() != null) {
 			servicoCliente.editar(cliente);
-			attr.addAttribute("sucessoMenssagemEditar", "Cliente editado com sucesso!");
-		}
-		return PAGINA_INICIAL;
+			return PAGINA_CLIENTE_DETALHADO;
 	}
 	
 	@ModelAttribute("servicos")

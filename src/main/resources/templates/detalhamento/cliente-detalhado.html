@@ -20,7 +20,7 @@
 							</div>
 							<div>
 							<button class="btn btn-primary" type="button" data-toggle="modal"  data-target="#novoCliente">Novo Cliente </button>
-							<button class="btn btn-primary" type="button" data-toggle="modal"  data-target="#editCliente">Editar Cliente</button>
+							<button class="btn btn-primary" type="button" data-toggle="modal"   data-target="#editCliente">Editar Cliente</button>
 							<button class="btn btn-danger">Listar Todos Agendamentos</button>
 							</div>
 						</div>
@@ -28,8 +28,7 @@
 				</div>
 			</div>
 		</section>
-			<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
-			<div th:replace="fragments/modal-editar-cliente :: modalEditCliente"></div>
+			
 	
 		<section class="no-padding-top">
 			<div class="container-fluid">
@@ -56,22 +55,21 @@
 									<tbody>
 										<tr th:each="c : ${listaCliente}">
 											<td th:text="${c.id}">0</td>
-											<td th:text="${c.nome}">Gabriel</td>
+											<td th:text="${c.nome}" role="click" data-toggle="modal" data-target="#editCliente" aria-hidden="true">Gabriel</td>
 											<td th:text="${c.instagram}">@gasil96</td>
 											<td th:text="${c.saldo}">2565</td>
 											<td th:text="${c.telefone}">+55(91)98198-7035</td>
 											<td th:text="${c.statusCliente}">ATIVO</td>
 											<td
 												th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">11-11-2019</td>
-											<td colspan="2"><a class="btn btn-danger btn-sm"
-												th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"
-												role="button"> <span class="oi oi-brush" title="Excluir"
-													aria-hidden="true">Excluir</span>
-											</a> <a class="btn btn-warning btn-sm"
-												th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"
-												role="button"> <span class="oi oi-brush" title="Excluir"
-													aria-hidden="true">Editar</span>
-											</a></td>
+											<td colspan="2">
+												<a class="btn btn-danger btn-sm" th:href="@{/cliente/excluir-cliente/{id} (id=${c.id})}"role="button">
+											 		<span class="oi oi-brush" title="Excluir"	aria-hidden="true">Excluir</span>
+												</a>
+											 	 <a class="btn btn-warning btn-sm"	th:href="@{/cliente/editar/{id} (id=${c.id})}"role="button" > 
+											    	<span class="oi oi-brush" title="Editar" aria-hidden="true">Editar</span>
+											 	</a>
+											</td>
 
 										</tr>
 									</tbody>
@@ -81,8 +79,49 @@
 					</div>
 				</div>
 			</div>
+		
+		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
+		<div th:replace="fragments/modal-editar-cliente :: modalEditCliente"></div>
 
-
+		</section>
+		<section>
+		
+		<form th:action="@{/cliente/editar}" th:object="${cliente}" method="POST">
+						<div class="form-group">
+							<label>Nome</label> <input type="text" id="nome"
+								placeholder="Digite o nome" class="form-control"
+								th:field="*{nome}" required="required">
+						</div>
+						<div class="form-group">
+							<label>Telefone</label> <input type="text" id="telefone"
+								placeholder="Digite o celular" class="form-control" th:field="*{telefone}">
+						</div>
+						<div class="form-group">
+							<label>Instagram</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">@</span>
+								</div>
+								<input type="text" placeholder="Digite o Instagram"
+									class="form-control" id="instagram" th:field="*{instagram}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="selectStatus">Selecione o Status do Cliente</label>
+							 <select id="selectStatus"	class="form-control" th:field="*{statusCliente}">
+							 <option th:each="sc : ${statuscliente}" th:value="${sc}" th:text="${sc.statusCliente}" >ATIVO</option>
+							</select>
+						</div>
+					<input type="text" class="form-control" id="id" th:field="*{id}">
+						
+						
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal"
+						class="btn btn-secondary">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+					</form>
+		
 		</section>
 		
 	</div>

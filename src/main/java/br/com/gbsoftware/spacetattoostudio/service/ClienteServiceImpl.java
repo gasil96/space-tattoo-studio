@@ -28,6 +28,7 @@ public class ClienteServiceImpl implements ClienteService {
 		Optional<Cliente> clienteLocalizado = clienteRepository.findById(cliente.getId());
 		if(clienteLocalizado.isPresent()) {
 		clienteRepository.save(cliente);
+		System.err.println("ALTEROU");
 		}
 	}
 
