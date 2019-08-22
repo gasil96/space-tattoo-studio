@@ -68,7 +68,7 @@ public class ClienteController {
 	
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("clienteLocalizado", servicoCliente.buscarPorId(id));
+		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
 		return PAGINA_CLIENTE_DETALHADO;
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
