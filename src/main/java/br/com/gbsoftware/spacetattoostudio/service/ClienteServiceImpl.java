@@ -24,10 +24,9 @@ public class ClienteServiceImpl implements ClienteService {
 		}
 
 		if (cliente.getId() == null) {
-			cliente.setDataCadastro(LocalDateTime.now());
-			clienteRepository.save(cliente);
+			clienteRepository.save(cliente).setDataCadastro(LocalDateTime.now());;
 		} else {
-			clienteRepository.save(cliente);
+			clienteRepository.save(cliente).setDataCadastro(null);
 		}
 
 	}
