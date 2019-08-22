@@ -17,18 +17,13 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteRepository clienteRepository;
 
 	@Override
-	public void salvarOuEditar(Cliente cliente) {
+	public void salvar(Cliente cliente) {
 
 		if (!cliente.getInstagram().isEmpty()) {
 			cliente.setInstagram("@" + cliente.getInstagram());
 		}
-
-		if (cliente.getId() == null) {
-			clienteRepository.save(cliente).setDataCadastro(LocalDateTime.now());;
-		} else {
-			clienteRepository.save(cliente).setDataCadastro(null);
-		}
-
+		cliente.setDataCadastro(LocalDateTime.now());
+		clienteRepository.save(cliente);
 	}
 
 	@Override
@@ -50,6 +45,12 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public List<Cliente> buscarTodos() {
 		return clienteRepository.findAll();
+	}
+
+	@Override
+	public void editar(Cliente cliente) {
+		cliente.setDataCadastro(cliente.getDataCadastro());
+		clienteRepository.save(cliente);
 	}
 
 }

@@ -2,7 +2,6 @@ package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.util.List;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class ClienteController {
 	/*SALVAR NOVO CLIENTE*/
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		servicoCliente.salvarOuEditar(cliente);
+		servicoCliente.salvar(cliente);
 		attr.addAttribute("sucessoMenssagemSalvar", "Cliente salvo com sucesso!");
 		return  ATUALIZAR_PAGINA;
 		//TODO - FECHA O MODAL e madna msg 
@@ -77,7 +76,7 @@ public class ClienteController {
 	@PostMapping("editar")
 	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 			attr.addAttribute("erroMenssagemEditar", "Não foi possivel editar o cliente");
-			servicoCliente.salvarOuEditar(cliente);
+			servicoCliente.editar(cliente);
 			return ATUALIZAR_PAGINA;
 	}
 	

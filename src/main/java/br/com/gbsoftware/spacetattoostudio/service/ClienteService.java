@@ -16,8 +16,10 @@ import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
 public interface ClienteService {
 
-	void salvarOuEditar(Cliente cliente);
+	void salvar(Cliente cliente);
 
+	void editar(Cliente cliente);
+	
 	Optional<Cliente> buscarPorId(Long id);
 
 	List<Cliente> buscarPorNome(String nome);
