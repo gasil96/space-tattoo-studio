@@ -26,21 +26,8 @@ public class ServicoServiceImpl implements ServicoService {
 	private ServicoRepository servicoRepository;
 
 	@Override
-	public void salvar(Servico servico) {
+	public void salvarOuEditar(Servico servico) {
 		servicoRepository.save(servico);
-	}
-
-	@Override
-	public void editar(Servico servico) {
-		Optional<Servico> servicoLocalizado = servicoRepository.findById(servico.getId());
-		if(servicoLocalizado.isPresent()) {
-			servicoRepository.save(servico);
-		}
-	}
-
-	@Override
-	public void excluir(Long id) {
-		servicoRepository.deleteById(id);
 	}
 
 	@Override

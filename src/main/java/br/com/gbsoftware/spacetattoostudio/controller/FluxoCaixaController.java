@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("caixa")
 public class FluxoCaixaController {
 
-	private static final String PAGINA_INICIAL = "home";
+//	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String PAGINA_FINANCEIRO_DETALHADO = "detalhamento/financeiro-detalhado";
 	
@@ -21,7 +21,7 @@ public class FluxoCaixaController {
 	
 	@GetMapping("detalhamento")
 	public String detalhamento(Model model) {
-		model.addAttribute("");
+		model.addAttribute("classActiveSubFinanceiro", "active");
 		return PAGINA_FINANCEIRO_DETALHADO;
 	}
 	

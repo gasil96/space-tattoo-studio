@@ -61,9 +61,9 @@ public class ServicoController {
 	
 	
 	@PostMapping("salvar")
-	public String salvar(@Valid Servico servico, BindingResult result, RedirectAttributes attr) {
+	public String salvar(Servico servico) {
 	
-		servicoSevice.salvar(servico);
+		servicoSevice.salvarOuEditar(servico);
 		return PAGINA_INICIAL;
 		
 	}

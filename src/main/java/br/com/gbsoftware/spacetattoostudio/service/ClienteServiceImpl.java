@@ -12,36 +12,24 @@ import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
-	
-	
+
 	@Autowired
 	private ClienteRepository clienteRepository;
 
-	
 	@Override
-	public void salvar(Cliente cliente) {
-		cliente.setInstagram("@"+cliente.getInstagram());
-		cliente.setDataCadastro(LocalDateTime.now());
-		clienteRepository.save(cliente);
-	}
+	public void salvarOuEditar(Cliente cliente) {
 
-	@Override
-	public void editar(Cliente cliente) {
-	
-			// TODO - Remover saidas do console
-		Optional<Cliente> clienteLocalizado = clienteRepository.findById(cliente.getId());
-		if(clienteLocalizado.isPresent()) {
-		clienteRepository.save(cliente);
-		
-			System.err.println("Alterou!!!");
-		}else{
-			System.err.println("Cliente não encontrado");
+		if (!cliente.getInstagram().isEmpty()) {
+			cliente.setInstagram("@" + cliente.getInstagram());
 		}
-	}
 
-	@Override
-	public void excluir(Long id) {
-		clienteRepository.deleteById(id);
+		if (cliente.getId() == null) {
+			cliente.setDataCadastro(LocalDateTime.now());
+			clienteRepository.save(cliente);
+		} else {
+			clienteRepository.save(cliente);
+		}
+
 	}
 
 	@Override
@@ -53,10 +41,10 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<Cliente> buscarPorNome(String nome) {
 		return clienteRepository.findByNome(nome);
 	}
-	
+
 	@Override
 	public Optional<Cliente> buscarPorId(Long id) {
-		
+
 		return clienteRepository.findById(id);
 	}
 

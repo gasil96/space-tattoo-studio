@@ -25,7 +25,7 @@
 						</div>
 
 						<div class="form-group">
-							<label>Horário do Agendamento</label> <input type="datetime" id="horario" class="form-control" th:field="*{horarioAgendamento}" required="required">
+							<label>Horário do Agendamento</label> <input type="text" id="horario" class="form-control" th:field="*{horarioAgendamento}">
 						</div>
 
 						<div class="form-group">
@@ -34,7 +34,7 @@
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
 						</div>
-						<input type="hidden" class="form-control" id="idS" th:field="*{id}">
+						<input type="text" class="form-control" id="idS" th:field="*{id}" placeholder="id agendamento">
 						<input type="text" class="form-control" id="idC"	th:field="*{cliente.id}">
 
 						<div class="modal-footer">

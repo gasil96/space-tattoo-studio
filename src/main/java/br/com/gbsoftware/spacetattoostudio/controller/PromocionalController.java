@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("promocional")
 public class PromocionalController {
 
-	private static final String PAGINA_INICIAL = "home";
+//	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_PROMOCIONAL = "promocional/descontos-promocoes";
 	
 	@GetMapping("promo")

@@ -18,11 +18,7 @@ import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 
 public interface ServicoService {
 
-	void salvar(Servico servico);
-
-	void editar(Servico servico);
-
-	void excluir(Long id);
+	void salvarOuEditar(Servico servico);
 
 	Optional<Servico> buscarPorId(Long id);
 	

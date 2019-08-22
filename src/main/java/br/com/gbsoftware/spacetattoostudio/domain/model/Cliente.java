@@ -75,9 +75,17 @@ public class Cliente extends EntidadeBase<Long> {
 		this.instagram = instagram;
 		this.saldo = saldo;
 		this.servicos = servicos;
+		
+	}
+	
+	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, String instagram) {
+		super();
+		this.nome = nome;
+		this.telefone = telefone;
+		this.statusCliente = statusCliente;
+		this.instagram = instagram;
 	}
 
-	
 	public void setStatusCliente(StatusClienteEnum statusCliente) {
 		this.statusCliente = statusCliente;
 	}

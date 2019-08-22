@@ -16,9 +16,7 @@ import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
 public interface ClienteService {
 
-	void salvar(Cliente cliente);
-
-	void excluir(Long id);
+	void salvarOuEditar(Cliente cliente);
 
 	Optional<Cliente> buscarPorId(Long id);
 
@@ -28,5 +26,4 @@ public interface ClienteService {
 	
 	List<Cliente> buscarTodos();
 
-	void editar(Cliente cliente);
 }

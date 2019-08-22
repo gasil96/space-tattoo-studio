@@ -39,6 +39,7 @@ public class ClienteController {
 
 	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_CLIENTE_DETALHADO = "detalhamento/cliente-detalhado";
+	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
 	
 	@Autowired
 	private ClienteService servicoCliente;
@@ -57,35 +58,29 @@ public class ClienteController {
 	/*SALVAR NOVO CLIENTE*/
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		servicoCliente.salvar(cliente);
+		servicoCliente.salvarOuEditar(cliente);
 		attr.addAttribute("sucessoMenssagemSalvar", "Cliente salvo com sucesso!");
-		return "redirect:detalhamento";
+		return  ATUALIZAR_PAGINA;
 		//TODO - FECHA O MODAL e madna msg 
 	}
+
+	/*EDITAR PASSANDO CAMPOS*/
 	
-	/*EXCLUIR POR ID*/
-	
-	/**
-	 * @author Gabriel 
-	 * @deprecated 
-	 *  não vai haver exclusão no sistema somente cliente desativado ( ou seja update )
-	 * 
-	 * */
-	
-	@GetMapping("/excluir-cliente/{id}")
-	public String excluirCliente(@PathVariable("id") Long id, RedirectAttributes attr) {
-		servicoCliente.excluir(id);
-		attr.addFlashAttribute("successoExcluir", "Cliente excluido com sucesso!");
-		// TODO - logica de excluir somente cliente sem relacionametno
-		return PAGINA_INICIAL;
+	@GetMapping("editar/{id}")
+	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
+		return ATUALIZAR_PAGINA;
+		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
-	/*BUSCAR POR ID*/
-	@GetMapping("busca-id")
-	public String buscarClienteId(@PathVariable("id") ModelMap model, Long id) {
-		model.addAttribute("lista", servicoCliente.buscarPorId(id).orElseThrow(() -> new EntityNotFoundException()));
-		return PAGINA_INICIAL;
-		// TODO - aqui vai a a *section* com o clietne localizado
+	
+	/*EDITAR*/
+	@PostMapping("editar")
+	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
+			attr.addAttribute("erroMenssagemEditar", "Não foi possivel editar o cliente");
+			servicoCliente.salvarOuEditar(cliente);
+			return ATUALIZAR_PAGINA;
 	}
+	
 
 	/*BUSCAR POR NOME*/
 	@GetMapping("/busca-nome")
@@ -111,23 +106,6 @@ public class ClienteController {
 		// TODO - aqui vai a  *tabela* com a lista de clientes localizados
 	}
 
-	/*EDITAR PASSANDO CAMPOS*/
-	
-	
-	@GetMapping("editar/{id}")
-	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
-		return PAGINA_CLIENTE_DETALHADO;
-		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
-	}
-	
-	/*EDITAR*/
-	@PostMapping("editar")
-	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-			attr.addAttribute("erroMenssagemEditar", "Não foi possivel editar o cliente");
-			servicoCliente.editar(cliente);
-			return PAGINA_CLIENTE_DETALHADO;
-	}
 	
 	@ModelAttribute("servicos")
 	public List<Servico> getServicos(){
