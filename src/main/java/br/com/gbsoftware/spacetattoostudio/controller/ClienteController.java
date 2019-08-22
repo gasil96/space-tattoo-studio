@@ -2,6 +2,7 @@ package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.util.List;
 
+import javax.swing.text.View;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class ClienteController {
 	@Autowired
 	private ServicoService servicoServico;
 	
-
+	
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Model model) {
 		model.addAttribute("classActiveSubCliente","active"); 
@@ -66,9 +67,10 @@ public class ClienteController {
 	/*EDITAR PASSANDO CAMPOS*/
 	
 	@GetMapping("editar/{id}")
-	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
-		return PAGINA_CLIENTE_DETALHADO;
+		
+		return PAGINA_CLIENTE_DETALHADO; 
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
 	
