@@ -63,7 +63,7 @@ public class ServicoController {
 	@PostMapping("salvar")
 	public String salvar(Servico servico) {
 	
-		servicoSevice.salvarOuEditar(servico);
+		servicoSevice.salvar(servico);
 		return PAGINA_INICIAL;
 		
 	}

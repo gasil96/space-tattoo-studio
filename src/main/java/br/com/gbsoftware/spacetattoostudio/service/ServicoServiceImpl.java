@@ -26,10 +26,15 @@ public class ServicoServiceImpl implements ServicoService {
 	private ServicoRepository servicoRepository;
 
 	@Override
-	public void salvarOuEditar(Servico servico) {
+	public void editar(Servico servico) {
 		servicoRepository.save(servico);
 	}
 
+	public void salvar(Servico servico) {
+		servicoRepository.save(servico);
+	}
+
+	
 	@Override
 	public List<Servico> buscarPorHorarioAgendamento(LocalDateTime horarioAgendamento) {
 		return servicoRepository.findByHorarioAgendamento(horarioAgendamento);
