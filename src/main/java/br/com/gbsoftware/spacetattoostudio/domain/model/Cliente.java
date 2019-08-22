@@ -42,7 +42,7 @@ public class Cliente extends EntidadeBase<Long> {
 	private String telefone;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = true, length = 65)
+	@Column(name = "status", length = 65)
 	private StatusClienteEnum statusCliente;
 
 	@Column(name = "numero_servicos")
@@ -78,6 +78,10 @@ public class Cliente extends EntidadeBase<Long> {
 	}
 
 	
+	public void setStatusCliente(StatusClienteEnum statusCliente) {
+		this.statusCliente = statusCliente;
+	}
+
 	public String getInstagram() {
 		return instagram;
 	}

@@ -15,12 +15,12 @@ public enum StatusClienteEnum {
 
 	private String statusCliente;
 
+	private StatusClienteEnum(String statusCliente) {
+		this.statusCliente = statusCliente;
+	}
 	
 	public String getStatusCliente() {
 		return statusCliente;
-	}
-	private StatusClienteEnum(String statusCliente) {
-		this.statusCliente = statusCliente;
 	}
 
 }

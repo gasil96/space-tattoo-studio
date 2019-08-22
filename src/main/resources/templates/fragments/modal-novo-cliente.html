@@ -5,22 +5,19 @@
 <body>
 
 
-	<div id="novoCliente" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true"
-		class="modal fade text-left" th:fragment="modalNovoCliente">
+	<div id="novoCliente" tabindex="-1" role="dialog"	aria-labelledby="exampleModalLabel" aria-hidden="true"	class="modal fade text-left" th:fragment="modalNovoCliente">
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<strong id="tituloModalNovoCliente" class="modal-title">Novo
-						Cliente</strong>
+					<strong id="titvuloModalNovoCliente" class="modal-title">Novo Cliente</strong>
 					<button type="button" data-dismiss="modal" aria-label="Close"
 						class="close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form th:action="@{/cliente/salvar}" th:object="${cliente}"
-						method="POST">
+					
+					<form th:action="@{/cliente/salvar}" th:object="${cliente}"	method="POST">
 						<div class="form-group">
 							<label>Nome</label> <input type="text" id="nome"
 								placeholder="Digite o nome" class="form-control"
@@ -42,22 +39,22 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="selectStatus">Selecione o Status do Cliente</label> 
-							<select
-								id="selectStatus" class="form-control"
-								th:field="*{statusCliente}">
-								<option th:each="sc : ${statuscliente}" th:value="${sc}" th:text="${sc.statusCliente}">ATIVO</option>
+							<label for="statusCliente">Selecione o Status do Cliente</label> 
+							<select id="selectStatusCliente" class="form-control" th:field="*{statusCliente}">
+								<option th:each="c : ${statuscliente}" th:value="${c}" th:text="${c.statusCliente}">ATIVO</option>
+								
 							</select>
 						</div>
+						
 						<input type="hidden" class="form-control" id="id" th:field="*{id}">
 
 
 						<div class="modal-footer">
-							<button type="button" data-dismiss="modal"
-								class="btn btn-secondary">Cancelar</button>
+							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
 							<button type="submit" class="btn btn-primary">Salvar</button>
 						</div>
 					</form>
+					
 				</div>
 			</div>
 		</div>

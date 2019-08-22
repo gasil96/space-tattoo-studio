@@ -38,10 +38,10 @@ public class Servico extends EntidadeBase<Long>{
 
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo", nullable = true, length = 65)
+	@Column(name = "tipo", length = 65)
 	private TipoServicoEnum tipoServico;
 	
-	@DateTimeFormat(iso = ISO.DATE)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@Column(name = "horario_agendamento")
 	private LocalDateTime horarioAgendamento;
 	
@@ -72,6 +72,8 @@ public class Servico extends EntidadeBase<Long>{
 		this.cliente = cliente;
 	}
 
+
+
 	public LocalDateTime getHorarioAgendamento() {
 		return horarioAgendamento;
 	}
@@ -87,7 +89,6 @@ public class Servico extends EntidadeBase<Long>{
 	public void setTipoServico(TipoServicoEnum tipoServico) {
 		this.tipoServico = tipoServico;
 	}
-
 
 	public LocalDateTime getHorarioConclusaoAgendamento() {
 		return horarioConclusaoAgendamento;

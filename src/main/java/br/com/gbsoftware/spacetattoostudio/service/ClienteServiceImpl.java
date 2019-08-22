@@ -12,10 +12,12 @@ import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
-
+	
+	
 	@Autowired
 	private ClienteRepository clienteRepository;
 
+	
 	@Override
 	public void salvar(Cliente cliente) {
 		cliente.setInstagram("@"+cliente.getInstagram());
@@ -25,10 +27,15 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void editar(Cliente cliente) {
+	
+			// TODO - Remover saidas do console
 		Optional<Cliente> clienteLocalizado = clienteRepository.findById(cliente.getId());
 		if(clienteLocalizado.isPresent()) {
 		clienteRepository.save(cliente);
-		System.err.println("ALTEROU");
+		
+			System.err.println("Alterou!!!");
+		}else{
+			System.err.println("Cliente não encontrado");
 		}
 	}
 

@@ -79,7 +79,7 @@ public class ServicoController {
 	}
 	
 	@ModelAttribute("statusagendamento")
-	public StatusServicoEnum[] getStatusAgendametno() {
+	public StatusServicoEnum[] getStatusAgendamento() {
 		return StatusServicoEnum.values();
 	}
 	

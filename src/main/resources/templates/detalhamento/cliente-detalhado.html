@@ -43,6 +43,7 @@
 											<th>Instagram</th>
 											<th>N° Agendamentos</th>
 											<th>Status</th>
+											<th>Data Cadastro</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -53,6 +54,7 @@
 											<td th:text="${c.instagram}">@brenomarques__</td>
 											<td th:text="${c.numeroServicos}">2</td>
 											<td th:text="${c.statusCliente}">Ativo</td>
+											<td th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">11-11-1996</td>
 										</tr>
 									</tbody>
 								</table>

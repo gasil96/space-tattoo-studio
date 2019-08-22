@@ -4,10 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
@@ -62,11 +59,19 @@ public class ClienteController {
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		servicoCliente.salvar(cliente);
 		attr.addAttribute("sucessoMenssagemSalvar", "Cliente salvo com sucesso!");
-		return PAGINA_INICIAL;
+		return "redirect:detalhamento";
 		//TODO - FECHA O MODAL e madna msg 
 	}
 	
 	/*EXCLUIR POR ID*/
+	
+	/**
+	 * @author Gabriel 
+	 * @deprecated 
+	 *  não vai haver exclusão no sistema somente cliente desativado ( ou seja update )
+	 * 
+	 * */
+	
 	@GetMapping("/excluir-cliente/{id}")
 	public String excluirCliente(@PathVariable("id") Long id, RedirectAttributes attr) {
 		servicoCliente.excluir(id);
@@ -107,6 +112,8 @@ public class ClienteController {
 	}
 
 	/*EDITAR PASSANDO CAMPOS*/
+	
+	
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
@@ -128,7 +135,7 @@ public class ClienteController {
 	}
 	
 	@ModelAttribute("statuscliente")
-	public StatusClienteEnum[] getStatusCliuente() {
+	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
 	}		
 	
