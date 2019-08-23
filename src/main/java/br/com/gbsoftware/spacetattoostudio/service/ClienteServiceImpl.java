@@ -42,26 +42,23 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public List<Cliente> buscarTodos() {
-		return clienteRepository. findAll();
+		return clienteRepository.findAll();
 	}
 
-	// TODO - LÓGICA ERRADA
 	@Override
 	public void editar(Cliente cliente) {
 		if (!cliente.getInstagram().isEmpty()) {
-			String primeiroCaractere = cliente.getInstagram().substring(0 , 0);
-			if(primeiroCaractere.equals("@")) {
+			char primeiroCaractere = cliente.getInstagram().charAt(0);
+			if (primeiroCaractere != '@') {
 				cliente.setInstagram("@" + cliente.getInstagram());
-				System.err.println("DENTRO DOS IFES");
 			}
 		}
 		clienteRepository.save(cliente);
-	
 	}
 
 	@Override
 	public List<Cliente> clienteNomeId() {
 		return clienteRepository.clienteNomeId();
 	}
-	
+
 }
