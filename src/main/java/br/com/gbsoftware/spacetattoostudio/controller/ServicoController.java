@@ -72,9 +72,9 @@ public class ServicoController {
 	}
 	
 	@GetMapping("editar/{id}")
-	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoSevice.buscarPorId(id));
-		return PAGINA_AGENDAMENTO_DETALHADO;
+		return "fragments/modal-editar-agendamento"; 
 	}
 	
 	@PostMapping("editar")

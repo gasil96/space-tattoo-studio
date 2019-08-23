@@ -4,11 +4,12 @@
 <meta charset="UTF-8" />
 <body>
 
-	<div id="novoAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" th:fragment="modalNovoAgendamento">
+<div layout:fragment="corpo">
+	<div id="editarNovoAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" >
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<strong id="tituloModalNovoAgendamento" class="modal-title">Novo Agendamento</strong>
+					<strong id="tituloModalNovoAgendamento" class="modal-title">Alterar Agendamento</strong>
 					<button type="button" data-dismiss="modal" aria-label="Close" class="close">
 						<span aria-hidden="true">×</span>
 					</button>
@@ -25,8 +26,7 @@
 						</div>
 
 						<div class="form-group">
-							<label>Horário do Agendamento</label> 
-							<input type="text" id="horario" class="form-control" th:field="*{horarioAgendamento}">
+							<label>Horário do Agendamento</label> <input type="datetime" id="horario" class="form-control" th:field="*{horarioAgendamento}">
 						</div>
 
 						<div class="form-group">
@@ -35,12 +35,13 @@
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
 						</div>
-						<input type="text" class="form-control" id="idS" th:field="*{id}" placeholder="id agendamento">
-						<input type="text" class="form-control" id="idC"	th:field="*{cliente.id}">
+						<input type="hidden" class="form-control" id="idS" th:field="*{id}" placeholder="id agendamento">
+						<input type="hidden" class="form-control" id="idC"	th:field="*{cliente.id}">
 
 						<div class="modal-footer">
-							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Salvar</button>
+							<button role="button"
+						class="btn btn-secondary" th:href="@{/agendamento/detalhamento}">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Alterar</button>
 						</div>
 					</form>
 					
@@ -48,5 +49,12 @@
 			</div>
 		</div>
 	</div>
+	
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+	$(document).ready(function() {
+	    $('#editarNovoAgendamento').modal('show');
+	})
+	</script>
 </body>
 </html>

@@ -49,7 +49,6 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void editar(Cliente cliente) {
-		cliente.setDataCadastro(cliente.getDataCadastro());
 		clienteRepository.save(cliente);
 	}
 

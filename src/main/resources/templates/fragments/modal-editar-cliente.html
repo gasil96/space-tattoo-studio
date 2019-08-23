@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <body>
 
-
-	<div id="editCliente" tabindex="-1" role="dialog"	aria-labelledby="exampleModalLabel" aria-hidden="true"		class="modal fade text-left" th:fragment="modalEditCliente">
+<div layout:fragment="corpo">
+	<div id="editCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"		class="modal fade text-left" >
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<strong id="tituloModalEditarCliente" class="modal-title">Editar
+					<strong id="tituloModalEditarCliente" class="modal-title">Alterar
 						Cliente</strong>
 					<button type="button" data-dismiss="modal" aria-label="Close"
 						class="close">
@@ -44,18 +44,25 @@
 							</select>
 						</div>
 					<input type="hidden" class="form-control" id="id" th:field="*{id}">
-					<input type="hidden" class="form-control" id="data" th:field="*{dataCadastro}">
+					<input type="datetime" class="form-control" id="data" th:field="*{dataCadastro}" disabled="disabled">
 						
 						
 				<div class="modal-footer">
-					<button type="button" data-dismiss="modal"
-						class="btn btn-secondary">Cancelar</button>
-					<button type="submit" class="btn btn-primary">Salvar</button>
+					<button role="button"
+						class="btn btn-secondary" th:href="@{/cliente/detalhamento}">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Alterar</button>
 				</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+	$(document).ready(function() {
+	    $('#editCliente').modal('show');
+	})
+	</script>
 </body>
 </html>

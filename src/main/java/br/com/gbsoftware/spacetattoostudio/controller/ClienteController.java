@@ -61,7 +61,6 @@ public class ClienteController {
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		servicoCliente.salvar(cliente);
-		attr.addAttribute("sucessoMenssagemSalvar", "Cliente salvo com sucesso!");
 		return  ATUALIZAR_PAGINA;
 		//TODO - FECHA O MODAL e madna msg 
 	}
@@ -72,7 +71,7 @@ public class ClienteController {
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
 		
-		return PAGINA_CLIENTE_DETALHADO; 
+		return "fragments/modal-editar-cliente"; 
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
 	
