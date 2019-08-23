@@ -37,15 +37,15 @@ public class Cliente extends EntidadeBase<Long> {
 	// @NotBlank //impede pessistencia de elementos vazios TODO - FALTA COLOCAR OS
 	// NOTNULL @NOTBLACK LENGHT ETC...
 	@NotNull
-	@Column(length = 65)
+	@Column(length = 50)
 	private String nome;
 
-	@Column(length = 30)
+	@Column(length = 20)
 	private String telefone;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status", length = 65)
+	@Column(name = "status", length = 30)
 	private StatusClienteEnum statusCliente;
 
 	@Column(name = "numero_servicos")
@@ -165,4 +165,9 @@ public class Cliente extends EntidadeBase<Long> {
 				+ ", servicos=" + servicos + "]";
 	}
 
+	public static void main(String[] args) {
+		String s = "nomedeusuarioomaiorpossivelsss";
+		System.err.println(s.length());	
+	}
+	
 }
