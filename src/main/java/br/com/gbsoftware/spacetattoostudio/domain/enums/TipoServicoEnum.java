@@ -10,9 +10,9 @@ package br.com.gbsoftware.spacetattoostudio.domain.enums;
  */
 public enum TipoServicoEnum {
 
-	BARBEARIA("BARBEARIA"),
-	LOJA("LOJA"),
 	TATTOO("TATTOO"),
+	BARBEARIA("BARBEARIA"),
+	PRODUTO("PRODUTO"),
 	PIERNCING("PIERCING");
 	
 	private String tipoServico;

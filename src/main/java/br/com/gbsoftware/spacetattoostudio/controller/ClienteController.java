@@ -40,6 +40,7 @@ public class ClienteController {
 	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_CLIENTE_DETALHADO = "detalhamento/cliente-detalhado";
 	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
+	private static final String MODAL_EDITAR_CLIENTE = "modal/modal-editar-cliente";
 	
 	@Autowired
 	private ClienteService servicoCliente;
@@ -70,7 +71,7 @@ public class ClienteController {
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
 		
-		return "fragments/modal-editar-cliente"; 
+		return MODAL_EDITAR_CLIENTE; 
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
 	

@@ -45,12 +45,18 @@ public class ClienteServiceImpl implements ClienteService {
 		return clienteRepository. findAll();
 	}
 
+	// TODO - LÓGICA ERRADA
 	@Override
 	public void editar(Cliente cliente) {
 		if (!cliente.getInstagram().isEmpty()) {
-			cliente.setInstagram("@" + cliente.getInstagram());
+			String primeiroCaractere = cliente.getInstagram().substring(0 , 0);
+			if(primeiroCaractere.equals("@")) {
+				cliente.setInstagram("@" + cliente.getInstagram());
+				System.err.println("DENTRO DOS IFES");
+			}
 		}
 		clienteRepository.save(cliente);
+	
 	}
 
 	@Override

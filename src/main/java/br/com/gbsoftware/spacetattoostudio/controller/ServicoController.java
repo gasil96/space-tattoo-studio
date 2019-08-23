@@ -37,6 +37,7 @@ public class ServicoController {
 	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_AGENDAMENTO_DETALHADO = "detalhamento/servico-detalhado";
 	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
+	private static final String MODAL_EDITAR_AGENDAMENTO = "modal/modal-editar-agendamento";
 	
 	
 	
@@ -74,7 +75,7 @@ public class ServicoController {
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoSevice.buscarPorId(id));
-		return "fragments/modal-editar-agendamento"; 
+		return MODAL_EDITAR_AGENDAMENTO; 
 	}
 	
 	@PostMapping("editar")

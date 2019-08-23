@@ -30,8 +30,9 @@
 						</div>
 
 						<div class="form-group">
-							<label for="tipoServico">Selecione o Status do agendamento</label>
-							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">
+							<label for="tipoServico">Status</label>
+							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}" required="required">
+								<option value="" selected="selected">Selecione</option>
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
 						</div>
@@ -40,7 +41,7 @@
 
 						<div class="modal-footer">
 							<button role="button"
-						class="btn btn-secondary" th:href="@{/agendamento/detalhamento}">Cancelar</button>
+						class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 							<button type="submit" class="btn btn-primary">Alterar</button>
 						</div>
 					</form>

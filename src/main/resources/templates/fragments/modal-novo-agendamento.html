@@ -30,12 +30,12 @@
 						</div>
 
 						<div class="form-group">
-							<label for="tipoServico">Selecione o Status do agendamento</label>
-							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">
+							<label for="tipoServico">Status do agendamento</label>
+							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}" required="required">
+								<option value="" selected="selected">Selecione</option>
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
 						</div>
-						<input type="text" class="form-control" id="idS" th:field="*{id}" placeholder="id agendamento">
 						<input type="text" class="form-control" id="idC"	th:field="*{cliente.id}">
 
 						<div class="modal-footer">
