@@ -52,7 +52,7 @@
 											<td th:text="${c.instagram}">@brenomarques__</td>
 											<td th:text="${c.numeroServicos}">2</td>
 											<td th:text="${c.statusCliente}">Ativo</td>
-											<td th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy hh-mm')}">11-11-1996</td>
+											<td th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">11-11-1996</td>
 											<td colspan="2">
 												<a th:href="@{/cliente/editar/{id} (id=${c.id})}" role="button" >
 	                                				<span title="Editar" aria-hidden="true">editar</span>

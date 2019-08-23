@@ -36,12 +36,12 @@ public class Servico extends EntidadeBase<Long>{
 	 * 
 	 * */
 
-	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", length = 65)
 	private TipoServicoEnum tipoServico;
 	
-	@DateTimeFormat(iso = ISO.DATE)
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@Column(name = "horario_agendamento")
 	private LocalDateTime horarioAgendamento;
 	
@@ -49,6 +49,7 @@ public class Servico extends EntidadeBase<Long>{
 	@Column(name = "horario_conclusao_agendamento")
 	private LocalDateTime horarioConclusaoAgendamento;
 	
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_agendamento", length = 65)
 	private StatusServicoEnum statusAgendamento;

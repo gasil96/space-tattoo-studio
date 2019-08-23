@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
@@ -50,10 +49,9 @@ public class ClienteController {
 	
 	
 	@GetMapping("detalhamento")
-	public String cliente(Cliente cliente, Model model) {
+	public String cliente(Cliente cliente, Model model, Sort sort) {
 		model.addAttribute("classActiveSubCliente","active"); 
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
-		
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 

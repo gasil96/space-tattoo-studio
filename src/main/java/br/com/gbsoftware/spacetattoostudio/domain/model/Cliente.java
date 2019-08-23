@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -28,19 +30,20 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 @SuppressWarnings("serial")
 @Table(name = "CLIENTE")
 public class Cliente extends EntidadeBase<Long> {
-/**
- * TODO
- * Faltando @Notblank's
- * Faltando passar os nullable, lenght's e uniques 
- * 
- * */
-	//@NotBlank //impede pessistencia de elementos vazios TODO - FALTA COLOCAR OS NOTNULL @NOTBLACK LENGHT ETC...
-	@Column(nullable = true, length = 65)
+	/**
+	 * TODO Faltando @Notblank's Faltando passar os nullable, lenght's e uniques
+	 * 
+	 */
+	// @NotBlank //impede pessistencia de elementos vazios TODO - FALTA COLOCAR OS
+	// NOTNULL @NOTBLACK LENGHT ETC...
+	@NotNull
+	@Column(length = 65)
 	private String nome;
 
 	@Column(length = 30)
 	private String telefone;
 
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", length = 65)
 	private StatusClienteEnum statusCliente;
@@ -49,12 +52,12 @@ public class Cliente extends EntidadeBase<Long> {
 	private Long numeroServicos;
 
 	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name = "data_cadastro")
+	@Column(name = "data_cadastro", nullable = false, updatable = false)
 	private LocalDateTime dataCadastro;
 
 	@Column(length = 30)
 	private String instagram;
-	
+
 	private Double saldo;
 
 	@OneToMany(mappedBy = "cliente")
@@ -64,8 +67,8 @@ public class Cliente extends EntidadeBase<Long> {
 
 	}
 
-	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente,
-			Long numeroServicos, LocalDateTime dataCadastro, String instagram, Double saldo, List<Servico> servicos) {
+	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, Long numeroServicos,
+			LocalDateTime dataCadastro, String instagram, Double saldo, List<Servico> servicos) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
@@ -75,9 +78,9 @@ public class Cliente extends EntidadeBase<Long> {
 		this.instagram = instagram;
 		this.saldo = saldo;
 		this.servicos = servicos;
-		
+
 	}
-	
+
 	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, String instagram) {
 		super();
 		this.nome = nome;
@@ -93,9 +96,9 @@ public class Cliente extends EntidadeBase<Long> {
 	public String getInstagram() {
 		return instagram;
 	}
-	
+
 	public void setInstagram(String instagram) {
-		this.instagram = instagram;
+			this.instagram =  instagram;
 	}
 
 	public String getNome() {
@@ -148,6 +151,11 @@ public class Cliente extends EntidadeBase<Long> {
 
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
+	}
+
+	@PrePersist
+	public void preSalvar() {
+		this.setDataCadastro(LocalDateTime.now());
 	}
 
 	@Override

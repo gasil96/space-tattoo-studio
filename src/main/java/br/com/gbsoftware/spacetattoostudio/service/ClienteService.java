@@ -27,5 +27,7 @@ public interface ClienteService {
 	List<Cliente> buscarPorInstagram(String instagram);
 	
 	List<Cliente> buscarTodos();
+	
+	List<Cliente> clienteNomeId();
 
 }
