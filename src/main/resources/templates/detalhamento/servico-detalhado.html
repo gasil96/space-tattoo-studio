@@ -49,6 +49,12 @@
 											<td th:text="${a.horarioAgendamento}">9:00 AM</td>
 											<td th:text="${a.horarioConclusaoAgendamento}">2</td>
 											<td th:text="${a.statusAgendamento}">Ativo</td>
+											<td colspan="2">
+<!-- 												<a type="button" th:href="@{/cliente/editar/{id} (id=${c.id})}"></a> -->
+												<a th:href="@{/agendamento/editar/{id} (id=${a.id})}" role="button">
+	                                				<span title="Editar" aria-hidden="true">editar</span>
+	                           					</a>	
+											</td>
 										</tr>
 										
 									</tbody>
@@ -88,5 +94,14 @@
 		</section>
 		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 	</div>
+	
+	<script type="text/javascript" layout:fragment="script">
+
+$(document).ready(function() {
+    $('#novoAgendamento').modal('show');
+})
+
+</script>
+	
 </body>
 </html>

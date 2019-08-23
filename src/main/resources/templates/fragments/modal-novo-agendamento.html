@@ -16,7 +16,7 @@
 
 				<div class="modal-body">
 					
-					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST">
+					<form th:action="@{/agendamento/editar}" th:object="${servico}"	method="POST">
 						<div class="form-group">
 							<label for="tipoServico">Selecione o tipo de agendamento</label>
 							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}">

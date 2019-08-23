@@ -2,7 +2,6 @@ package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.util.List;
 
-import javax.swing.text.View;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
@@ -52,6 +53,7 @@ public class ClienteController {
 	public String cliente(Cliente cliente, Model model) {
 		model.addAttribute("classActiveSubCliente","active"); 
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
+		
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
@@ -77,7 +79,6 @@ public class ClienteController {
 	/*EDITAR*/
 	@PostMapping("editar")
 	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-			attr.addAttribute("erroMenssagemEditar", "Não foi possivel editar o cliente");
 			servicoCliente.editar(cliente);
 			return ATUALIZAR_PAGINA;
 	}

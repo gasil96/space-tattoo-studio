@@ -6,10 +6,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -34,6 +36,7 @@ public class ServicoController {
 
 	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_AGENDAMENTO_DETALHADO = "detalhamento/servico-detalhado";
+	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
 	
 	
 	
@@ -55,18 +58,31 @@ public class ServicoController {
 	}
 	
 	@GetMapping("cadastrar")
-	public String Cadastrar(Servico servico) {
+	public String Cadastrar(Servico agendamento) {
 		return PAGINA_INICIAL;
 	}
 	
 	
 	@PostMapping("salvar")
-	public String salvar(Servico servico) {
+	public String salvar(Servico agendamento) {
 	
-		servicoSevice.salvar(servico);
-		return PAGINA_INICIAL;
+		servicoSevice.salvar(agendamento);
+		return ATUALIZAR_PAGINA;
 		
 	}
+	
+	@GetMapping("editar/{id}")
+	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("servico", servicoSevice.buscarPorId(id));
+		return PAGINA_AGENDAMENTO_DETALHADO;
+	}
+	
+	@PostMapping("editar")
+	public String editar(@Valid Servico agendamento, BindingResult result, RedirectAttributes attr) {
+		servicoSevice.editar(agendamento);
+		return ATUALIZAR_PAGINA;
+	}
+	
 	
 	@ModelAttribute("cliente")
 	public List<Cliente> getCliente(){
