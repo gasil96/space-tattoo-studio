@@ -61,6 +61,7 @@ public class ClienteController {
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		servicoCliente.salvar(cliente);
+		attr.addAttribute("sucessoMenssagemSalvar", "Cliente salvo com sucesso!");
 		return  ATUALIZAR_PAGINA;
 		//TODO - FECHA O MODAL e madna msg 
 	}
