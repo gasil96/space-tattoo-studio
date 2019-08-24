@@ -21,6 +21,10 @@ public class PaginaErro implements ErrorViewResolver{
 				model.addObject("error", "Página não encontrada ");
 				model.addObject("message", "A url para a página '  " + map.get("path") + "' Não existe.");
 				break;
+			case 403:
+				model.addObject("error", "Usuario sem permissão para acessar essa pagina");
+				model.addObject("message", "A url para a página '  " + map.get("path") + "' Não existe.");
+				break;
 			case 500:
 				model.addObject("error", "Erro interno no servidor");
 				model.addObject("message", "Ocorreu um erro, porfavor tenta mais tarde!");
