@@ -18,25 +18,31 @@ public class InitController {
 
 	private static final String PAGINA_INICIAL = "home";
 	private static final String __ADMINISTRACAO = "admin/admin";
-	
-	
+
 	@Autowired
 	private ClienteService servicoCliente;
-	
+
 	@GetMapping("/")
 	public String home(ModelMap model, Cliente cliente) {
-		model.addAttribute("classActivePrincipal","active");
-		List<Cliente> totalClientes =  servicoCliente.buscarTodos();
+		model.addAttribute("classActivePrincipal", "active");
+		List<Cliente> totalClientes = servicoCliente.buscarTodos();
 		model.addAttribute("totalClientes", totalClientes.size());
-		
-		
+
 		return PAGINA_INICIAL;
 	}
-	
+
+	@GetMapping("/home")
+	public String dashboard(ModelMap model, Cliente cliente) {
+		model.addAttribute("classActivePrincipal", "active");
+		List<Cliente> totalClientes = servicoCliente.buscarTodos();
+		model.addAttribute("totalClientes", totalClientes.size());
+		return PAGINA_INICIAL;
+	}
+
 	@GetMapping("admin")
 	public String admin(ModelMap model, Cliente cliente, Servico servico) {
 		model.addAttribute("AdminAtivo", "active");
 		return __ADMINISTRACAO;
 	}
-	
+
 }
