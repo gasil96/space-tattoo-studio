@@ -30,7 +30,13 @@ public class InitController {
 
 		return PAGINA_INICIAL;
 	}
+	
+	 @GetMapping("/login")
+	    public String login() {
+	        return "login";
+	    }
 
+	
 	@GetMapping("/home")
 	public String dashboard(ModelMap model, Cliente cliente) {
 		model.addAttribute("classActivePrincipal", "active");
