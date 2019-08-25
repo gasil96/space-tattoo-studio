@@ -8,7 +8,10 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolve
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
-
+/** 
+ * @author Gabriel Silva
+ * 
+ * */
 @Component
 public class PaginaErro implements ErrorViewResolver{
 

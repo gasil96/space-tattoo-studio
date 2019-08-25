@@ -3,11 +3,9 @@ package br.com.gbsoftware.spacetattoostudio.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.gbsoftware.spacetattoostudio.domain.model.Usuario;
+import br.com.gbsoftware.spacetattoostudio.domain.model.Role;
 
 @Repository
-public interface UsuarioRepository extends CrudRepository<Usuario, String>{
+public interface RoleRepository extends CrudRepository<Role, String>{
 
-	Usuario findByLogin(String login);
-	
 }

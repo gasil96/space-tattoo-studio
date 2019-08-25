@@ -9,6 +9,68 @@
 
 	<div layout:fragment="corpo">
 
+	<section class="no-padding-top">
+          <div class="container-fluid">
+            <div class="row">
+<!-- 	 Formulário Básico -->
+              <div class="col-lg-6">                           
+                <div class="block">
+                  <div class="title"><strong>Novo Usuário</strong></div>
+                  <div class="block-body">
+                    <form th:action="@{/salvar-usuario}" method="POST" th:object="${usuario}">
+                      <div class="form-group">
+                        <label for="nome" class="form-control-label">Nome</label>
+                        <input id="nome" type="text"  class="mr-sm-3 form-control" th:field="*{nomeCompleto}">
+                      </div>
+                      <div class="form-group">
+                        <label for="login" class="form-control-label">Login</label>
+                        <input id="login" type="text"  class="mr-sm-3 form-control" th:field="*{login}">
+                      </div>
+                      <div class="form-group">
+                        <label for="password" class="form-control-label">Senha</label>
+                        <input id="password" type="password"  class="mr-sm-3 form-control form-control">
+                      </div>
+                       <div class="form-group">
+                        <label for="confirm_password" class="form-control-label">Confirmar Senha</label>
+                        <input id="confirm_password" type="password"  class="mr-sm-3 form-control form-control" th:field="*{senha}">
+                      </div>
+                      
+                      <div class="form-group"> 
+                        <label for="usuarios" class="form-control-label">Tipo de acesso</label>
+                       		 <select	 id="role" class="mr-sm-3 form-control form-control" th:field="*{roles}" required="required">
+								<option value="" selected="selected">Selecione...</option>
+								<option th:each="r : ${tiporole}" th:value="${r}" th:text="${r.role}">ROLE_ADMIN</option>
+							</select>
+                      </div>
+                      <div class="form-group">
+                        <input type="submit" value="Salvar" class="btn btn-primary" >
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </section>
 	</div>
+	
+	<script type="text/javascript" layout:fragment="script">
+	
+	var password = document.getElementById("password")
+	  , confirm_password = document.getElementById("confirm_password");
+
+	function validatePassword(){
+	  if(password.value != confirm_password.value) {
+	    confirm_password.setCustomValidity("Senhas diferentes!");
+	  } else {
+	    confirm_password.setCustomValidity('');
+	  }
+	}
+
+	password.onchange = validatePassword;
+	confirm_password.onkeyup = validatePassword;
+	
+	</script>
+	
 </body>
 </html>

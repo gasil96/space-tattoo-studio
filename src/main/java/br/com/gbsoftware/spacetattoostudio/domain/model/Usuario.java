@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,11 +26,14 @@ public class Usuario implements UserDetails, Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(length = 20)
+	@Column(length = 20, unique = true)
+	@NotNull
 	private String login;
 	
+	@NotNull
 	private String nomeCompleto;
 	
+	@NotNull
 	@NotEmpty
 	private String senha;
 	
