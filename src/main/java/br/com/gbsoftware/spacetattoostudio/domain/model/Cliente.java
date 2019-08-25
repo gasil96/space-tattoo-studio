@@ -165,9 +165,4 @@ public class Cliente extends EntidadeBase<Long> {
 				+ ", servicos=" + servicos + "]";
 	}
 
-	public static void main(String[] args) {
-		String s = "nomedeusuarioomaiorpossivelsss";
-		System.err.println(s.length());	
-	}
-	
 }

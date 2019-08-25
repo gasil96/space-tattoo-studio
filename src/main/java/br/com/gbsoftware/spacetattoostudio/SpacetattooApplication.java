@@ -15,7 +15,6 @@ public class SpacetattooApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpacetattooApplication.class, args);
-		System.out.println(new BCryptPasswordEncoder().encode("123"));
 	}
 	
 }

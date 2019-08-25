@@ -1,6 +1,8 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -38,6 +40,7 @@ public class ServicoController {
 	private static final String PAGINA_AGENDAMENTO_DETALHADO = "detalhamento/servico-detalhado";
 	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
 	private static final String MODAL_EDITAR_AGENDAMENTO = "modal/modal-editar-agendamento";
+	private static final String MODAL_CONFIRMAR_ENCERRAMENTO = "modal/confirmar-encerramento";
 	
 	
 	
@@ -65,9 +68,8 @@ public class ServicoController {
 	
 	
 	@PostMapping("salvar")
-	public String salvar(Servico agendamento) {
-	
-		servicoSevice.salvar(agendamento);
+	public String salvar(@PathVariable("horarioAgendamento") LocalDateTime data, Servico servico) {
+		servicoSevice.salvar(servico);
 		return ATUALIZAR_PAGINA;
 		
 	}
@@ -84,6 +86,19 @@ public class ServicoController {
 		return ATUALIZAR_PAGINA;
 	}
 	
+	@GetMapping("encerrar/{id}")
+	public String preEncerrar(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("servico", servicoSevice.buscarPorId(id));
+		return MODAL_CONFIRMAR_ENCERRAMENTO; 
+	}
+	
+	@PostMapping("encerrar")
+	public String encerrar(@Valid Servico servico) {
+		servico.setHorarioConclusaoAgendamento(LocalDateTime.now());
+		servico.setStatusAgendamento(StatusServicoEnum.ENCERRADO);
+		servicoSevice.editar(servico);
+		return ATUALIZAR_PAGINA;
+	}
 	
 	@ModelAttribute("cliente")
 	public List<Cliente> getCliente(){

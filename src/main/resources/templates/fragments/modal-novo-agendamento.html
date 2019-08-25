@@ -18,25 +18,25 @@
 					
 					<form th:action="@{/agendamento/editar}" th:object="${servico}"	method="POST">
 						<div class="form-group">
-							<label for="tipoServico">Selecione o tipo de agendamento</label>
-							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}">
+							<label for="tipoServico">Tipo</label>
+							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}" required="required">
+								<option value="" selected="selected">Selecione</option>
 								<option th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}">ATIVO</option>
 							</select>
 						</div>
 
 						<div class="form-group">
-							<label>Horário do Agendamento</label> 
-							<input type="text" id="horario" class="form-control" th:field="*{horarioAgendamento}">
+							<label>Data/Horário</label> 
+							<input type="datetime-local"  id="horario" class="form-control" th:field="*{horarioAgendamento}">
 						</div>
 
 						<div class="form-group">
-							<label for="tipoServico">Status do agendamento</label>
-							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}" required="required">
-								<option value="" selected="selected">Selecione</option>
+							<label for="tipoServico">Status</label>
+							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
 						</div>
-						<input type="text" class="form-control" id="idC"	th:field="*{cliente.id}">
+						<input type="text" class="form-control" id="idC"	th:field="*{cliente.id}" required="required">
 
 						<div class="modal-footer">
 							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>

@@ -10,7 +10,8 @@ package br.com.gbsoftware.spacetattoostudio.domain.enums;
  */
 public enum StatusServicoEnum {
 	ATIVO("ATIVO"),
-	CANCELADO("CANCELADO"),
+	ENCERRADO("ENCERRADO"),
+	CONCLUIDO("CONCLUIDO"),
 	PENDENTE("PENDENTE");
 
 	private String statusServico;

@@ -42,7 +42,7 @@ public class Servico extends EntidadeBase<Long>{
 	private TipoServicoEnum tipoServico;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
-	@Column(name = "horario_agendamento")
+	@Column(name = "horario_agendamento", nullable=false)
 	private LocalDateTime horarioAgendamento;
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
@@ -121,5 +121,5 @@ public class Servico extends EntidadeBase<Long>{
 				+ horarioAgendamento + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
 				+ ", statusAgendamento=" + statusAgendamento + ", cliente=" + cliente + "]";
 	}
-	
+
 }

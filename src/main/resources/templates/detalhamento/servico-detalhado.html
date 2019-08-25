@@ -41,16 +41,21 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="a : ${listaServico}">
+										<tr th:each="a : ${listaServico}" >
 											<th scope="row" th:text="${a.id}" >1</th>
-											<td th:text="${a.tipoServico}">Tatuagem</td>
-											<td th:text="${a.cliente.nome}">Breno</td>
-											<td th:text="${a.horarioAgendamento}">9:00 AM</td>
-											<td th:text="${a.horarioConclusaoAgendamento}">2</td>
+											<td th:text="${a.tipoServico}" >Tatuagem</td>
+											<td th:text="${a.cliente.nome}">Breno </td>
+											<td th:text="${#temporals.format(a.horarioAgendamento, 'dd-MM-yyyy  HH:mm')}">9:00 AM</td>
+											<td th:text="${#temporals.format(a.horarioConclusaoAgendamento, 'dd-MM-yyyy  HH:mm')}">2</td>
 											<td th:text="${a.statusAgendamento}">Ativo</td>
 											<td colspan="2">
 												<a th:href="@{/agendamento/editar/{id} (id=${a.id})}" role="button">
 	                                				<span title="Editar" aria-hidden="true">editar</span>
+	                           					</a>	
+											</td>
+											<td colspan="2">
+												<a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}" role="button">
+	                                				<span title="encerrar" aria-hidden="true">encerrar</span>
 	                           					</a>	
 											</td>
 										</tr>

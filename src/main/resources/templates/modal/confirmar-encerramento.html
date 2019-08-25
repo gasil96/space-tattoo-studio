@@ -5,48 +5,41 @@
 <body>
 
 <div layout:fragment="corpo">
-	<div id="editarNovoAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" >
+	<div id="encerrarAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"		class="modal fade text-left" >
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<strong id="tituloModalNovoAgendamento" class="modal-title">Alterar Agendamento</strong>
-					<button type="button" data-dismiss="modal" aria-label="Close" class="close">
+					<strong id="tituloModalEditarCliente" class="modal-title">Alterar
+						Cliente</strong>
+					<button type="button" data-dismiss="modal" aria-label="Close"
+						class="close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-
-				<div class="modal-body">
-					
-					<form th:action="@{/agendamento/editar}" th:object="${servico}"	method="POST">
-						<div class="form-group">
-							<label for="tipoServico">Selecione o tipo de agendamento</label>
-							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}">
-								<option th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}">ATIVO</option>
+				<div class="modal-body" id="cliente">
+					<form th:action="@{/agendamento/encerrar}" th:object="${servico}" method="POST">
+					<br>	Deseja confirmar o encerramento deste agendamento ? <br><br>
+					<div id="esconder" style="display: none">
+							<select type="hidden" id="selectTipoServico" class="form-control"	th:field="*{tipoServico}">
+								<option  th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}" >ATIVO</option>
 							</select>
-						</div>
 
-						<div class="form-group">
-							<label>Data/Horário</label> 
 							<input type="datetime-local"  id="horario" class="form-control" th:field="*{horarioAgendamento}">
-						</div>
 
-						<div class="form-group">
-							<label for="tipoServico">Status</label>
 							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}" required="required">
 								<option value="" selected="selected">Selecione</option>
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
-						</div>
 						<input type="hidden" class="form-control" id="idS" th:field="*{id}" placeholder="id agendamento">
 						<input type="hidden" class="form-control" id="idC"	th:field="*{cliente.id}">
-
-						<div class="modal-footer">
-							<button role="button"
+					</div>
+						
+				<div class="modal-footer">
+					<button role="button"
 						class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Alterar</button>
-						</div>
+					<button type="submit" class="btn btn-danger">Confirmar</button>
+				</div>
 					</form>
-					
 				</div>
 			</div>
 		</div>
@@ -55,7 +48,7 @@
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 	$(document).ready(function() {
-	    $('#editarNovoAgendamento').modal('show');
+	    $('#encerrarAgendamento').modal('show');
 	})
 	</script>
 </body>
