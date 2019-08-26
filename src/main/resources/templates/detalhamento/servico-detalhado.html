@@ -13,7 +13,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#novoAgendamento">Novo Agendamento</button>
+						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#novoAgendamento"><i class="icon icon-paper-and-pencil"></i> Novo Agendamento</button>
 						<br><br>		
 					</div>
 				</div>
@@ -50,14 +50,15 @@
 											<td th:text="${a.statusAgendamento}">Ativo</td>
 											<td colspan="2">
 												<a th:href="@{/agendamento/editar/{id} (id=${a.id})}" role="button">
-	                                				<span title="Editar" aria-hidden="true">@</span>
+	                                				<span title="EDITAR" aria-hidden="true" style="color: white;"><i class="icon icon-paper-and-pencil "></i></span>
 	                           					</a>	
-												<a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}" role="button">
-	                                				<span title="encerrar" aria-hidden="true" 	style="color: red">@</span>
+	                           					<a th:href="@{/agendamento/reabrir/{id} (id=${a.id})}" role="button">
+	                                				<span title="REABRIR" aria-hidden="true" style="color: yellow;"><i class="icon icon-new-file"></i></span>
 	                           					</a>
 	                           					<a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}" role="button">
-	                                				<span title="reabrir" aria-hidden="true" style="color: white">@</span>
-	                           					</a>	
+	                                				<span title="ENCERRAR" aria-hidden="true" 	style="color: red"><i class="icon icon-close"></i></span>
+	                           					</a>
+	                           						
 											</td>
 										</tr>
 										

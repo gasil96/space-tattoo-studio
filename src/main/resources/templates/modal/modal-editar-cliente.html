@@ -60,6 +60,8 @@
 	<script type="text/javascript" layout:fragment="script">
 	$(document).ready(function() {
 	    $('#editCliente').modal('show');
+	    $('#editCliente').on('hide.bs.modal', function () { window.location.href = '/cliente/detalhamento'; })
+
 	})
 	</script>
 </body>

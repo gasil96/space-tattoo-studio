@@ -48,6 +48,8 @@
 	<script type="text/javascript" layout:fragment="script">
 	$(document).ready(function() {
 	    $('#encerrarAgendamento').modal('show');
+	    $('#encerrarAgendamento').on('hide.bs.modal', function () { window.location.href = '/agendamento/detalhamento'; })
+
 	})
 	</script>
 </body>

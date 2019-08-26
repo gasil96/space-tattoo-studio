@@ -5,7 +5,7 @@
 <body>
 
 <div layout:fragment="corpo">
-	<div id="editarNovoAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" >
+	<div id="reabrirAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" >
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -17,20 +17,20 @@
 
 				<div class="modal-body">
 					
-					<form th:action="@{/agendamento/editar}" th:object="${servico}"	method="POST">
-						<div class="form-group">
+					<form th:action="@{/agendamento/reabrir}" th:object="${servico}"	method="POST">
+						<div class="form-group" style="display: none;">
 							<label for="tipoServico">Selecione o tipo de agendamento</label>
 							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}">
 								<option th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}">ATIVO</option>
 							</select>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group" >
 							<label>Data/Horário</label> 
 							<input type="datetime-local"  id="horario" class="form-control" th:field="*{horarioAgendamento}">
 						</div>
 
-						<div class="form-group">
+						<div class="form-group"  style="display: none;">
 							<label for="tipoServico">Status</label>
 							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}" required="required">
 								<option value="" selected="selected">Selecione</option>
@@ -43,7 +43,7 @@
 						<div class="modal-footer">
 							<button role="button"
 						class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Alterar</button>
+							<button type="submit" class="btn btn-primary">Reabrir</button>
 						</div>
 					</form>
 					
@@ -55,9 +55,9 @@
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 	$(document).ready(function() {
-	    $('#editarNovoAgendamento').modal('show');
+	    $('#reabrirAgendamento').modal('show');
 	
-	    $('#editarNovoAgendamento').on('hide.bs.modal', function () { window.location.href = '/agendamento/detalhamento'; })
+	    $('#reabrirAgendamento').on('hide.bs.modal', function () { window.location.href = '/agendamento/detalhamento'; })
 	})
 	
 
