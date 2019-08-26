@@ -33,7 +33,13 @@ public class AdministracaoController {
 	public String admin(ModelMap model, Cliente cliente, Servico servico, Usuario usuario, Role role) {
 		model.addAttribute("AdminAtivo", "active");
 		model.addAttribute("listaUsuarios", servicoUsuario.buscarTodos());
+		Role r1 = new Role();
+		Role r2 = new Role();
 		role.setNomeRole("ROLE_ADMIN");
+		r1.setNomeRole("ROLE_GERENTE");
+		r2.setNomeRole("ROLE_USUARIO");
+		servicoRole.salvar(r1);
+		servicoRole.salvar(r2);
 		servicoRole.salvar(role);
 		return __ADMINISTRACAO;
 	}

@@ -7,8 +7,8 @@ public enum TipoRole {
 	 * */
 	
 	ROLE_ADMIN("ROLE_ADMIN"),
-	ROLE_USER_PRIVILEGIO("ROLE_USER_PRIVILEGIO"),
-	ROLE_USER("ROLE_USER");
+	ROLE_GERENTE("ROLE_GERENTE"),
+	ROLE_USUARIO("ROLE_USUARIO");
 	
 	private String role;
 

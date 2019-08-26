@@ -88,7 +88,7 @@
 								<strong>Bar Chart Example</strong>
 							</div>
 							<div class="bar-chart chart">
-								<canvas id="barChartCustom3"></canvas>
+								<canvas id="clienteDetalhamentoGrafico"></canvas>
 							</div>
 						</div>
 					</div>
@@ -97,5 +97,131 @@
 		</section>
 		
 	</div>
+	<script type="text/javascript" layout:fragment="script">
+	
+	var BARCHARTEXMPLE    = $('#clienteDetalhamentoGrafico');
+    var barChartExample = new Chart(BARCHARTEXMPLE, {
+        type: 'bar',
+        options: {
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: 'transparent'
+                    }
+                }]
+            },
+        },
+        data: {
+            labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+            datasets: [
+                {
+                    label: "Barbearia",
+                    backgroundColor: [
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9"
+                    ],
+                    hoverBackgroundColor: [
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9"
+                    ],
+                    borderColor: [
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9",
+                        "#864DD9"
+                    ],
+                    borderWidth: 0.5,
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                },
+                {
+                    label: "Tatuagem",
+                    backgroundColor: [
+                        "rgba( 0, 95, 80, 0,9 )",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)"
+                    ],
+                    hoverBackgroundColor: [
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)"
+                    ],
+                    borderColor: [
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)",
+                        "rgba(98, 98, 98, 0.5)"
+                    ],
+                    borderWidth: 0.5,
+                    data: [35, 40, 60, 47, 88, 27, 30],
+                },
+                {
+                    label: "Piecing",
+                    backgroundColor: [
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF"
+                    ],
+                    hoverBackgroundColor: [
+                    	"#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF"
+                    ],
+                    borderColor: [
+                    	"#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF",
+                        "#F0F8FF"
+                    ],
+                    borderWidth: 0.5,
+                    data: [35, 40, 60, 47, 88, 27, 30],
+                }
+            ]
+        }
+    });
+	
+	</script>
+	
 	</body>
 </html>

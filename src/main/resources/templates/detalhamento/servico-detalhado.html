@@ -50,12 +50,13 @@
 											<td th:text="${a.statusAgendamento}">Ativo</td>
 											<td colspan="2">
 												<a th:href="@{/agendamento/editar/{id} (id=${a.id})}" role="button">
-	                                				<span title="Editar" aria-hidden="true">editar</span>
+	                                				<span title="Editar" aria-hidden="true">@</span>
 	                           					</a>	
-											</td>
-											<td colspan="2">
 												<a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}" role="button">
-	                                				<span title="encerrar" aria-hidden="true">encerrar</span>
+	                                				<span title="encerrar" aria-hidden="true" 	style="color: red">@</span>
+	                           					</a>
+	                           					<a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}" role="button">
+	                                				<span title="reabrir" aria-hidden="true" style="color: white">@</span>
 	                           					</a>	
 											</td>
 										</tr>
