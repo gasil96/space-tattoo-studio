@@ -22,14 +22,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private ImplementsUserDetailsService userDetailsService;
 	
-	//TODO - FALTA DEFINIR REGRAS DE ACESO AS PAGE
-
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/login").permitAll()
+		.antMatchers(HttpMethod.GET, "/caixa/fluxo").hasAnyRole("ADMIN","GERENTE")
 		.antMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN")
-		.antMatchers(HttpMethod.GET, "/caixa/fluxo").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/login").permitAll()
 		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
@@ -39,11 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(userDetailsService)
 		.passwordEncoder(new BCryptPasswordEncoder());
+		auth.inMemoryAuthentication().withUser("adm").password("{noop}Q$&u1d&#51@").roles("ADMIN");
 	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception{
 		web.ignoring().antMatchers("/css/**","/data/**","/fonts/**","/icons-reference/**","/img/**","/js/**","/vendor/**");
 	}
-	
 }
