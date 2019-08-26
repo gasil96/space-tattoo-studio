@@ -13,8 +13,9 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#novoAgendamento"><i class="icon icon-paper-and-pencil"></i> Novo Agendamento</button>
-						<br><br>		
+						<button role="button" data-toggle="modal" data-target="#novoAgendamento" 
+						style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;">
+						<i class="material-icons" style="font-size: 48px; color: white;">note_add</i></button>
 					</div>
 				</div>
 			</div>
@@ -50,13 +51,13 @@
 											<td th:text="${a.statusAgendamento}">Ativo</td>
 											<td colspan="2">
 												<a th:href="@{/agendamento/editar/{id} (id=${a.id})}" role="button">
-	                                				<span title="EDITAR" aria-hidden="true" style="color: white;"><i class="icon icon-paper-and-pencil "></i></span>
+	                                				<span title="EDITAR" aria-hidden="true" style="color: white;"><i class="material-icons">style</i></span>
 	                           					</a>	
 	                           					<a th:href="@{/agendamento/reabrir/{id} (id=${a.id})}" role="button">
-	                                				<span title="REABRIR" aria-hidden="true" style="color: yellow;"><i class="icon icon-new-file"></i></span>
+	                                				<span title="REABRIR" aria-hidden="true" style="color: yellow;"><i class="material-icons">timer</i></span>
 	                           					</a>
 	                           					<a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}" role="button">
-	                                				<span title="ENCERRAR" aria-hidden="true" 	style="color: red"><i class="icon icon-close"></i></span>
+	                                				<span title="ENCERRAR" aria-hidden="true" 	style="color: red"><i class="material-icons md-48">timer_off</i></span>
 	                           					</a>
 	                           						
 											</td>
