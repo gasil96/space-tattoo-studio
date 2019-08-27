@@ -54,10 +54,10 @@
 	                                				<span title="EDITAR" aria-hidden="true" style="color: white;"><i class="material-icons">style</i></span>
 	                           					</a>	
 	                           					<a th:href="@{/agendamento/reabrir/{id} (id=${a.id})}" role="button">
-	                                				<span title="REABRIR" aria-hidden="true" style="color: yellow;"><i class="material-icons">timer</i></span>
+	                                				<span title="REABRIR" aria-hidden="true" style="color: yellow;" th:unless="${a.horarioConclusaoAgendamento == null}"><i class="material-icons">timer</i></span>
 	                           					</a>
 	                           					<a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}" role="button">
-	                                				<span title="ENCERRAR" aria-hidden="true" 	style="color: red"><i class="material-icons md-48">timer_off</i></span>
+	                                				<span title="ENCERRAR" aria-hidden="true" 	style="color: red;" th:if="${a.horarioConclusaoAgendamento == null}"><i class="material-icons md-48">timer_off</i></span>
 	                           					</a>
 	                           						
 											</td>
