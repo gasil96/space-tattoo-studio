@@ -42,7 +42,8 @@ public class ServicoController {
 	private static final String MODAL_CONFIRMAR_ENCERRAMENTO = "modal/confirmar-encerramento";
 	private static final String MODAL_REABRIR_AGENDAMENTO = "modal/modal-reabrir-agendamento";
 	
-	
+	private static final String MODAL_NOVO_AGENDAMENTO = "modal/novo-agendamento";
+
 	
 	@Autowired
 	private ServicoService servicoSevice;
@@ -68,11 +69,24 @@ public class ServicoController {
 	
 	
 	@PostMapping("salvar")
-	public String salvar(@PathVariable("horarioAgendamento") LocalDateTime data, Servico servico) {
+	public String salvar(Servico servico) {
 		servicoSevice.salvar(servico);
 		return ATUALIZAR_PAGINA;
 		
 	}
+	
+	
+	/*NOVO AGENDAMETNO INICO*/
+	@GetMapping("agendar/{id}")
+	public String preAgendar(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("servico", servicoSevice.buscarPorId(id));
+		
+		return MODAL_NOVO_AGENDAMENTO; 
+		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
+	}
+	
+	/*NOVO AGENDAMETNO FIM*/
+	
 	
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {

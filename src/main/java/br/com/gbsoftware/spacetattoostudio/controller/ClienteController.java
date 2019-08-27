@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
@@ -41,6 +44,7 @@ public class ClienteController {
 	private static final String PAGINA_CLIENTE_DETALHADO = "detalhamento/cliente-detalhado";
 	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
 	private static final String MODAL_EDITAR_CLIENTE = "modal/modal-editar-cliente";
+	private static final String MODAL_NOVO_AGENDAMENTO = "modal/novo-agendamento";
 	
 	@Autowired
 	private ClienteService servicoCliente;
@@ -50,12 +54,15 @@ public class ClienteController {
 	
 	
 	@GetMapping("detalhamento")
-	public String cliente(Cliente cliente, Model model, Sort sort) {
+	public String cliente(Cliente cliente, Model model, Sort sort, Servico service) {
 		model.addAttribute("classActiveSubCliente","active"); 
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
+	
+	
+	
 	/*SALVAR NOVO CLIENTE*/
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
@@ -63,6 +70,14 @@ public class ClienteController {
 		attr.addAttribute("sucessoMenssagemSalvar", "Cliente salvo com sucesso!");
 		return  ATUALIZAR_PAGINA;
 		//TODO - FECHA O MODAL e madna msg 
+	}
+
+	
+	/*EDITAR*/
+	@PostMapping("editar")
+	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
+			servicoCliente.editar(cliente);
+			return ATUALIZAR_PAGINA;
 	}
 
 	/*EDITAR PASSANDO CAMPOS*/
@@ -75,12 +90,22 @@ public class ClienteController {
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
 	
-	/*EDITAR*/
-	@PostMapping("editar")
-	public String editar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-			servicoCliente.editar(cliente);
-			return ATUALIZAR_PAGINA;
+	/*NOVO AGENDAMETNO INICO*/
+	@GetMapping("agendar/{id}")
+	public String preAgendar(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("servico", servicoServico.buscarPorId(id));
+		
+		return MODAL_NOVO_AGENDAMENTO; 
 	}
+	
+	@PostMapping("salvar-agendamento")
+	public String salvarAgendamento(@PathVariable("horarioAgendamento") LocalDateTime data, Servico servico) {
+		servicoServico.salvar(servico);
+		return ATUALIZAR_PAGINA;
+		
+	}
+	
+	/*NOVO AGENDAMETNO FIM*/
 	
 
 	/*BUSCAR POR NOME*/
@@ -117,5 +142,15 @@ public class ClienteController {
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
 	}		
+	
+	@ModelAttribute("tipoagendamento")
+	public TipoServicoEnum[] getTipoServico() {
+		return TipoServicoEnum.values();
+	}
+	
+	@ModelAttribute("statusagendamento")
+	public StatusServicoEnum[] getStatusAgendamento() {
+		return StatusServicoEnum.values();
+	}
 	
 }

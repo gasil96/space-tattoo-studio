@@ -48,9 +48,6 @@ public class Cliente extends EntidadeBase<Long> {
 	@Column(name = "status", length = 30)
 	private StatusClienteEnum statusCliente;
 
-	@Column(name = "numero_servicos")
-	private Long numeroServicos;
-
 	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "data_cadastro", nullable = false, updatable = false)
 	private LocalDateTime dataCadastro;
@@ -67,13 +64,12 @@ public class Cliente extends EntidadeBase<Long> {
 
 	}
 
-	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, Long numeroServicos,
+	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, 
 			LocalDateTime dataCadastro, String instagram, Double saldo, List<Servico> servicos) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
 		this.statusCliente = statusCliente;
-		this.numeroServicos = numeroServicos;
 		this.dataCadastro = dataCadastro;
 		this.instagram = instagram;
 		this.saldo = saldo;
@@ -121,14 +117,6 @@ public class Cliente extends EntidadeBase<Long> {
 		return statusCliente;
 	}
 
-	public Long getNumeroServicos() {
-		return numeroServicos;
-	}
-
-	public void setNumeroServicos(Long numeroServicos) {
-		this.numeroServicos = numeroServicos;
-	}
-
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
 	}
@@ -161,7 +149,7 @@ public class Cliente extends EntidadeBase<Long> {
 	@Override
 	public String toString() {
 		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
-				+ ", numeroServicos=" + numeroServicos + ", dataCadastro=" + dataCadastro + ", saldo=" + saldo
+				+ ", dataCadastro=" + dataCadastro + ", saldo=" + saldo
 				+ ", servicos=" + servicos + "]";
 	}
 

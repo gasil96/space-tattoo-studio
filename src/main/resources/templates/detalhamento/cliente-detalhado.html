@@ -41,7 +41,6 @@
 											<th>Nome</th>
 											<th>Telefone</th>
 											<th>Instagram</th>
-											<th>N° Agendamentos</th>
 											<th>Status</th>
 											<th>Data Cadastro</th>
 										</tr>
@@ -52,14 +51,19 @@
 											<td th:text="${c.nome}" >Breno</td>
 											<td th:text="${c.telefone}">+55 91 989568730</td>
 											<td th:text="${c.instagram}">@brenomarques__</td>
-											<td th:text="${c.numeroServicos}">2</td>
 											<td th:text="${c.statusCliente}">Ativo</td>
 											<td th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">11-11-1996</td>
 											<td colspan="2">
 												<a th:href="@{/cliente/editar/{id} (id=${c.id})}" role="button" >
 	                                				<span title="EDITAR" aria-hidden="true" style="color: white;"><i class="material-icons">style</i></span>
-	                           					</a>	
+	                           					</a>
+<!-- 	                           					<a th:href="@{/agendamento/agendar/{id} (id=${c.id})}" role="button" > -->
+	                           					<a data-toggle="modal" data-target="#novoAgendamentoCliente" role="button" href="#" th:id=${cliente.id}>
+	                                				<span title="AGENDAR" style="color: white"><i class="material-icons" >note_add</i></span>
+	                           					</a>
+
 											</td>
+<!-- 											<td><a th:attr="onclick = ${ 'modalRemover(' + cliente.id + ')' }" href="#">Deletar</a></td> -->
 										</tr>
 									</tbody>
 								</table>
@@ -97,9 +101,23 @@
 				</div>
 			</div>
 		</section>
-		
+		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
+		<div th:replace="fragments/modal-novo-agendamento-cliente :: modalNovoAgendamentoCliente"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
+	
+	
+//TODO - VAI CODIGO QUE CHAMA MODAL COM ID PASSADA	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	var BARCHARTEXMPLE    = $('#clienteDetalhamentoGrafico');
     var barChartExample = new Chart(BARCHARTEXMPLE, {

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+
+	<div id="novoAgendamentoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left"  th:fragment="modalNovoAgendamentoCliente">
+		<div role="document" class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<strong id="tituloModalNovoAgendamento" class="modal-title" style="color: red">Novo Agendamento pagina@</strong>
+					<button type="button" data-dismiss="modal" aria-label="Close" class="close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					
+					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST" th:id="${servico.cliente.id}">
+						<div class="form-group">
+							<label for="tipoServico">Tipo</label>
+							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}" required="required">
+								<option value="" selected="selected">Selecione</option>
+								<option th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}">ATIVO</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label>Data/Horário</label> 
+							<input type="datetime-local"  id="horario" class="form-control" th:field="*{horarioAgendamento}">
+						</div>
+
+						<div class="form-group">
+							<label for="tipoServico">Status</label>
+							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">
+								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
+							</select>
+						</div>
+						<input type="text" class="form-control" id="client" name="cliente"	th:value="${servico.cliente.id}" readonly="readonly">
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Salvar</button>
+						</div>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
