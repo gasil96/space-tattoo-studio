@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <body>
-
-	<div id="novoAgendamentoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left"  th:fragment="modalNovoAgendamentoCliente">
+<div layout:fragment="corpo">
+	<div id="novoAgendamentoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" >
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<strong id="tituloModalNovoAgendamento" class="modal-title" style="color: red">Novo Agendamento pagina@</strong>
+					<strong id="tituloModalNovoAgendamento" class="modal-title" >Agendamento para: <span th:text="${clienteNome}" style="color: yellow;"></span></strong>
 					<button type="button" data-dismiss="modal" aria-label="Close" class="close">
 						<span aria-hidden="true">×</span>
 					</button>
@@ -16,7 +16,7 @@
 
 				<div class="modal-body">
 					
-					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST" th:id="${servico.cliente.id}">
+					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST" >
 						<div class="form-group">
 							<label for="tipoServico">Tipo</label>
 							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}" required="required">
@@ -36,7 +36,10 @@
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
 						</div>
-						<input type="text" class="form-control" id="client" name="cliente"	th:value="${servico.cliente.id}" readonly="readonly">
+						<input type="hidden" class="form-control" id="id" th:field="*{id}">
+						<input type="hidden" class="form-control" id="idC" >
+						<div style="display: none">	<select th:field="*{cliente.id}"><option th:value="${id_cliente_referente}"></option></select></div>
+						
 						<div class="modal-footer">
 							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
 							<button type="submit" class="btn btn-primary">Salvar</button>
@@ -47,6 +50,14 @@
 			</div>
 		</div>
 	</div>
+</div>
+<script type="text/javascript" layout:fragment="script">
+	$(document).ready(function() {
+	    $('#novoAgendamentoCliente').modal('show');
+	    $('#novoAgendamentoCliente').on('hide.bs.modal', function () { window.location.href = '/cliente/detalhamento'; })
+
+	})
+	</script>	
 	
 </body>
 </html>

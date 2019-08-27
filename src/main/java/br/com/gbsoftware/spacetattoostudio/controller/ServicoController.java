@@ -42,7 +42,7 @@ public class ServicoController {
 	private static final String MODAL_CONFIRMAR_ENCERRAMENTO = "modal/confirmar-encerramento";
 	private static final String MODAL_REABRIR_AGENDAMENTO = "modal/modal-reabrir-agendamento";
 	
-	private static final String MODAL_NOVO_AGENDAMENTO = "modal/novo-agendamento";
+	private static final String MODAL_NOVO_AGENDAMENTO_CLIENTE = "modal/modal-novo-agendamento-cliente";
 
 	
 	@Autowired
@@ -80,8 +80,10 @@ public class ServicoController {
 	@GetMapping("agendar/{id}")
 	public String preAgendar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoSevice.buscarPorId(id));
+ 		model.addAttribute("id_cliente_referente", id);
+ 		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
 		
-		return MODAL_NOVO_AGENDAMENTO; 
+		return MODAL_NOVO_AGENDAMENTO_CLIENTE; 
 		// MODAL PREENCHIDO COM TODOS OS CAMPOS COM ID JA PASSADA;
 	}
 	

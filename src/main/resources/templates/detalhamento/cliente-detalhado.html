@@ -57,13 +57,11 @@
 												<a th:href="@{/cliente/editar/{id} (id=${c.id})}" role="button" >
 	                                				<span title="EDITAR" aria-hidden="true" style="color: white;"><i class="material-icons">style</i></span>
 	                           					</a>
-<!-- 	                           					<a th:href="@{/agendamento/agendar/{id} (id=${c.id})}" role="button" > -->
-	                           					<a data-toggle="modal" data-target="#novoAgendamentoCliente" role="button" href="#" th:id=${cliente.id}>
-	                                				<span title="AGENDAR" style="color: white"><i class="material-icons" >note_add</i></span>
+	                           					<a th:href="@{/agendamento/agendar/{id} (id=${c.id})}" role="button" >
+	                                				<span title="AGENDAR" style="color: yellow"><i class="material-icons" >note_add</i></span>
 	                           					</a>
-
 											</td>
-<!-- 											<td><a th:attr="onclick = ${ 'modalRemover(' + cliente.id + ')' }" href="#">Deletar</a></td> -->
+											
 										</tr>
 									</tbody>
 								</table>
@@ -102,7 +100,6 @@
 			</div>
 		</section>
 		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
-		<div th:replace="fragments/modal-novo-agendamento-cliente :: modalNovoAgendamentoCliente"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 	
