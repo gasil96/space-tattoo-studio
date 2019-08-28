@@ -30,4 +30,6 @@ public interface ServicoService {
 	List<Servico> buscarPorHorarioConclusaoAgendamento(LocalDateTime horarioConclusaoAgendamento);
 	
 	List<Servico> buscarPorStatusAgendamento(StatusServicoEnum statusAgendamento);
+	
+	List<Servico> getAgendamentoPorDia();
 }

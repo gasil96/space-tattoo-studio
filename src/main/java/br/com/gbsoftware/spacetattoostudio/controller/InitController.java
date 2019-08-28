@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
+import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
+import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 
 @Controller
 @RequestMapping
@@ -26,13 +28,16 @@ public class InitController {
 
 	@Autowired
 	private ClienteService servicoCliente;
+	@Autowired
+	private ServicoService servicoService;
 	
 	@GetMapping("/")
-	public String home(ModelMap model, Cliente cliente) {
+	public String home(ModelMap model, Cliente cliente, Servico servico) {
 		model.addAttribute("classActivePrincipal", "active");
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
+		List<Servico> totalServico = servicoService.buscarTodos();
 		model.addAttribute("totalClientes", totalClientes.size());
-
+		model.addAttribute("totalAgendamentos", totalServico.size());
 		return PAGINA_INICIAL;
 	}
 	
@@ -53,24 +58,4 @@ public class InitController {
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

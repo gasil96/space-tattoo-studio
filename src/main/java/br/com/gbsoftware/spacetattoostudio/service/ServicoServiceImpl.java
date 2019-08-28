@@ -60,4 +60,9 @@ public class ServicoServiceImpl implements ServicoService {
 	public List<Servico> buscarTodos() {
 		return servicoRepository.findAll();
 	}
+
+	@Override
+	public List<Servico> getAgendamentoPorDia() {
+		return servicoRepository.agendamentosDoDia();
+	}
 }

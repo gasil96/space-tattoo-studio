@@ -14,7 +14,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<button role="role" data-toggle="modal" style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;"
+						<button role="button" data-toggle="modal" style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;"
 							data-target="#novoCliente"  
 							title="NOVO AGENDAMENTO"><i class="material-icons" 
 							style="font-size: 52px; color: white" > group_add </i> 
@@ -58,7 +58,7 @@
 	                                				<span title="EDITAR" aria-hidden="true" style="color: white;"><i class="material-icons">style</i></span>
 	                           					</a>
 	                           					<a th:href="@{/agendamento/agendar/{id} (id=${c.id})}" role="button" >
-	                                				<span title="AGENDAR" style="color: yellow"><i class="material-icons" >note_add</i></span>
+	                                				<span title="AGENDAR" style="color: grey"><i class="material-icons" >note_add</i></span>
 	                           					</a>
 											</td>
 											
@@ -102,19 +102,6 @@
 		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-	
-	
-//TODO - VAI CODIGO QUE CHAMA MODAL COM ID PASSADA	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	var BARCHARTEXMPLE    = $('#clienteDetalhamentoGrafico');
     var barChartExample = new Chart(BARCHARTEXMPLE, {
