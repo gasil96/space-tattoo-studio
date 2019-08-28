@@ -27,7 +27,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	List<Servico> findByHorarioConclusaoAgendamento(LocalDateTime horarioConclusaoAgendamento);
 
-	@Query(value="select * from servico where horario_agendamento=date(now())", nativeQuery=true)
+	@Query(value="select * from servico where date_format(horario_agendamento, '%Y-%m-%d') = curdate();", nativeQuery=true)
 	List<Servico> agendamentosDoDia();
 	
 	@Override

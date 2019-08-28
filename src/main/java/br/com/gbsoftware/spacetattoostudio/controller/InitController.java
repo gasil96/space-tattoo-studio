@@ -35,9 +35,8 @@ public class InitController {
 	public String home(ModelMap model, Cliente cliente, Servico servico) {
 		model.addAttribute("classActivePrincipal", "active");
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
-		List<Servico> totalServico = servicoService.buscarTodos();
 		model.addAttribute("totalClientes", totalClientes.size());
-		model.addAttribute("totalAgendamentos", totalServico.size());
+		model.addAttribute("totalAgendamentosDia", getAgendamentoDoDia().size());
 		return PAGINA_INICIAL;
 	}
 	
@@ -57,5 +56,10 @@ public class InitController {
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
+	}
+	
+	@ModelAttribute("listaAgendamentoDia")
+	public List<Servico> getAgendamentoDoDia(){
+		return servicoService.getAgendamentoPorDia();
 	}
 }
