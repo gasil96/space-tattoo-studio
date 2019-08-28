@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
-import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 @Repository
 public interface ServicoRepository extends JpaRepository<Servico, Long> {
@@ -29,6 +28,9 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	@Query(value="select * from servico where date_format(horario_agendamento, '%Y-%m-%d') = curdate();", nativeQuery=true)
 	List<Servico> agendamentosDoDia();
+
+	@Query(value = "select * from servico where yearweek(horario_agendamento) = yearweek(CURRENT_DATE);", nativeQuery=true)
+	List<Servico> agendamentoDaSemana();
 	
 	@Override
 	default boolean existsById(Long id) {

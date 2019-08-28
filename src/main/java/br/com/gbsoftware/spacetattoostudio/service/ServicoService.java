@@ -32,4 +32,6 @@ public interface ServicoService {
 	List<Servico> buscarPorStatusAgendamento(StatusServicoEnum statusAgendamento);
 	
 	List<Servico> getAgendamentoPorDia();
+	
+	List<Servico> getAgendamentoPorSemana();
 }

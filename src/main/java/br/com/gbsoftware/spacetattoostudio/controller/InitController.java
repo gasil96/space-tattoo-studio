@@ -37,6 +37,7 @@ public class InitController {
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
 		model.addAttribute("totalClientes", totalClientes.size());
 		model.addAttribute("totalAgendamentosDia", getAgendamentoDoDia().size());
+		model.addAttribute("totalAgendamentosSemana", getAgendamentoDaSemana().size());
 		return PAGINA_INICIAL;
 	}
 	
@@ -61,5 +62,10 @@ public class InitController {
 	@ModelAttribute("listaAgendamentoDia")
 	public List<Servico> getAgendamentoDoDia(){
 		return servicoService.getAgendamentoPorDia();
+	}
+	
+	@ModelAttribute("listaAgendamentoDaSemana")
+	public List<Servico> getAgendamentoDaSemana(){
+		return servicoService.getAgendamentoPorSemana();
 	}
 }

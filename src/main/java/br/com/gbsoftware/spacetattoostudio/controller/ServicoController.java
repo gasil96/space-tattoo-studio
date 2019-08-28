@@ -74,6 +74,10 @@ public class ServicoController {
 	
 	@PostMapping("editar")
 	public String editar(@Valid Servico agendamento) {
+		
+		if(agendamento.getStatusAgendamento() == StatusServicoEnum.ENCERRADO) {
+			agendamento.setHorarioConclusaoAgendamento(LocalDateTime.now());
+		}
 		servicoSevice.editar(agendamento);
 		// TODO - RETORNO ("msgClienteAlterado", "Cliente alterado com sucesso!"
 		return ATUALIZAR_PAGINA;
