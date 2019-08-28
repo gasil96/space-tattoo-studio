@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.service;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -11,14 +16,6 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.repository.ServicoRepository;
-/**
- * 
- * <b>GB Software</b>
- * 
- * @author Gabriel Silva - gasil96@gmail.com
- * @version 2019 - Criação
- *
- */
 @Service
 public class ServicoServiceImpl implements ServicoService {
 
@@ -34,7 +31,6 @@ public class ServicoServiceImpl implements ServicoService {
 		servicoRepository.save(servico);
 	}
 
-	
 	@Override
 	public List<Servico> buscarPorHorarioAgendamento(LocalDateTime horarioAgendamento) {
 		return servicoRepository.findByHorarioAgendamento(horarioAgendamento);
@@ -64,5 +60,4 @@ public class ServicoServiceImpl implements ServicoService {
 	public List<Servico> buscarTodos() {
 		return servicoRepository.findAll();
 	}
-	
 }

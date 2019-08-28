@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,10 +17,6 @@ import org.springframework.security.core.GrantedAuthority;
 @SuppressWarnings("serial")
 @Entity
 public class Role implements GrantedAuthority {
-	/** 
-	 * @author Gabriel Silva
-	 * 
-	 * */
 	
 	@Id
 	@Column(length = 20, unique=true, updatable=false)
@@ -46,5 +47,4 @@ public class Role implements GrantedAuthority {
 		return this.nomeRole;
 
 	}
-	
 }

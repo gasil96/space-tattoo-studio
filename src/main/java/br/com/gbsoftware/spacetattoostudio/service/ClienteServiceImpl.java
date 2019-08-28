@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.service;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.util.List;
 import java.util.Optional;
 
@@ -60,5 +65,4 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<Cliente> clienteNomeId() {
 		return clienteRepository.clienteNomeId();
 	}
-
 }

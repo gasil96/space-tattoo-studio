@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.domain;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.io.Serializable;
 
 import javax.persistence.GeneratedValue;
@@ -10,14 +15,10 @@ import javax.persistence.MappedSuperclass;
 @SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class EntidadeBase<ID extends Serializable> implements Serializable {
-
-
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private ID id;
 
-	
-	
 	public ID getId() {
 		return id;
 	}
@@ -50,7 +51,4 @@ public abstract class EntidadeBase<ID extends Serializable> implements Serializa
 			return false;
 		return true;
 	}
-	
-	
-	
 }

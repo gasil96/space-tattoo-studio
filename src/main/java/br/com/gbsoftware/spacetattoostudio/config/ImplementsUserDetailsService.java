@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.config;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +20,13 @@ import br.com.gbsoftware.spacetattoostudio.repository.UsuarioRepository;
 @Repository
 @Transactional
 public class ImplementsUserDetailsService implements UserDetailsService{
-	/** 
-	 * @author Gabriel Silva
-	 * 
-	 * */
+
 	@Autowired
 	private UsuarioRepository userRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		Usuario usuario = userRepository.findByLogin(login);
-		
 		if(usuario == null) {
 			throw new UsernameNotFoundException("Usuário não encontrado");
 		}

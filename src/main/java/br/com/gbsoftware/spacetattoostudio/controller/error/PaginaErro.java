@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.controller.error;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,10 +13,6 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolve
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
-/** 
- * @author Gabriel Silva
- * 
- * */
 @Component
 public class PaginaErro implements ErrorViewResolver{
 
@@ -39,5 +40,4 @@ public class PaginaErro implements ErrorViewResolver{
 			}
 			return model;
 	}
-	
 }

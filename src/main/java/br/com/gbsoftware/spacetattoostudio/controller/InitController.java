@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +26,6 @@ public class InitController {
 
 	@Autowired
 	private ClienteService servicoCliente;
-
-
 	
 	@GetMapping("/")
 	public String home(ModelMap model, Cliente cliente) {
@@ -46,8 +49,6 @@ public class InitController {
 		return PAGINA_INICIAL;
 	}
 	
-	
-	//TODO - exemplo passagem atributo
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();

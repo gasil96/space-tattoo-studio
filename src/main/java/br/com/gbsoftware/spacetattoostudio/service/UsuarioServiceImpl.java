@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.service;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +30,4 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 		usuarioRepository.save(usuario);
 	}
-
 }

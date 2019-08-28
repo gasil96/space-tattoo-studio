@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,24 +23,11 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 
-/**
- * 
- * <b>GB Software</b>
- * 
- * @author Gabriel Silva - gasil96@gmail.com
- * @version 2019 - Criação
- *
- */
 @Entity
 @SuppressWarnings("serial")
 @Table(name = "CLIENTE")
 public class Cliente extends EntidadeBase<Long> {
-	/**
-	 * TODO Faltando @Notblank's Faltando passar os nullable, lenght's e uniques
-	 * 
-	 */
-	// @NotBlank //impede pessistencia de elementos vazios TODO - FALTA COLOCAR OS
-	// NOTNULL @NOTBLACK LENGHT ETC...
+
 	@NotNull
 	@Column(length = 50)
 	private String nome;
@@ -61,7 +53,6 @@ public class Cliente extends EntidadeBase<Long> {
 	private List<Servico> servicos;
 
 	public Cliente() {
-
 	}
 
 	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, 
@@ -74,7 +65,6 @@ public class Cliente extends EntidadeBase<Long> {
 		this.instagram = instagram;
 		this.saldo = saldo;
 		this.servicos = servicos;
-
 	}
 
 	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, String instagram) {
@@ -152,5 +142,4 @@ public class Cliente extends EntidadeBase<Long> {
 				+ ", dataCadastro=" + dataCadastro + ", saldo=" + saldo
 				+ ", servicos=" + servicos + "]";
 	}
-
 }

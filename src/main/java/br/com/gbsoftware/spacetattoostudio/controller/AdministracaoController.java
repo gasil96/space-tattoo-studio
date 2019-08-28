@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +26,6 @@ import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 public class AdministracaoController {
 
 	private static final String __ADMINISTRACAO = "admin/admin";
-
 	
 	@Autowired
 	private UsuarioService servicoUsuario;

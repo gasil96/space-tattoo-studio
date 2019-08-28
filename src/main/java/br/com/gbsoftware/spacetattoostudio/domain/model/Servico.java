@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -17,24 +22,10 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
-/**
- * 
- * <b>GB Software</b>
- * 
- * @author Gabriel Silva - gasil96@gmail.com
- * @version 2019 - Criação
- *
- */
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "SERVICO")
 public class Servico extends EntidadeBase<Long>{
-	/**
-	 * TODO
-	 * Faltando @Notblank's
-	 * Faltando passar os nullable, lenght's e uniques 
-	 * 
-	 * */
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -72,8 +63,6 @@ public class Servico extends EntidadeBase<Long>{
 		this.statusAgendamento = statusAgendamento;
 		this.cliente = cliente;
 	}
-
-
 
 	public LocalDateTime getHorarioAgendamento() {
 		return horarioAgendamento;
@@ -121,5 +110,4 @@ public class Servico extends EntidadeBase<Long>{
 				+ horarioAgendamento + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
 				+ ", statusAgendamento=" + statusAgendamento + ", cliente=" + cliente + "]";
 	}
-
 }

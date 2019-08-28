@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("promocional")
 public class PromocionalController {
 
-//	private static final String PAGINA_INICIAL = "home";
 	private static final String PAGINA_PROMOCIONAL = "promocional/descontos-promocoes";
 	
 	@GetMapping("promo")
@@ -17,6 +21,4 @@ public class PromocionalController {
 		model.addAttribute("classActivePromocional", "active");
 		return PAGINA_PROMOCIONAL;
 	}
-	
-	
 }

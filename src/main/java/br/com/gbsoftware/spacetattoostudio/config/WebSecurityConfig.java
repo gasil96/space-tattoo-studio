@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.config;
-
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,10 +19,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
-	/** 
-	 * @author Gabriel Silva
-	 * 
-	 * */	
 	
 	@Autowired
 	private ImplementsUserDetailsService userDetailsService;
