@@ -78,10 +78,10 @@
 					<div class="col-lg-4">
 						<div class="pie-chart chart block">
 							<div class="title">
-								<strong>Pie Chart Example</strong>
+								<strong>Novos clientes mês atual</strong>
 							</div>
 							<div class="pie-chart chart margin-bottom-sm">
-								<canvas id="pieChartCustom1"></canvas>
+								<canvas id="clientesMesAtual"></canvas>
 							</div>
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 					<div class="col-lg-8">
 						<div class="bar-chart block chart">
 							<div class="title">
-								<strong>Bar Chart Example</strong>
+								<strong>Novos clientes cadastrados nos últimos meses</strong>
 							</div>
 							<div class="bar-chart chart">
 								<canvas id="clienteDetalhamentoGrafico"></canvas>
@@ -123,7 +123,7 @@
             },
         },
         data: {
-            labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+            labels: ["AntepnultimoMes", "PnultimoMes", "UltimoMes"],
             datasets: [
                 {
                     label: "Barbearia",
@@ -223,6 +223,41 @@
                 }
             ]
         }
+    });
+    
+    var PIECHARTEXMPLE    = $('#clientesMesAtual');
+    var pieChartExample = new Chart(PIECHARTEXMPLE, {
+        type: 'pie',
+        options: {
+            legend: {
+                display: true,
+                position: "left"
+            }
+        },
+        data: {
+            labels: [
+                "Barbearia",
+                "Tatuagem",
+                "Piercing"
+            ],
+            datasets: [
+                {
+                    data: [300, 50, 100],
+                    borderWidth: 0,
+                    backgroundColor: [
+                        '#723ac3',
+                        "#864DD9",
+                        "#9762e6",
+                        "#a678eb"
+                    ],
+                    hoverBackgroundColor: [
+                        '#723ac3',
+                        "#864DD9",
+                        "#9762e6",
+                        "#a678eb"
+                    ]
+                }]
+            }
     });
 	
 	</script>
