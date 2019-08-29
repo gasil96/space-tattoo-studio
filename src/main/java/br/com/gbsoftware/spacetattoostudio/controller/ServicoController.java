@@ -53,8 +53,12 @@ public class ServicoController {
 	
 	@PostMapping("salvar") 
 	public String salvar(Servico servico) {
-		servicoSevice.salvar(servico);
-		// TODO - RETORNO ("msgSalvamentoAgendamento", "Novo agendamento realizado!"
+		if(servicoCliente.buscarPorId(servico.getCliente().getId()).isPresent()) {
+			servicoSevice.salvar(servico);
+			// TODO - RETORNO ("msgSalvamentoAgendamento", "Novo agendamento realizado!"
+		} else {
+			// TODO - RETORNO ("msgErroIdNaoValida", "Código do cliente não é válido"
+		}
 		return ATUALIZAR_PAGINA;
 	}
 	

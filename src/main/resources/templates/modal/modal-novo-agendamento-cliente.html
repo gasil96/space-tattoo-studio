@@ -36,8 +36,6 @@
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
 							</select>
 						</div>
-						<input type="hidden" class="form-control" id="id" th:field="*{id}">
-						<input type="hidden" class="form-control" id="idC" >
 						<div style="display: none">	<select th:field="*{cliente.id}"><option th:value="${id_cliente_referente}"></option></select></div>
 						
 						<div class="modal-footer">
