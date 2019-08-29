@@ -33,12 +33,28 @@ public class ClienteController {
 	private static final String PAGINA_CLIENTE_DETALHADO = "detalhamento/cliente-detalhado";
 	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
 	private static final String MODAL_EDITAR_CLIENTE = "modal/modal-editar-cliente";
-	
+	private static final String MODAL_NOVO_AGENDAMENTO_CLIENTE = "modal/modal-novo-agendamento-cliente";
+
 	@Autowired
 	private ClienteService servicoCliente;
 
 	@Autowired
 	private ServicoService servicoServico;
+	
+	
+	
+	/**
+	 * @test
+	 *
+	 * */
+	@GetMapping("agendar/{id}")
+	public String preAgendar(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("servico", servicoServico.buscarPorId(id));
+ 		model.addAttribute("id_cliente_referente", id);
+ 		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
+		return MODAL_NOVO_AGENDAMENTO_CLIENTE; 
+	}
+	
 	
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Servico service, Model model) {

@@ -88,6 +88,7 @@
 					<div class="col-lg-4" th:each="pa :${proximosAgendamentos}">
 						<div class="user-block block text-center">
 							<h2 th:text="${#temporals.format(pa.horarioAgendamento, 'HH:mm')}">09:00 AM</h2>
+							<h2 style="text-decoration:line-through; color: red" th:if="${pa.horarioConclusaoAgendamento}">ENCERRADO</h2>
 							<a href="#" class="user-title">
 								<h3 class="h5" th:text="${pa.cliente.nome}">Breno Marques</h3> <span th:text="${pa.cliente.instagram}">@brenomarques__</span>
 							</a>
@@ -102,15 +103,12 @@
 		</div>
 		
 	<script type="text/javascript" layout:fragment="script">
-	
-	function iconOnOver(x) {
-		  x.style.color = "green";
-		}
-		function iconNormal(x) {
-		  x.style.color = "white";
-		}
+
+		$(document).ready(function () {
+		    setTimeout(function () {
+		        window.location.reload(1);
+		    }, 30000); // 5 em 5 segundos.
+		});
 	</script>
-</body>
-		
 </body>
 </html>

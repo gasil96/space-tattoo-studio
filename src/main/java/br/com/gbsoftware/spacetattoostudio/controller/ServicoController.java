@@ -59,8 +59,7 @@ public class ServicoController {
 	}
 	
 	@GetMapping("agendar/{id}")
-	public String preAgendar(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("servico", servicoSevice.buscarPorId(id));
+	public String preAgendar(@PathVariable("id") Long id, Model model, Servico servico) {
  		model.addAttribute("id_cliente_referente", id);
  		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
 		return MODAL_NOVO_AGENDAMENTO_CLIENTE; 

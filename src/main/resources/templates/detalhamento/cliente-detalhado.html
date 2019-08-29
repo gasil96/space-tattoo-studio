@@ -1,4 +1,4 @@
-
+ 	
 <!DOCTYPE html>
 <html layout:decorate="~{layout-principal}">
 <head>
@@ -17,7 +17,7 @@
 						<button role="button" data-toggle="modal" style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;"
 							data-target="#novoCliente"  
 							title="NOVO AGENDAMENTO"><i class="material-icons" 
-							style="font-size: 52px; color: white" > group_add </i> 
+							style="font-size: 52px; color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)"> group_add </i> 
 						</button>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 	                                				<span title="EDITAR" aria-hidden="true" style="color: grey;"><i class="material-icons">style</i></span>
 	                           					</a>
 	                           					<a th:href="@{/agendamento/agendar/{id} (id=${c.id})}" role="button" >
-	                                				<span title="AGENDAR" style="color: white"><i class="material-icons" >note_add</i></span>
+	                                				<span title="AGENDAR" style="color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)"><i class="material-icons" >note_add</i></span>
 	                           					</a>
 											</td>
 											
@@ -99,7 +99,6 @@
 				</div>
 			</div>
 		</section>
-		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 	
