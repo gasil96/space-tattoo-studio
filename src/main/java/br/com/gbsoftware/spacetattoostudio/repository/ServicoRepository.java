@@ -32,8 +32,4 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 	@Query(value = "select * from servico where date_format(horario_agendamento, '%Y-%m-%d') between curdate() and date_add(now(), interval 7 day)", nativeQuery=true)
 	List<Servico> agendamentoDaSemana();
 	
-	@Override
-	default boolean existsById(Long id) {
-		return false;
-	}
 }
