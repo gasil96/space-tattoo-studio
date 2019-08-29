@@ -18,7 +18,7 @@
 								class="progress-details d-flex align-items-end justify-content-between">
 								<div class="title">
 									<div >
-										<a role="button" data-toggle="modal" data-target="#novoCliente" href="#" style="color: white">
+										<a role="button" data-toggle="modal" data-target="#novoCliente" href="#" style="color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
 										<i class="material-icons md-48" style="font-size: 35px"> group_add </i> 
 										</a>
 									</div>
@@ -36,7 +36,7 @@
 								class="progress-details d-flex align-items-end justify-content-between">
 								<div class="title">
 									<div >
-										<a role="button" data-toggle="modal" data-target="#novoAgendamento" href="#" style="color: white">
+										<a role="button" data-toggle="modal" data-target="#novoAgendamento" href="#" style="color: white"  onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
 										<i class="material-icons md-48" style="font-size: 35px"> note_add </i> 
 										</a>
 									</div>
@@ -52,7 +52,7 @@
 								class="progress-details d-flex align-items-end justify-content-between">
 								<div class="title">
 									<div >
-										<a href="/agendamento/detalhamento" style="color: white">
+										<a href="/agendamento/detalhamento" style="color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
 										<i class="material-icons md-48" style="font-size: 35px">event_note </i> 
 										</a>
 									</div>
@@ -68,11 +68,11 @@
 								class="progress-details d-flex align-items-end justify-content-between">
 								<div class="title">
 									<div >
-										<a role="button" data-toggle="modal" data-target="#novoCliente" href="#" style="color: white">
+										<a role="button" data-toggle="modal" data-target="#novoCliente" href="#" style="color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
 										<i class="material-icons md-48" style="font-size: 35px">attach_money </i> 
 										</a>
 									</div>
-									<strong>Saldo diário do caixa</strong>
+									<strong>Saldo diário do caixa *fake* </strong>
 								</div>
 								<div class="number dashtext-2">10</div>
 							</div>
@@ -85,38 +85,32 @@
 		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-4">
+					<div class="col-lg-4" th:each="pa :${proximosAgendamentos}">
 						<div class="user-block block text-center">
-							<h2 st>09:00 AM</h2>
+							<h2 th:text="${#temporals.format(pa.horarioAgendamento, 'HH:mm')}">09:00 AM</h2>
 							<a href="#" class="user-title">
-								<h3 class="h5">Breno Marques</h3> <span>@brenomarques__</span>
+								<h3 class="h5" th:text="${pa.cliente.nome}">Breno Marques</h3> <span th:text="${pa.cliente.instagram}">@brenomarques__</span>
 							</a>
-							<div class="contributions">Tatuagem</div>
+							<div class="contributions" th:text="${pa.tipoServico}">Tatuagem</div>
 						</div>
 					</div>
-					<div class="col-lg-4">
-						<div class="user-block block text-center">
-							<h2>11:30 AM</h2>
-							<a href="#" class="user-title">
-								<h3 class="h5">Gabriel Silva</h3> <span>@gasil96</span>
-							</a>
-							<div class="contributions">Barbearia</div>
-						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="user-block block text-center">
-							<h2>15:25 AM</h2>
-							<a href="#" class="user-title">
-								<h3 class="h5">Bianca Ribeiro</h3> <span>@biancabribeiro</span>
-							</a>
-							<div class="contributions">Piercing</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</section>
+		
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
 		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 		</div>
+		
+	<script type="text/javascript" layout:fragment="script">
+	
+	function iconOnOver(x) {
+		  x.style.color = "green";
+		}
+		function iconNormal(x) {
+		  x.style.color = "white";
+		}
+	</script>
+</body>
+		
 </body>
 </html>

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
@@ -35,9 +37,11 @@ public class InitController {
 	public String home(ModelMap model, Cliente cliente, Servico servico) {
 		model.addAttribute("classActivePrincipal", "active");
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
+		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
 		model.addAttribute("totalClientes", totalClientes.size());
 		model.addAttribute("totalAgendamentosDia", getAgendamentoDoDia().size());
 		model.addAttribute("totalAgendamentosSemana", getAgendamentoDaSemana().size());
+		model.addAttribute("proximosAgendamentos", servicoService.proximosTresAgendamentos());
 		return PAGINA_INICIAL;
 	}
 	
@@ -67,5 +71,15 @@ public class InitController {
 	@ModelAttribute("listaAgendamentoDaSemana")
 	public List<Servico> getAgendamentoDaSemana(){
 		return servicoService.getAgendamentoPorSemana();
+	}
+	
+	@ModelAttribute("tipoagendamento")
+	public TipoServicoEnum[] getTipoServico() {
+		return TipoServicoEnum.values();
+	}
+	
+	@ModelAttribute("statusagendamento")
+	public StatusServicoEnum[] getStatusAgendamento() {
+		return StatusServicoEnum.values();
 	}
 }

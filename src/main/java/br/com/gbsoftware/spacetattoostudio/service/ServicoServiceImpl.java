@@ -70,4 +70,9 @@ public class ServicoServiceImpl implements ServicoService {
 	public List<Servico> getAgendamentoPorSemana() {
 		return servicoRepository.agendamentoDaSemana();
 	}
+
+	@Override
+	public List<Servico> proximosTresAgendamentos() {
+		return servicoRepository.proximosTresAgendamentos();
+	}
 }

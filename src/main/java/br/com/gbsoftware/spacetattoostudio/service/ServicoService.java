@@ -34,4 +34,6 @@ public interface ServicoService {
 	List<Servico> getAgendamentoPorDia();
 	
 	List<Servico> getAgendamentoPorSemana();
+	
+	List<Servico> proximosTresAgendamentos();
 }
