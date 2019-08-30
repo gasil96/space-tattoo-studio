@@ -45,6 +45,7 @@ public class AdministracaoController {
 		servicoRole.salvar(r1);
 		servicoRole.salvar(r2);
 		servicoRole.salvar(role);
+		model.addAttribute("listaUsuarios", servicoUsuario.buscarTodos());
 		return __ADMINISTRACAO;
 	}
 	

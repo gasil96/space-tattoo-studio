@@ -30,6 +30,7 @@ public class InitController {
 
 	@Autowired
 	private ClienteService servicoCliente;
+	
 	@Autowired
 	private ServicoService servicoService;
 	
