@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
+
 /**
  * <b>GB Software</b>
  * 
@@ -6,6 +7,7 @@ package br.com.gbsoftware.spacetattoostudio.controller;
  * @version 2019 - Criação
  */
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -44,21 +46,28 @@ public class ClienteController {
 	@GetMapping("agendar/{id}")
 	public String preAgendar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoServico.buscarPorId(id));
- 		model.addAttribute("id_cliente_referente", id);
- 		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
-		return MODAL_NOVO_AGENDAMENTO_CLIENTE; 
+		model.addAttribute("id_cliente_referente", id);
+		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
+		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
 	}
-	
+
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Servico service, Model model) {
-		model.addAttribute("classActiveSubCliente","active"); 
+		model.addAttribute("classActiveSubCliente", "active");
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
 		model.addAttribute("totalClientes", totalClientes.size());
 		List<Cliente> totalClientesCM = servicoCliente.getPorCadastroMes();
 		List<Cliente> totalClientesCMA = servicoCliente.getPorCadastroMesAnterio();
-		model.addAttribute("totalCadastroMesAtual",  "+"+totalClientesCM.size());
-		model.addAttribute("totalCadastroMesAnterio", "+"+totalClientesCMA.size());
+		model.addAttribute("totalCadastroMesAtual", "+" + totalClientesCM.size());
+		model.addAttribute("totalCadastroMesAnterio", "+" + totalClientesCMA.size());
+		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
+		List<Cliente> clientesAtivos = clientesTotal.stream().filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
+		List<Cliente> clientesInativos = clientesTotal.stream().filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
+		List<Cliente> clientesInadimplentes = clientesTotal.stream().filter(x -> StatusClienteEnum.INADIMPLENTE.equals(x.getStatusCliente())).collect(Collectors.toList());
+		model.addAttribute("totalAtivos",clientesAtivos.size());
+		model.addAttribute("totalInativos",clientesInativos.size());
+		model.addAttribute("totalInadim",clientesInadimplentes.size());
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
@@ -66,29 +75,29 @@ public class ClienteController {
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		servicoCliente.salvar(cliente);
 		// TODO - RETORNO ("msgSalvamentoCliente", "Novo cliente salvo com sucesso!"
-		return  ATUALIZAR_PAGINA;
+		return ATUALIZAR_PAGINA;
 	}
 
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
-		return MODAL_EDITAR_CLIENTE; 
+		return MODAL_EDITAR_CLIENTE;
 	}
-	
+
 	@PostMapping("editar")
 	public String editar(@Valid Cliente cliente) {
 		servicoCliente.editar(cliente);
 		// TODO - RETORNO ("msgClienteAlterado", "Cliente alterado com sucesso!"
 		return ATUALIZAR_PAGINA;
 	}
-	
+
 	@ModelAttribute("servicos")
-	public List<Servico> getServicos(){
+	public List<Servico> getServicos() {
 		return servicoServico.buscarTodos();
 	}
-	
+
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
-	}		
+	}
 }
