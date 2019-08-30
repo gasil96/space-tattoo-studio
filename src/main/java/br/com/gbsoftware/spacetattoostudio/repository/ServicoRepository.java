@@ -31,11 +31,23 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 	@Query(value = "SELECT * FROM servico WHERE date_format(horario_agendamento, '%Y-%m-%d') = CURDATE()", nativeQuery = true)
 	List<Servico> agendamentosDoDia();
 
-	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d') "
-					+ "BETWEEN CURDATE() AND DATE_ADD(NOW(), INTERVAL 7 DAY)", nativeQuery = true)
+	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
+			+ "BETWEEN CURDATE() AND DATE_ADD(NOW(), INTERVAL 7 DAY)", nativeQuery = true)
 	List<Servico> agendamentoDaSemana();
 
 	@Query(value = "SELECT * FROM servico WHERE horario_agendamento BETWEEN CURRENT_TIMESTAMP()"
-					+ " AND DATE_ADD(NOW(), INTERVAL 1 DAY) LIMIT 6", nativeQuery = true)
-	List<Servico> proximosTresAgendamentos();
+			+ " AND DATE_ADD(NOW(), INTERVAL 1 DAY) LIMIT 6", nativeQuery = true)
+	List<Servico> proximosSeisAgendamentos();
+
+	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
+			+ "BETWEEN CURDATE() AND DATE_ADD(NOW(), INTERVAL 3 MONTH)", nativeQuery = true)
+	List<Servico> agendamentosProximosTresMeses();
+
+	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
+			+ " BETWEEN CURDATE() - INTERVAL 3 MONTH AND CURDATE()", nativeQuery = true)
+	List<Servico> agendametnoUltimosTresMeses();
+
+	@Query(value = "select * from servico where month(horario_agendamento) = month(current_timestamp())", nativeQuery = true)
+	List<Servico> agendamentosMesAtual();
+
 }

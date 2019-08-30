@@ -35,5 +35,11 @@ public interface ServicoService {
 	
 	List<Servico> getAgendamentoPorSemana();
 	
-	List<Servico> proximosTresAgendamentos();
+	List<Servico> getAgendamentosProximosTresMeses();
+	
+	List<Servico> getAgendamentosUltimosTresMeses();
+	
+	List<Servico> getAgendamentosMesAtual();
+	
+	List<Servico> getProximosSeisAgendamentos();
 }

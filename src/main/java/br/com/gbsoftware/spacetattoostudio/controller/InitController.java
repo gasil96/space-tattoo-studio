@@ -41,7 +41,7 @@ public class InitController {
 		model.addAttribute("totalClientes", totalClientes.size());
 		model.addAttribute("totalAgendamentosDia", getAgendamentoDoDia().size());
 		model.addAttribute("totalAgendamentosSemana", getAgendamentoDaSemana().size());
-		model.addAttribute("proximosAgendamentos", servicoService.proximosTresAgendamentos());
+		model.addAttribute("proximosAgendamentos", servicoService.getProximosSeisAgendamentos());
 		return PAGINA_INICIAL;
 	}
 	

@@ -24,6 +24,7 @@ public interface ClienteService {
 	
 	List<Cliente> buscarTodos();
 	
-	List<Cliente> clienteNomeId();
+	List<Cliente> getPorCadastroMes();
 
+	List<Cliente> getPorCadastroMesAnterio();
 }

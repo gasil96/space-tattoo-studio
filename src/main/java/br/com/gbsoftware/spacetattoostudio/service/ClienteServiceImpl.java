@@ -62,7 +62,12 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public List<Cliente> clienteNomeId() {
-		return clienteRepository.clienteNomeId();
+	public List<Cliente> getPorCadastroMes() {
+		return clienteRepository.getPorCadastroMesAtual();
+	}
+
+	@Override
+	public List<Cliente> getPorCadastroMesAnterio() {
+		return clienteRepository.getPorCadastroMesPassado();
 	}
 }

@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.repository;
+
 /**
  * <b>GB Software</b>
  * 
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
+
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
@@ -19,7 +21,9 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	List<Cliente> findByInstagram(String instagram);
 
-	@Query(value="select * from cliente c where c.id=40", nativeQuery=true)
-	List<Cliente> clienteNomeId();
+	@Query(value = "SELECT * FROM cliente WHERE month(data_cadastro) = month(now())", nativeQuery = true)
+	List<Cliente> getPorCadastroMesAtual();
 
+	@Query(value = "SELECT * FROM cliente WHERE MONTH(data_cadastro) = (MONTH(NOW())-1)", nativeQuery = true)
+	List<Cliente> getPorCadastroMesPassado();
 }

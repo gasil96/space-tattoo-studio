@@ -40,13 +40,7 @@ public class ClienteController {
 
 	@Autowired
 	private ServicoService servicoServico;
-	
-	
-	
-	/**
-	 * @test
-	 *
-	 * */
+
 	@GetMapping("agendar/{id}")
 	public String preAgendar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoServico.buscarPorId(id));
@@ -55,11 +49,16 @@ public class ClienteController {
 		return MODAL_NOVO_AGENDAMENTO_CLIENTE; 
 	}
 	
-	
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Servico service, Model model) {
 		model.addAttribute("classActiveSubCliente","active"); 
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
+		List<Cliente> totalClientes = servicoCliente.buscarTodos();
+		model.addAttribute("totalClientes", totalClientes.size());
+		List<Cliente> totalClientesCM = servicoCliente.getPorCadastroMes();
+		List<Cliente> totalClientesCMA = servicoCliente.getPorCadastroMesAnterio();
+		model.addAttribute("totalCadastroMesAtual",  "+"+totalClientesCM.size());
+		model.addAttribute("totalCadastroMesAnterio", "+"+totalClientesCMA.size());
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 

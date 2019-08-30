@@ -72,7 +72,23 @@ public class ServicoServiceImpl implements ServicoService {
 	}
 
 	@Override
-	public List<Servico> proximosTresAgendamentos() {
-		return servicoRepository.proximosTresAgendamentos();
+	public List<Servico> getAgendamentosProximosTresMeses() {
+		return servicoRepository.agendamentosProximosTresMeses();
 	}
+
+	@Override
+	public List<Servico> getAgendamentosUltimosTresMeses() {
+		return servicoRepository.agendametnoUltimosTresMeses();
+	}
+
+	@Override
+	public List<Servico> getAgendamentosMesAtual() {
+		return servicoRepository.agendamentosMesAtual();
+	}
+
+	@Override
+	public List<Servico> getProximosSeisAgendamentos() {
+		return servicoRepository.proximosSeisAgendamentos();
+	}
+
 }
