@@ -8,14 +8,12 @@
 		<div role="document" class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<strong id="tituloModalNovoAgendamento" class="modal-title">Novo Agendamento</strong>
+					<strong id="tituloModalNovoAgendamento" class="modal-title" style="color: red">Novo Agendamento</strong>
 					<button type="button" data-dismiss="modal" aria-label="Close" class="close">
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-
 				<div class="modal-body">
-					
 					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST">
 						<div class="form-group">
 							<label for="tipoServico">Tipo</label>
@@ -24,12 +22,15 @@
 								<option th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}">ATIVO</option>
 							</select>
 						</div>
-
 						<div class="form-group">
 							<label>Data/Horário</label> 
-							<input type="datetime-local"  id="horario" class="form-control" th:field="*{horarioAgendamento}">
+							<div class="input-group date" id="horarioAgendamentoDatePicker" data-target-input="nearest">
+			                    <input type="text" class="form-control " data-target="#horarioAgendamentoDatePicker" th:field="*{horarioAgendamento}">
+			                    <div class="input-group-append" data-target="#horarioAgendamentoDatePicker" data-toggle="datetimepicker">
+			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+			                    </div>
+			                </div>
 						</div>
-
 						<div class="form-group">
 							<label for="tipoServico">Status</label>
 							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">
@@ -41,18 +42,24 @@
 							<label>Código do cliente</label> 
 							<input type="number" class="form-control" id="idC" placeholder=""	th:field="*{cliente.id}" required="required">
 						</div>
-						
-						
-
+			
 						<div class="modal-footer">
 							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
 							<button type="submit" class="btn btn-primary">Salvar</button>
 						</div>
 					</form>
-					
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script type="text/javascript" layout:fragment="script">
+	 $(function () {
+         $('#datetimepicker5').datetimepicker({
+        	 format: 'L' 
+         });
+     });
+	</script>
+	
 </body>
 </html>

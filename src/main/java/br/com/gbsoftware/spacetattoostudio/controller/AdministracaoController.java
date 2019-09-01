@@ -25,7 +25,7 @@ import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 @Controller
 public class AdministracaoController {
 
-	private static final String __ADMINISTRACAO = "admin/admin";
+	private static final String __ADMINISTRACAO = "/admin";
 	
 	@Autowired
 	private UsuarioService servicoUsuario;
