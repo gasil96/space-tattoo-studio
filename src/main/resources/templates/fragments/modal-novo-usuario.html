@@ -17,7 +17,7 @@
 				</div>
 				<div class="modal-body">
 					
-					 <form th:action="@{/salvar-usuario}" method="POST" th:object="${usuario}">
+					 <form th:action="@{/adm/salvar-usuario}" method="POST" th:object="${usuario}">
                       <div class="form-group">
                         <label for="nome" class="form-control-label">Nome</label>
                         <input id="nome" type="text"  class="mr-sm-3 form-control" th:field="*{nomeCompleto}" required="required">

@@ -13,6 +13,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoRole;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
@@ -23,9 +25,11 @@ import br.com.gbsoftware.spacetattoostudio.service.RoleService;
 import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 
 @Controller
+@RequestMapping("adm")
 public class AdministracaoController {
 
 	private static final String __ADMINISTRACAO = "admin/admin";
+	private static final String ATT_PAGINA__ = "redirect:administracao";
 	
 	@Autowired
 	private UsuarioService servicoUsuario;
@@ -33,7 +37,7 @@ public class AdministracaoController {
 	@Autowired
 	private RoleService servicoRole;
 	
-	@GetMapping("admin")
+	@GetMapping("administracao")
 	public String admin(ModelMap model, Cliente cliente, Servico servico, Usuario usuario, Role role) {
 		model.addAttribute("AdminAtivo", "active");
 		model.addAttribute("listaUsuarios", servicoUsuario.buscarTodos());
@@ -50,9 +54,11 @@ public class AdministracaoController {
 	}
 	
 	@PostMapping("/salvar-usuario")
-	public String salvarUsuario(@Valid Usuario usuario) {
+	public String salvarUsuario(@Valid Usuario usuario, RedirectAttributes attr) {
 		servicoUsuario.salvar(usuario);
-		return __ADMINISTRACAO;
+		attr.addFlashAttribute("salvou", true);
+		
+		return ATT_PAGINA__;
 	}
 	
 	@PostMapping("/salvar-role")

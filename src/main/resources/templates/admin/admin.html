@@ -19,6 +19,8 @@
 			</div>
 			<br>
 		</section>
+		<div th:if="${salvou == true}" id="salvouUsuario"></div>
+		<div th:if="${editou == true} " id="clienteEditado"></div>
 		
 		<section class="no-padding-top">
 			<div class="container-fluid">
@@ -52,5 +54,18 @@
 		
 		<div th:replace="fragments/modal-novo-usuario :: modalNovoUsuario"></div>
 	</div>
+	<script type="text/javascript" layout:fragment="script">
+	
+	$(document).ready(function() {
+		$('#salvouUsuario').show(function() {
+			Messenger().post({
+				message : 'Usuário salvo com sucesso!',
+				type : 'success'
+			});
+		});
+	});
+	
+	</script>
+	
 </body>
 </html>
