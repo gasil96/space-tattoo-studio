@@ -24,7 +24,11 @@
 			</div>
 		</section>
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
-		<div th:if="${salvou == true} " id="clienteSalvo" class="salvamentoRealizado"></div>
+		<div th:if="${salvou == true} " id="clienteSalvo"></div>
+		
+		 <p>
+            <button id="demoMessagekkkkkkk" class="btn btn-success">Success Message</button>
+         </p>
 		
 		<section class="no-padding-top">
           <div class="container-fluid">
@@ -32,7 +36,7 @@
               <div class="title"><strong>Todos</strong></div>
               <div class="block-body">
                 <div class="table-responsive">
-                  <table id="demoMessage3" style="width: 100%;" class="table">
+                  <table id="datatableCliente" style="width: 100%;" class="table">
 					<thead>
 						<tr>
 							<th># Código</th>
@@ -139,22 +143,19 @@
 	        });
 	    });
 		
-		$('div.salvamentoRealizado').show(function () {
-	        Messenger().post({
+		$('#clienteSalvo').show(function () {
+			Messenger().post({
 	            message: 'How are you?',
-	            type: 'success',
-	            showCloseButton: true
-	        }),
-	        
-	        $('#demoMessage3').show(function () {
-	            Messenger().post({
-	                message: 'No unusual activity around. Carry on.',
-	                type: 'info',
-	                showCloseButton: true
-	            });
+	            type: 'success'
 	        });
-	        
 	    });
+		
+		 $('#demoMessagekkkkkkk').on('click', function () {
+		        Messenger().post({
+		            message: 'How are you?',
+		            type: 'success'
+		        });
+		    });
 		
 	</script>
 </body>
