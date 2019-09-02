@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.passwordEncoder(new BCryptPasswordEncoder());
 		auth.inMemoryAuthentication().withUser("adm").password("{noop}Q$&u1d&#51@").roles("ADMIN");
 	}
-	
+	 
 	@Override
 	public void configure(WebSecurity web) throws Exception{
 		web.ignoring().antMatchers("/css/**","/data/**","/fonts/**","/icons-reference/**","/img/**","/js/**","/vendor/**");
