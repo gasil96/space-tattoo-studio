@@ -73,8 +73,6 @@ public class ServicoController {
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoSevice.buscarPorId(id));
-		// TODO - NAO ESTA RECUPERANDO A DATA
-		System.err.println("data/hora ---->  " + servicoSevice.buscarPorId(id).get().getHorarioAgendamento());
 		return MODAL_EDITAR_AGENDAMENTO; 
 	}
 	

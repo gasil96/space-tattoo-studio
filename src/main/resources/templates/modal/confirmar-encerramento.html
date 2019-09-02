@@ -18,12 +18,12 @@
 				<div class="modal-body" id="cliente">
 					<form th:action="@{/agendamento/encerrar}" th:object="${servico}" method="POST">
 					<br>	Deseja confirmar o encerramento deste agendamento ? <br><br>
-					<div id="esconder" style="display: none">
+					<div id="esconder" style="display: none;">
 							<select type="hidden" id="selectTipoServico" class="form-control"	th:field="*{tipoServico}">
 								<option  th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}" >ATIVO</option>
 							</select>
 
-							<input type="datetime-local"  id="horario" class="form-control" th:field="*{horarioAgendamento}">
+							<input type="text"  id="horarioAgendamento" class="form-control" th:field="*{horarioAgendamento}">
 
 							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}" required="required">
 								<option value="" selected="selected">Selecione</option>
