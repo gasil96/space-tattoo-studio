@@ -24,9 +24,9 @@
 						</div>
 						<div class="form-group">
 							<label>Data/Horário</label> 
-							<div class="input-group date" id="horarioAgendamentoDatePicker" data-target-input="nearest">
-			                    <input type="text" class="form-control " data-target="#horarioAgendamentoDatePicker" th:field="*{horarioAgendamento}">
-			                    <div class="input-group-append" data-target="#horarioAgendamentoDatePicker" data-toggle="datetimepicker">
+							<div class="input-group date" id="horarioAgendamento" data-target-input="nearest">
+			                    <input type="text" class="form-control " data-target="#horarioAgendamento" th:field="*{horarioAgendamento}">
+			                    <div class="input-group-append" data-target="#horarioAgendamento" data-toggle="datetimepicker">
 			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 			                    </div>
 			                </div>
@@ -52,14 +52,7 @@
 			</div>
 		</div>
 	</div>
-	
 	<script type="text/javascript" layout:fragment="script">
-	 $(function () {
-         $('#datetimepicker5').datetimepicker({
-        	 format: 'L' 
-         });
-     });
 	</script>
-	
 </body>
 </html>

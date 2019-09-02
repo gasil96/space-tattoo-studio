@@ -27,7 +27,12 @@
 
 						<div class="form-group">
 							<label>Data/Horário</label> 
-							<input type="datetime-local"  id="horario" class="form-control" th:field="*{horarioAgendamento}">
+							<div class="input-group date" id="horarioAgendamento" data-target-input="nearest">
+			                    <input type="text" class="form-control " data-target="#horarioAgendamento" th:field="*{horarioAgendamento}">
+			                    <div class="input-group-append" data-target="#horarioAgendamento" data-toggle="datetimepicker">
+			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+			                    </div>
+			                </div>
 						</div>
 
 						<div class="form-group">
@@ -60,6 +65,14 @@
 	    $('#editarNovoAgendamento').on('hide.bs.modal', function () { window.location.href = '/agendamento/detalhamento'; })
 	})
 	
+	$(function () {
+        $('#horarioAgendamento').datetimepicker({
+      	  format: 'DD-MM-YYYY HH:mm', 
+      	  autoclose: true,
+      	  locale: 'pt-BR',
+      	  minDate: new Date()
+        });
+    });
 
 	</script>
 </body>

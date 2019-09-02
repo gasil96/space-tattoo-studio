@@ -107,8 +107,19 @@
 		$(document).ready(function () {
 		    setTimeout(function () {
 		        window.location.reload(1);
-		    }, 30000); // 5 em 5 segundos.
+		    }, 3000000); 
 		});
+		
+		$(function () {
+	        $('#horarioAgendamento').datetimepicker({
+	      	  format: 'DD-MM-YYYY HH:mm', 
+	      	  autoclose: true,
+	      	  locale: 'pt-BR',
+	      	  minDate: new Date()
+	        });
+	    });
+		
+		
 	</script>
 </body>
 </html>

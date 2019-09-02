@@ -32,7 +32,7 @@ public class Servico extends EntidadeBase<Long>{
 	@Column(name = "tipo", length = 65)
 	private TipoServicoEnum tipoServico;
 	
-	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern="dd-MM-yyyy HH:mm")
 	@Column(name = "horario_agendamento", nullable=false)
 	private LocalDateTime horarioAgendamento;
 	
