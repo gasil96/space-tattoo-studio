@@ -24,14 +24,15 @@
 			</div>
 		</section>
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
-
+		<div th:if="${salvou == true} " id="clienteSalvo" class="salvamentoRealizado"></div>
+		
 		<section class="no-padding-top">
           <div class="container-fluid">
             <div class="block">
               <div class="title"><strong>Todos</strong></div>
               <div class="block-body">
                 <div class="table-responsive">
-                  <table id="datatableCliente" style="width: 100%;" class="table">
+                  <table id="demoMessage3" style="width: 100%;" class="table">
 					<thead>
 						<tr>
 							<th># Código</th>
@@ -137,12 +138,22 @@
 	          minDate: new Date()
 	        });
 	    });
-
-		$('#clienteSalvo').on('click', function () {
+		
+		$('div.salvamentoRealizado').show(function () {
 	        Messenger().post({
-	            message: 'Cliente salvo com sucesso!',
-	            type: 'success'
+	            message: 'How are you?',
+	            type: 'success',
+	            showCloseButton: true
+	        }),
+	        
+	        $('#demoMessage3').show(function () {
+	            Messenger().post({
+	                message: 'No unusual activity around. Carry on.',
+	                type: 'info',
+	                showCloseButton: true
+	            });
 	        });
+	        
 	    });
 		
 	</script>

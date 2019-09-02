@@ -80,7 +80,7 @@ public class ClienteController {
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		servicoCliente.salvar(cliente);
-		attr.addFlashAttribute("msgSalvamentoCliente", "Novo cliente salvo com sucesso!");
+		attr.addFlashAttribute("salvou", true);
 		return ATUALIZAR_PAGINA;
 	}
 
