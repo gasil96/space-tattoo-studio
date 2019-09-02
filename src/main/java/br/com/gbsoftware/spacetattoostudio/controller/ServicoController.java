@@ -73,17 +73,18 @@ public class ServicoController {
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoSevice.buscarPorId(id));
+		System.err.println("data/hora ---->  " + servicoSevice.buscarPorId(id).get().getHorarioAgendamento());
 		return MODAL_EDITAR_AGENDAMENTO; 
 	}
 	
 	@PostMapping("editar")
-	public String editar(@Valid Servico agendamento) {
+	public String editar(@Valid Servico agendamento, RedirectAttributes attr) {
 		
 		if(agendamento.getStatusAgendamento() == StatusServicoEnum.ENCERRADO) {
 			agendamento.setHorarioConclusaoAgendamento(LocalDateTime.now());
 		}
 		servicoSevice.editar(agendamento);
-		// TODO - RETORNO ("msgClienteAlterado", "Cliente alterado com sucesso!"
+		attr.addFlashAttribute("editou", true);
 		return ATUALIZAR_PAGINA;
 	}
 	
@@ -94,11 +95,11 @@ public class ServicoController {
 	}
 
 	@PostMapping("encerrar")
-	public String encerrar(@Valid Servico servico) {
+	public String encerrar(@Valid Servico servico, RedirectAttributes attr) {
 		servico.setHorarioConclusaoAgendamento(LocalDateTime.now());
 		servico.setStatusAgendamento(StatusServicoEnum.ENCERRADO);
 		servicoSevice.editar(servico);
-		// TODO - RETORNO ("msgAgendamentoEncerrado", "O agendamento foi encerrado."
+		attr.addFlashAttribute("encerrou", true);
 		return ATUALIZAR_PAGINA;
 	}
 	
@@ -109,10 +110,10 @@ public class ServicoController {
 	}
 	
 	@PostMapping("reabrir")
-	public String reabrir(@Valid Servico servico) {
+	public String reabrir(@Valid Servico servico, RedirectAttributes attr) {
 		servico.setStatusAgendamento(StatusServicoEnum.ATIVO);
 		servicoSevice.editar(servico);
-		// TODO - RETORNO ("msgAgendamentoEncerrado", "O agendamento foi reaberto."
+		attr.addFlashAttribute("reabriu", true);
 		return ATUALIZAR_PAGINA;
 	}
 	

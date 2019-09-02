@@ -22,7 +22,9 @@
 		</section>
 				<div th:if="${salvou == true} " id="agendamentoSalvou"></div>
 				<div th:if="${codigoInvalido == true} " id="agendamentoCodigoInvalido"></div>
-<!-- 				<div th:if="${salvou == true} " id="clienteSalvo"></div> -->
+				<div th:if="${editou == true} " id="agendamentoEditado"></div>
+				<div th:if="${encerrou == true} " id="agendamentoEncerrado"></div>
+				<div th:if="${reabriu == true} " id="agendamentoReaberto"></div>
 		
 		
 		<section class="no-padding-top">
@@ -115,6 +117,33 @@
 			Messenger().post({
 				message : 'Código de cliente inválido',
 				type : 'error'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoEditado').show(function() {
+			Messenger().post({
+				message : 'Alteração realizada com sucesso!',
+				type : 'info'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoEncerrado').show(function() {
+			Messenger().post({
+				message : 'Agendamento encerrado!',
+				type : 'info'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoReaberto').show(function() {
+			Messenger().post({
+				message : 'Agendamento reaberto com sucesso!',
+				type : 'success'
 			});
 		});
 	});
