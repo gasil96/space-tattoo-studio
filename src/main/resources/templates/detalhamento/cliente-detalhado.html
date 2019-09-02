@@ -25,6 +25,7 @@
 		</section>
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
 		<div th:if="${salvou == true} " id="clienteSalvo"></div>
+		<div th:if="${editou == true} " id="clienteEditado"></div>
 		
 		<section class="no-padding-top">
           <div class="container-fluid">
@@ -140,11 +141,19 @@
 	        });
 	    });
 	
-	
 		$(document).ready(function() {
 			$('#clienteSalvo').show(function() {
 				Messenger().post({
 					message : 'Cliente salvo com sucesso!',
+					type : 'success'
+				});
+			});
+		});
+		
+		$(document).ready(function() {
+			$('#clienteEditado').show(function() {
+				Messenger().post({
+					message : 'Alteração realizada com sucesso!',
 					type : 'success'
 				});
 			});

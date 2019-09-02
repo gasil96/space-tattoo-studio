@@ -20,6 +20,11 @@
 				</div>
 			</div>
 		</section>
+				<div th:if="${salvou == true} " id="agendamentoSalvou"></div>
+				<div th:if="${codigoInvalido == true} " id="agendamentoCodigoInvalido"></div>
+<!-- 				<div th:if="${salvou == true} " id="clienteSalvo"></div> -->
+		
+		
 		<section class="no-padding-top">
           <div class="container-fluid">
             <div class="block">
@@ -95,6 +100,35 @@
 		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
+	
+	$(document).ready(function() {
+		$('#agendamentoSalvou').show(function() {
+			Messenger().post({
+				message : 'Agendamento salvo com sucesso!',
+				type : 'success'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoCodigoInvalido').show(function() {
+			Messenger().post({
+				message : 'Código de cliente inválido',
+				type : 'error'
+			});
+		});
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	$(document).ready(function(){
 		  $('#datatableAgendamento').DataTable({
 			  "language": {

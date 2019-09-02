@@ -93,7 +93,7 @@ public class ClienteController {
 	@PostMapping("editar")
 	public String editar(@Valid Cliente cliente, RedirectAttributes attr) {
 		servicoCliente.editar(cliente);
-		// TODO - RETORNO ("msgClienteAlterado", "Cliente alterado com sucesso!"
+		attr.addFlashAttribute("editou", true);
 		return ATUALIZAR_PAGINA;
 	}
 

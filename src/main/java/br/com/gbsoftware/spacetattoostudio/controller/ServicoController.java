@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
@@ -52,12 +53,12 @@ public class ServicoController {
 	}
 	
 	@PostMapping("salvar") 
-	public String salvar(Servico servico) {
+	public String salvar(Servico servico, RedirectAttributes attr) {
 		if(servicoCliente.buscarPorId(servico.getCliente().getId()).isPresent()) {
 			servicoSevice.salvar(servico);
-			// TODO - RETORNO ("msgSalvamentoAgendamento", "Novo agendamento realizado!"
+			attr.addFlashAttribute("salvou", true);
 		} else {
-			// TODO - RETORNO ("msgErroIdNaoValida", "Código do cliente não é válido"
+			attr.addFlashAttribute("codigoInvalido", true);
 		}
 		return ATUALIZAR_PAGINA;
 	}
