@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
@@ -68,13 +69,18 @@ public class ClienteController {
 		model.addAttribute("totalAtivos",clientesAtivos.size());
 		model.addAttribute("totalInativos",clientesInativos.size());
 		model.addAttribute("totalInadim",clientesInadimplentes.size());
+		
+		ModelAndView mav = new ModelAndView("usuario");
+		mav.addObject("totalAtivosTeste", clientesAtivos.size());
+		
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
+	
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		servicoCliente.salvar(cliente);
-		// TODO - RETORNO ("msgSalvamentoCliente", "Novo cliente salvo com sucesso!"
+		attr.addFlashAttribute("msgSalvamentoCliente", "Novo cliente salvo com sucesso!");
 		return ATUALIZAR_PAGINA;
 	}
 
@@ -85,7 +91,7 @@ public class ClienteController {
 	}
 
 	@PostMapping("editar")
-	public String editar(@Valid Cliente cliente) {
+	public String editar(@Valid Cliente cliente, RedirectAttributes attr) {
 		servicoCliente.editar(cliente);
 		// TODO - RETORNO ("msgClienteAlterado", "Cliente alterado com sucesso!"
 		return ATUALIZAR_PAGINA;

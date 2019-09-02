@@ -22,7 +22,7 @@
 										<i class="material-icons md-48" style="font-size: 42px"> group_add </i> 
 										</a>
 									</div>
-									<strong>Total de clientes</strong>
+									<strong><a href="/cliente/detalhamento">Total de clientes</a></strong>
 								</div>
 								<div class="number dashtext-4" th:text="${totalClientes}">253</div>
 							</div>
@@ -98,6 +98,20 @@
 			</div>
 		</section>
 		
+		<section>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="block">
+                  <div class="title" style="text-align: center;"><strong>Calendário Geral</strong></div>
+                  <p>Todos agendamentos estarão disponivéis nesse calendário.</p>
+                  <div id="calendarioGeral">   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+		
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
 		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 		</div>
@@ -119,7 +133,23 @@
 	        });
 	    });
 		
-		
+		$('#calendarioGeral').fullCalendar({
+	        header: {
+	            left: 'prev,next today',
+	            center: 'title',
+	            right: 'month,agendaWeek,agendaDay,listWeek'
+	        },
+	        editable: true,
+	        eventLimit: true, // allow "more" link when too many events
+	        navLinks: true,
+	        themeSystem: 'bootstrap3',
+	        bootstrapGlyphicons: false,
+	        events: [{
+	                title: 'All Day Event',
+	                start: '0d'
+	            }
+	        ]
+	    });
 	</script>
 </body>
 </html>

@@ -36,7 +36,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 	List<Servico> agendamentoDaSemana();
 
 	@Query(value = "SELECT * FROM servico WHERE horario_agendamento BETWEEN CURRENT_TIMESTAMP()"
-			+ " AND DATE_ADD(NOW(), INTERVAL 1 DAY) LIMIT 6", nativeQuery = true)
+			+ " AND DATE_ADD(NOW(), INTERVAL 1 DAY) LIMIT 3", nativeQuery = true)
 	List<Servico> proximosSeisAgendamentos();
 
 	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
