@@ -73,6 +73,7 @@ public class ServicoController {
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("servico", servicoSevice.buscarPorId(id));
+		// TODO - NAO ESTA RECUPERANDO A DATA
 		System.err.println("data/hora ---->  " + servicoSevice.buscarPorId(id).get().getHorarioAgendamento());
 		return MODAL_EDITAR_AGENDAMENTO; 
 	}
@@ -83,6 +84,7 @@ public class ServicoController {
 		if(agendamento.getStatusAgendamento() == StatusServicoEnum.ENCERRADO) {
 			agendamento.setHorarioConclusaoAgendamento(LocalDateTime.now());
 		}
+		agendamento.setHorarioAgendamento(agendamento.getHorarioAgendamento());
 		servicoSevice.editar(agendamento);
 		attr.addFlashAttribute("editou", true);
 		return ATUALIZAR_PAGINA;
