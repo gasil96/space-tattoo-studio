@@ -133,23 +133,65 @@
 	        });
 	    });
 		
-		$('#calendarioGeral').fullCalendar({
+		$('#calendarioGeral2').fullCalendar({
 	        header: {
 	            left: 'prev,next today',
 	            center: 'title',
-	            right: 'month,agendaWeek,agendaDay,listWeek'
+	            right: 'month,agendaWeek,agendaDay'
 	        },
 	        editable: true,
 	        eventLimit: true, // allow "more" link when too many events
 	        navLinks: true,
-	        themeSystem: 'bootstrap3',
-	        bootstrapGlyphicons: false,
+	        themeSystem: 'bootstrap4',
 	        events: [{
 	                title: 'All Day Event',
 	                start: '0d'
 	            }
 	        ]
 	    });
+		$(function () {
+
+		    // how to integrate Google Calendar: https://fullcalendar.io/docs/google_calendar/
+		    var todayDate = moment().startOf('day');
+		    var YM = todayDate.format('YYYY-MM');
+		    var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
+		    var TODAY = todayDate.format('YYYY-MM-DD');
+		    var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+
+		    
+		    $('#calendarioGeral2').fullCalendar({
+		        header: {
+		            left: 'prev,next today',
+		            center: 'title',
+		            right: 'month,agendaWeek,agendaDay'
+		        },
+		        editable: false,
+		        eventLimit: true, // allow "more" link when too many events
+		        navLinks: true,
+		        themeSystem: 'bootstrap4',
+		        bootstrapGlyphicons: false,
+		        events: [{
+		                title: 'Evento de Hoje',
+		                start: TODAY
+		            },
+		            {
+		                title: 'Long Event',
+		                start: YM + '0d',
+		                end: YM + '-10'
+		            },
+		            {
+		                title: 'Click for Google',
+		                url: 'http://google.com/',
+		                start: YM + '-28'
+		            }
+		        ]
+		    });
+		});
+		
+
+		 $(document).ready(function() {
+		       var teste = [[${listaAgendamentoDia}]];
+		    }
 	</script>
 </body>
 </html>

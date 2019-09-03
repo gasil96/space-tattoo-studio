@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
+import java.util.HashMap;
 /**
  * <b>GB Software</b>
  * 
@@ -6,6 +7,9 @@ package br.com.gbsoftware.spacetattoostudio.controller;
  * @version 2019 - Criação
  */
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
@@ -83,4 +91,5 @@ public class InitController {
 	public StatusServicoEnum[] getStatusAgendamento() {
 		return StatusServicoEnum.values();
 	}
+	
 }
