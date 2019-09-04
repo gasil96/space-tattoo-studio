@@ -148,9 +148,6 @@
 		var TOMORROW = todayDate.clone().add(1, 'day')
 				.format('YYYY-MM-DD');
 		
-	
-		 
-		
 		$(document).ready(function() {
 			$.ajax({
 				type : "GET",
@@ -160,11 +157,17 @@
 					var jsonOk = JSON.stringify(data);
 					console.log("Sucesso dados ---> : ", data);
 					$('#calendarioGeral').fullCalendar({
+						 header: {
+					            left: 'prev,next today',
+					            center: 'title',
+					            right: 'month,agendaWeek,agendaDay'
+					        },
 						themeSystem : 'bootstrap4',
 						events : [ {
 								start : data.start,
-								title : data.title
-						} ]
+								title : data.title,
+								url   : 'url'
+						}]
 					});
 
 				},
@@ -174,33 +177,6 @@
 			});
 
 		});
-
-		$(document).ready(function() {
-			$('#calendarioGeral2').fullCalendar({
-				themeSystem : 'bootstrap4',
-				eventSources : [ {
-					url : '/calendario',
-					type : 'GET',
-					dataType : 'json',
-					data : {
-						start : 'start',
-						title : 'title',
-						end : 'end'
-					},
-					error : function() {
-						alert("Ocorreu um erro ao buscar eventos!");
-					},
-				} ]
-			});
-
-			console.log(TODAY);
-		});
-
-		// 		$('#calendarioGeral').fullCalendar({
-		// 		    events: {
-		// 		               url: "/calendario",
-		// 		          }
-		// 		});
 	</script>
 </body>
 </html>

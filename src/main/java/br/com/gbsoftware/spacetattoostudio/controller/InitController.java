@@ -8,6 +8,7 @@ import java.util.HashMap;
  */
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -103,19 +104,17 @@ public class InitController {
     String getCalendario(HttpServletResponse response) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("start", "2019-09-17");
-//        map.put("id", 111);
+        map.put("id", 111);
         map.put("title", "Agendamento");
-//        map.put("url", "http://globo.com/");
-        map.put("end", "2019-09-17");
+        map.put("url", "http://globo.com/");
+        map.put("end", "2019-09-05");
 
         // Convert to JSON string.
         String ted = new Gson().toJson(map);
-
-//         Write JSON string.
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        System.err.println("Objeto com a data " + ted);
-        return ted;
+         String ss = "{'start':'2019-09-17','end':'2019-09-05','id':111,'title':'Agendamen@@@to','url':'globo.com/'}";
+         System.err.println("Objeto json" + ss);
+        return ss;
+        
 	
 	}
 	
