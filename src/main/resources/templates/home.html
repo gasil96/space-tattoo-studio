@@ -111,6 +111,12 @@
             </div>
           </div>
         </section>
+        
+		<section>
+		
+			<span id="mensagem"></span>
+		
+		</section>
 		
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
 		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
@@ -132,66 +138,69 @@
 	      	  minDate: new Date()
 	        });
 	    });
+
 		
-		$('#calendarioGeral2').fullCalendar({
-	        header: {
-	            left: 'prev,next today',
-	            center: 'title',
-	            right: 'month,agendaWeek,agendaDay'
-	        },
-	        editable: true,
-	        eventLimit: true, // allow "more" link when too many events
-	        navLinks: true,
-	        themeSystem: 'bootstrap4',
-	        events: [{
-	                title: 'All Day Event',
-	                start: '0d'
-	            }
-	        ]
-	    });
-		$(function () {
+		var todayDate = moment().startOf('day');
+		var YM = todayDate.format('YYYY-MM');
+		var YESTERDAY = todayDate.clone()
+				.subtract(1, 'day').format('YYYY-MM-DD');
+		var TODAY = todayDate.format('YYYY-MM-DD');
+		var TOMORROW = todayDate.clone().add(1, 'day')
+				.format('YYYY-MM-DD');
+		
+	
+		 
+		
+		$(document).ready(function() {
+			$.ajax({
+				type : "GET",
+				url : "/calendario",
+				dataType : 'json',
+				success : function(data) {
+					var jsonOk = JSON.stringify(data);
+					console.log("Sucesso dados ---> : ", data);
+					$('#calendarioGeral').fullCalendar({
+						themeSystem : 'bootstrap4',
+						events : [ {
+								start : data.start,
+								title : data.title
+						} ]
+					});
 
-		    // how to integrate Google Calendar: https://fullcalendar.io/docs/google_calendar/
-		    var todayDate = moment().startOf('day');
-		    var YM = todayDate.format('YYYY-MM');
-		    var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-		    var TODAY = todayDate.format('YYYY-MM-DD');
-		    var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+				},
+				error : function(e) {
+					alert("Ocorreu um erro ao buscar eventos!");
+				}
+			});
 
-		    
-		    $('#calendarioGeral2').fullCalendar({
-		        header: {
-		            left: 'prev,next today',
-		            center: 'title',
-		            right: 'month,agendaWeek,agendaDay'
-		        },
-		        editable: false,
-		        eventLimit: true, // allow "more" link when too many events
-		        navLinks: true,
-		        themeSystem: 'bootstrap4',
-		        bootstrapGlyphicons: false,
-		        events: [{
-		                title: 'Evento de Hoje',
-		                start: TODAY
-		            },
-		            {
-		                title: 'Long Event',
-		                start: YM + '0d',
-		                end: YM + '-10'
-		            },
-		            {
-		                title: 'Click for Google',
-		                url: 'http://google.com/',
-		                start: YM + '-28'
-		            }
-		        ]
-		    });
 		});
-		
 
-		 $(document).ready(function() {
-		       var teste = [[${listaAgendamentoDia}]];
-		    }
+		$(document).ready(function() {
+			$('#calendarioGeral2').fullCalendar({
+				themeSystem : 'bootstrap4',
+				eventSources : [ {
+					url : '/calendario',
+					type : 'GET',
+					dataType : 'json',
+					data : {
+						start : 'start',
+						title : 'title',
+						end : 'end'
+					},
+					error : function() {
+						alert("Ocorreu um erro ao buscar eventos!");
+					},
+				} ]
+			});
+
+			console.log(TODAY);
+		});
+
+		// 		$('#calendarioGeral').fullCalendar({
+		// 		    events: {
+		// 		               url: "/calendario",
+		// 		          }
+		// 		});
 	</script>
 </body>
 </html>
