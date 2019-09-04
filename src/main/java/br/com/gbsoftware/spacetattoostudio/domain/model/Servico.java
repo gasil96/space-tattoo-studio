@@ -64,6 +64,12 @@ public class Servico extends EntidadeBase<Long>{
 		this.cliente = cliente;
 	}
 
+
+	public Servico(@NotNull TipoServicoEnum tipoServico) {
+		super();
+		this.tipoServico = tipoServico;
+	}
+
 	public LocalDateTime getHorarioAgendamento() {
 		return horarioAgendamento;
 	}
@@ -108,6 +114,6 @@ public class Servico extends EntidadeBase<Long>{
 	public String toString() {
 		return "Servico [tipoServico=" + tipoServico + ", horarioAgendamento="
 				+ horarioAgendamento + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
-				+ ", statusAgendamento=" + statusAgendamento + ", cliente=" + cliente + "]";
+				+ ", statusAgendamento=" + statusAgendamento + "]";
 	}
 }

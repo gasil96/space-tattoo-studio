@@ -1,4 +1,8 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 /**
  * <b>GB Software</b>
@@ -8,7 +12,6 @@ import java.util.HashMap;
  */
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -109,11 +112,23 @@ public class InitController {
         map.put("url", "http://globo.com/");
         map.put("end", "2019-09-05");
 
+        Servico s1 = new Servico(TipoServicoEnum.BARBEARIA);
+        Servico s2 = new Servico(TipoServicoEnum.PIERNCING);
+        Servico s3 = new Servico(TipoServicoEnum.TATTOO);
+        List<Servico> listaServicos = new ArrayList<>();
+        listaServicos.add(s1);
+        listaServicos.add(s2);
+        listaServicos.add(s3);
+        
+        String listagemConvertida = new Gson().toJson(listaServicos);
+        
+        
         // Convert to JSON string.
         String ted = new Gson().toJson(map);
-         String ss = "{'start':'2019-09-17','end':'2019-09-05','id':111,'title':'Agendamen@@@to','url':'globo.com/'}";
-         System.err.println("Objeto json" + ss);
-        return ss;
+        listaServicos.stream().forEach(System.err::println);
+        System.err.println("Objeto json" + ted);
+        System.err.println("Objeto json" + listagemConvertida);
+        return listagemConvertida;
         
 	
 	}
