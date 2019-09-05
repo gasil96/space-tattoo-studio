@@ -1,9 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 /**
  * <b>GB Software</b>
  * 
@@ -11,7 +7,6 @@ import java.util.HashMap;
  * @version 2019 - Criação
  */
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
@@ -42,10 +40,10 @@ public class InitController {
 
 	@Autowired
 	private ClienteService servicoCliente;
-	
+
 	@Autowired
 	private ServicoService servicoService;
-	
+
 	@GetMapping("/")
 	public String home(ModelMap model, Cliente cliente, Servico servico) {
 		model.addAttribute("classActivePrincipal", "active");
@@ -57,12 +55,12 @@ public class InitController {
 		model.addAttribute("proximosAgendamentos", servicoService.getProximosSeisAgendamentos());
 		return PAGINA_INICIAL;
 	}
-	
-	 @GetMapping("/login")
-	    public String login() {
-	        return "login";
-	    }
-	
+
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+
 	@GetMapping("/home")
 	public String dashboard(ModelMap model, Cliente cliente) {
 		model.addAttribute("classActivePrincipal", "active");
@@ -70,67 +68,39 @@ public class InitController {
 		model.addAttribute("totalClientes", totalClientes.size());
 		return PAGINA_INICIAL;
 	}
-	
+
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
 	}
-	
+
 	@ModelAttribute("listaAgendamentoDia")
-	public List<Servico> getAgendamentoDoDia(){
+	public List<Servico> getAgendamentoDoDia() {
 		return servicoService.getAgendamentoPorDia();
 	}
-	
+
 	@ModelAttribute("listaAgendamentoDaSemana")
-	public List<Servico> getAgendamentoDaSemana(){
+	public List<Servico> getAgendamentoDaSemana() {
 		return servicoService.getAgendamentoPorSemana();
 	}
-	
+
 	@ModelAttribute("tipoagendamento")
 	public TipoServicoEnum[] getTipoServico() {
 		return TipoServicoEnum.values();
 	}
-	
+
 	@ModelAttribute("statusagendamento")
 	public StatusServicoEnum[] getStatusAgendamento() {
 		return StatusServicoEnum.values();
 	}
-	
-	/** 
-	 * Testes TODO
-	 * 
-	 * */
-	
-	@RequestMapping(value = "/calendario", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    String getCalendario(HttpServletResponse response) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("start", "2019-09-17");
-        map.put("id", 111);
-        map.put("title", "Agendamento");
-        map.put("url", "http://globo.com/");
-        map.put("end", "2019-09-05");
 
-        Servico s1 = new Servico(TipoServicoEnum.BARBEARIA);
-        Servico s2 = new Servico(TipoServicoEnum.PIERNCING);
-        Servico s3 = new Servico(TipoServicoEnum.TATTOO);
-        List<Servico> listaServicos = new ArrayList<>();
-        listaServicos.add(s1);
-        listaServicos.add(s2);
-        listaServicos.add(s3);
-        
-        String listagemConvertida = new Gson().toJson(listaServicos);
-        
-        
-        // Convert to JSON string.
-        String ted = new Gson().toJson(map);
-        listaServicos.stream().forEach(System.err::println);
-        System.err.println("Objeto json" + ted);
-        System.err.println("Objeto json" + listagemConvertida);
-        return listagemConvertida;
-        
-	
+	@RequestMapping(value = "/calendario", method = RequestMethod.GET)
+	public @ResponseBody String getCalendario(HttpServletResponse response) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		List<Servico> listaServicos = servicoService.buscarTodos();
+		String listaServicosJson = mapper.writeValueAsString(listaServicos);
+		return listaServicosJson;
 	}
-	
 }

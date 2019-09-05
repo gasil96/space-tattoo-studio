@@ -155,7 +155,6 @@
 				dataType : 'json',
 				success : function(data) {
 					var jsonOk = JSON.stringify(data);
-					console.log("Sucesso dados ---> : ", data);
 					$('#calendarioGeral').fullCalendar({
 						 header: {
 					            left: 'prev,next today',
@@ -163,11 +162,11 @@
 					            right: 'month,agendaWeek,agendaDay'
 					        },
 						themeSystem : 'bootstrap4',
-						events : [ {
-								start : data.start,
-								title : data.title,
-								url   : 'url'
-						}]
+						eventSources: [
+			                {
+			                    url: '/calendario'
+			                }
+			            ]
 					});
 
 				},

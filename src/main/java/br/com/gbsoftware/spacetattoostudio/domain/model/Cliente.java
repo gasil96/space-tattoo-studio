@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
+
 /**
  * <b>GB Software</b>
  * 
@@ -55,8 +56,8 @@ public class Cliente extends EntidadeBase<Long> {
 	public Cliente() {
 	}
 
-	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, 
-			LocalDateTime dataCadastro, String instagram, Double saldo, List<Servico> servicos) {
+	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, LocalDateTime dataCadastro,
+			String instagram, Double saldo, List<Servico> servicos) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
@@ -84,7 +85,7 @@ public class Cliente extends EntidadeBase<Long> {
 	}
 
 	public void setInstagram(String instagram) {
-			this.instagram =  instagram;
+		this.instagram = instagram;
 	}
 
 	public String getNome() {
@@ -139,7 +140,6 @@ public class Cliente extends EntidadeBase<Long> {
 	@Override
 	public String toString() {
 		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
-				+ ", dataCadastro=" + dataCadastro + ", saldo=" + saldo
-				+ ", servicos=" + servicos + "]";
+				+ ", dataCadastro=" + dataCadastro + ", saldo=" + saldo + "]";
 	}
 }
