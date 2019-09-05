@@ -148,16 +148,6 @@
 		});
 	});
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	$(document).ready(function(){
 		  $('#datatableAgendamento').DataTable({
 			  "language": {
@@ -173,6 +163,8 @@
       	  minDate: new Date()
         });
     });
+	
+	//-------------------------------------------------------------------------------------------------------------
 	
 	var BARCHARTEXMPLE    = $('#relatorioAgendamentoSemestral');
     var barChartExample = new Chart(BARCHARTEXMPLE, {
@@ -296,9 +288,11 @@
         }
     });
 	
-    //------------------------------
+    //-------------------------------------------------------------------------------------------------------------
     
-      var PIECHARTEXMPLE    = $('#nMesAnterior');
+    
+    
+    var PIECHARTEXMPLE    = $('#nMesAnterior');
     var pieChartExample = new Chart(PIECHARTEXMPLE, {
         type: 'pie',
         options: {
@@ -315,7 +309,7 @@
             ],
             datasets: [
                 {
-                    data: [300, 50, 100],
+                    data: [300, 500, 100],
                     borderWidth: 0,
                     backgroundColor: [
                         '#723ac3',
@@ -333,7 +327,34 @@
             }
     });
     
-    
+//     $(document).ready(function() {
+// 		$.ajax({
+// 			type : "GET",
+// 			url : "/calendario",
+// 			dataType : 'json',
+// 			success : function(data) {
+// 				var jsonOk = JSON.stringify(data);
+// 				$('#calendarioGeral').fullCalendar({
+// 					 header: {
+// 				            left: 'prev,next today',
+// 				            center: 'title',
+// 				            right: 'month,agendaWeek,agendaDay'
+// 				        },
+// 					themeSystem : 'bootstrap4',
+// 					eventSources: [
+// 		                {
+// 		                    url: '/calendario'
+// 		                }
+// 		            ]
+// 				});
+
+// 			},
+// 			error : function(e) {
+// 				alert("Ocorreu um erro ao buscar os eventos!");
+// 			}
+// 		});
+
+// 	});
     
     
     

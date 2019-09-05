@@ -1,7 +1,4 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 /**
  * <b>GB Software</b>
  * 
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
@@ -98,8 +96,8 @@ public class InitController {
 	@RequestMapping(value = "/calendario", method = RequestMethod.GET)
 	public @ResponseBody String getCalendario(HttpServletResponse response) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-//		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		List<Servico> listaServicos = servicoService.buscarTodos();
 		String listaServicosJson = mapper.writeValueAsString(listaServicos);
 		return listaServicosJson;
