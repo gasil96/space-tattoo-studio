@@ -48,7 +48,7 @@ public class Servico extends EntidadeBase<Long> {
 
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@Column(name = "horario_conclusao_agendamento")
-	@JsonProperty(value = "end")
+	@JsonIgnore
 	private LocalDateTime horarioConclusaoAgendamento;
 
 	@NotNull
@@ -92,7 +92,7 @@ public class Servico extends EntidadeBase<Long> {
 		return horarioAgendamento;
 	}
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	public void setHorarioAgendamento(LocalDateTime horarioAgendamento) {
 		this.horarioAgendamento = horarioAgendamento;
 	}
