@@ -290,71 +290,60 @@
 	
     //-------------------------------------------------------------------------------------------------------------
     
-    
-    
-    var PIECHARTEXMPLE    = $('#nMesAnterior');
-    var pieChartExample = new Chart(PIECHARTEXMPLE, {
-        type: 'pie',
-        options: {
-            legend: {
-                display: true,
-                position: "left"
-            }
-        },
-        data: {
-            labels: [
-                "Barbearia",
-                "Tatuagem",
-                "Piercing"
-            ],
-            datasets: [
-                {
-                    data: [300, 500, 100],
-                    borderWidth: 0,
-                    backgroundColor: [
-                        '#723ac3',
-                        "#864DD9",
-                        "#9762e6",
-                        "#a678eb"
-                    ],
-                    hoverBackgroundColor: [
-                        '#723ac3',
-                        "#864DD9",
-                        "#9762e6",
-                        "#a678eb"
-                    ]
-                }]
-            }
-    });
-    
-//     $(document).ready(function() {
-// 		$.ajax({
-// 			type : "GET",
-// 			url : "/calendario",
-// 			dataType : 'json',
-// 			success : function(data) {
-// 				var jsonOk = JSON.stringify(data);
-// 				$('#calendarioGeral').fullCalendar({
-// 					 header: {
-// 				            left: 'prev,next today',
-// 				            center: 'title',
-// 				            right: 'month,agendaWeek,agendaDay'
-// 				        },
-// 					themeSystem : 'bootstrap4',
-// 					eventSources: [
-// 		                {
-// 		                    url: '/calendario'
-// 		                }
-// 		            ]
-// 				});
+    $(document).ready(function() {
+		$.ajax({
+			type : "GET",
+			url : "/agendamento/dadosMA",
+			dataType : 'json',
+			success : function(data) {
+				var jsonOk = JSON.stringify(data);
+				console.log(data);
+				
+				 
+			    var PIECHARTEXMPLE    = $('#nMesAnterior');
+			    var pieChartExample = new Chart(PIECHARTEXMPLE, {
+			        type: 'pie',
+			        options: {
+			            legend: {
+			                display: true,
+			                position: "left"
+			            }
+			        },
+			        data: {
+			            labels: [
+			                "Barbearia",
+			                "Tatuagem",
+			                "Piercing"
+			            ],
+			            datasets: [
+			                {
+			                    data: [data.barbeariaTotal, data.tattooTotal, data.piercingTotal],
+			                    borderWidth: 0,
+			                    backgroundColor: [
+			                        '#723ac3',
+			                        "#864DD9",
+			                        "#9762e6",
+			                        "#a678eb"
+			                    ],
+			                    hoverBackgroundColor: [
+			                        '#723ac3',
+			                        "#864DD9",
+			                        "#9762e6",
+			                        "#a678eb"
+			                    ]
+			                }]
+			            }
+			    });
+				
+				
+				
+			},
+			error : function(e) {
+				alert("Ocorreu um erro ao buscar os eventos!");
+			}
+		});
 
-// 			},
-// 			error : function(e) {
-// 				alert("Ocorreu um erro ao buscar os eventos!");
-// 			}
-// 		});
-
-// 	});
+	});
     
     
     

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
@@ -128,7 +129,7 @@ public class ServicoController {
 	}
 
 	@RequestMapping(value = "/dadosMA", method = RequestMethod.GET)
-	public @ResponseBody String getDadosMA c(HttpServletResponse response) throws JsonProcessingException {
+	public @ResponseBody String getDadosMA(HttpServletResponse response) throws JsonProcessingException {
 		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosMesAtual();
 		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
@@ -137,10 +138,14 @@ public class ServicoController {
 		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("barbeariaTotal", agendamentosBarbearia);
-		map.put("piercingTotal", agendamentosPiercing);
-		map.put("tattooTotal", agendamentosTattoo);
-		String listaTotaisAgendamentosJson = new Gson().toJson(map); 
+		map.put("barbeariaTotal", agendamentosBarbearia.size());
+		map.put("piercingTotal", agendamentosPiercing.size());
+		map.put("tattooTotal", agendamentosTattoo.size());
+		String listaTotaisAgendamentosJson = new Gson().toJson(map);
+//		ObjectMapper mapper = new ObjectMapper();
+//		String listaTotaisAgendamentosJson = mapper.writeValueAsString(agendamentosTattoo);
+		System.err.println("dadosMA =========>" + listaTotaisAgendamentosJson);
+		
 		return listaTotaisAgendamentosJson;
 	}
 
