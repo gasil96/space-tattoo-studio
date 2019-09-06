@@ -142,12 +142,26 @@ public class ServicoController {
 		map.put("piercingTotal", agendamentosPiercing.size());
 		map.put("tattooTotal", agendamentosTattoo.size());
 		String listaTotaisAgendamentosJson = new Gson().toJson(map);
-//		ObjectMapper mapper = new ObjectMapper();
-//		String listaTotaisAgendamentosJson = mapper.writeValueAsString(agendamentosTattoo);
-		System.err.println("dadosMA =========>" + listaTotaisAgendamentosJson);
-		
 		return listaTotaisAgendamentosJson;
 	}
+	
+	@RequestMapping(value = "/dadosUltimosTresM", method = RequestMethod.GET)
+	public @ResponseBody String getDadoUltimosTresM(HttpServletResponse response) throws JsonProcessingException {
+		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosMesAtual();
+		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
+				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
+		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
+				.filter(x -> TipoServicoEnum.PIERNCING.equals(x.getTipoServico())).collect(Collectors.toList());
+		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
+				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("barbeariaTotal", agendamentosBarbearia.size());
+		map.put("piercingTotal", agendamentosPiercing.size());
+		map.put("tattooTotal", agendamentosTattoo.size());
+		String listaTotaisAgendamentosJson = new Gson().toJson(map);
+		return listaTotaisAgendamentosJson;
+	}
+	
 
 	@ModelAttribute("cliente")
 	public List<Cliente> getCliente() {
