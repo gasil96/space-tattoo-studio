@@ -125,13 +125,6 @@
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 	
-	$(document).ready(function(){
-		  $('#datatableCliente').DataTable({
-			  "language": {
-		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-	        }});
-		});
-		
 		$(function () {
 	        $('#horarioAgendamento').datetimepicker({
 	      	  format: 'DD-MM-YYYY HH:mm', 
@@ -140,6 +133,53 @@
 	          minDate: new Date()
 	        });
 	    });
+		
+		$(document).ready(function() {
+		    $('#datatableCliente').DataTable( {
+		        dom: 'Bfrtip',
+		        buttons: [{
+		           extend: 'excel',
+		           text: 'Planilha',
+		           exportOptions: {
+	                    columns: ':visible'
+	                },
+		        },
+	                {
+		        	extend:'print',
+		        	text: 'Impressão',
+		        	exportOptions: {
+	                    columns: ':visible'
+	                },
+	                },
+                {
+		        	extend:'pdf',
+		        	exportOptions: {
+	                    columns: ':visible'
+	                },
+	                },
+	                {
+			        	extend:'excel',
+			        	text:"WhatsApp",
+			        	exportOptions: {
+		                    columns: '2'
+		                },
+		                },
+		                {
+				        	extend:'excel',
+				        	text:"Instagram",
+				        	exportOptions: {
+			                    columns: '3'
+			                },
+			                }
+		       
+		            
+		                
+		        ], 
+		        language: {
+		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+		        }
+		    } );
+		} );
 	
 		$(document).ready(function() {
 			$('#clienteSalvo').show(function() {

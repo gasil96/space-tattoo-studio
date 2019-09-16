@@ -13,8 +13,8 @@
 						<span aria-hidden="true">×</span>
 					</button>
 				</div>
-				<div class="modal-body">
 					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST">
+				<div class="modal-body">
 						<div class="form-group">
 							<label for="tipoServico">Tipo</label>
 							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}" required="required">
@@ -47,8 +47,8 @@
 							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
 							<button type="submit" class="btn btn-primary">Salvar</button>
 						</div>
-					</form>
 				</div>
+					</form>
 			</div>
 		</div>
 	</div>

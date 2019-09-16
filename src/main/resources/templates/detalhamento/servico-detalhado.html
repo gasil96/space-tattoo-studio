@@ -49,7 +49,7 @@
 										<th>Inicio</th>
 										<th>Término</th>
 										<th>Status</th>
-										<th></th>
+										<th style="display: none"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -189,12 +189,35 @@
 		});
 	});
 	
-	$(document).ready(function(){
-		  $('#datatableAgendamento').DataTable({
-			  "language": {
-		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-	        }});
-		});
+	$(document).ready(function() {
+	    $('#datatableAgendamento').DataTable( {
+	        dom: 'Bfrtip',
+	        buttons: [{
+	           extend: 'excel',
+	           text: 'Planilha',
+	           exportOptions: {
+                    columns: ':visible'
+                },
+	        },
+                {
+	        	extend:'print',
+	        	text: 'Impressão',
+	        	exportOptions: {
+                    columns: ':visible'
+                },
+                },
+            {
+	        	extend:'pdf',
+	        	exportOptions: {
+                    columns: ':visible'
+                },
+                }           
+	        ], 
+	        language: {
+	            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+	        }
+	    } );
+	} );
 
 	$(function () {
         $('#horarioAgendamento').datetimepicker({
