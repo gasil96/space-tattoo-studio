@@ -63,7 +63,13 @@
 					<h2 class="h5 no-margin-bottom" layout:fragment="titulosubCabecalho">Titulo do sub menu aqui</h2>
 				</div>
 			</div>
-
+			<div id = "ajax-loading">
+					<div class="sk-three-bounce">
+                      <div class="sk-child sk-bounce1"></div>
+                      <div class="sk-child sk-bounce2"></div>
+                      <div class="sk-child sk-bounce3"></div>
+                    </div>
+			</div>
 			<div class="container-fluid">
 				<ul class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -73,7 +79,7 @@
 			<div layout:fragment="corpo">
 				<div>conteudo principal das paginas</div>
 			</div>
-
+			
 			<footer th:replace="fragments/footer :: rodape">
 				<div>footer</div>
 			</footer>
@@ -137,7 +143,9 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 	
+	<script type="text/javascript">
 	
+	</script>
 	
 	<script layout:fragment="script"> 
 	</script>

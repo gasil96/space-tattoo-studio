@@ -133,7 +133,7 @@ public class ServicoController {
 		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
 		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERNCING.equals(x.getTipoServico())).collect(Collectors.toList());
+				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
 		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -150,7 +150,7 @@ public class ServicoController {
 		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
 		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERNCING.equals(x.getTipoServico())).collect(Collectors.toList());
+				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
 		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -167,7 +167,7 @@ public class ServicoController {
 		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
 		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERNCING.equals(x.getTipoServico())).collect(Collectors.toList());
+				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
 		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -186,7 +186,7 @@ public class ServicoController {
 						&& StatusServicoEnum.ENCERRADO.equals(x.getStatusAgendamento()))
 				.collect(Collectors.toList());
 		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERNCING.equals(x.getTipoServico())
+				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())
 						&& StatusServicoEnum.ENCERRADO.equals(x.getStatusAgendamento()))
 				.collect(Collectors.toList());
 		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
