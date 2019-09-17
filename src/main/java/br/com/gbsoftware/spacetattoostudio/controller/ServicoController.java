@@ -65,8 +65,14 @@ public class ServicoController {
 	@PostMapping("salvar")
 	public String salvar(Servico servico, RedirectAttributes attr) {
 		if (servicoCliente.buscarPorId(servico.getCliente().getId()).isPresent()) {
-			servicoSevice.salvar(servico);
-			attr.addFlashAttribute("salvou", true);
+			if(servico.getNumeroSessoes() == null) {
+				servico.setNumeroSessoes(1);
+				servicoSevice.salvar(servico);
+				attr.addFlashAttribute("salvou", true);
+			}else {
+				servicoSevice.salvar(servico);
+				attr.addFlashAttribute("salvou", true);
+			}
 		} else {
 			attr.addFlashAttribute("codigoInvalido", true);
 		}

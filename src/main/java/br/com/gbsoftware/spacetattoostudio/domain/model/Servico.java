@@ -42,6 +42,9 @@ public class Servico extends EntidadeBase<Long> {
 	@JsonProperty(value = "title")
 	private TipoServicoEnum tipoServico;
 
+	@Column(length = 40)
+	private String categoria;
+
 	@JsonProperty(value = "start")
 	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
 	@Column(name = "horario_agendamento", nullable = false)
@@ -57,13 +60,13 @@ public class Servico extends EntidadeBase<Long> {
 	@Column(name = "status_agendamento", length = 65)
 	@JsonIgnore
 	private StatusServicoEnum statusAgendamento;
-	
+
 	@Column(name = "valor_orcamento", length = 65, precision = 12, scale = 2)
 	private BigDecimal orcamento;
 
 	@Column(name = "numero_sessoes", length = 3)
 	private Integer numeroSessoes;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_cliente_fk")
@@ -74,17 +77,26 @@ public class Servico extends EntidadeBase<Long> {
 
 	}
 
-	public Servico(@NotNull TipoServicoEnum tipoServico, LocalDateTime horarioAgendamento,
-			LocalDateTime horarioConclusaoAgendamento, @NotNull StatusServicoEnum statusAgendamento, BigDecimal orcamento,
-			Integer numeroSessoes, @NotNull Cliente cliente) {
+	public Servico(@NotNull TipoServicoEnum tipoServico, String categoria, LocalDateTime horarioAgendamento,
+			LocalDateTime horarioConclusaoAgendamento, @NotNull StatusServicoEnum statusAgendamento,
+			BigDecimal orcamento, Integer numeroSessoes, @NotNull Cliente cliente) {
 		super();
 		this.tipoServico = tipoServico;
+		this.categoria = categoria;
 		this.horarioAgendamento = horarioAgendamento;
 		this.horarioConclusaoAgendamento = horarioConclusaoAgendamento;
 		this.statusAgendamento = statusAgendamento;
 		this.orcamento = orcamento;
 		this.numeroSessoes = numeroSessoes;
 		this.cliente = cliente;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public BigDecimal getOrcamento() {
@@ -117,7 +129,7 @@ public class Servico extends EntidadeBase<Long> {
 	public LocalDateTime getHorarioAgendamento() {
 		return horarioAgendamento;
 	}
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	public void setHorarioAgendamento(LocalDateTime horarioAgendamento) {
 		this.horarioAgendamento = horarioAgendamento;
@@ -158,9 +170,10 @@ public class Servico extends EntidadeBase<Long> {
 
 	@Override
 	public String toString() {
-		return "Servico [tipoServico=" + tipoServico + ", horarioAgendamento=" + horarioAgendamento
-				+ ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento + ", statusAgendamento="
-				+ statusAgendamento + ", orcamento=" + orcamento + ", numeroSessoes=" + numeroSessoes + ", cliente="
-				+ cliente + "]";
+		return "Servico [tipoServico=" + tipoServico + ", categoria=" + categoria + ", horarioAgendamento="
+				+ horarioAgendamento + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
+				+ ", statusAgendamento=" + statusAgendamento + ", orcamento=" + orcamento + ", numeroSessoes="
+				+ numeroSessoes + ", cliente=" + cliente + "]";
 	}
+
 }

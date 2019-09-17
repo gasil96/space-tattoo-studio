@@ -30,7 +30,6 @@
 		<div th:if="${encerrou == true} " id="agendamentoEncerrado"></div>
 		<div th:if="${reabriu == true} " id="agendamentoReaberto"></div>
 
-
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="block">
@@ -43,26 +42,32 @@
 								class="table">
 								<thead>
 									<tr>
-										<th>#</th>
+<!-- 										<th>#</th> -->
 										<th>Tipo</th>
+										<th>Categoria</th>
 										<th>Cliente</th>
 										<th>Inicio</th>
 										<th>Término</th>
 										<th>Status</th>
+										<th>Valor</th>
+										<th>Sessões</th>
 										<th style="display: none"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="a : ${listaServico}">
-										<th scope="row" th:text="${a.id}"><a class="text-muted">1</a></th>
+<!-- 										<th scope="row" th:text="${a.id}"><a class="text-muted">1</a></th> -->
 										<td th:text="${a.tipoServico}">Tatuagem</td>
+										<td th:text="${a.categoria}">Mahori</td>
 										<td th:text="${a.cliente.nome}">Breno</td>
 										<td
-											th:text="${#temporals.format(a.horarioAgendamento, 'dd-MM-yyyy  HH:mm')}">9:00
+											th:text="${#temporals.format(a.horarioAgendamento, 'dd/MM  HH:mm')}">9:00
 											AM</td>
 										<td
-											th:text="${#temporals.format(a.horarioConclusaoAgendamento, 'dd-MM-yyyy  HH:mm')}">2</td>
+											th:text="${#temporals.format(a.horarioConclusaoAgendamento, 'dd/MM  HH:mm')}">2</td>
 										<td th:text="${a.statusAgendamento}">Ativo</td>
+										<td th:text="${a.orcamento}">500,00</td>
+										<td th:text="${a.numeroSessoes}">3</td>
 										<td colspan="2"><a
 											th:href="@{/agendamento/editar/{id} (id=${a.id})}"
 											role="button"> <span title="EDITAR" aria-hidden="true"
@@ -77,7 +82,8 @@
 												style="color: red;"
 												th:if="${a.horarioConclusaoAgendamento == null}"><i
 													class="material-icons md-48">timer_off</i></span>
-										</a></td>
+										</a>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -143,7 +149,6 @@
 			th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-	
 	$(document).ready(function() {
 		$('#agendamentoSalvou').show(function() {
 			Messenger().post({

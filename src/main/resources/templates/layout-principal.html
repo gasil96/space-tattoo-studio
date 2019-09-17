@@ -146,7 +146,18 @@
 	<script th:src="@{/js/components-preloader.js}"> </script>
 	
 	<script type="text/javascript">
-	     </script>
+	
+	$(document).ready(function() {
+        $('#sessoes').hide();
+        $('#selectTipoServico').change(function() {
+             if ($('#selectTipoServico').val() == 'TATTOO') {
+                $('#sessoes').show();
+            }  else {
+                $('#sessoes').hide();
+            }
+        });
+    });
+	</script>
 
 	
 	<script layout:fragment="script"> 
