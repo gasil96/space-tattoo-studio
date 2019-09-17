@@ -32,6 +32,16 @@
 			                </div>
 						</div>
 						<div class="form-group">
+							<label>Instagram</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">R$</span>
+								</div>
+								<input type="text" placeholder="Valor do orçamento"
+									class="form-control" id="orcamento" data-mask=" 9999.99" th:field="*{orcamento}" >
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="tipoServico">Status</label>
 							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">
 								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>

@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
 
+import java.math.BigDecimal;
 /**
  * <b>GB Software</b>
  * 
@@ -56,7 +57,13 @@ public class Servico extends EntidadeBase<Long> {
 	@Column(name = "status_agendamento", length = 65)
 	@JsonIgnore
 	private StatusServicoEnum statusAgendamento;
+	
+	@Column(name = "valor_orcamento", length = 65, precision = 12, scale = 2)
+	private BigDecimal orcamento;
 
+	@Column(name = "numero_sessoes", length = 3)
+	private Integer numeroSessoes;
+	
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_cliente_fk")
@@ -67,14 +74,33 @@ public class Servico extends EntidadeBase<Long> {
 
 	}
 
-	public Servico(TipoServicoEnum tipoServico, LocalDateTime horarioAgendamento,
-			LocalDateTime horarioConclusaoAgendamento, StatusServicoEnum statusAgendamento, @NotNull Cliente cliente) {
+	public Servico(@NotNull TipoServicoEnum tipoServico, LocalDateTime horarioAgendamento,
+			LocalDateTime horarioConclusaoAgendamento, @NotNull StatusServicoEnum statusAgendamento, BigDecimal orcamento,
+			Integer numeroSessoes, @NotNull Cliente cliente) {
 		super();
 		this.tipoServico = tipoServico;
 		this.horarioAgendamento = horarioAgendamento;
 		this.horarioConclusaoAgendamento = horarioConclusaoAgendamento;
 		this.statusAgendamento = statusAgendamento;
+		this.orcamento = orcamento;
+		this.numeroSessoes = numeroSessoes;
 		this.cliente = cliente;
+	}
+
+	public BigDecimal getOrcamento() {
+		return orcamento;
+	}
+
+	public void setOrcamento(BigDecimal orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	public Integer getNumeroSessoes() {
+		return numeroSessoes;
+	}
+
+	public void setNumeroSessoes(Integer numeroSessoes) {
+		this.numeroSessoes = numeroSessoes;
 	}
 
 	public Servico(@NotNull TipoServicoEnum tipoServico) {
@@ -133,6 +159,8 @@ public class Servico extends EntidadeBase<Long> {
 	@Override
 	public String toString() {
 		return "Servico [tipoServico=" + tipoServico + ", horarioAgendamento=" + horarioAgendamento
-				+ ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento + "]";
+				+ ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento + ", statusAgendamento="
+				+ statusAgendamento + ", orcamento=" + orcamento + ", numeroSessoes=" + numeroSessoes + ", cliente="
+				+ cliente + "]";
 	}
 }
