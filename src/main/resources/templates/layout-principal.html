@@ -148,7 +148,11 @@
 	<script type="text/javascript">
 	
 	$(document).ready(function() {
+		if($('#selectTipoServico').val() == 'TATTOO'){
+	        $('#sessoes').show();
+		}else{
         $('#sessoes').hide();
+		}
         $('#selectTipoServico').change(function() {
              if ($('#selectTipoServico').val() == 'TATTOO') {
                 $('#sessoes').show();
