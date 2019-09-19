@@ -49,7 +49,7 @@
 										<th>Inicio</th>
 										<th>Término</th>
 										<th>Status</th>
-										<th>Valor</th>
+										<th>R$ Valor</th>
 										<th>Sessões</th>
 										<th style="display: none"></th>
 									</tr>
@@ -66,7 +66,7 @@
 										<td
 											th:text="${#temporals.format(a.horarioConclusaoAgendamento, 'dd/MM  HH:mm')}">2</td>
 										<td th:text="${a.statusAgendamento}">Ativo</td>
-										<td th:text="${a.orcamento}">500,00</td>
+										<td >R$ <span th:text="${a.orcamento}"></span></td>
 										<td th:text="${a.numeroSessoes}">3</td>
 										<td colspan="2"><a
 											th:href="@{/agendamento/editar/{id} (id=${a.id})}"

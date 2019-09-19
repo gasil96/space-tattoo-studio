@@ -40,8 +40,8 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text">R$</span>
 								</div>
-								<input type="text" placeholder="Valor"
-									class="form-control" id="orcamento" required="required" data-mask=" 9999.99" th:field="*{orcamento}" >
+								<input type="number" placeholder="Valor"
+									class="form-control" id="orcamento" required="required" min="0" max="10000" th:field="*{orcamento}" >
 							</div>
 						</div>
 						<div class="form-group"  id="sessoes">
