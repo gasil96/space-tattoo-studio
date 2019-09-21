@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+	<div layout:fragment="titulosubCabecalho">
+		<h2 class="h5 no-margin-bottom">Dashboard</h2>
+	</div>
+	<li layout:fragment="caminho" hidden></li>
+
+	<div layout:fragment="corpo">
+		<section class="no-padding-top no-padding-bottom">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-3 col-sm-6">
+						<div class="statistic-block block">
+							<div
+								class="progress-details d-flex align-items-end justify-content-between">
+								<div class="title">
+									<div >
+										<a role="button" data-toggle="modal" data-target="#novoCliente" href="#" style="color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
+										<i class="material-icons md-48" style="font-size: 35px"> group_add </i> 
+										</a>
+									</div>
+									<strong><a href="/cliente/detalhamento">Total de clientes</a></strong>
+								</div>
+								<div class="number dashtext-4" th:text="${totalClientes}">253</div>
+							</div>
+							
+							
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6">
+						<div class="statistic-block block">
+							<div
+								class="progress-details d-flex align-items-end justify-content-between">
+								<div class="title">
+									<div >
+										<a role="button" data-toggle="modal" data-target="#novoAgendamento" href="#" style="color: white"  onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
+										<i class="material-icons md-48" style="font-size: 35px"> note_add </i> 
+										</a>
+									</div>
+									<strong>Agendamentos do dia</strong>
+								</div>
+								<div class="number dashtext-1" th:text="${totalAgendamentosDia}">12</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6">
+						<div class="statistic-block block">
+							<div
+								class="progress-details d-flex align-items-end justify-content-between">
+								<div class="title">
+									<div >
+										<a href="/agendamento/detalhamento" style="color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
+										<i class="material-icons md-48" style="font-size: 35px">event_note </i> 
+										</a>
+									</div>
+									<strong>Agendamentos da semana</strong>
+								</div>
+								<div class="number dashtext-2" th:text="${totalAgendamentosSemana}">57</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="no-padding-bottom">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-4" th:each="pa :${proximosAgendamentos}">
+						<div class="user-block block text-center">
+							<h2 th:text="${#temporals.format(pa.horarioAgendamento, 'HH:mm')}">09:00 AM</h2>
+							<h2 style="text-decoration:line-through; color: red" th:if="${pa.horarioConclusaoAgendamento}">ENCERRADO</h2>
+							<a href="#" class="user-title">
+								<h3 class="h5" th:text="${pa.cliente.nome}">Breno Marques</h3> <span th:text="${pa.cliente.instagram}">@brenomarques__</span>
+							</a>
+							<div class="contributions" th:text="${pa.tipoServico}">Tatuagem</div>
+						</div>
+					</div>
+			</div>
+		</section>
+		
+		<section>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="block">
+                  <div class="title" style="text-align: center;"><strong>Calendário Geral</strong></div>
+                  <p>Todos agendamentos estarão disponivéis nesse calendário.</p>
+                  <div id="calendarioGeral">   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+		<section>
+		
+			<span id="mensagem"></span>
+		
+		</section>
+		
+		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
+		<div th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
+		</div>
+		
+	<script type="text/javascript" layout:fragment="script">
+
+		$(document).ready(function () {
+		    setTimeout(function () {
+		        window.location.reload(1);
+		    }, 3000000); 
+		});
+		
+		$(function () {
+	        $('#horarioAgendamento').datetimepicker({
+	      	  format: 'DD-MM-YYYY HH:mm', 
+	      	  autoclose: true,
+	      	  locale: 'pt-BR',
+	      	  minDate: new Date()
+	        });
+	    });
+
+		
+		var todayDate = moment().startOf('day');
+		var YM = todayDate.format('YYYY-MM');
+		var YESTERDAY = todayDate.clone()
+				.subtract(1, 'day').format('YYYY-MM-DD');
+		var TODAY = todayDate.format('YYYY-MM-DD');
+		var TOMORROW = todayDate.clone().add(1, 'day')
+				.format('YYYY-MM-DD');
+		
+		$(document).ready(function() {
+			$.ajax({
+				type : "GET",
+				url : "/calendario",
+				dataType : 'json',
+				success : function(data) {
+					var jsonOk = JSON.stringify(data);
+					$('#calendarioGeral').fullCalendar({
+						 header: {
+					            left: 'prev,next today',
+					            center: 'title',
+					            right: 'month,agendaWeek,agendaDay'
+					        },
+						themeSystem : 'bootstrap4',
+						eventSources: [
+			                {
+			                    url: '/calendario'
+			                }
+			            ]
+					});
+
+				},
+				error : function(e) {
+					alert("Ocorreu um erro ao buscar os eventos!");
+				}
+			});
+
+		});
+	</script>
+</body>
+</html>

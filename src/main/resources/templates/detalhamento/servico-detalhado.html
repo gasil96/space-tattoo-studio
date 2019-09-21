@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+
+<body>
+	<h2 layout:fragment="titulosubCabecalho">Agendamento Detalhado</h2>
+
+	<li layout:fragment="caminho">Agendamento</li>
+
+	<div layout:fragment="corpo">
+
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<button role="button" data-toggle="modal"
+							data-target="#novoAgendamento"
+							style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;">
+							<i class="material-icons" style="font-size: 44px; color: white;"
+								onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">note_add</i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div th:if="${salvou == true} " id="agendamentoSalvou"></div>
+		<div th:if="${codigoInvalido == true} " id="agendamentoCodigoInvalido"></div>
+		<div th:if="${editou == true} " id="agendamentoEditado"></div>
+		<div th:if="${encerrou == true} " id="agendamentoEncerrado"></div>
+		<div th:if="${reabriu == true} " id="agendamentoReaberto"></div>
+
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="block">
+					<div class="title">
+						<strong>Todos</strong>
+					</div>
+					<div class="block-body">
+						<div class="table-responsive">
+							<table id="datatableAgendamento" style="width: 100%;"
+								class="table">
+								<thead>
+									<tr>
+<!-- 										<th>#</th> -->
+										<th>Tipo</th>
+										<th>Categoria</th>
+										<th>Cliente</th>
+										<th>Inicio</th>
+										<th>Término</th>
+										<th>Status</th>
+										<th>R$ Valor</th>
+										<th>Sessões</th>
+										<th style="display: none"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="a : ${listaServico}">
+<!-- 										<th scope="row" th:text="${a.id}"><a class="text-muted">1</a></th> -->
+										<td th:text="${a.tipoServico}">Tatuagem</td>
+										<td th:text="${a.categoria}">Mahori</td>
+										<td th:text="${a.cliente.nome}">Breno</td>
+										<td
+											th:text="${#temporals.format(a.horarioAgendamento, 'dd/MM  HH:mm')}">9:00
+											AM</td>
+										<td
+											th:text="${#temporals.format(a.horarioConclusaoAgendamento, 'dd/MM  HH:mm')}">2</td>
+										<td th:text="${a.statusAgendamento}">Ativo</td>
+										<td >R$ <span th:text="${a.orcamento}"></span></td>
+										<td th:text="${a.numeroSessoes}">3</td>
+										<td colspan="2"><a
+											th:href="@{/agendamento/editar/{id} (id=${a.id})}"
+											role="button"> <span title="EDITAR" aria-hidden="true"
+												style="color: grey;"><i class="material-icons">style</i></span>
+										</a> <a th:href="@{/agendamento/reabrir/{id} (id=${a.id})}"
+											role="button"> <span title="REABRIR" aria-hidden="true"
+												style="color: yellow;"
+												th:unless="${a.horarioConclusaoAgendamento == null}"><i
+													class="material-icons">timer</i></span>
+										</a> <a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}"
+											role="button"> <span title="ENCERRAR" aria-hidden="true"
+												style="color: red;"
+												th:if="${a.horarioConclusaoAgendamento == null}"><i
+													class="material-icons md-48">timer_off</i></span>
+										</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="pie-chart chart block">
+							<div class="title">
+								<strong id="mesAnoAtual">Nº Agendamentos Mês Atual</strong>
+							</div>
+							<div class="pie-chart chart margin-bottom-sm">
+								<canvas id="nMesAnterior"></canvas>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div class="bar-chart block chart">
+							<div class="title">
+								<strong>Comparativo <strong style="color: yellow;">ULTIMOS</strong> meses (90 dias)</strong>
+							</div>
+							<div class="bar-chart chart">
+								<canvas id="relatorioAgendamentoUltimos3Meses"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="container-fluid">
+				<div class="row">
+				<div class="col-lg-4">
+						<div class="pie-chart chart block">
+							<div class="title">
+								<strong id="agendamentosEncerradosMesAtual">Nº de agendamentos <strong style="color: red">ENCERRADOS</strong> em  <strong id="mesAtual">MES</strong></strong>
+							</div>
+							<div class="pie-chart chart margin-bottom-sm">
+								<canvas id="encerramentosMesAtual"></canvas>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div class="bar-chart block chart">
+							<div class="title">
+								<strong>Comparativo <strong style="color: yellow;">PRÓXIMOS</strong> meses (90 dias)</strong>
+							</div>
+							<div class="bar-chart chart">
+								<canvas id="relatorioAgendamentoProximos3Meses"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div
+			th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+	$(document).ready(function() {
+		$('#agendamentoSalvou').show(function() {
+			Messenger().post({
+				message : 'Agendamento salvo com sucesso!',
+				type : 'success'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoCodigoInvalido').show(function() {
+			Messenger().post({
+				message : 'Código de cliente inválido',
+				type : 'error'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoEditado').show(function() {
+			Messenger().post({
+				message : 'Alteração realizada com sucesso!',
+				type : 'info'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoEncerrado').show(function() {
+			Messenger().post({
+				message : 'Agendamento encerrado!',
+				type : 'info'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#agendamentoReaberto').show(function() {
+			Messenger().post({
+				message : 'Agendamento reaberto com sucesso!',
+				type : 'success'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+	    $('#datatableAgendamento').DataTable( {
+	        dom: 'lBfrtip',
+	        buttons: [{
+	           extend: 'excel',
+	           text: 'Planilha',
+	           exportOptions: {
+                    columns: ':visible'
+                },
+	        },
+                {
+	        	extend:'print',
+	        	text: 'Impressão',
+	        	exportOptions: {
+                    columns: ':visible'
+                },
+                },
+            {
+	        	extend:'pdf',
+	        	exportOptions: {
+                    columns: ':visible'
+                },
+                }           
+	        ], 
+	        language: {
+	            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+	        }
+	    } );
+	} );
+
+	$(function () {
+        $('#horarioAgendamento').datetimepicker({
+      	  format: 'DD-MM-YYYY HH:mm', 
+      	  autoclose: true,
+      	  locale: 'pt-BR',
+      	  minDate: new Date()
+        });
+    });
+	
+	//-------------------------------------------------------------------------------------------------------------
+    $(document).ready(
+			function() {
+				var mesAtual = (moment().format('MMMM'));
+				var anoAtual = (moment().format('YYYY'));
+				var mesAnoAtual = "Nº de agendamentos em "+ (moment().format('MMMM'))+" de "+(moment().format('YYYY'));
+				var titleLabelComparativo = "(Período) "+ moment().subtract(90, 'days').calendar() + " até " + moment().subtract(1, 'minute').calendar(); 
+				document.getElementById("mesAnoAtual").innerHTML = mesAnoAtual; 
+				$.ajax({
+					type : "GET",
+					url : "/agendamento/dadosUltimosTresM",
+					dataType : 'json',
+					success : function(data) {
+						var BARCHARTEXMPLE    = $('#relatorioAgendamentoUltimos3Meses');
+					    var barChartExample = new Chart(BARCHARTEXMPLE, {
+					        type: 'bar',
+					        options: {
+					            scales: {
+					                xAxes: [{
+					                    display: true,
+					                    gridLines: {
+					                        color: 'transparent'
+					                    }
+					                }],
+					                yAxes: [{
+					                    display: true,
+					                    gridLines: {
+					                        color: 'transparent'
+					                    }
+					                }]
+					            },
+					        },
+					        data: {
+					            labels: [titleLabelComparativo],
+					            datasets: [
+					                {
+					                    label: "Barbearia",
+					                    backgroundColor: [
+					                        "#864DD9"
+					                    ],
+					                    hoverBackgroundColor: [
+					                        "#864DD9"
+					                    ],
+					                    borderColor: [
+					                        "#864DD9"
+					                    ],
+					                    borderWidth: 0.5,
+					                    data: [data.barbeariaTotal],
+					                },
+					                {
+					                    label: "Tattoo",
+					                    backgroundColor: [
+					                        "rgba(98, 98, 98, 0.5)"
+					                    ],
+					                    hoverBackgroundColor: [
+					                        "rgba(98, 98, 98, 0.5)"
+					                    ],
+					                    borderColor: [
+					                        "rgba(98, 98, 98, 0.5)"
+					                    ],
+					                    borderWidth: 0.5,
+					                    data: [data.tattooTotal],
+					                },
+					                {
+					                    label: "Piercing",
+					                    backgroundColor: [
+					                        "#F0F8FF"
+					                    ],
+					                    hoverBackgroundColor: [
+					                        "#F0F8FF"
+					                    ],
+					                    borderColor: [
+					                        "#F0F8FF"
+					                    ],
+					                    borderWidth: 0.5,
+					                    data: [data.piercingTotal],
+					                }
+					            ]
+					        }
+					    });
+					},
+					error : function(e) {
+						alert("Ocorreu um erro ao buscar os eventos!");
+					}
+				});
+
+			});
+	
+    $(document).ready(
+			function() {
+				var mesAtual = (moment().format('MMMM'));
+				var anoAtual = (moment().format('YYYY'));
+				var mesAnoAtual = "Nº de agendamentos em "+ (moment().format('MMMM'))+" de "+(moment().format('YYYY'));
+				var titleLabelComparativo = "(Período) "+ moment().subtract(90, 'days').calendar() + " até " + moment().subtract(1, 'minute').calendar(); 
+				document.getElementById("mesAnoAtual").innerHTML = mesAnoAtual; 
+				$.ajax({
+					type : "GET",
+					url : "/agendamento/dadosProximosTresM",
+					dataType : 'json',
+					success : function(data) {
+						var BARCHARTEXMPLE    = $('#relatorioAgendamentoProximos3Meses');
+					    var barChartExample = new Chart(BARCHARTEXMPLE, {
+					        type: 'bar',
+					        options: {
+					            scales: {
+					                xAxes: [{
+					                    display: true,
+					                    gridLines: {
+					                        color: 'transparent'
+					                    }
+					                }],
+					                yAxes: [{
+					                    display: true,
+					                    gridLines: {
+					                        color: 'transparent'
+					                    }
+					                }]
+					            },
+					        },
+					        data: {
+					            labels: [titleLabelComparativo],
+					            datasets: [
+					                {
+					                    label: "Barbearia",
+					                    backgroundColor: [
+					                        "#864DD9"
+					                    ],
+					                    hoverBackgroundColor: [
+					                        "#864DD9"
+					                    ],
+					                    borderColor: [
+					                        "#864DD9"
+					                    ],
+					                    borderWidth: 0.5,
+					                    data: [data.barbeariaTotal],
+					                },
+					                {
+					                    label: "Tattoo",
+					                    backgroundColor: [
+					                        "rgba(98, 98, 98, 0.5)"
+					                    ],
+					                    hoverBackgroundColor: [
+					                        "rgba(98, 98, 98, 0.5)"
+					                    ],
+					                    borderColor: [
+					                        "rgba(98, 98, 98, 0.5)"
+					                    ],
+					                    borderWidth: 0.5,
+					                    data: [data.tattooTotal],
+					                },
+					                {
+					                    label: "Piercing",
+					                    backgroundColor: [
+					                        "#F0F8FF"
+					                    ],
+					                    hoverBackgroundColor: [
+					                        "#F0F8FF"
+					                    ],
+					                    borderColor: [
+					                        "#F0F8FF"
+					                    ],
+					                    borderWidth: 0.5,
+					                    data: [data.piercingTotal],
+					                }
+					            ]
+					        }
+					    });
+					},
+					error : function(e) {
+						alert("Ocorreu um erro ao buscar os eventos!");
+					}
+				});
+
+			});
+	
+	
+    //-------------------------------------------------------------------------------------------------------------
+		$(document).ready(
+				function() {
+					$.ajax({
+						type : "GET",
+						url : "/agendamento/dadosMA",
+						dataType : 'json',
+						success : function(data) {
+							var PIECHARTEXMPLE = $('#nMesAnterior');
+							var pieChartExample = new Chart(PIECHARTEXMPLE,
+									{
+										type : 'pie',
+										options : {
+											legend : {
+												display : true,
+												position : "left"
+											}
+										},
+										data : {
+											labels : [ "Barbearia", "Tattoo","Piercing" ],
+											datasets : [ {
+												data : [ data.barbeariaTotal, data.tattooTotal,	data.piercingTotal ],
+												borderWidth : 0,
+												backgroundColor : [ '#864dd9', "#47494b", "#f0f8ff"],
+												hoverBackgroundColor : ['#864dd9', "#47494b","#f0f8ff"]
+											}]
+										}
+									});
+						},
+						error : function(e) {
+							alert("Ocorreu um erro ao buscar os eventos!");
+						}
+					});
+
+				});
+    
+		//-------------------------------------------------------------------------------------------------------------
+		$(document).ready(
+				function() {
+					var mesAtual = (moment().format('MMMM'));
+					document.getElementById("mesAtual").innerHTML = mesAtual; 
+
+					$.ajax({
+						type : "GET",
+						url : "/agendamento/dadosEncerrados",
+						dataType : 'json',
+						success : function(data) {
+							var PIECHARTEXMPLE = $('#encerramentosMesAtual');
+							var pieChartExample = new Chart(PIECHARTEXMPLE,
+									{
+										type : 'pie',
+										options : {
+											legend : {
+												display : true,
+												position : "left"
+											}
+										},
+										data : {
+											labels : [ "Barbearia", "Tattoo","Piercing" ],
+											datasets : [ {
+												data : [ data.barbeariaTotal, data.tattooTotal,	data.piercingTotal ],
+												borderWidth : 0,
+												backgroundColor : [ '#864dd9', "#47494b", "#f0f8ff"],
+												hoverBackgroundColor : ['#864dd9', "#47494b","#f0f8ff"]
+											}]
+										}
+									});
+						},
+						error : function(e) {
+							alert("Ocorreu um erro ao buscar os eventos!");
+						}
+					});
+
+				});
+	</script>
+</body>
+</html>

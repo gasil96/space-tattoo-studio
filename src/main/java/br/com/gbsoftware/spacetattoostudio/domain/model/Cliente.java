@@ -1,80 +1,91 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
 
-import java.io.Serializable;
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 
 @Entity
-@Table(name = "CLIENTES")
-public class Cliente implements Serializable{
+@SuppressWarnings("serial")
+@Table(name = "CLIENTE")
+public class Cliente extends EntidadeBase<Long> {
 
-	private static final long serialVersionUID = 8088981926287053083L;
-	
-	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_clientes")
-	private Long id;
-
-	@Column(nullable = true)
-	@Size(min  = 3, max = 45, message = "Nome deve conter no mínimo 3 caracteres e no máximo 45")
+	@NotNull
+	@Column(length = 50)
 	private String nome;
-	
+
+	@Column(length = 20)
 	private String telefone;
-	
-	@Column(name = "status", nullable = true)
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", length = 30)
 	private StatusClienteEnum statusCliente;
-	
-	@Column(name = "numero_servicos")
-	private Long numeroServicos;
-	
+
 	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name = "data_cadastro")
+	@Column(name = "data_cadastro", nullable = false, updatable = false)
 	private LocalDateTime dataCadastro;
-	
+
+	@Column(length = 30)
+	private String instagram;
+
 	private Double saldo;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Servico> servicos;
-	
+
 	public Cliente() {
-		
 	}
 
-	public Cliente(Long id,
-			@Size(min = 3, max = 45, message = "Nome deve conter no mínimo 3 caracteres e no máximo 45") String nome,
-			String telefone, StatusClienteEnum statusCliente, Long numeroServicos, LocalDateTime dataCadastro,
-			Double saldo, List<Servico> servicos) {
+	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, LocalDateTime dataCadastro,
+			String instagram, Double saldo, List<Servico> servicos) {
 		super();
-		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.statusCliente = statusCliente;
-		this.numeroServicos = numeroServicos;
 		this.dataCadastro = dataCadastro;
+		this.instagram = instagram;
 		this.saldo = saldo;
 		this.servicos = servicos;
 	}
 
-	public Long getId() {
-		return id;
+	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, String instagram) {
+		super();
+		this.nome = nome;
+		this.telefone = telefone;
+		this.statusCliente = statusCliente;
+		this.instagram = instagram;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setStatusCliente(StatusClienteEnum statusCliente) {
+		this.statusCliente = statusCliente;
+	}
+
+	public String getInstagram() {
+		return instagram;
+	}
+
+	public void setInstagram(String instagram) {
+		this.instagram = instagram;
 	}
 
 	public String getNome() {
@@ -95,18 +106,6 @@ public class Cliente implements Serializable{
 
 	public StatusClienteEnum getStatusCliente() {
 		return statusCliente;
-	}
-
-	public void setStatusCliente(StatusClienteEnum statusCliente) {
-		this.statusCliente = statusCliente;
-	}
-
-	public Long getNumeroServicos() {
-		return numeroServicos;
-	}
-
-	public void setNumeroServicos(Long numeroServicos) {
-		this.numeroServicos = numeroServicos;
 	}
 
 	public LocalDateTime getDataCadastro() {
@@ -133,11 +132,14 @@ public class Cliente implements Serializable{
 		this.servicos = servicos;
 	}
 
+	@PrePersist
+	public void preSalvar() {
+		this.setDataCadastro(LocalDateTime.now());
+	}
+
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
-				+ ", numeroServicos=" + numeroServicos + ", dataCadastro=" + dataCadastro + ", saldo=" + saldo
-				+ ", servicos=" + servicos + "]";
+		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
+				+ ", dataCadastro=" + dataCadastro + ", saldo=" + saldo + "]";
 	}
-	
 }

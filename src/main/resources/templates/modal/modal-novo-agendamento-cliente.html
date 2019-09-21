@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+<div layout:fragment="corpo">
+	<div id="novoAgendamentoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" >
+		<div role="document" class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<strong id="tituloModalNovoAgendamento" class="modal-title" >Agendamento para: <span th:text="${clienteNome}" style="color: yellow;"></span></strong>
+					<button type="button" data-dismiss="modal" aria-label="Close" class="close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					
+					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST">
+				<div class="modal-body">
+						<div class="form-group">
+							<label for="tipoServico">Tipo</label>
+							<select id="selectTipoServico" class="form-control"	th:field="*{tipoServico}" required="required">
+								<option value="" selected="selected">Selecione o tipo</option>
+								<option th:each="ts : ${tipoagendamento}" th:value="${ts}" th:text="${ts.tipoServico}">ATIVO</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Cateogira</label> 
+							<input type="text" class="form-control" id="cat" required="required" placeholder="maori, aquarela, relógio"  th:field="*{categoria}" maxlength="40">
+						</div>
+						<div class="form-group">
+							<label>Data/Horário</label> 
+							<div class="input-group date" id="horarioAgendamento" data-target-input="nearest">
+			                    <input type="text" class="form-control " required="required" data-target="#horarioAgendamento" th:field="*{horarioAgendamento}">
+			                    <div class="input-group-append" data-target="#horarioAgendamento" data-toggle="datetimepicker">
+			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+			                    </div>
+			                </div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">R$</span>
+								</div>
+								<input type="number" placeholder="Valor"
+									class="form-control" id="orcamento" required="required" min="0" max="10000" th:field="*{orcamento}" >
+							</div>
+						</div>
+						<div class="form-group"  id="sessoes">
+							<label>Número de sessões</label> 
+							<input type="number" class="form-control" placeholder="" th:field="*{numeroSessoes}" min="1" max="30">
+						</div>
+						<div class="form-group">
+							<label for="tipoServico">Status</label>
+							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">
+								<option th:each="ss : ${statusagendamento}" th:value="${ss}" th:text="${ss.statusServico}">ATIVO</option>
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label>Código do cliente</label> 
+							<div style="display: none">	<select th:field="*{cliente.id}"><option th:value="${id_cliente_referente}"></option></select></div>
+						</div>
+			
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
+							<button type="submit" class="btn btn-primary">Salvar</button>
+						</div>
+				</div>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" layout:fragment="script">
+	$(document).ready(function() {
+	    $('#novoAgendamentoCliente').modal('show');
+	    $('#novoAgendamentoCliente').on('hide.bs.modal', function () { window.location.href = '/cliente/detalhamento'; })
+
+	})
+	
+	$(function () {
+        $('#horarioAgendamento').datetimepicker({
+      	  format: 'DD-MM-YYYY HH:mm', 
+      	  autoclose: true,
+      	  locale: 'pt-BR',
+      	  minDate: new Date()
+        });
+    });
+	</script>	
+	
+</body>
+</html>

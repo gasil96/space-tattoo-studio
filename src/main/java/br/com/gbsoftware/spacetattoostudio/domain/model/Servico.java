@@ -1,68 +1,138 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
+/**
+ * <b>GB Software</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
+import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "SERVICO")
-public class Servico implements Serializable{
+public class Servico extends EntidadeBase<Long> {
 
-	private static final long serialVersionUID = 8942989251660620714L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_servico")
-	private Long idServico;
-	
-	@Column(name = "tipo", nullable = true)
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo", length = 65)
+	@JsonProperty(value = "title")
 	private TipoServicoEnum tipoServico;
-	
-	@DateTimeFormat(iso = ISO.DATE_TIME)
-	@Column(name = "horario_agendamento")
-	private LocalDateTime horarioAgendametno;
-	
+
+	@Column(length = 40)
+	private String categoria;
+
+	@JsonProperty(value = "start")
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@Column(name = "horario_agendamento", nullable = false)
+	private LocalDateTime horarioAgendamento;
+
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	@Column(name = "horario_conclusao_agendamento")
+	@JsonIgnore
 	private LocalDateTime horarioConclusaoAgendamento;
-	
-	@Column(name = "status")
+
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status_agendamento", length = 65)
+	@JsonIgnore
 	private StatusServicoEnum statusAgendamento;
-	
+
+	@Column(name = "valor_orcamento", length = 65, precision = 12, scale = 2)
+	private BigDecimal orcamento;
+
+	@Column(name = "numero_sessoes", length = 3)
+	private Integer numeroSessoes;
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_cliente_fk")
+	@JsonIgnore
 	private Cliente cliente;
-	
+
 	public Servico() {
-		
+
 	}
 
-	public Servico(Long idServico, TipoServicoEnum tipoServico, LocalDateTime horarioAgendametno,
-			LocalDateTime horarioConclusaoAgendamento, StatusServicoEnum statusAgendamento, @NotNull Cliente cliente) {
+	public Servico(@NotNull TipoServicoEnum tipoServico, String categoria, LocalDateTime horarioAgendamento,
+			LocalDateTime horarioConclusaoAgendamento, @NotNull StatusServicoEnum statusAgendamento,
+			BigDecimal orcamento, Integer numeroSessoes, @NotNull Cliente cliente) {
 		super();
-		this.idServico = idServico;
 		this.tipoServico = tipoServico;
-		this.horarioAgendametno = horarioAgendametno;
+		this.categoria = categoria;
+		this.horarioAgendamento = horarioAgendamento;
 		this.horarioConclusaoAgendamento = horarioConclusaoAgendamento;
 		this.statusAgendamento = statusAgendamento;
+		this.orcamento = orcamento;
+		this.numeroSessoes = numeroSessoes;
 		this.cliente = cliente;
 	}
 
-	public Long getIdServico() {
-		return idServico;
+	public String getCategoria() {
+		return categoria;
 	}
 
-	public void setIdServico(Long idServico) {
-		this.idServico = idServico;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
+	public BigDecimal getOrcamento() {
+		return orcamento;
+	}
+
+	public void setOrcamento(BigDecimal orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	public Integer getNumeroSessoes() {
+		return numeroSessoes;
+	}
+
+	public void setNumeroSessoes(Integer numeroSessoes) {
+		this.numeroSessoes = numeroSessoes;
+	}
+
+	public Servico(@NotNull TipoServicoEnum tipoServico) {
+		super();
+		this.tipoServico = tipoServico;
+	}
+
+	public Servico(@NotNull TipoServicoEnum tipoServico, LocalDateTime horarioAgendamento) {
+		super();
+		this.tipoServico = tipoServico;
+		this.horarioAgendamento = horarioAgendamento;
+	}
+
+	public LocalDateTime getHorarioAgendamento() {
+		return horarioAgendamento;
+	}
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	public void setHorarioAgendamento(LocalDateTime horarioAgendamento) {
+		this.horarioAgendamento = horarioAgendamento;
 	}
 
 	public TipoServicoEnum getTipoServico() {
@@ -73,14 +143,7 @@ public class Servico implements Serializable{
 		this.tipoServico = tipoServico;
 	}
 
-	public LocalDateTime getHorarioAgendametno() {
-		return horarioAgendametno;
-	}
-
-	public void setHorarioAgendametno(LocalDateTime horarioAgendametno) {
-		this.horarioAgendametno = horarioAgendametno;
-	}
-
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	public LocalDateTime getHorarioConclusaoAgendamento() {
 		return horarioConclusaoAgendamento;
 	}
@@ -107,9 +170,10 @@ public class Servico implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Servico [idServico=" + idServico + ", tipoServico=" + tipoServico + ", horarioAgendametno="
-				+ horarioAgendametno + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
-				+ ", statusAgendamento=" + statusAgendamento + ", cliente=" + cliente + "]";
+		return "Servico [tipoServico=" + tipoServico + ", categoria=" + categoria + ", horarioAgendamento="
+				+ horarioAgendamento + ", horarioConclusaoAgendamento=" + horarioConclusaoAgendamento
+				+ ", statusAgendamento=" + statusAgendamento + ", orcamento=" + orcamento + ", numeroSessoes="
+				+ numeroSessoes + ", cliente=" + cliente + "]";
 	}
-	
+
 }
