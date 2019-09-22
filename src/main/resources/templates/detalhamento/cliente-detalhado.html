@@ -140,12 +140,14 @@
 		        buttons: [{
 		           extend: 'excel',
 		           text: 'Planilha',
+		           className: 'btn btn-primary btn-sm',
 		           exportOptions: {
 	                    columns: ':visible'
 	                },
 		        },
 	                {
 		        	extend:'print',
+		        	className: 'btn btn-primary btn-sm',
 		        	text: 'Impressão',
 		        	exportOptions: {
 	                    columns: ':visible'
@@ -153,6 +155,7 @@
 	                },
                 {
 		        	extend:'pdf',
+		        	className: 'btn btn-primary btn-sm',
 		        	exportOptions: {
 	                    columns: ':visible'
 	                },
@@ -160,20 +163,19 @@
 	                {
 			        	extend:'excel',
 			        	text:"WhatsApp",
+			        	className: 'btn btn-primary btn-sm',
 			        	exportOptions: {
 		                    columns: '2'
 		                },
 		                },
 		                {
-				        	extend:'excel',
+		                	extend:'excel',
 				        	text:"Instagram",
+				        	className: 'btn btn-primary btn-sm',
 				        	exportOptions: {
 			                    columns: '3'
 			                },
 			                }
-		       
-		            
-		                
 		        ], 
 		        language: {
 		            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"

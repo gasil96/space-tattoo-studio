@@ -14,7 +14,6 @@
 					</button>
 				</div>
 
-				<div class="modal-body">
 					
 					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST">
 				<div class="modal-body">
@@ -59,7 +58,6 @@
 						</div>
 						
 						<div class="form-group">
-							<label>Código do cliente</label> 
 							<div style="display: none">	<select th:field="*{cliente.id}"><option th:value="${id_cliente_referente}"></option></select></div>
 						</div>
 			
@@ -70,7 +68,6 @@
 				</div>
 					</form>
 					
-				</div>
 			</div>
 		</div>
 	</div>

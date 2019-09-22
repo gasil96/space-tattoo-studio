@@ -13,11 +13,11 @@
         <ul class="list-unstyled">
           <li th:class="${classActivePrincipal}"><a th:href="@{/}"><i class="icon-home"></i>Principal</a></li>
           <li th:class="${classActiveCaixa}"><a th:href="@{/caixa/fluxo}"><i class="icon-grid"></i>Caixa</a></li>
-          <li th:class="${classActivePromocional}"><a th:href="@{/promocional/promo}"><i class="icon icon-presentation"></i>Promocional</a></li>
+          <li th:class="${classActiveSubCliente}"><a th:href="@{/cliente/detalhamento}"><i class="icon icon-user"></i>Clientes</a></li>
+          <li th:class="${classActiveSubAgendamento}"><a th:href="@{/agendamento/detalhamento}"><i class="icon icon-padnote"></i>Agendamentos</a></li>
           <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamento</a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled">
-              <li th:class="${classActiveSubCliente}"><a th:href="@{/cliente/detalhamento}">Clientes</a></li>
-              <li th:class="${classActiveSubAgendamento}"><a th:href="@{/agendamento/detalhamento}">Agendamentos</a></li>
+	          <li th:class="${classActivePromocional}"><a th:href="@{/promocional/promo}">Promocional</a></li>
               <li th:class="${classActiveSubFinanceiro}"><a th:href="@{/caixa/detalhamento}">Financeiro</a></li>
             </ul>
           </li>

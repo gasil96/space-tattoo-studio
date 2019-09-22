@@ -200,6 +200,7 @@
 	        buttons: [{
 	           extend: 'excel',
 	           text: 'Planilha',
+	           className: 'btn btn-primary btn-sm',
 	           exportOptions: {
                     columns: ':visible'
                 },
@@ -207,12 +208,14 @@
                 {
 	        	extend:'print',
 	        	text: 'Impressão',
+				className: 'btn btn-primary btn-sm',
 	        	exportOptions: {
                     columns: ':visible'
                 },
                 },
             {
 	        	extend:'pdf',
+		        className: 'btn btn-primary btn-sm',
 	        	exportOptions: {
                     columns: ':visible'
                 },
@@ -285,13 +288,13 @@
 					                {
 					                    label: "Tattoo",
 					                    backgroundColor: [
-					                        "rgba(98, 98, 98, 0.5)"
+					                        "#4682B4"
 					                    ],
 					                    hoverBackgroundColor: [
-					                        "rgba(98, 98, 98, 0.5)"
+					                        "#4682B4"
 					                    ],
 					                    borderColor: [
-					                        "rgba(98, 98, 98, 0.5)"
+					                        "#4682B4"
 					                    ],
 					                    borderWidth: 0.5,
 					                    data: [data.tattooTotal],
@@ -372,13 +375,13 @@
 					                {
 					                    label: "Tattoo",
 					                    backgroundColor: [
-					                        "rgba(98, 98, 98, 0.5)"
+					                        "#4682B4"
 					                    ],
 					                    hoverBackgroundColor: [
-					                        "rgba(98, 98, 98, 0.5)"
+					                        "#4682B4"
 					                    ],
 					                    borderColor: [
-					                        "rgba(98, 98, 98, 0.5)"
+					                        "#4682B4"
 					                    ],
 					                    borderWidth: 0.5,
 					                    data: [data.tattooTotal],
@@ -432,8 +435,8 @@
 											datasets : [ {
 												data : [ data.barbeariaTotal, data.tattooTotal,	data.piercingTotal ],
 												borderWidth : 0,
-												backgroundColor : [ '#864dd9', "#47494b", "#f0f8ff"],
-												hoverBackgroundColor : ['#864dd9', "#47494b","#f0f8ff"]
+												backgroundColor : [ '#864dd9', "#4682B4", "#f0f8ff"],
+												hoverBackgroundColor : ['#864dd9', "#4682B4","#f0f8ff"]
 											}]
 										}
 									});
@@ -471,8 +474,8 @@
 											datasets : [ {
 												data : [ data.barbeariaTotal, data.tattooTotal,	data.piercingTotal ],
 												borderWidth : 0,
-												backgroundColor : [ '#864dd9', "#47494b", "#f0f8ff"],
-												hoverBackgroundColor : ['#864dd9', "#47494b","#f0f8ff"]
+												backgroundColor : [ '#864dd9', "#4682B4", "#f0f8ff"],
+												hoverBackgroundColor : ['#864dd9', "#4682B4","#f0f8ff"]
 											}]
 										}
 									});

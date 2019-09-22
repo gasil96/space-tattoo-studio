@@ -107,7 +107,7 @@
     <!-- Forms init-->
     <script th:src="@{/js/forms-advanced.js}"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<!--     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script> -->
+	<!--     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script> -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 	<!-- Data Tables-->
     <script th:src="@{/vendor/datatables.net/js/jquery.dataTables.js}"></script>
@@ -116,17 +116,17 @@
     <script th:src="@{/vendor/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js}"></script>
     <script th:src="@{/js/tables-datatable.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js" integrity="sha256-aIToY7VLU5x+toAJcyINV0WEogFBCIVeeWhyUbCaYiQ=" crossorigin="anonymous"></script>
- <!-- Notifications-->
+ 	<!-- Notifications-->
     <script th:src="@{/vendor/messenger-hubspot/build/js/messenger.min.js}">   </script>
     <script th:src="@{/vendor/messenger-hubspot/build/js/messenger-theme-flat.js}">   </script>
     <script th:src="@{/js/components-notifications.js}"> </script>	
-<!-- Full Calendar-->
+	<!-- Full Calendar-->
     <script th:src="@{/vendor/moment/min/moment.min.js}">   </script>
     <script th:src="@{/vendor/fullcalendar/fullcalendar.min.js}">   </script>
     <script th:src="@{/vendor/fullcalendar/gcal.min.js}">   </script>
     <script th:src="@{/vendor/fullcalendar/locale/pt-br.js}">   </script>
     <script th:src="@{/js/components-calendar.js}"></script>	
-<!-- 	export datatable -->
+	<!-- 	export datatable -->
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
@@ -135,29 +135,26 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+	<!-- 	preloader -->
 	<script th:src="@{/js/components-preloader.js}"> </script>
-	
+	<!-- 	 script's gerais -->
 	<script type="text/javascript">
-	
-	$(document).ready(function() {
-		if($('#selectTipoServico').val() == 'TATTOO'){
-	        $('#sessoes').show();
-		}else{
-        $('#sessoes').hide();
-		}
-        $('#selectTipoServico').change(function() {
-             if ($('#selectTipoServico').val() == 'TATTOO') {
-                $('#sessoes').show();
-            }  else {
-                $('#sessoes').hide();
-            }
-        });
-    });
+		$(document).ready(function() {
+			if($('#selectTipoServico').val() == 'TATTOO'){
+		        $('#sessoes').show();
+			}else{
+	        $('#sessoes').hide();
+			}
+	        $('#selectTipoServico').change(function() {
+	             if ($('#selectTipoServico').val() == 'TATTOO') {
+	                $('#sessoes').show();
+	            }  else {
+	                $('#sessoes').hide();
+	            }
+	        });
+	    });
 	</script>
-
-	
 	<script layout:fragment="script"> 
 	</script>
-	
-</body>
+</body>	
 </html>

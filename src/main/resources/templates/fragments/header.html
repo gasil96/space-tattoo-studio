@@ -17,16 +17,13 @@
         </div>
         <div class="container-fluid d-flex align-items-center justify-content-between">
           <div class="navbar-header">
-            <!-- Navbar Header--><a th:href="@{/}" class="navbar-brand">
-              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Space </strong><strong>Tattoo </strong><strong class="text-primary">Studio </strong></div>
-              <div class="brand-text brand-sm"><strong class="text-primary">S</strong><strong>T</strong><strong class="text-primary">S</strong></div></a>
-            <!-- Sidebar Toggle Btn-->
-            <button class="sidebar-toggle"><i class="fa fa-long-arrow-left" style=""></i></button>
+            <a th:href="@{/}" class="navbar-brand">
+              <span class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Space </strong><strong>Tattoo </strong><strong class="text-primary">Studio </strong></span>
+              <span class="brand-text brand-sm"><strong class="text-primary">S</strong><strong>T</strong><strong class="text-primary">S</strong></span></a>
+            <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
           </div>
           <div class="right-menu list-inline no-margin-bottom">    
             <div class="list-inline-item"><a href="#" class="search-open nav-link"><i class="icon-magnifying-glass-browser"></i></a></div>
-            <!-- Megamenu end     -->
-            <!-- Log out               -->
             <div class="list-inline-item logout"> <a id="logout" th:href="@{/logout}" class="nav-link"> <span class="d-none d-sm-inline">Sair </span><i class="icon-logout"></i></a></div>
           </div>
         </div>
