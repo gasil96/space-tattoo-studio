@@ -329,7 +329,7 @@
 				var mesAtual = (moment().format('MMMM'));
 				var anoAtual = (moment().format('YYYY'));
 				var mesAnoAtual = "Nº de agendamentos em "+ (moment().format('MMMM'))+" de "+(moment().format('YYYY'));
-				var titleLabelComparativo = "(Período) "+ moment().subtract(90, 'days').calendar() + " até " + moment().subtract(1, 'minute').calendar(); 
+				var titleLabelComparativoProximo = "(Período) "+ moment().subtract(1, 'minute').calendar() + " até " + moment().add(90, 'days').calendar() ;
 				document.getElementById("mesAnoAtual").innerHTML = mesAnoAtual; 
 				$.ajax({
 					type : "GET",
@@ -356,7 +356,7 @@
 					            },
 					        },
 					        data: {
-					            labels: [titleLabelComparativo],
+					            labels: [titleLabelComparativoProximo],
 					            datasets: [
 					                {
 					                    label: "Barbearia",
