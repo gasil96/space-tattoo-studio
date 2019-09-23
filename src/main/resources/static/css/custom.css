@@ -1,1 +1,18 @@
 /* your styles go here */
+
+.texto-login {
+  font-family:  font-login-LemonJelly;
+  font-size: 95px;
+  background: -webkit-linear-gradient(#aaa	, #aaa);
+  -webkit-background-clip: text;
+/*   -webkit-text-fill-color: transparent; */
+  color: white;
+ transform: rotate(-11deg);
+}
+
+@font-face {
+  font-family: "font-login-LemonJelly";
+  src: url("../fonts/LemonJellyPersonalUse-dEqR.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
