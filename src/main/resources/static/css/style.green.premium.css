@@ -1621,7 +1621,7 @@ nav#sidebar.shrinked a[aria-expanded="true"]::after {
 }
 
 .login-page .form-holder .info {
-  background: rgba(66, 146, 68, 0.95);
+  background: rgba(66, 146, 68, 0.65);
   color: #fff;
 }
 
