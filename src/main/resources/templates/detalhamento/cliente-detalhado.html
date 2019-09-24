@@ -16,7 +16,7 @@
 					<div class="col-lg-12">
 						<button role="button" data-toggle="modal" style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;"
 							data-target="#novoCliente"  
-							title="NOVO AGENDAMENTO"><i class="material-icons" 
+							title="Novo Cliente"><i class="material-icons" 
 							style="font-size: 52px; color: white" onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)"> group_add </i> 
 						</button>
 					</div>
@@ -36,7 +36,7 @@
                   <table id="datatableCliente" style="width: 100%;" class="table">
 					<thead>
 						<tr>
-							<th># Código</th>
+							<th>Código</th>
 							<th>Nome</th>
 							<th>Telefone</th>
 						    <th>Instagram</th>
@@ -47,7 +47,7 @@
 						</thead>
                     <tbody>
                       <tr th:each="c :${listaCliente}">
-                        <td scope="row" th:text="${c.id}">1<a class="text-muted"></a></td>
+                        <td th:text="${c.id}">1<a ></a></td>
                         <td th:text="${c.nome}">Gabriel Silva</td>
                         <td th:text="${c.telefone}">(91) 9 9552-2735</td>
                         <td th:text="${c.instagram}">gasil96</td>
@@ -138,9 +138,11 @@
 		$(document).ready(function() {
 		    $('#datatableCliente').DataTable( {
 		        dom: 'lBfrtip',
+		        order: [],	   
 		        buttons: [{
 		           extend: 'excel',
 		           text: 'Planilha',
+		           title: 'SpaceTattooStudio Clientes',
 		           className: 'btn btn-primary btn-sm',
 		           exportOptions: {
 	                    columns: ':visible'
@@ -150,6 +152,7 @@
 		        	extend:'print',
 		        	className: 'btn btn-primary btn-sm',
 		        	text: 'Impressão',
+		        	title: 'SpaceTattooStudio',
 		        	exportOptions: {
 	                    columns: ':visible'
 	                },
@@ -157,6 +160,7 @@
                 {
 		        	extend:'pdf',
 		        	className: 'btn btn-primary btn-sm',
+		        	title: 'SpaceTattooStudio',
 		        	exportOptions: {
 	                    columns: ':visible'
 	                },
@@ -165,6 +169,7 @@
 			        	extend:'excel',
 			        	text:"WhatsApp",
 			        	className: 'btn btn-primary btn-sm',
+			        	 title: 'SpaceTattooStudio WhatsApp',
 			        	exportOptions: {
 		                    columns: '2'
 		                },
@@ -172,6 +177,7 @@
 		                {
 		                	extend:'excel',
 				        	text:"Instagram",
+				        	title: 'SpaceTattooStudio @Instagram',
 				        	className: 'btn btn-primary btn-sm',
 				        	exportOptions: {
 			                    columns: '3'

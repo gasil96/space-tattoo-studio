@@ -49,5 +49,8 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	@Query(value = "select * from servico where month(horario_agendamento) = month(current_timestamp())", nativeQuery = true)
 	List<Servico> agendamentosMesAtual();
+	
+	@Query(value = "SELECT * FROM servico ORDER BY horario_agendamento DESC", nativeQuery = true)
+	List<Servico> findAll();
 
 }
