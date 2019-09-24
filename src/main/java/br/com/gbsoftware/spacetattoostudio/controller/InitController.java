@@ -1,6 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
