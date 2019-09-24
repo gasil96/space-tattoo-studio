@@ -47,21 +47,19 @@
                 <div class="content">
                   <form method="post" class="form-validate mb-4" th:action="@{/login}">
                       <div th:if="${param.error}">
-                    	 <div class="alert alert-danger">
-                        		Usuário ou senha inválido.
+                    	 <div id="invalidos">
                    		 </div>
                 	   </div>
                       <div th:if="${param.logout}">
-		                    <div >
-		                        Você foi desconectado.
+		                    <div id="desconectado">
 		                    </div>
 	               	  </div>
                     <div class="form-group">
-                      <input id="username" type="text" name="username" required data-msg="Please enter your username" class="input-material">
+                      <input id="username" type="text" name="username" required data-msg="Por favor, digite seu nome" class="input-material">
                       <label for="username" class="label-material">Login</label>
                     </div>
                     <div class="form-group">
-                      <input id="password" type="password" name="password" required data-msg="Please enter your password" class="input-material">
+                      <input id="password" type="password" name="password" required data-msg="Por favor, digite sua senha" class="input-material">
                       <label for="password" class="label-material">Senha</label>
                     </div>
                     <button type="submit" class="btn btn-primary"  name="login-submit"  id="login-submit">Entrar</button>
@@ -100,7 +98,7 @@
 				
       </div>
     </div>
-    <!-- JavaScript files-->
+     <!-- JavaScript files-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/popper.js/umd/popper.min.js"> </script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -108,5 +106,26 @@
     <script src="vendor/chart.js/Chart.min.js"></script>
     <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="js/front.js"></script>
+    <script src="vendor/messenger-hubspot/build/js/messenger.min.js">   </script>
+    <script src="vendor/messenger-hubspot/build/js/messenger-theme-flat.js">   </script>
+    <script src="js/components-notifications.js"> </script>	
+    <script type="text/javascript">
+    $(document).ready(function() {
+		$('#invalidos').show(function() {
+			Messenger().post({
+				message : 'Usuario ou Senha inválido.',
+				type : 'error'
+			});
+		});
+		
+		$('#desconectado').show(function() {
+			Messenger().post({
+				message : 'Você foi desconectado do Sistema',
+				type : 'info'
+			});
+		});
+		
+	});
+    </script>
   </body>
 </html>
