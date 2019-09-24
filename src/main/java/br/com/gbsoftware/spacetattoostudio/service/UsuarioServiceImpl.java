@@ -6,6 +6,7 @@ package br.com.gbsoftware.spacetattoostudio.service;
  * @version 2019 - Criação
  */
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,5 +30,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void salvar(Usuario usuario) {
 		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 		usuarioRepository.save(usuario);
+	}
+
+	@Override
+	public Optional<Usuario> findById(String login) {
+		return usuarioRepository.findById(login);
 	}
 }

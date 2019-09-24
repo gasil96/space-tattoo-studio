@@ -7,7 +7,12 @@
        <!-- Sidebar Navigation-->
       <nav id="sidebar" th:fragment="menuLateral">
         <!-- Sidebar Header-->
-        <div class="sidebar-header d-flex align-items-center">
+        <div class="sidebar-header d-flex align-items-center" sec:authorize="isAuthenticated()">
+            <div class="avatar"><img th:src="@{/img/favicon.ico}" alt="..." class="img-fluid rounded-circle"></div>
+          <div class="title">
+            <h1 class="h5" th:text="${usuarioLogadoNome}">Gabriel Silvaaaa</h1>
+            <p th:text="${usuarioLogadoCargo}">Desenvolvedor</p>
+          </div>
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
         <ul class="list-unstyled">
@@ -15,15 +20,16 @@
           <li th:class="${classActiveCaixa}"><a th:href="@{/caixa/fluxo}"><i class="icon-grid"></i>Caixa</a></li>
           <li th:class="${classActiveSubCliente}"><a th:href="@{/cliente/detalhamento}"><i class="icon icon-user"></i>Clientes</a></li>
           <li th:class="${classActiveSubAgendamento}"><a th:href="@{/agendamento/detalhamento}"><i class="icon icon-padnote"></i>Agendamentos</a></li>
-          <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamento</a>
-            <ul id="exampledropdownDropdown" class="collapse list-unstyled">
+          <li sec:authorize="hasAnyRole('ADMIN','GERENTE')"><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamento</a>
+            <ul id="exampledropdownDropdown" class="collapse list-unstyled" >
 	          <li th:class="${classActivePromocional}"><a th:href="@{/promocional/promo}">Promocional</a></li>
               <li th:class="${classActiveSubFinanceiro}"><a th:href="@{/caixa/detalhamento}">Financeiro</a></li>
             </ul>
           </li>
-        </ul><span class="heading">Extras</span>
-        <ul class="list-unstyled" >
-          <li> <a th:href="@{/adm/administracao}" > <i class="icon-settings"></i>Administração</a></li>
+        </ul>
+        <span class="heading" sec:authorize="hasRole('ADMIN')">Extras</span>
+        <ul class="list-unstyled"  >
+          <li> <a th:href="@{/adm/administracao}" sec:authorize="hasRole('ADMIN')"> <i class="icon-settings"></i>Administração</a></li>
         </ul>
       </nav>
 </body>

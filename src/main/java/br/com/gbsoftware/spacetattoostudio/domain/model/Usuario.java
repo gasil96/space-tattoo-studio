@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,6 +22,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import br.com.gbsoftware.spacetattoostudio.domain.enums.CargoUsuarioEnum;
 
 @Entity
 public class Usuario implements UserDetails, Serializable{
@@ -38,6 +42,10 @@ public class Usuario implements UserDetails, Serializable{
 	@NotEmpty
 	private String senha;
 	
+	@Column(name = "cargo")
+	@Enumerated(EnumType.STRING)
+	private CargoUsuarioEnum cargo;
+	
 	@ManyToMany
 	@JoinTable(
 			name = "usuarios_roles",
@@ -47,6 +55,13 @@ public class Usuario implements UserDetails, Serializable{
 					name = "role_id", referencedColumnName = "nomeRole"))
 	private List<Role> roles;
 	
+	public CargoUsuarioEnum getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(CargoUsuarioEnum cargo) {
+		this.cargo = cargo;
+	}
 	
 	public String getLogin() {
 		return login;

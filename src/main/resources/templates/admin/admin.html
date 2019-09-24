@@ -36,12 +36,14 @@
 										<tr>
 											<th>Nome</th>
 											<th>login(id)</th>
+											<th>Cargo</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="u :${listaUsuarios}">
 											<th th:text="${u.nomeCompleto}">Gabriel Silva</th>
 											<td th:text="${u.login}" >gasil96</td>
+											<td th:text="${u.cargo}" >Desenvolvedor</td>
 										</tr>
 									</tbody>
 								</table>

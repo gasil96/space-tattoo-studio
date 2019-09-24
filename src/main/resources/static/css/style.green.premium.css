@@ -800,7 +800,7 @@ nav#sidebar .avatar {
   margin-right: 15px;
   background: none;
   padding: 4px;
-  border: 3px solid #282b2f;
+  border: 0px solid #282b2f;
 }
 
 nav#sidebar ul {
