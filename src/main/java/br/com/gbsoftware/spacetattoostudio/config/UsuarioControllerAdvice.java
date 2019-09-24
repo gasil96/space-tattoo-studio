@@ -22,10 +22,13 @@ public class UsuarioControllerAdvice {
 		if(principal instanceof UserDetails) {
 			Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 			String login = usuarioLogado.getName();
+			if(usuarioLogado.getName().equals("adm")) {
+				return "Administrador";
+			}
 			String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
 			return usuarioLogadoNome;
 		}else {
-			return "Super ";
+			return null;
 		}
 	}
 	
@@ -35,11 +38,14 @@ public class UsuarioControllerAdvice {
 		if(principal instanceof UserDetails) {
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
+		if(usuarioLogado.getName().equals("adm")) {
+			return "Principal Conta";
+		}
 		String usuarioLogadoCargo = servicoUsuario.findById(login).get().getCargo().toString();
 		String cargoTratado = usuarioLogadoCargo.substring(0,1).concat(usuarioLogadoCargo.substring(1).toLowerCase());
 		return cargoTratado;
 		}else {
-			return "Administrador";
+			return null;
 		}
 	}
 	
