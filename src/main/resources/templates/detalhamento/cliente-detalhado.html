@@ -26,6 +26,7 @@
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
 		<div th:if="${salvou == true} " id="clienteSalvo"></div>
 		<div th:if="${editou == true} " id="clienteEditado"></div>
+		<div th:if="${instaJaExiste == true} " id="instaIgual"></div>
 		
 		<section class="no-padding-top">
           <div class="container-fluid">
@@ -204,6 +205,14 @@
 				Messenger().post({
 					message : 'Alteração realizada com sucesso!',
 					type : 'info'
+				});
+			});
+		});
+		$(document).ready(function() {
+			$('#instaIgual').show(function() {
+				Messenger().post({
+					message : 'Não foi possivel realizar cadastro, pois o INSTAGRAM informado ja existe no sistema!',
+					type : 'error'
 				});
 			});
 		});

@@ -76,11 +76,20 @@ public class ClienteController {
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
-	
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		servicoCliente.salvar(cliente);
-		attr.addFlashAttribute("salvou", true);
+		if(cliente.getInstagram().isEmpty()) {
+			servicoCliente.salvar(cliente);
+			attr.addFlashAttribute("salvou", true);
+		}else {
+			String insta = "@"+cliente.getInstagram();
+			if(servicoCliente.buscarPorInstagram(insta).isEmpty()) {
+				servicoCliente.salvar(cliente);
+				attr.addFlashAttribute("salvou", true);
+			}else {
+				attr.addFlashAttribute("instaJaExiste", true);
+			}
+		}
 		return ATUALIZAR_PAGINA;
 	}
 

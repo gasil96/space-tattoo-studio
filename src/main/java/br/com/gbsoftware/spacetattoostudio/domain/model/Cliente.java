@@ -33,7 +33,7 @@ public class Cliente extends EntidadeBase<Long> {
 	@Column(length = 50)
 	private String nome;
 
-	@Column(length = 20, unique=true)
+	@Column(length = 20)
 	private String telefone;
 
 	@NotNull
@@ -45,7 +45,7 @@ public class Cliente extends EntidadeBase<Long> {
 	@Column(name = "data_cadastro", nullable = false, updatable = false)
 	private LocalDateTime dataCadastro;
 
-	@Column(length = 30, unique = true)
+	@Column(length = 30)
 	private String instagram;
 
 	private Double saldo;
