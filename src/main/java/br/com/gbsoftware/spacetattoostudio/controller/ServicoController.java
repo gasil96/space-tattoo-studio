@@ -187,9 +187,7 @@ public class ServicoController {
 	@RequestMapping(value = "/dadosEncerrados", method = RequestMethod.GET)
 	public @ResponseBody String getDadosEncerrados(HttpServletResponse response) throws JsonProcessingException {
 		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosProximosTresMeses();
-		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())
-						&& StatusServicoEnum.ENCERRADO.equals(x.getStatusAgendamento()))
+		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream().filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())&& StatusServicoEnum.ENCERRADO.equals(x.getStatusAgendamento()))
 				.collect(Collectors.toList());
 		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
 				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())
@@ -203,7 +201,9 @@ public class ServicoController {
 		map.put("barbeariaTotal", agendamentosBarbearia.size());
 		map.put("piercingTotal", agendamentosPiercing.size());
 		map.put("tattooTotal", agendamentosTattoo.size());
+		
 		String listaTotaisAgendamentosJson = new Gson().toJson(map);
+		System.err.println("ENCERRAMENTOS"+ listaTotaisAgendamentosJson);
 		return listaTotaisAgendamentosJson;
 	}
 
