@@ -92,7 +92,9 @@
 								<strong class="h5" th:text="${pa.cliente.nome}">Gabriel Silva</strong> <br>
 								<span th:text="${pa.cliente.instagram}">@gasil96</span>
 							</a>
-							<div class="contributions" th:text="${pa.tipoServico}">Tatuagem</div>
+							<div class="contributions" th:text="${pa.tipoServico}" data-toggle="popover" title="Categoria" data-placement="bottom" data-container="body" th:attr="data-content=${#strings.concat(
+	                                    	pa.categoria
+	                                    )}">TATTOO</div>
 						</div>
 					</div>
 			</div>
@@ -116,7 +118,6 @@
 		<section>
 		
 			<span id="mensagem"></span>
-		
 		</section>
 		
 		<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
@@ -130,6 +131,12 @@
 		        window.location.reload(1);
 		    }, 3000000); 
 		});
+		
+		$(document).ready(function(){
+			  $('[data-toggle="popover"]').popover({
+				  trigger: 'hover'
+			  });   
+			});
 		
 		$(function () {
 	        $('#horarioAgendamento').datetimepicker({

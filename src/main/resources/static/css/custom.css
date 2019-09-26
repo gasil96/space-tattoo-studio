@@ -16,3 +16,22 @@
   font-weight: normal;
   font-style: normal;
 }
+
+.popover {
+    background-color: #26292d !important; 
+    font-size: 15px;
+    color: red;
+  }
+  
+.popover-header{
+	background-color: #26292d !important;
+	color: #429244;
+	text-transform: uppercase;
+	text-align: center;
+	font-style: inherit;
+}
+  
+.popover-body{
+	color: #8a8d93;
+	text-transform: uppercase;
+}
