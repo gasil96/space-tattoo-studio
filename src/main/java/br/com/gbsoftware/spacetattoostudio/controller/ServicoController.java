@@ -186,25 +186,19 @@ public class ServicoController {
 
 	@RequestMapping(value = "/dadosEncerrados", method = RequestMethod.GET)
 	public @ResponseBody String getDadosEncerrados(HttpServletResponse response) throws JsonProcessingException {
-		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosProximosTresMeses();
-		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream().filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())&& StatusServicoEnum.ENCERRADO.equals(x.getStatusAgendamento()))
-				.collect(Collectors.toList());
-		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())
-						&& StatusServicoEnum.ENCERRADO.equals(x.getStatusAgendamento()))
-				.collect(Collectors.toList());
-		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())
-						&& StatusServicoEnum.ENCERRADO.equals(x.getStatusAgendamento()))
-				.collect(Collectors.toList());
+		List<Servico> encerramentosMesAtual = servicoSevice.encerramentoMesAtual();
+		List<Servico> agendamentosBarbeariaE = encerramentosMesAtual.stream()
+				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
+		List<Servico> agendamentosPiercingE = encerramentosMesAtual.stream()
+				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
+		List<Servico> agendamentosTattooE = encerramentosMesAtual.stream()
+				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("barbeariaTotal", agendamentosBarbearia.size());
-		map.put("piercingTotal", agendamentosPiercing.size());
-		map.put("tattooTotal", agendamentosTattoo.size());
-		
-		String listaTotaisAgendamentosJson = new Gson().toJson(map);
-		System.err.println("ENCERRAMENTOS"+ listaTotaisAgendamentosJson);
-		return listaTotaisAgendamentosJson;
+		map.put("barbeariaTotalEncerrado", agendamentosBarbeariaE.size());
+		map.put("piercingTotalEncerrado", agendamentosPiercingE.size());
+		map.put("tattooTotalEncerrado", agendamentosTattooE.size());
+		String listaTotaisAgendamentosJsonEncerrados = new Gson().toJson(map);
+		return listaTotaisAgendamentosJsonEncerrados;
 	}
 
 	@ModelAttribute("cliente")

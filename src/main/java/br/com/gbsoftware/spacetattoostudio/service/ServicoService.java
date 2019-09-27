@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -20,26 +21,29 @@ public interface ServicoService {
 	void editar(Servico servico);
 
 	Optional<Servico> buscarPorId(Long id);
-	
+
 	List<Servico> buscarTodos();
-	
+
 	List<Servico> buscarPorHorarioAgendamento(LocalDateTime horarioAgendamento);
 
 	List<Servico> buscarPorTipoServico(TipoServicoEnum tipoServico);
-	
+
 	List<Servico> buscarPorHorarioConclusaoAgendamento(LocalDateTime horarioConclusaoAgendamento);
-	
+
 	List<Servico> buscarPorStatusAgendamento(StatusServicoEnum statusAgendamento);
-	
+
 	List<Servico> getAgendamentoPorDia();
-	
+
 	List<Servico> getAgendamentoPorSemana();
-	
+
 	List<Servico> getAgendamentosProximosTresMeses();
-	
+
 	List<Servico> getAgendamentosUltimosTresMeses();
-	
+
 	List<Servico> getAgendamentosMesAtual();
-	
+
 	List<Servico> getProximosSeisAgendamentos();
+
+	List<Servico> encerramentoMesAtual();
+
 }

@@ -91,4 +91,9 @@ public class ServicoServiceImpl implements ServicoService {
 		return servicoRepository.proximosSeisAgendamentos();
 	}
 
+	@Override
+	public List<Servico> encerramentoMesAtual() {
+		return servicoRepository.encerramentoMesAtual();
+	}
+
 }

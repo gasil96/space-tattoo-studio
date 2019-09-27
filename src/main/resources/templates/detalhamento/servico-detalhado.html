@@ -110,7 +110,7 @@
 					<div class="col-lg-8">
 						<div class="bar-chart block chart">
 							<div class="title">
-								<strong>Comparativo <strong style="color: yellow;">ULTIMOS</strong> meses (90 dias)</strong>
+								<strong>Agendamentos dos <strong style="color: yellow;">ULTIMOS</strong> meses (90 dias)</strong>
 							</div>
 							<div class="bar-chart chart">
 								<canvas id="relatorioAgendamentoUltimos3Meses"></canvas>
@@ -123,23 +123,24 @@
 		<section>
 			<div class="container-fluid">
 				<div class="row">
-				<div class="col-lg-4">
+				
+					<div class="col-lg-8">
+						<div class="bar-chart block chart">
+							<div class="title">
+								<strong>Agendamentos para os <strong style="color: yellow;">PRÓXIMOS</strong> meses (90 dias)</strong>
+							</div>
+							<div class="bar-chart chart">
+								<canvas id="relatorioAgendamentoProximos3Meses"></canvas>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
 						<div class="pie-chart chart block">
 							<div class="title">
 								<strong id="agendamentosEncerradosMesAtual">Nº de agendamentos <strong style="color: red">ENCERRADOS</strong> em  <strong id="mesAtual">MES</strong></strong>
 							</div>
 							<div class="pie-chart chart margin-bottom-sm">
 								<canvas id="encerramentosMesAtual"></canvas>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-8">
-						<div class="bar-chart block chart">
-							<div class="title">
-								<strong>Comparativo <strong style="color: yellow;">PRÓXIMOS</strong> meses (90 dias)</strong>
-							</div>
-							<div class="bar-chart chart">
-								<canvas id="relatorioAgendamentoProximos3Meses"></canvas>
 							</div>
 						</div>
 					</div>
@@ -478,7 +479,7 @@
 										data : {
 											labels : [ "Barbearia", "Tattoo","Piercing" ],
 											datasets : [ {
-												data : [ data.barbeariaTotal, data.tattooTotal,	data.piercingTotal ],
+												data : [ data.barbeariaTotalEncerrado, data.tattooTotalEncerrado,	data.piercingTotalEncerrado ],
 												borderWidth : 0,
 												backgroundColor : [ '#864dd9', "#4682B4", "#f0f8ff"],
 												hoverBackgroundColor : ['#864dd9', "#4682B4","#f0f8ff"]
