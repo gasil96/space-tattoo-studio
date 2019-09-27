@@ -47,15 +47,15 @@
 	        <div class="col-lg-12">
 		        	<div align="right">
 	    	    		<button class="btn btn-primary" id="abrir-caixa">ABRIR CAIXA</button>
-	    	    		<button class="btn btn-danger" id="fechar-caixa">FECHAR CAIXA</button>
+	    	    		<button class="btn btn-danger" id="fechar-caixa" style="display: none">FECHAR CAIXA</button>
 		        	</div>
 	    	    		<br>
 	        </div>
         </section>
-        <section>
+        <section id = "fluxo" style="display: block;">
 	        <div class="col-lg-12">
 	                <div class="block">
-	                  <div class="title"><strong>All form elements</strong> </div>
+	                  <div class="title" align="center"><strong>CAIXA R$</strong> </div>
 	                  <div class="block-body">
 	                    <form class="form-horizontal">
 	                      <div class="form-group row">
@@ -365,10 +365,21 @@
 
 	</div>
 	<script type="text/javascript" layout:fragment="script">
+/**
+ * TODO - PROVISORIO INICIALIZAR --> "STYLE DISPLAY NONE" BUTTON FECHAR CAIXA E FORM  @@@@@@@@@@@@@2
+ */
 	$("#abrir-caixa").click(function() {
 		$("#fechar-caixa").show();
 		$("#abrir-caixa").hide();
-	})	
+		$("#fluxo").show();
+	});	
+	
+	$("#fechar-caixa").click(function() {
+		$("#fechar-caixa").hide();
+		$("#abrir-caixa").show();
+		$("#fluxo").hide();
+	});	
+	
 	
 	</script>
 </body>
