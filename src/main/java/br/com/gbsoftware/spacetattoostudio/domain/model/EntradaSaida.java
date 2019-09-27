@@ -26,5 +26,7 @@ public class EntradaSaida {
 	
 	private FormaPagamentoEnum formaPagamento;
 	
+	private Cliente cliente;
+	
 	private Caixa caixa;
 }
