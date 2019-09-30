@@ -146,7 +146,6 @@
 	      	  minDate: new Date()
 	        });
 	    });
-
 		
 		var todayDate = moment().startOf('day');
 		var YM = todayDate.format('YYYY-MM');
@@ -170,6 +169,12 @@
 					            right: 'month,agendaWeek,agendaDay'
 					        },
 						themeSystem : 'bootstrap4',
+						eventClick: function(data) {
+						    Messenger().post({
+								message : 'CATEGORIA: '+data.categoria+'!',
+								type : 'info'
+							});
+						  },
 						eventSources: [
 			                {
 			                    url: '/calendario'
@@ -179,7 +184,7 @@
 
 				},
 				error : function(e) {
-					alert("Ocorreu um erro ao buscar os eventos!");
+					alert("Ocorreu um erro ao buscar os eventos, contate o suporte!");
 				}
 			});
 

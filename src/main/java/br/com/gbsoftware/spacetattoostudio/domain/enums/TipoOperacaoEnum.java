@@ -3,7 +3,7 @@ package br.com.gbsoftware.spacetattoostudio.domain.enums;
 public enum TipoOperacaoEnum {
 
 	ENTRADA("ENTRADA"),
-	SAIDA("SAIDA");
+	SAIDA("SAÍDA");
 	
 	private String operacao;
 	

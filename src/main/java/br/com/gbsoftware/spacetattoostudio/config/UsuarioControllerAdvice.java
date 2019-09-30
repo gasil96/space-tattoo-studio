@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.config;
-
+/**
+ * <b>Gabriel S. Sofware</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
