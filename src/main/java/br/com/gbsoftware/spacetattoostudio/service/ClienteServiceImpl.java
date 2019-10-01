@@ -70,4 +70,9 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<Cliente> getPorCadastroMesAnterio() {
 		return clienteRepository.getPorCadastroMesPassado();
 	}
+
+	@Override
+	public List<Cliente> getClienteIdInstaNome() {
+		return clienteRepository.getClienteIdInstaNome();
+	}
 }

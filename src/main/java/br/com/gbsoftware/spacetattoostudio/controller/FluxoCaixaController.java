@@ -1,6 +1,9 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,6 +20,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
@@ -24,6 +33,7 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 
 @Controller
@@ -33,11 +43,15 @@ public class FluxoCaixaController {
 	@Autowired
 	private UsuarioService servicoUsuario;
 	
+	@Autowired 
+	private ClienteService servicoCliente;
+	
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 	@GetMapping("fluxo")
 	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida) {
 		model.addAttribute("classActiveCaixa", "active");
+//		model.addAttribute("cliente", servicoCliente.getClienteIdInstaNome());
 		return PAGINA_FLUXO_CAIXA;
 	}
 	
@@ -92,6 +106,16 @@ public class FluxoCaixaController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@RequestMapping(value = "/input-clientes")
+	public @ResponseBody String getInputClientes(HttpServletResponse response) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+		mapper.registerModule(new JavaTimeModule());
+		List<Cliente> listaClientesInput = servicoCliente.buscarTodos();
+		String listaClientesInputJson = mapper.writeValueAsString(listaClientesInput);
+		return listaClientesInputJson;
+	}
+	
 	@ModelAttribute("formapagamento")
 	public FormaPagamentoEnum[] getFormaPagamento() {
 		return FormaPagamentoEnum.values();

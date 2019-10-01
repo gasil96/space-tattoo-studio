@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public abstract class EntidadeBase<ID extends Serializable> implements Serializable {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnore
 	private ID id;
 
 	public ID getId() {

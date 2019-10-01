@@ -1,7 +1,7 @@
 $(function () {
-    $.get('data/countries.json', function (data) {
-        $("#typeahead2").typeahead({ source: data.countries });
-    }, 'json');
+//    $.get('data/countries.json', function (data) {
+//        $("#typeahead2").typeahead({ source: data.countries });
+//    }, 'json');
 
 
     $('#typeahead3').typeahead({

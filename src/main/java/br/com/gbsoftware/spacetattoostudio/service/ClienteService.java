@@ -27,4 +27,6 @@ public interface ClienteService {
 	List<Cliente> getPorCadastroMes();
 
 	List<Cliente> getPorCadastroMesAnterio();
+	
+	List<Cliente> getClienteIdInstaNome();
 }

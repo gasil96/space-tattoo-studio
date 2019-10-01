@@ -148,8 +148,12 @@
 											th:text="${fp.pagamento}">ATIVO</option>
 									</select>
 								</div>
+								<div class="form-group form-group-typeahead">
+									<label>Cliente</label> 
+			                    	<input id="typeaheadIdInstaNomeCliente" type="text" placeholder="Cliente" class="form-control">
+			                    </div>
 								<div align="right">
-									<button type="reset" class="btn btn-warning">Limpar</button>
+									<button type="reset" class="btn btn-warning" id="enable">Limpar</button>
 									<button type="submit" class="btn btn-primary">Adicionar</button>
 								</div>
 							</div>
@@ -208,9 +212,7 @@
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 		//  TODO - PROVISORIO INICIALIZAR --> "STYLE DISPLAY NONE" BUTTON FECHAR CAIXA E FORM  @@@@@@@@@@@@@2
-
 		var hojeAs = moment().calendar();
-		
 		$("#diaAs").append("<strong>"+hojeAs+"</strong>");
 		
 		$(document).ready(function() {
