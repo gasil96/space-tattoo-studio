@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
@@ -26,12 +27,12 @@ import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 @SuppressWarnings("serial")
 public class Caixa extends EntidadeBase<Long> {
 
-	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
 	@Column(name = "data_hora_abertura", updatable = false)
 	private LocalDateTime dataHoraAbertura;
 
-	@DateTimeFormat(iso = ISO.DATE_TIME)
-	@Column(name = "data_hora_fechamento", updatable = false)
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@Column(name = "data_hora_fechamento")
 	private LocalDateTime dataHoraFechamento;
 
 	@Column(length = 65, precision = 12, scale = 2)
@@ -41,26 +42,38 @@ public class Caixa extends EntidadeBase<Long> {
 	@Column(name = "operador_abertura", updatable = false, length = 30)
 	private String operadorAbertura;
 
-	@NotNull
-	@Column(name = "operador_fechamento", updatable = false, length = 30)
+	@Column(name = "operador_fechamento", length = 30)
 	private String operadorFechamento;
+
+	@Type(type="true_false") 
+	private Boolean aberto;
 
 	@OneToMany(mappedBy = "caixa")
 	private List<EntradaSaida> entradaSaida;
 
 	public Caixa() {
-		
+
 	}
 
 	public Caixa(LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento, BigDecimal total,
-			String operadorAbertura, String operadorFechamento, List<EntradaSaida> entradaSaida) {
+			@NotNull String operadorAbertura, @NotNull String operadorFechamento, Boolean aberto,
+			List<EntradaSaida> entradaSaida) {
 		super();
 		this.dataHoraAbertura = dataHoraAbertura;
 		this.dataHoraFechamento = dataHoraFechamento;
 		this.total = total;
 		this.operadorAbertura = operadorAbertura;
 		this.operadorFechamento = operadorFechamento;
+		this.aberto = aberto;
 		this.entradaSaida = entradaSaida;
+	}
+
+	public Boolean getAberto() {
+		return aberto;
+	}
+
+	public void setAberto(Boolean aberto) {
+		this.aberto = aberto;
 	}
 
 	public LocalDateTime getDataHoraAbertura() {
@@ -115,6 +128,7 @@ public class Caixa extends EntidadeBase<Long> {
 	public String toString() {
 		return "Caixa [dataHoraAbertura=" + dataHoraAbertura + ", dataHoraFechamento=" + dataHoraFechamento + ", total="
 				+ total + ", operadorAbertura=" + operadorAbertura + ", operadorFechamento=" + operadorFechamento
-				+ ", entradaSaida=" + entradaSaida + "]";
+				+ ", aberto=" + aberto + ", entradaSaida=" + entradaSaida + "]";
 	}
+
 }

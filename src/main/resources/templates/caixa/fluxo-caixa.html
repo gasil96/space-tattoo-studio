@@ -8,7 +8,13 @@
 	<li layout:fragment="caminho">Caixa</li>
 
 	<div layout:fragment="corpo">
-
+			
+	<section>
+		<strong>TESTES</strong>
+		
+		<span th:if="${caixaAberto}">Teste</span>
+	</section>
+			
 		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
@@ -65,16 +71,16 @@
 			<div class="col-lg-12">
 				<div class="block">
 					<div class="block-body">
-						<div id="abrir-caixa">
+						<div id="abrir-caixa" th:unless="${caixaAberto}">
 							<form class="form-inline"
-								th:action="@{/caixa/abrir-fechar-caixa}"
+								th:action="@{/caixa/abrir-caixa}"
 								th:object="${entradaSaida}" method="POST" id="formAbrirCaixa">
-								<div class="form-group" style="margin-right: 10px">
-									<label for="inlineFormInput" class="sr-only">Valor
-										Inicial Caixa</label> <input type="text" value="0"
-										class="form-control" th:field="*{valor}" required="required"
-										placeholder="Valor inicial">
-								</div>
+<!-- 								<div class="form-group" style="margin-right: 10px"> -->
+<!-- 									<label for="inlineFormInput" class="sr-only">Valor -->
+<!-- 										Inicial Caixa</label> <input type="text" value="0" -->
+<!-- 										class="form-control" th:field="*{valor}" required="required" -->
+<!-- 										placeholder="Valor inicial"> -->
+<!-- 								</div> -->
 								<div class="form-group">
 									<input type="submit" value="ABRIR CAIXA"
 										class="btn btn-primary" id="abrir-caixa">
@@ -83,7 +89,7 @@
 								</div>
 							</form>
 						</div>
-						<div id="fechar-caixa">
+						<div id="fechar-caixa" th:if="${caixaAberto}">
 							<form class="form-inline" th:action="@{/caixa/fechar-caixa}"
 								th:object="${caixa}" method="POST">
 								<div class="form-group">
@@ -97,7 +103,7 @@
 			</div>
 		</section>
 
-		<section id="fluxo" style="display: block;">
+		<section id="fluxo" style="display: block; " th:if="${caixaAberto}">
 			<div class="col-lg-8">
 				<div class="block">
 					<div class="title" align="center">
@@ -117,17 +123,18 @@
 							</div>
 							<div id="esconderForm">
 								<div class="form-group" id="tipoEntrada">
-									<label for="categoriaEntrada">Tipo de Entrada</label> <select
+									<label for="categoriaEntrada">Segmento</label> <select
 										id="categoriaEntrada" class="form-control" required="required"
 										th:field="*{categoriaEntrada}">
+										<option value="" selected="selected">Selecione...</option>
 										<option th:each="cat : ${categoriaentrada}" th:value="${cat}"
 											th:text="${cat.categoriaEntrada}">ATIVO</option>
 									</select>
 								</div>
 								<div class="form-group">
-									<label>Descrição</label> <input type="text" id="descricao"
-										placeholder="Informações sobre..." class="form-control"
-										required="required" th:field="*{descricao}">
+									<label>Observação</label> <input type="text" id="descricao"
+										placeholder="Sdicione algumas informações..." class="form-control"
+										th:field="*{descricao}">
 								</div>
 								<div class="form-group">
 									<label>Valor R$</label> <input type="text" value="0"
@@ -148,13 +155,17 @@
 											th:text="${fp.pagamento}">ATIVO</option>
 									</select>
 								</div>
-								<div class="form-group form-group-typeahead">
+								<div class="form-group form-group-typeahead" id="clienteId">
 									<label>Cliente</label> 
-			                    	<input id="typeaheadIdInstaNomeCliente" type="text" placeholder="Cliente" class="form-control">
+			                    	<input id="typeaheadIdInstaNomeCliente" type="text" placeholder="Pesquise por Nome ou @Instagram" class="form-control">
+			                    </div>
+			                    <div class="form-group">
+			                    	<input type="hidden" class="form-control" placeholder="Id do Caixa Referencial">
 			                    </div>
 								<div align="right">
-									<button type="reset" class="btn btn-warning" id="enable">Limpar</button>
-									<button type="submit" class="btn btn-primary">Adicionar</button>
+									<button type="reset" class="btn btn-warning" id="btn_simular">Simular</button>
+									<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
+									<button type="submit" class="btn btn-primary">Gerar</button>
 								</div>
 							</div>
 						</form>
@@ -162,7 +173,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="no-padding-top">
+		<section class="no-padding-top" style="display: none">
 			<div class="container-fluid">
 				<div class="block">
 					<div class="title">
@@ -224,13 +235,6 @@
 					alert("Erro, contate o suporte");
 				}
 			});
-
-			// 			@@@@@@ INICIO TODO - QUEM VAI DEFIRNIR A VISIBILIDADE DOS BUTTONS SERA O TH:IF() OU TH:UNLESS @@@@@@@@@@@@@@@@@@@@
-
-			$("#fechar-caixa").hide();
-			$("#abrir-caixa").show();
-			// 			@@@@@@ FIM TODO -  @@@@@@@@@@@@@@@@@@@@
-
 		});
 
 		function controleFormulario(e) {
@@ -239,7 +243,9 @@
 				$("#desconto").show();
 			} else if (e == 'SAIDA') {
 				$("#esconderForm").show();
+				$("#btn_simular").hide();
 				$("#desconto").hide();
+				$("#clienteId").hide();
 			} else {
 				alert("Erro, contate o suporte");
 			}

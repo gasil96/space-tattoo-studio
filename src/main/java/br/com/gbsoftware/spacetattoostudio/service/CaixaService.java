@@ -17,4 +17,6 @@ public interface CaixaService {
 
 	List<Caixa> buscarTodos();
 	
+	Caixa getDiaAtual();
+	
 }

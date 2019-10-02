@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class EntidadeBase<ID extends Serializable> implements Serializable {

@@ -42,4 +42,9 @@ public class CaixaServiceImpl implements CaixaService {
 		return caixaRepository.findAll();
 	}
 
+	@Override
+	public Caixa getDiaAtual() {
+		return caixaRepository.getCaixaDiaAtual();
+	}
+
 }

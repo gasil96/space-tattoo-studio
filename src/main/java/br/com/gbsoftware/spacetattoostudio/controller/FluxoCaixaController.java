@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +34,7 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 
@@ -46,12 +48,20 @@ public class FluxoCaixaController {
 	@Autowired 
 	private ClienteService servicoCliente;
 	
+	@Autowired
+	private CaixaService servicoCaixa;
+	
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 	@GetMapping("fluxo")
-	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida) {
+	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Long idFalso) {
+		caixa = servicoCaixa.getDiaAtual();
 		model.addAttribute("classActiveCaixa", "active");
-//		model.addAttribute("cliente", servicoCliente.getClienteIdInstaNome());
+		if(caixa == null) {
+			model.addAttribute("caixaAberto", false);
+		}else {
+			model.addAttribute("caixaAberto", servicoCaixa.getDiaAtual().getAberto());
+		}
 		return PAGINA_FLUXO_CAIXA;
 	}
 	
@@ -63,47 +73,52 @@ public class FluxoCaixaController {
 	}
 	
 	@PostMapping("/abrir-caixa")
-	public String abriCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente) {
-		
+	public String abriCaixa(Caixa caixa, Cliente cliente, RedirectAttributes attr) {
+		caixa = servicoCaixa.getDiaAtual();
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
-		
-		caixa.setDataHoraAbertura(LocalDateTime.now());
-		caixa.setOperadorAbertura(usuarioLogadoNome);
-		
-		
-		
-		entradaSaida.setHorarioOperacao(LocalDateTime.now());
-		entradaSaida.setDescricao("VALOR_INICIAL_CAIXA");
-		entradaSaida.setDesconto(null);
-		entradaSaida.setFormaPagamento(FormaPagamentoEnum.AVISTA);
-		entradaSaida.setTipoOperacao(TipoOperacaoEnum.ENTRADA);
-		entradaSaida.setCategoriaEntrada(CategoriaEntradaEnum.DIVERSOS);
-		System.err.println(entradaSaida.toString()); // TODO - REMOVER TOSTRING
-		System.err.println(caixa.toString()); // TODO - REMOVER TOSTRING
+		if(caixa == null) {
+			Caixa caixaNovo = new Caixa();
+			caixaNovo.setDataHoraAbertura(LocalDateTime.now());
+			caixaNovo.setOperadorAbertura(usuarioLogadoNome);
+			caixaNovo.setAberto(true);
+			servicoCaixa.salvar(caixaNovo);
+		}else {
+			caixa.setAberto(true);
+			caixa.setDataHoraFechamento(null);
+			caixa.setOperadorFechamento(null);
+			servicoCaixa.salvar(caixa);
+		}
+		attr.addFlashAttribute("caixaAbertoSuccesso", true);
 		return ATUALIZAR_PAGINA;
 	}
 	
 	@PostMapping("/fechar-caixa")
-	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente) {
+	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr) {
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
-		
-		BigDecimal big1 = new BigDecimal("0.1"); // TODO - REMOVER APOS CONCLUSAO METODO
 
-			// TODO - LOCALIZAR CAIXA ABERTO; 
+		BigDecimal big1 = new BigDecimal("1000.0"); // TODO - REMOVER APOS CONCLUSAO METODO
 		
+		caixa = servicoCaixa.getDiaAtual();
+		if(caixa == null) {
+			attr.addFlashAttribute("erroFecharCaixa", true);
+		}else {
 			caixa.setDataHoraFechamento(LocalDateTime.now());
 			caixa.setOperadorFechamento(usuarioLogadoNome);
+			caixa.setAberto(false);
 			
-			// TODO - CALCULADO ENTRADA E SAIDA
-			// TODO - CALCULO DEBITO/CREDITO/AVISTA
-			
+			/**
+			 * Cálculo do total aqui
+			 * */
 			caixa.setTotal(big1); // TODO - AQUI VAI O TOTAL CALCULADO AO FECHAR CAIXA
-			System.err.println(caixa.toString()); // TODO - REMOVER TOSTRING
-		return ATUALIZAR_PAGINA;
+			servicoCaixa.salvar(caixa);
+		}
+			// TODO - CALCULO DEBITO/CREDITO/AVISTA
+			// TODO - CHAMA MODAL COM DADOS DO FECHAMENTO DO CAIXA
+			return ATUALIZAR_PAGINA;
 	}
 
 	@RequestMapping(value = "/input-clientes")

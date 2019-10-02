@@ -23,6 +23,17 @@ $(document).ready(function() {
 			    },
 			    source: item
 			});
+				
+			$('#consultaCadastroCliente').typeahead({
+				
+			    displayText: function (item) {
+			        return item.nome + ', ' + item.telefone + ', ' + item.instagram
+			    },
+			    afterSelect: function (item) {
+			        this.$element[0].value = item.nome + ', ' + item.telefone + ', ' + item.instagram
+			    },
+			    source: item
+			});
 		},
 		error : function(e) {
 			alert("Ocorreu um erro, contate o suporte!");
