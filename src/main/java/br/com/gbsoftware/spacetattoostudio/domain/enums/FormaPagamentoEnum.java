@@ -7,9 +7,9 @@ package br.com.gbsoftware.spacetattoostudio.domain.enums;
  */
 public enum FormaPagamentoEnum {
 
+	A_VISTA("À Vista"),
 	CREDITO("Crédito"),
-	DEBITO("Débito"),
-	AVISTA("À Vista");
+	DEBITO("Débito");
 	
 	private String pagamento;
 

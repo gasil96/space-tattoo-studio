@@ -18,6 +18,13 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	public void salvar(Caixa caixa) {
 
+//		BigDecimal big1 = new BigDecimal("1000.0"); // TODO - REMOVER APOS CONCLUSAO METODO
+		
+		/**
+		 * TODO - Cálculo do total aqui
+		 * */
+//		caixa.setTotal(big1); // TODO - AQUI VAI O TOTAL CALCULADO AO FECHAR CAIXA
+		
 		caixaRepository.save(caixa);
 	}
 

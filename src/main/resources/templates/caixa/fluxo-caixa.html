@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout-principal}">
 <head>
+<style type="text/css">
+
+.cssTeste {
+color: red;
+}
+
+</style>
 <meta charset="UTF-8" />
 <body>
 	<h2 layout:fragment="titulosubCabecalho">Controle Caixa Diário</h2>
@@ -146,7 +153,7 @@
 											th:text="${fp.pagamento}">ATIVO</option>
 									</select>
 								</div>
-								<div class="form-group form-group-typeahead" id="clienteId">
+								<div class="form-group form-group-typeahead" >
 									<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
 										type="text" placeholder="Pesquise por Nome ou @Instagram"
 										class="form-control" th:field="*{cliente.id}">
@@ -193,7 +200,7 @@
 								</thead>
 								<tbody>
 									<tr th:each="es :${teste}">
-										<td th:text="${es.tipoOperacao}">ENTRADA</td>
+										<td th:text="${es.tipoOperacao}" >ENTRADA</td>
 										<td th:text="${es.valor}"></td>
 										<td th:text="${es.desconto}"></td>
 										<td th:text="${es.formaPagamento}"></td>

@@ -1,11 +1,4 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
-/**
- * <b>Gabriel S. Sofware</b>
- * 
- * @author Gabriel Silva - gasil96@gmail.com
- * @version 2019 - Criação
- */
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -111,9 +104,6 @@ public class FluxoCaixaController {
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
-
-		BigDecimal big1 = new BigDecimal("1000.0"); // TODO - REMOVER APOS CONCLUSAO METODO
-		
 		caixa = servicoCaixa.getDiaAtual();
 		if(caixa == null) {
 			attr.addFlashAttribute("erroFecharCaixa", true);
@@ -122,10 +112,6 @@ public class FluxoCaixaController {
 			caixa.setOperadorFechamento(usuarioLogadoNome);
 			caixa.setAberto(false);
 			
-			/**
-			 * Cálculo do total aqui
-			 * */
-			caixa.setTotal(big1); // TODO - AQUI VAI O TOTAL CALCULADO AO FECHAR CAIXA
 			servicoCaixa.salvar(caixa);
 		}
 			// TODO - CALCULO DEBITO/CREDITO/AVISTA
