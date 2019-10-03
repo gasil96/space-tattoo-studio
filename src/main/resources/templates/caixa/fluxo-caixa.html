@@ -2,11 +2,9 @@
 <html layout:decorate="~{layout-principal}">
 <head>
 <style type="text/css">
-
 .cssTeste {
-color: red;
+	color: red;
 }
-
 </style>
 <meta charset="UTF-8" />
 <body>
@@ -153,21 +151,23 @@ color: red;
 											th:text="${fp.pagamento}">ATIVO</option>
 									</select>
 								</div>
-								<div class="form-group form-group-typeahead" >
+								<div class="form-group form-group-typeahead">
 									<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
 										type="text" placeholder="Pesquise por Nome ou @Instagram"
 										class="form-control" th:field="*{cliente.id}">
 								</div>
 								<div class="form-group">
-<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
-									<div style="display: none">	<select th:field="*{caixa.id}"><option th:value="${idcaixadia}"></option></select>
+									<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
+									<div style="display: none">
+										<select th:field="*{caixa.id}"><option
+												th:value="${idcaixadia}"></option></select>
+									</div>
+									<div align="right">
+										<button type="reset" class="btn btn-warning" id="btn_simular">Simular</button>
+										<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
+										<button type="submit" class="btn btn-primary">Gerar</button>
+									</div>
 								</div>
-								<div align="right">
-									<button type="reset" class="btn btn-warning" id="btn_simular">Simular</button>
-									<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
-									<button type="submit" class="btn btn-primary">Gerar</button>
-								</div>
-							</div>
 						</form>
 					</div>
 				</div>
@@ -187,35 +187,51 @@ color: red;
 							<table id="dataTableFluxo" style="width: 100%;" class="table">
 								<thead>
 									<tr>
+										<th></th>
 										<th>Operação</th>
 										<th>Valor</th>
 										<th>Desconto</th>
 										<th>Pagamento</th>
-										<th>Observações</th>
 										<th>Segmento</th>
 										<th>Cliente</th>
 										<th>Data</th>
-										<th style="display: none">-</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="es :${teste}">
-										<td th:text="${es.tipoOperacao}" >ENTRADA</td>
+										<td><i class="material-icons"
+											style="align-self: center; color: #ffc107"
+											data-toggle="popover" title="Informações Adicionais"
+											data-placement="left" data-container="body"
+											th:attr="data-content=${#strings.concat(
+											'Observações: ', es.descricao,
+											'  ',
+	                                    )}">
+												info </i></td>
+										<td th:text="${es.tipoOperacao}"></td>
 										<td align="center" th:text="${es.valor}"></td>
-										<td align="center" ><span th:text="${#numbers.formatDecimal(es.desconto,2,0)} "></span> %</td>
+										<td align="center"><span
+											th:text="${#numbers.formatDecimal(es.desconto,2,0)} "></span>
+											%</td>
 										<td th:text="${es.formaPagamento}"></td>
-										<td th:text="${es.descricao}"></td>
 										<td th:text="${es.categoriaEntrada}"></td>
 										<td th:text="${es.cliente.nome}"></td>
-										<td
-											th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
-										<td><a role="button"> <span title="EDITAR"
-												aria-hidden="true" style="color: grey;"><i
-													class="material-icons">style</i></span>
-										</a> <a role="button"> <span title="AGENDAR"
-												style="color: white" onmouseover="iconOnOver(this)"
+										<td	th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
+										<td><a sec:authorize="hasRole('ADMIN')" href="#"
+											role="button"> <span title="EDITAR" aria-hidden="true"
+												style="color: white;"
+												onmouseover="iconOnOverPersonalizado(this)"
 												onmouseout="iconNormal(this)"><i
-													class="material-icons">note_add</i></span>
+													class="material-icons">style</i></span>
+										</a></td>
+										<td><a sec:authorize="hasAnyRole('ADMIN', 'GERENTE')" href="#"
+											role="button"> <span title="EXCLUIR"
+												style="color: #bb414d;"
+												onmouseover="iconOnOverPersonalizado(this)"
+												onmouseout="iconNormalPersonalizado(this)"><i
+													class="material-icons">highlight_off</i></span>
 										</a></td>
 									</tr>
 								</tbody>

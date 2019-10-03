@@ -6,6 +6,15 @@ function iconNormal(x) {
 	x.style.color = "white";
 }
 
+function iconOnOverPersonalizado(x) {
+	x.style.color = "#ffc107";
+}
+
+function iconNormalPersonalizado(x) {
+	x.style.color = "#bb414d";
+}
+
+
 $(document).ready(function() {
 	$.ajax({
 		type : "GET",
