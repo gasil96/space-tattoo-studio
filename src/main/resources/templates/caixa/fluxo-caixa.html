@@ -115,59 +115,59 @@
 										th:field="*{tipoOperacao}">
 								</div>
 							</div>
-							<div id="esconderForm">
-								<div class="form-group" id="tipoEntrada">
-									<label for="categoriaEntrada">Segmento</label> <select
-										id="categoriaEntrada" class="form-control" required="required"
-										th:field="*{categoriaEntrada}">
-										<option value="" selected="selected">Selecione...</option>
-										<option th:each="cat : ${categoriaentrada}" th:value="${cat}"
-											th:text="${cat.categoriaEntrada}">ATIVO</option>
-									</select>
+							<div class="form-group" id="tipoEntrada">
+								<label for="categoriaEntrada">Segmento</label> <select
+									id="categoriaEntrada" class="form-control" required="required"
+									th:field="*{categoriaEntrada}">
+									<option value="" selected="selected">Selecione...</option>
+									<option th:each="cat : ${categoriaentrada}" th:value="${cat}"
+										th:text="${cat.categoriaEntrada}">ATIVO</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Observação <span
+									style="font-size: 11px; vertical-align: top; color: white">(
+										Opcional )</span></label> <input type="text" id="descricao"
+									placeholder="Sdicione algumas informações..."
+									class="form-control" th:field="*{descricao}">
+							</div>
+							<div class="form-group">
+								<label>Valor R$</label> <input type="text" value="0"
+									class="form-control" th:field="*{valor}" required="required">
+							</div>
+							<div class="form-group" id="desconto">
+								<label>Desconto % <span
+									style="font-size: 11px; vertical-align: top; color: white">(
+										Opcional )</span></label> <input type="text" value="0" class="form-control"
+									th:field="*{desconto}">
+								<button type="reset" class="btn btn-warning btn-sm"
+									id="btn_simular" style="margin-top: 6px">Simular</button>
+							</div>
+							<div class="form-group" id="formaPagamento">
+								<label for="formaPagamento">Forma de pagamento</label> <select
+									id="formaPagamento" class="form-control" required="required"
+									th:field="*{formaPagamento}">
+									<option value="" selected="selected">Selecione...</option>
+									<option th:each="fp : ${formapagamento}" th:value="${fp}"
+										th:text="${fp.pagamento}">ATIVO</option>
+								</select>
+							</div>
+							<div class="form-group form-group-typeahead">
+								<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
+									type="text" placeholder="Pesquise por Nome ou @Instagram"
+									class="form-control" th:field="*{cliente.id}">
+							</div>
+							<div class="form-group">
+								<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
+								<div style="display: none">
+									<select th:field="*{caixa.id}"><option
+											th:value="${idcaixadia}"></option></select>
 								</div>
-								<div class="form-group">
-									<label>Observação <span
-										style="font-size: 11px; vertical-align: top; color: white">(
-											Opcional )</span></label> <input type="text" id="descricao"
-										placeholder="Sdicione algumas informações..."
-										class="form-control" th:field="*{descricao}">
+								<div align="right">
+									<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
+									<button type="submit" class="btn btn-primary">Gerar</button>
 								</div>
-								<div class="form-group">
-									<label>Valor R$</label> <input type="text" value="0"
-										class="form-control" th:field="*{valor}" required="required">
-								</div>
-								<div class="form-group" id="desconto">
-									<label>Desconto % <span
-										style="font-size: 11px; vertical-align: top; color: white">(
-											Opcional )</span></label> <input type="text" value="0" class="form-control"
-										th:field="*{desconto}">
-								</div>
-								<div class="form-group" id="formaPagamento">
-									<label for="formaPagamento">Forma de pagamento</label> <select
-										id="formaPagamento" class="form-control" required="required"
-										th:field="*{formaPagamento}">
-										<option value="" selected="selected">Selecione...</option>
-										<option th:each="fp : ${formapagamento}" th:value="${fp}"
-											th:text="${fp.pagamento}">ATIVO</option>
-									</select>
-								</div>
-								<div class="form-group form-group-typeahead">
-									<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
-										type="text" placeholder="Pesquise por Nome ou @Instagram"
-										class="form-control" th:field="*{cliente.id}">
-								</div>
-								<div class="form-group">
-									<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
-									<div style="display: none">
-										<select th:field="*{caixa.id}"><option
-												th:value="${idcaixadia}"></option></select>
-									</div>
-									<div align="right">
-										<button type="reset" class="btn btn-warning" id="btn_simular">Simular</button>
-										<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
-										<button type="submit" class="btn btn-primary">Gerar</button>
-									</div>
-								</div>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -218,16 +218,17 @@
 										<td th:text="${es.formaPagamento}"></td>
 										<td th:text="${es.categoriaEntrada}"></td>
 										<td th:text="${es.cliente.nome}"></td>
-										<td	th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
-										<td><a sec:authorize="hasAnyRole('ADMIN', 'GERENTE')" href="#"
-											role="button"> <span title="EDITAR" aria-hidden="true"
-												style="color: white;"
+										<td
+											th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
+										<td><a sec:authorize="hasAnyRole('ADMIN', 'GERENTE')"
+											href="#" role="button"> <span title="EDITAR"
+												aria-hidden="true" style="color: white;"
 												onmouseover="iconOnOverPersonalizado(this)"
 												onmouseout="iconNormal(this)"><i
 													class="material-icons">style</i></span>
 										</a></td>
-										<td><a sec:authorize="hasAnyRole('ADMIN', 'GERENTE')" href="#"
-											role="button"> <span title="EXCLUIR"
+										<td><a sec:authorize="hasAnyRole('ADMIN', 'GERENTE')"
+											href="#" role="button"> <span title="EXCLUIR"
 												style="color: #bb414d;"
 												onmouseover="iconOnOverPersonalizado(this)"
 												onmouseout="iconNormalPersonalizado(this)"><i
@@ -245,6 +246,15 @@
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 		//  TODO - PROVISORIO INICIALIZAR --> "STYLE DISPLAY NONE" BUTTON FECHAR CAIXA E FORM  @@@@@@@@@@@@@2
+
+		var valor = $("#valor");
+		var desconto = $("#desconto");
+
+		$("#btn_simular").click(function() {
+			alert(desconto.val());
+			console.log("desconot", valor.val());
+		});
+
 		var hojeAs = moment().calendar();
 		$("#diaAs").append("<strong>" + hojeAs + "</strong>");
 
