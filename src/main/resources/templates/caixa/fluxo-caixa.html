@@ -201,8 +201,8 @@ color: red;
 								<tbody>
 									<tr th:each="es :${teste}">
 										<td th:text="${es.tipoOperacao}" >ENTRADA</td>
-										<td th:text="${es.valor}"></td>
-										<td th:text="${es.desconto}"></td>
+										<td align="center" th:text="${es.valor}"></td>
+										<td align="center" ><span th:text="${es.desconto}"></span> %</td>
 										<td th:text="${es.formaPagamento}"></td>
 										<td th:text="${es.descricao}"></td>
 										<td th:text="${es.categoriaEntrada}"></td>
@@ -261,11 +261,11 @@ color: red;
 
 		$("input[name='valor']").TouchSpin({
 			min : 0,
-			max : 1000000000000000000000000000,
-// 			step : 10.0,
+			max : 100000,
+			step : 0.01,
 			decimals : 2,
-// 			boostat : 5,
-// 			maxboostedstep : 10,
+			boostat : 5,
+			maxboostedstep : 100000,
 			prefix : 'R$',
 		});
 
