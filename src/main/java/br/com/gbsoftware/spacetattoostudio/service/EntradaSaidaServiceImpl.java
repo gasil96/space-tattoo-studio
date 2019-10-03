@@ -1,4 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -10,20 +12,30 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
 import br.com.gbsoftware.spacetattoostudio.repository.EntradaSaidaRepository;
 
 @Service
-public class EntradaSaidaServiceImpl implements EntradaSaidaService{
+public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 
 	@Autowired
 	private EntradaSaidaRepository entradaSaidaRepository;
-	
+
 	@Override
 	public void salvar(EntradaSaida entradaSaida) {
 
-		entradaSaidaRepository.save(entradaSaida);
+		if (entradaSaida.getDesconto() == null) {
+
+			entradaSaidaRepository.save(entradaSaida);
+		} else {
+			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto()).divide(new BigDecimal(100)));
+			
+			System.err.println("---------------------> " + resultadoValorComDesconto);
+//			entradaSaidaRepository.save(entradaSaida);
+		}
+
 	}
 
 	@Override
