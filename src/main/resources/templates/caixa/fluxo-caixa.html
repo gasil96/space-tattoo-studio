@@ -195,8 +195,8 @@
 										<th>Segmento</th>
 										<th>Cliente</th>
 										<th>Data</th>
-										<th></th>
-										<th></th>
+										<th sec:authorize="hasAnyRole('ADMIN', 'GERENTE')"></th>
+										<th sec:authorize="hasAnyRole('ADMIN', 'GERENTE')"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -219,7 +219,7 @@
 										<td th:text="${es.categoriaEntrada}"></td>
 										<td th:text="${es.cliente.nome}"></td>
 										<td	th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
-										<td><a sec:authorize="hasRole('ADMIN')" href="#"
+										<td><a sec:authorize="hasAnyRole('ADMIN', 'GERENTE')" href="#"
 											role="button"> <span title="EDITAR" aria-hidden="true"
 												style="color: white;"
 												onmouseover="iconOnOverPersonalizado(this)"
