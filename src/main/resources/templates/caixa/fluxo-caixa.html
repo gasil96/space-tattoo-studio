@@ -251,8 +251,15 @@
 		var desconto = $("#desconto");
 
 		$("#btn_simular").click(function() {
-			var valorComDesconto = (valor.val()*desconto.val()/100);
-			alert(valorComDesconto);
+			var descontoAplicado = (valor.val()*desconto.val()/100);
+			var valorComDesconto = valor.val() - descontoAplicado;
+			Messenger().post({
+				message : 'Valor com desconto aplicado: R$ '+valorComDesconto,
+				type : 'info'
+			});
+// 			console.log("Valor normal: "+ valor.val());
+// 			console.log("Desconto aplicado: "+ descontoAplicado);
+// 			console.log("Valor com desconto: "+ valorComDesconto);
 		});
 
 		var hojeAs = moment().calendar();
