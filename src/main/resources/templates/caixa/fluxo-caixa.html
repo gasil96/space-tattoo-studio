@@ -188,8 +188,8 @@ color: red;
 								<thead>
 									<tr>
 										<th>Operação</th>
-										<th>ValorR$</th>
-										<th>Desconto%</th>
+										<th>Valor</th>
+										<th>Desconto</th>
 										<th>Pagamento</th>
 										<th>Observações</th>
 										<th>Segmento</th>
@@ -202,7 +202,7 @@ color: red;
 									<tr th:each="es :${teste}">
 										<td th:text="${es.tipoOperacao}" >ENTRADA</td>
 										<td align="center" th:text="${es.valor}"></td>
-										<td align="center" ><span th:text="${es.desconto}"></span> %</td>
+										<td align="center" ><span th:text="${#numbers.formatDecimal(es.desconto,2,0)} "></span> %</td>
 										<td th:text="${es.formaPagamento}"></td>
 										<td th:text="${es.descricao}"></td>
 										<td th:text="${es.categoriaEntrada}"></td>
