@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -44,81 +45,90 @@ public class FluxoCaixaController {
 
 	@Autowired
 	private UsuarioService servicoUsuario;
-	
-	@Autowired 
+
+	@Autowired
 	private ClienteService servicoCliente;
-	
+
 	@Autowired
 	private CaixaService servicoCaixa;
-	
+
 	@Autowired
 	private EntradaSaidaService servicoEntradaSaida;
-	
+
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
+
 	@GetMapping("fluxo")
 	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Cliente cliente) {
 		caixa = servicoCaixa.getDiaAtual();
 		model.addAttribute("classActiveCaixa", "active");
-		if(caixa == null) {
+		if (caixa == null) {
 			model.addAttribute("caixaAberto", false);
-		}else {
+		} else {
 			model.addAttribute("caixaAberto", servicoCaixa.getDiaAtual().getAberto());
 		}
 		model.addAttribute("teste", servicoEntradaSaida.busarTodosDoDia(servicoCaixa.getDiaAtual().getId()));
 		return PAGINA_FLUXO_CAIXA;
 	}
-	
+
 	@PostMapping("/adicionar")
-	public String salvarEntradaOuSaida(EntradaSaida entradaSaida) {
+	public String salvarEntradaOuSaida(EntradaSaida entradaSaida, RedirectAttributes attr) {
 		entradaSaida.setHorarioOperacao(LocalDateTime.now());
-		servicoEntradaSaida.salvar(entradaSaida);
-		System.err.println(entradaSaida.toString()); // TODO - REMOVER TOSTRING
+		if (servicoCliente.buscarPorId(entradaSaida.getCliente().getId()).isPresent()
+				&& servicoCaixa.buscarPorId(entradaSaida.getCaixa().getId()).isPresent()) {
+			servicoEntradaSaida.salvar(entradaSaida);
+			attr.addFlashAttribute("adicionou", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+		} else {
+			attr.addFlashAttribute("erroAdicionar", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+		}
 		return ATUALIZAR_PAGINA;
 	}
-	
+
 	@PostMapping("/abrir-caixa")
 	public String abriCaixa(Caixa caixa, Cliente cliente, RedirectAttributes attr) {
 		caixa = servicoCaixa.getDiaAtual();
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
-		if(caixa == null) {
+		if (caixa == null) {
 			Caixa caixaNovo = new Caixa();
 			caixaNovo.setDataHoraAbertura(LocalDateTime.now());
 			caixaNovo.setOperadorAbertura(usuarioLogadoNome);
 			caixaNovo.setAberto(true);
 			servicoCaixa.salvar(caixaNovo);
-		}else {
+			attr.addFlashAttribute("caixaAbertoSucesso", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+		} else {
 			caixa.setAberto(true);
 			caixa.setDataHoraFechamento(null);
 			caixa.setOperadorFechamento(null);
 			servicoCaixa.salvar(caixa);
+			attr.addFlashAttribute("caixaReaberto", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
 		}
-		attr.addFlashAttribute("caixaAbertoSuccesso", true);
 		return ATUALIZAR_PAGINA;
 	}
-	
+
 	@PostMapping("/fechar-caixa")
 	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr) {
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
 		caixa = servicoCaixa.getDiaAtual();
-		if(caixa == null) {
-			attr.addFlashAttribute("erroFecharCaixa", true);
-		}else {
+		if (caixa == null) {
+			attr.addFlashAttribute("erroFecharCaixa", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+		} else {
 			caixa.setDataHoraFechamento(LocalDateTime.now());
 			caixa.setOperadorFechamento(usuarioLogadoNome);
 			caixa.setAberto(false);
-			
+
+			attr.addFlashAttribute("caixaFechadoSucesso", true);// TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
 			servicoCaixa.salvar(caixa);
 		}
-			// TODO - CALCULO DEBITO/CREDITO/AVISTA
-			// TODO - CHAMA MODAL COM DADOS DO FECHAMENTO DO CAIXA
-			return ATUALIZAR_PAGINA;
+		// TODO - CALCULO DEBITO/CREDITO/AVISTA
+		// TODO - CHAMA MODAL COM DADOS DO FECHAMENTO DO CAIXA
+		return ATUALIZAR_PAGINA;
 	}
 
+	// TODO - TESTAR ESSE MÉTODO NO INITCONTROLLER
 	@RequestMapping(value = "/input-clientes")
 	public @ResponseBody String getInputClientes(HttpServletResponse response) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -128,27 +138,26 @@ public class FluxoCaixaController {
 		String listaClientesInputJson = mapper.writeValueAsString(listaClientesInput);
 		return listaClientesInputJson;
 	}
-	
+
 	@ModelAttribute("formapagamento")
 	public FormaPagamentoEnum[] getFormaPagamento() {
 		return FormaPagamentoEnum.values();
 	}
-	
+
 	@ModelAttribute("categoriaentrada")
 	public CategoriaEntradaEnum[] getCategoriaEntrada() {
 		return CategoriaEntradaEnum.values();
 	}
-	
+
 	@ModelAttribute("tipooperacao")
 	public TipoOperacaoEnum[] getOperacao() {
 		return TipoOperacaoEnum.values();
 	}
-	
+
 	@ModelAttribute("idcaixadia")
 	public Long getIdCaixaDia() {
 		Long idCaixaDia = servicoCaixa.getDiaAtual().getId();
 		return idCaixaDia;
 	}
-	
-	
+
 }
