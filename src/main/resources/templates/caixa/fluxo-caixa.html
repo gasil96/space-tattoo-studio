@@ -130,7 +130,9 @@
 									</select>
 								</div>
 								<div class="form-group">
-									<label>Observação</label> <input type="text" id="descricao"
+									<label>Observação <span
+										style="font-size: 11px; vertical-align: top; color: white">(
+											Opcional )</span></label> <input type="text" id="descricao"
 										placeholder="Sdicione algumas informações..." class="form-control"
 										th:field="*{descricao}">
 								</div>
@@ -171,7 +173,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="no-padding-top" style="display: none">
+		<section class="no-padding-top" style="display: block">
 			<div class="container-fluid">
 				<div class="block">
 					<div class="title">
@@ -182,25 +184,27 @@
 							<table id="dataTableFluxo" style="width: 100%;" class="table">
 								<thead>
 									<tr>
-										<th>Tipo</th>
-										<th>Horario</th>
-										<th>Segmento</th>
-										<th>Descrição</th>
-										<th>Valor</th>
+										<th>Operação</th>
+										<th>ValorR$</th>
+										<th>Desconto%</th>
 										<th>Pagamento</th>
-										<th>Desconto</th>
-										<th>-</th>
+										<th>Observações</th>
+										<th>Segmento</th>
+										<th>Cliente</th>
+										<th>Data</th>
+										<th style="display: none">-</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>SAÍDA</td>
-										<td>12:53</td>
-										<td>Dirversos</td>
-										<td>Pagamento Energia</td>
-										<td>R$ <span>253</span></td>
-										<td>À Vista</td>
-										<td><span>0</span>%</td>
+									<tr th:each="es :${teste}">
+										<td th:text="${es.tipoOperacao}">ENTRADA</td>
+										<td th:text="${es.valor}"></td>
+										<td th:text="${es.desconto}"></td>
+										<td th:text="${es.formaPagamento}"></td>
+										<td th:text="${es.descricao}"></td>
+										<td th:text="${es.categoriaEntrada}"></td>
+										<td th:text="${es.cliente.nome}"></td>
+										<td th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
 										<td><a role="button"> <span title="EDITAR"
 												aria-hidden="true" style="color: grey;"><i
 													class="material-icons">style</i></span>
@@ -239,6 +243,7 @@
 			if (e == 'ENTRADA') {
 				$("#esconderForm").show();
 				$("#desconto").show();
+				$("#btn_simular").show();
 			} else if (e == 'SAIDA') {
 				$("#esconderForm").show();
 				$("#btn_simular").hide();
@@ -279,9 +284,11 @@
 											{
 												dom : 'lBfrtip',
 												order : [],
+												searching : false,
 												buttons : [
 														{
 															extend : 'pdf',
+															text: 'Gerar Relatório',
 															className : 'btn btn-primary btn-sm',
 															title : 'Fluxo Caixa '+diaAtual,
 															exportOptions : {
@@ -300,7 +307,7 @@
 														{
 															extend : 'print',
 															className : 'btn btn-primary btn-sm',
-															text : 'Impressão',
+															text : ' Imprimir',
 															title : 'Fluxo Caixa '+diaAtual,
 															exportOptions : {
 																columns : ':visible'

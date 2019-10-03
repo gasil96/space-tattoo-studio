@@ -1,4 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
+/**
+ * <b>Gabriel S. Sofware</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +42,7 @@ import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
 import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
+import br.com.gbsoftware.spacetattoostudio.service.EntradaSaidaService;
 import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 
 @Controller
@@ -51,10 +58,13 @@ public class FluxoCaixaController {
 	@Autowired
 	private CaixaService servicoCaixa;
 	
+	@Autowired
+	private EntradaSaidaService servicoEntradaSaida;
+	
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 	@GetMapping("fluxo")
-	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Long idFalso) {
+	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Long iDCaixaFK) {
 		caixa = servicoCaixa.getDiaAtual();
 		model.addAttribute("classActiveCaixa", "active");
 		if(caixa == null) {
@@ -62,6 +72,9 @@ public class FluxoCaixaController {
 		}else {
 			model.addAttribute("caixaAberto", servicoCaixa.getDiaAtual().getAberto());
 		}
+		iDCaixaFK = (long) 2;
+		
+		model.addAttribute("teste", servicoEntradaSaida.busarTodosDoDia(servicoCaixa.getDiaAtual().getId()));
 		return PAGINA_FLUXO_CAIXA;
 	}
 	

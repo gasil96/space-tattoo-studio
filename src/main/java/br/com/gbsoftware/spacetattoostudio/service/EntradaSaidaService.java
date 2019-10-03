@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.service;
-
+/**
+ * <b>Gabriel S. Sofware</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.util.List;
 import java.util.Optional;
 
@@ -16,5 +21,7 @@ public interface EntradaSaidaService {
 	Optional<EntradaSaida> buscarPorId(Long id);
 
 	List<EntradaSaida> buscarTodos();
+	
+	List<EntradaSaida> busarTodosDoDia(Long iDCaixaFK);
 
 }
