@@ -140,8 +140,8 @@
 									style="font-size: 11px; vertical-align: top; color: white">(
 										Opcional )</span></label> <input type="text" value="0" class="form-control"
 									th:field="*{desconto}">
-								<button type="reset" class="btn btn-warning btn-sm"
-									id="btn_simular" style="margin-top: 6px">Simular</button>
+								<button type="button" class="btn btn-warning btn-sm"
+									id="btn_simular" style="margin-top: 6px">Simular Desconto</button>
 							</div>
 							<div class="form-group" id="formaPagamento">
 								<label for="formaPagamento">Forma de pagamento</label> <select
@@ -245,22 +245,24 @@
 
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-		//  TODO - PROVISORIO INICIALIZAR --> "STYLE DISPLAY NONE" BUTTON FECHAR CAIXA E FORM  @@@@@@@@@@@@@2
-
 		var valor = $("#valor");
 		var desconto = $("#desconto");
 
-		$("#btn_simular").click(function() {
-			var descontoAplicado = (valor.val()*desconto.val()/100);
-			var valorComDesconto = valor.val() - descontoAplicado;
-			Messenger().post({
-				message : 'Valor com desconto aplicado: R$ '+valorComDesconto,
-				type : 'info'
-			});
-// 			console.log("Valor normal: "+ valor.val());
-// 			console.log("Desconto aplicado: "+ descontoAplicado);
-// 			console.log("Valor com desconto: "+ valorComDesconto);
-		});
+		$("#btn_simular")
+				.click(
+						function() {
+							var descontoAplicado = (valor.val()
+									* desconto.val() / 100);
+							var valorComDesconto = valor.val()
+									- descontoAplicado;
+							Messenger()
+									.post(
+											{
+												message : 'Valor com desconto aplicado: R$ '
+														+ valorComDesconto,
+												type : 'info'
+											});
+						});
 
 		var hojeAs = moment().calendar();
 		$("#diaAs").append("<strong>" + hojeAs + "</strong>");
