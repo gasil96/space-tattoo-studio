@@ -58,7 +58,7 @@ public class EntradaSaida extends EntidadeBase<Long> {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "id_caixa_fk")
+	@JoinColumn(name = "id_caixa_fk" )
 	private Caixa caixa;
 
 	@ManyToOne

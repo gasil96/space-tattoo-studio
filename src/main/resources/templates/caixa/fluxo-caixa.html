@@ -8,11 +8,9 @@
 	<li layout:fragment="caminho">Caixa</li>
 
 	<div layout:fragment="corpo">
-			
-	<section id="testes">
 
-	</section>
-			
+		<section id="testes"></section>
+
 		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
@@ -70,15 +68,8 @@
 				<div class="block">
 					<div class="block-body">
 						<div id="abrir-caixa" th:unless="${caixaAberto}">
-							<form class="form-inline"
-								th:action="@{/caixa/abrir-caixa}"
+							<form class="form-inline" th:action="@{/caixa/abrir-caixa}"
 								th:object="${entradaSaida}" method="POST" id="formAbrirCaixa">
-<!-- 								<div class="form-group" style="margin-right: 10px"> -->
-<!-- 									<label for="inlineFormInput" class="sr-only">Valor -->
-<!-- 										Inicial Caixa</label> <input type="text" value="0" -->
-<!-- 										class="form-control" th:field="*{valor}" required="required" -->
-<!-- 										placeholder="Valor inicial"> -->
-<!-- 								</div> -->
 								<div class="form-group">
 									<input type="submit" value="ABRIR CAIXA"
 										class="btn btn-primary" id="abrir-caixa">
@@ -101,7 +92,7 @@
 			</div>
 		</section>
 
-		<section id="fluxo" style="display: block; " th:if="${caixaAberto}">
+		<section id="fluxo" style="display: block;" th:if="${caixaAberto}">
 			<div class="col-lg-8">
 				<div class="block">
 					<div class="title" align="center">
@@ -133,8 +124,8 @@
 									<label>Observação <span
 										style="font-size: 11px; vertical-align: top; color: white">(
 											Opcional )</span></label> <input type="text" id="descricao"
-										placeholder="Sdicione algumas informações..." class="form-control"
-										th:field="*{descricao}">
+										placeholder="Sdicione algumas informações..."
+										class="form-control" th:field="*{descricao}">
 								</div>
 								<div class="form-group">
 									<label>Valor R$</label> <input type="text" value="0"
@@ -156,12 +147,14 @@
 									</select>
 								</div>
 								<div class="form-group form-group-typeahead" id="clienteId">
-									<label>Cliente</label> 
-			                    	<input id="typeaheadIdInstaNomeCliente" type="text" placeholder="Pesquise por Nome ou @Instagram" class="form-control">
-			                    </div>
-			                    <div class="form-group">
-			                    	<input type="hidden" class="form-control" placeholder="Id do Caixa Referencial">
-			                    </div>
+									<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
+										type="text" placeholder="Pesquise por Nome ou @Instagram"
+										class="form-control" th:field="*{cliente.id}">
+								</div>
+								<div class="form-group">
+<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
+									<div style="display: none">	<select th:field="*{caixa.id}"><option th:value="${idcaixadia}"></option></select>
+								</div>
 								<div align="right">
 									<button type="reset" class="btn btn-warning" id="btn_simular">Simular</button>
 									<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
@@ -173,11 +166,14 @@
 				</div>
 			</div>
 		</section>
-		<section class="no-padding-top" style="display: block">
+		<section class="no-padding-top" style="display: block"
+			th:if="${caixaAberto}">
 			<div class="container-fluid">
 				<div class="block">
 					<div class="title">
-						<strong>Fluxo de Caixa Atual ( <span id="diaAs"> </span> )</strong>
+						<strong>Fluxo de Caixa Atual ( <span id="diaAs"> </span>
+							)
+						</strong>
 					</div>
 					<div class="block-body">
 						<div class="table-responsive">
@@ -204,7 +200,8 @@
 										<td th:text="${es.descricao}"></td>
 										<td th:text="${es.categoriaEntrada}"></td>
 										<td th:text="${es.cliente.nome}"></td>
-										<td th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
+										<td
+											th:text="${#temporals.format(es.horarioOperacao, 'dd/MM hh:mm' )}"></td>
 										<td><a role="button"> <span title="EDITAR"
 												aria-hidden="true" style="color: grey;"><i
 													class="material-icons">style</i></span>
@@ -226,8 +223,8 @@
 	<script type="text/javascript" layout:fragment="script">
 		//  TODO - PROVISORIO INICIALIZAR --> "STYLE DISPLAY NONE" BUTTON FECHAR CAIXA E FORM  @@@@@@@@@@@@@2
 		var hojeAs = moment().calendar();
-		$("#diaAs").append("<strong>"+hojeAs+"</strong>");
-		
+		$("#diaAs").append("<strong>" + hojeAs + "</strong>");
+
 		$(document).ready(function() {
 			$("#esconderForm").hide();
 			$('input:radio[name="tipoOperacao"]').change(function() {
@@ -244,6 +241,7 @@
 				$("#esconderForm").show();
 				$("#desconto").show();
 				$("#btn_simular").show();
+				$("#clienteId").show();
 			} else if (e == 'SAIDA') {
 				$("#esconderForm").show();
 				$("#btn_simular").hide();
@@ -276,9 +274,9 @@
 		$(document)
 				.ready(
 						function() {
-							
+
 							var diaAtual = moment().format('Do MMMM YYYY');
-							
+
 							$('#dataTableFluxo')
 									.DataTable(
 											{
@@ -288,9 +286,10 @@
 												buttons : [
 														{
 															extend : 'pdf',
-															text: 'Gerar Relatório',
+															text : 'Gerar Relatório',
 															className : 'btn btn-primary btn-sm',
-															title : 'Fluxo Caixa '+diaAtual,
+															title : 'Fluxo Caixa '
+																	+ diaAtual,
 															exportOptions : {
 																columns : ':visible'
 															},
@@ -298,7 +297,8 @@
 														{
 															extend : 'excel',
 															text : 'Planilha',
-															title : 'Fluxo Caixa '+diaAtual,
+															title : 'Fluxo Caixa '
+																	+ diaAtual,
 															className : 'btn btn-primary btn-sm',
 															exportOptions : {
 																columns : ':visible'
@@ -308,7 +308,8 @@
 															extend : 'print',
 															className : 'btn btn-primary btn-sm',
 															text : ' Imprimir',
-															title : 'Fluxo Caixa '+diaAtual,
+															title : 'Fluxo Caixa '
+																	+ diaAtual,
 															exportOptions : {
 																columns : ':visible'
 															},

@@ -64,7 +64,7 @@ public class FluxoCaixaController {
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 	@GetMapping("fluxo")
-	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Long iDCaixaFK) {
+	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Cliente cliente) {
 		caixa = servicoCaixa.getDiaAtual();
 		model.addAttribute("classActiveCaixa", "active");
 		if(caixa == null) {
@@ -72,15 +72,14 @@ public class FluxoCaixaController {
 		}else {
 			model.addAttribute("caixaAberto", servicoCaixa.getDiaAtual().getAberto());
 		}
-		iDCaixaFK = (long) 2;
-		
 		model.addAttribute("teste", servicoEntradaSaida.busarTodosDoDia(servicoCaixa.getDiaAtual().getId()));
 		return PAGINA_FLUXO_CAIXA;
 	}
 	
 	@PostMapping("/adicionar")
-	public String salvarEntradaOuSaida(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente) {
+	public String salvarEntradaOuSaida(EntradaSaida entradaSaida) {
 		entradaSaida.setHorarioOperacao(LocalDateTime.now());
+		servicoEntradaSaida.salvar(entradaSaida);
 		System.err.println(entradaSaida.toString()); // TODO - REMOVER TOSTRING
 		return ATUALIZAR_PAGINA;
 	}
@@ -157,6 +156,12 @@ public class FluxoCaixaController {
 	@ModelAttribute("tipooperacao")
 	public TipoOperacaoEnum[] getOperacao() {
 		return TipoOperacaoEnum.values();
+	}
+	
+	@ModelAttribute("idcaixadia")
+	public Long getIdCaixaDia() {
+		Long idCaixaDia = servicoCaixa.getDiaAtual().getId();
+		return idCaixaDia;
 	}
 	
 	

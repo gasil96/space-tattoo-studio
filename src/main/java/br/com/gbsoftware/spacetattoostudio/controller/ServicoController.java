@@ -69,6 +69,7 @@ public class ServicoController {
 				servico.setNumeroSessoes(1);
 				servicoSevice.salvar(servico);
 				attr.addFlashAttribute("salvou", true);
+				System.err.println(servico.toString());
 			}else {
 				servicoSevice.salvar(servico);
 				attr.addFlashAttribute("salvou", true);
