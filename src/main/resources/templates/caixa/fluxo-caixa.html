@@ -115,6 +115,7 @@
 										th:field="*{tipoOperacao}">
 								</div>
 							</div>
+							<div id="esconderForm">
 							<div class="form-group" id="tipoEntrada">
 								<label for="categoriaEntrada">Segmento</label> <select
 									id="categoriaEntrada" class="form-control" required="required"
@@ -167,6 +168,7 @@
 									<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
 									<button type="submit" class="btn btn-primary">Gerar</button>
 								</div>
+							</div>
 							</div>
 						</form>
 					</div>
@@ -267,8 +269,8 @@
 		var hojeAs = moment().calendar();
 		$("#diaAs").append("<strong>" + hojeAs + "</strong>");
 
-		$(document).ready(function() {
 			$("#esconderForm").hide();
+		$(document).ready(function() {
 			$('input:radio[name="tipoOperacao"]').change(function() {
 				if ($("input[name='tipoOperacao']:checked")) {
 					controleFormulario($(this).val());
