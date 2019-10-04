@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
 
 public interface CaixaService {
 
@@ -23,5 +25,13 @@ public interface CaixaService {
 	List<Caixa> buscarTodos();
 	
 	Caixa getDiaAtual();
+
+	List<EntradaSaida> getLancamentos();
+
+	Optional<BigDecimal> sumValorEntradaDia();
+
+	Optional<BigDecimal> sumValorSaidaDia();
+
+	BigDecimal calculoValorTotalDia();
 	
 }

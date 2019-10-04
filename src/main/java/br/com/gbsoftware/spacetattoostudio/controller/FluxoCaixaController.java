@@ -66,6 +66,10 @@ public class FluxoCaixaController {
 	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Cliente cliente) {
 		caixa = servicoCaixa.getDiaAtual();
 		model.addAttribute("classActiveCaixa", "active");
+		model.addAttribute("calculoValorTotalDia", servicoCaixa.calculoValorTotalDia());
+		model.addAttribute("sumValorEntradaDia", servicoCaixa.sumValorEntradaDia().get());
+		model.addAttribute("sumValorSaidaDia", servicoCaixa.sumValorSaidaDia().get());
+		
 		if (caixa == null) {
 			model.addAttribute("caixaAberto", false);
 		} else {
@@ -82,13 +86,13 @@ public class FluxoCaixaController {
 			if (servicoCliente.buscarPorId(entradaSaida.getCliente().getId()).isPresent()
 					&& servicoCaixa.buscarPorId(entradaSaida.getCaixa().getId()).isPresent()) {
 				servicoEntradaSaida.salvar(entradaSaida);
-				attr.addFlashAttribute("adicionou", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+				attr.addFlashAttribute("adicionou", true); 
 			} else {
-				attr.addFlashAttribute("erroAdicionar", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+				attr.addFlashAttribute("erroAdicionar", true); 
 			}
 		} else {
 
-			attr.addFlashAttribute("caixaFechado", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("caixaFechado", true); 
 		}
 		return ATUALIZAR_PAGINA;
 	}
@@ -105,13 +109,13 @@ public class FluxoCaixaController {
 			caixaNovo.setOperadorAbertura(usuarioLogadoNome);
 			caixaNovo.setAberto(true);
 			servicoCaixa.salvar(caixaNovo);
-			attr.addFlashAttribute("caixaAbertoSucesso", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("caixaAbertoSucesso", true); 
 		} else {
 			caixa.setAberto(true);
 			caixa.setDataHoraFechamento(null);
 			caixa.setOperadorFechamento(null);
 			servicoCaixa.salvar(caixa);
-			attr.addFlashAttribute("caixaReaberto", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("caixaReaberto", true); 
 		}
 		return ATUALIZAR_PAGINA;
 	}
@@ -123,11 +127,11 @@ public class FluxoCaixaController {
 			if (caixa != null) {
 				return MODAL_CONFIRMAR_FECHAMENTO_CAIXA;
 			} else {
-				attr.addFlashAttribute("caixaNaoLocalizado", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+				attr.addFlashAttribute("caixaNaoLocalizado", true); 
 			}
 
 		} else {
-			attr.addFlashAttribute("erroFecharCaixa", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("erroFecharCaixa", true); 
 		}
 		return ATUALIZAR_PAGINA;
 	}
@@ -139,13 +143,13 @@ public class FluxoCaixaController {
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
 		caixa = servicoCaixa.getDiaAtual();
 		if (caixa == null) {
-			attr.addFlashAttribute("erroFecharCaixa", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("erroFecharCaixa", true); 
 		} else {
 			caixa.setDataHoraFechamento(LocalDateTime.now());
 			caixa.setOperadorFechamento(usuarioLogadoNome);
 			caixa.setAberto(false);
 
-			attr.addFlashAttribute("caixaFechadoSucesso", true);// TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("caixaFechadoSucesso", true);
 			servicoCaixa.salvar(caixa);
 		}
 		// TODO - CALCULO DEBITO/CREDITO/AVISTA
@@ -160,7 +164,7 @@ public class FluxoCaixaController {
 			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
 			return MODAL_EDITAR_ENTRADA_SAIDA;
 		} else {
-			attr.addFlashAttribute("esNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("esNaoEncontrada", true); 
 			return ATUALIZAR_PAGINA;
 		}
 	}
@@ -177,7 +181,7 @@ public class FluxoCaixaController {
 			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
 			return MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA;
 		} else {
-			attr.addFlashAttribute("esNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("esNaoEncontrada", true); 
 			return ATUALIZAR_PAGINA;
 		}
 	}
