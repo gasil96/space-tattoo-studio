@@ -58,6 +58,7 @@ public class FluxoCaixaController {
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA = "modal/modal-confimar-exclusao-entrada-saida";
+	private static final String MODAL_CONFIRMAR_FECHAMENTO_CAIXA = "modal/modal-confimar-fechamento-caixa";
 	private static final String MODAL_EDITAR_ENTRADA_SAIDA = "modal/modal-editar-entrada-saida";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
@@ -77,12 +78,17 @@ public class FluxoCaixaController {
 	@PostMapping("/adicionar")
 	public String salvarEntradaOuSaida(EntradaSaida entradaSaida, RedirectAttributes attr) {
 		entradaSaida.setHorarioOperacao(LocalDateTime.now());
-		if (servicoCliente.buscarPorId(entradaSaida.getCliente().getId()).isPresent()
-				&& servicoCaixa.buscarPorId(entradaSaida.getCaixa().getId()).isPresent()) {
-			servicoEntradaSaida.salvar(entradaSaida);
-			attr.addFlashAttribute("adicionou", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+		if (servicoCaixa.getDiaAtual().getAberto().booleanValue() == true) {
+			if (servicoCliente.buscarPorId(entradaSaida.getCliente().getId()).isPresent()
+					&& servicoCaixa.buscarPorId(entradaSaida.getCaixa().getId()).isPresent()) {
+				servicoEntradaSaida.salvar(entradaSaida);
+				attr.addFlashAttribute("adicionou", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			} else {
+				attr.addFlashAttribute("erroAdicionar", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			}
 		} else {
-			attr.addFlashAttribute("erroAdicionar", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+
+			attr.addFlashAttribute("caixaFechado", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
 		}
 		return ATUALIZAR_PAGINA;
 	}
@@ -110,7 +116,23 @@ public class FluxoCaixaController {
 		return ATUALIZAR_PAGINA;
 	}
 
-	@PostMapping("/fechar-caixa")
+	@GetMapping("pre-fechar-caixa")
+	public String preFecharCaixa(RedirectAttributes attr, Model model) {
+		if (servicoCaixa.getDiaAtual().getAberto().booleanValue() == true) {
+			Caixa caixa = servicoCaixa.getDiaAtual();
+			if (caixa != null) {
+				return MODAL_CONFIRMAR_FECHAMENTO_CAIXA;
+			} else {
+				attr.addFlashAttribute("caixaNaoLocalizado", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+			}
+
+		} else {
+			attr.addFlashAttribute("erroFecharCaixa", true); // TODO - FALTA IMPLEMENTAR ESSSE HUBSPOT MENSSEGER
+		}
+		return ATUALIZAR_PAGINA;
+	}
+
+	@PostMapping("fechar-caixa")
 	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr) {
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
@@ -138,7 +160,7 @@ public class FluxoCaixaController {
 			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
 			return MODAL_EDITAR_ENTRADA_SAIDA;
 		} else {
-			attr.addFlashAttribute("entradaNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("esNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
 			return ATUALIZAR_PAGINA;
 		}
 	}
@@ -155,7 +177,7 @@ public class FluxoCaixaController {
 			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
 			return MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA;
 		} else {
-			attr.addFlashAttribute("entradaNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
+			attr.addFlashAttribute("esNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
 			return ATUALIZAR_PAGINA;
 		}
 	}

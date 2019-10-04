@@ -84,8 +84,7 @@
 							</form>
 						</div>
 						<div id="fechar-caixa" th:if="${caixaAberto}">
-							<form class="form-inline" th:action="@{/caixa/fechar-caixa}"
-								th:object="${caixa}" method="POST">
+							<form class="form-inline" th:action="@{/caixa/pre-fechar-caixa}">
 								<div class="form-group">
 									<input type="submit" value="FECHAR CAIXA"
 										class="btn btn-danger">
@@ -154,7 +153,7 @@
 											th:text="${fp.pagamento}">ATIVO</option>
 									</select>
 								</div>
-								<div class="form-group form-group-typeahead">
+								<div class="form-group form-group-typeahead" id="idClienteFk">
 									<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
 										type="text" placeholder="Pesquise por Nome ou @Instagram"
 										class="form-control" th:field="*{cliente.id}">
@@ -214,8 +213,8 @@
 	                                    )}">
 												info </i></td>
 										<td th:switch="${#strings.capitalizeWords(es.tipoOperacao)}">
-										<span style="color: #429244;" th:case="ENTRADA">ENTRADA</span>
-										<span style="color: #bb414d;" th:case="SAIDA">SAIDA</span>
+											<span style="color: #429244;" th:case="ENTRADA">ENTRADA</span>
+											<span style="color: #bb414d;" th:case="SAIDA">SAIDA</span>
 										</td>
 										<td align="center" th:text="${es.valor}"></td>
 										<td align="center"><span
@@ -249,9 +248,83 @@
 				</div>
 			</div>
 		</section>
-
+		<div th:if="${adicionou == true} " id="adicionou"></div>
+		<div th:if="${erroAdicionar == true} " id="erroAdicionar"></div>
+		<div th:if="${caixaFechado == true} " id="caixaFechado"></div>
+		<div th:if="${caixaAbertoSucesso == true} " id="caixaAbertoSucesso"></div>
+		<div th:if="${caixaReaberto == true} " id="caixaReaberto"></div>
+		<div th:if="${caixaNaoLocalizado == true} " id="caixaNaoLocalizado"></div>
+		<div th:if="${erroFecharCaixa == true} " id="erroFecharCaixa"></div>
+		<div th:if="${caixaFechadoSucesso == true} " id="caixaFechadoSucesso"></div>
+		<div th:if="${esNaoEncontrada == true} " id="esNaoEncontrada"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
+		$(document).ready(function() {
+			$('#clienteSalvo').show(function() {
+				Messenger().post({
+					message : 'Cliente salvo com sucesso!',
+					type : 'success'
+				});
+			});
+		});
+
+		$(document).ready(function() {
+			$('#adicionou').show(function() {
+				Messenger().post({
+					message : 'Lançamento adicionado com sucesso!',
+					type : 'success'
+				});
+			});
+			$('#erroAdicionar').show(function() {
+				Messenger().post({
+					message : 'Erro ao tentar inserir um novo lançamento!',
+					type : 'error'
+				});
+			});
+			$('#caixaFechado').show(function() {
+				Messenger().post({
+					message : 'Impossivel inserir laçamento com caixa fechado!',
+					type : 'error'
+				});
+			});
+			$('#caixaAbertoSucesso').show(function() {
+				Messenger().post({
+					message : 'Caixa foi aberto com sucesso!',
+					type : 'success'
+				});
+			});
+			$('#caixaReaberto').show(function() {
+				Messenger().post({
+					message : 'Caixa reaberto com sucesso!',
+					type : 'success'
+				});
+			});
+			$('#caixaNaoLocalizado').show(function() {
+				Messenger().post({
+					message : 'Não foi possoivel localizar o cliente',
+					type : 'error'
+				});
+			});
+			$('#erroFecharCaixa').show(function() {
+				Messenger().post({
+					message : 'Erro ao tentar fechar o caixa',
+					type : 'error'
+				});
+			});
+			$('#caixaFechadoSucesso').show(function() {
+				Messenger().post({
+					message : 'O caixa foi fechado!',
+					type : 'success'
+				});
+			});
+			$('#esNaoEncontrada').show(function() {
+				Messenger().post({
+					message : 'Lançamento não encontrado',
+					type : 'error'
+				});
+			});
+		});
+		
 		var valor = $("#valor");
 		var desconto = $("#desconto");
 		$("#btn_simular").hide();
