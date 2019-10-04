@@ -84,15 +84,15 @@
 										<td colspan="2"><a
 											th:href="@{/agendamento/editar/{id} (id=${a.id})}"
 											role="button"> <span title="EDITAR" aria-hidden="true"
-												style="color: grey;"><i class="material-icons">style</i></span>
+												style="color: white;"><i class="material-icons">style</i></span>
 										</a> <a th:href="@{/agendamento/reabrir/{id} (id=${a.id})}"
 											role="button"> <span title="REABRIR" aria-hidden="true"
-												style="color: yellow;"
+												style="color: #ffc107;"
 												th:unless="${a.horarioConclusaoAgendamento == null}"><i
 													class="material-icons">timer</i></span>
 										</a> <a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}"
 											role="button"> <span title="ENCERRAR" aria-hidden="true"
-												style="color: red;"
+												style="color: #bb414d;"
 												th:if="${a.horarioConclusaoAgendamento == null}"><i
 													class="material-icons md-48">timer_off</i></span>
 										</a></td>
@@ -120,7 +120,7 @@
 					<div class="col-lg-8">
 						<div class="bar-chart block chart">
 							<div class="title">
-								<strong>Agendamentos dos <strong style="color: yellow;">ULTIMOS</strong>
+								<strong>Agendamentos dos <strong style="color: #ffc107;">ULTIMOS</strong>
 									meses (90 dias)
 								</strong>
 							</div>
@@ -140,7 +140,7 @@
 						<div class="bar-chart block chart">
 							<div class="title">
 								<strong>Agendamentos para os <strong
-									style="color: yellow;">PRÓXIMOS</strong> meses (90 dias)
+									style="color: #ffc107;">PRÓXIMOS</strong> meses (90 dias)
 								</strong>
 							</div>
 							<div class="bar-chart chart">
@@ -152,7 +152,7 @@
 						<div class="pie-chart chart block">
 							<div class="title">
 								<strong id="agendamentosEncerradosMesAtual">Nº de
-									agendamentos <strong style="color: red">ENCERRADOS</strong> em
+									agendamentos <strong style="color: #bb414d">ENCERRADOS</strong> em
 									<strong id="mesAtual">MES</strong>
 								</strong>
 							</div>
