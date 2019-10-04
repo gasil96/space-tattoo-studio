@@ -116,59 +116,60 @@
 								</div>
 							</div>
 							<div id="esconderForm">
-							<div class="form-group" id="tipoEntrada">
-								<label for="categoriaEntrada">Segmento</label> <select
-									id="categoriaEntrada" class="form-control" required="required"
-									th:field="*{categoriaEntrada}">
-									<option value="" selected="selected">Selecione...</option>
-									<option th:each="cat : ${categoriaentrada}" th:value="${cat}"
-										th:text="${cat.categoriaEntrada}">ATIVO</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label>Observação <span
-									style="font-size: 11px; vertical-align: top; color: white">(
-										Opcional )</span></label> <input type="text" id="descricao"
-									placeholder="Sdicione algumas informações..."
-									class="form-control" th:field="*{descricao}">
-							</div>
-							<div class="form-group">
-								<label>Valor R$</label> <input type="text" value="0"
-									class="form-control" th:field="*{valor}" required="required">
-							</div>
-							<div class="form-group" id="descontoDiv">
-								<label>Desconto % <span
-									style="font-size: 11px; vertical-align: top; color: white">(
-										Opcional )</span></label> <input type="text" value="0" class="form-control"
-									th:field="*{desconto}">
-								<button type="button" class="btn btn-warning btn-sm"
-									id="btn_simular" style="margin-top: 6px">Simular Desconto</button>
-							</div>
-							<div class="form-group" id="formaPagamento">
-								<label for="formaPagamento">Forma de pagamento</label> <select
-									id="formaPagamento" class="form-control" required="required"
-									th:field="*{formaPagamento}">
-									<option value="" selected="selected">Selecione...</option>
-									<option th:each="fp : ${formapagamento}" th:value="${fp}"
-										th:text="${fp.pagamento}">ATIVO</option>
-								</select>
-							</div>
-							<div class="form-group form-group-typeahead">
-								<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
-									type="text" placeholder="Pesquise por Nome ou @Instagram"
-									class="form-control" th:field="*{cliente.id}">
-							</div>
-							<div class="form-group">
-								<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
-								<div style="display: none">
-									<select th:field="*{caixa.id}"><option
-											th:value="${idcaixadia}"></option></select>
+								<div class="form-group" id="tipoEntrada">
+									<label for="categoriaEntrada">Segmento</label> <select
+										id="categoriaEntrada" class="form-control" required="required"
+										th:field="*{categoriaEntrada}">
+										<option value="" selected="selected">Selecione...</option>
+										<option th:each="cat : ${categoriaentrada}" th:value="${cat}"
+											th:text="${cat.categoriaEntrada}">ATIVO</option>
+									</select>
 								</div>
-								<div align="right">
-									<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
-									<button type="submit" class="btn btn-primary">Gerar</button>
+								<div class="form-group">
+									<label>Observação <span
+										style="font-size: 11px; vertical-align: top; color: white">(
+											Opcional )</span></label> <input type="text" id="descricao"
+										placeholder="Sdicione algumas informações..."
+										class="form-control" th:field="*{descricao}">
 								</div>
-							</div>
+								<div class="form-group">
+									<label>Valor R$</label> <input type="text" value="0"
+										class="form-control" th:field="*{valor}" required="required">
+								</div>
+								<div class="form-group" id="descontoDiv">
+									<label>Desconto % <span
+										style="font-size: 11px; vertical-align: top; color: white">(
+											Opcional )</span></label> <input type="text" value="0" class="form-control"
+										th:field="*{desconto}" onChange="myFunction()">
+									<button type="button" class="btn btn-warning btn-sm"
+										id="btn_simular" style="margin-top: 6px">Simular
+										Desconto</button>
+								</div>
+								<div class="form-group" id="formaPagamento">
+									<label for="formaPagamento">Forma de pagamento</label> <select
+										id="formaPagamento" class="form-control" required="required"
+										th:field="*{formaPagamento}">
+										<option value="" selected="selected">Selecione...</option>
+										<option th:each="fp : ${formapagamento}" th:value="${fp}"
+											th:text="${fp.pagamento}">ATIVO</option>
+									</select>
+								</div>
+								<div class="form-group form-group-typeahead">
+									<label>Cliente</label> <input id="typeaheadIdInstaNomeCliente"
+										type="text" placeholder="Pesquise por Nome ou @Instagram"
+										class="form-control" th:field="*{cliente.id}">
+								</div>
+								<div class="form-group">
+									<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
+									<div style="display: none">
+										<select th:field="*{caixa.id}"><option
+												th:value="${idcaixadia}"></option></select>
+									</div>
+									<div align="right">
+										<button type="reset" class="btn btn-danger" id="enable">Limpar</button>
+										<button type="submit" class="btn btn-primary">Gerar</button>
+									</div>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -249,7 +250,17 @@
 	<script type="text/javascript" layout:fragment="script">
 		var valor = $("#valor");
 		var desconto = $("#desconto");
-
+				 $("#btn_simular").hide();
+	
+		function myFunction() {
+			  var x = document.getElementById("desconto");
+				 $("#btn_simular").show();
+				 if(desconto.val() == 0 || !desconto.val()){
+					 
+				 $("#btn_simular").hide();
+				 }
+			}
+		
 		$("#btn_simular")
 				.click(
 						function() {
@@ -257,6 +268,7 @@
 									* desconto.val() / 100);
 							var valorComDesconto = valor.val()
 									- descontoAplicado;
+							console.log(valor.val());
 							Messenger()
 									.post(
 											{
@@ -269,7 +281,7 @@
 		var hojeAs = moment().calendar();
 		$("#diaAs").append("<strong>" + hojeAs + "</strong>");
 
-			$("#esconderForm").hide();
+		$("#esconderForm").hide();
 		$(document).ready(function() {
 			$('input:radio[name="tipoOperacao"]').change(function() {
 				if ($("input[name='tipoOperacao']:checked")) {
@@ -284,7 +296,6 @@
 			if (e == 'ENTRADA') {
 				$("#esconderForm").show();
 				$("#descontoDiv").show();
-				$("#btn_simular").show();
 				$("#clienteId").show();
 			} else if (e == 'SAIDA') {
 				$("#esconderForm").show();

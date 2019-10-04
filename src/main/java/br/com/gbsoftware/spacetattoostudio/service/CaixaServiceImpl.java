@@ -1,5 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.service;
-
+/**
+ * <b>Gabriel S. Sofware</b>
+ * 
+ * @author Gabriel Silva - gasil96@gmail.com
+ * @version 2019 - Criação
+ */
 import java.util.List;
 import java.util.Optional;
 
@@ -18,13 +23,7 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	public void salvar(Caixa caixa) {
 
-//		BigDecimal big1 = new BigDecimal("1000.0"); // TODO - REMOVER APOS CONCLUSAO METODO
-		
-		/**
-		 * TODO - Cálculo do total aqui
-		 * */
-//		caixa.setTotal(big1); // TODO - AQUI VAI O TOTAL CALCULADO AO FECHAR CAIXA
-		
+		// TODO - CALCULO DO TOTAL ARRECADADO NO DIA (ENTRADA - SAIDA)
 		caixaRepository.save(caixa);
 	}
 

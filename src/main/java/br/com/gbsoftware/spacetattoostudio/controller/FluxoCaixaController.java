@@ -65,9 +65,9 @@ public class FluxoCaixaController {
 		if (caixa == null) {
 			model.addAttribute("caixaAberto", false);
 		} else {
+			model.addAttribute("teste", servicoEntradaSaida.busarTodosDoDia(servicoCaixa.getDiaAtual().getId()));
 			model.addAttribute("caixaAberto", servicoCaixa.getDiaAtual().getAberto());
 		}
-		model.addAttribute("teste", servicoEntradaSaida.busarTodosDoDia(servicoCaixa.getDiaAtual().getId()));
 		return PAGINA_FLUXO_CAIXA;
 	}
 
@@ -128,7 +128,6 @@ public class FluxoCaixaController {
 		return ATUALIZAR_PAGINA;
 	}
 
-	// TODO - TESTAR ESSE MÉTODO NO INITCONTROLLER
 	@RequestMapping(value = "/input-clientes")
 	public @ResponseBody String getInputClientes(HttpServletResponse response) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -156,8 +155,14 @@ public class FluxoCaixaController {
 
 	@ModelAttribute("idcaixadia")
 	public Long getIdCaixaDia() {
-		Long idCaixaDia = servicoCaixa.getDiaAtual().getId();
-		return idCaixaDia;
+		Caixa caixa = servicoCaixa.getDiaAtual();
+		if (caixa == null) {
+			long idCaixaDia = 1;
+			return idCaixaDia;
+		} else {
+			Long idCaixaDia = servicoCaixa.getDiaAtual().getId();
+			return idCaixaDia;
+		}
 	}
 
 }
