@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+
+<div layout:fragment="corpo">
+	<div id="encerrarAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"		class="modal fade text-left" >
+		<div role="document" class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<strong id="tituloModalEditarCliente" class="modal-title" style="color: red">ATENÇÃO!</strong>
+					<button type="button" data-dismiss="modal" aria-label="Close"
+						class="close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" id="cliente">
+					<form th:action="@{/caixa/excluir}" th:object="${entradaSaidaLocalizada}"	method="POST">
+					<br>	<div align="center"><strong style="color:#ffc107; font-size: 18px"> Deseja confirmar a exclusão deste lançamento ?</strong> </div><br><br>
+							<input type="hidden" class="form-control" id="idC" placeholder="" th:field="*{id}" required="required">
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
+							<button type="submit" class="btn btn-danger">Confirmar</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+	$(document).ready(function() {
+	    $('#encerrarAgendamento').modal('show');
+	    $('#encerrarAgendamento').on('hide.bs.modal', function () { window.location.href = '/caixa/fluxo'; })
+
+	})
+	</script>
+</body>
+</html>

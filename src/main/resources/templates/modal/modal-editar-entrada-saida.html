@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+
+<div layout:fragment="corpo">
+	<div id="encerrarAgendamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left" >
+		<div role="document" class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<strong id="tituloModalEditarCliente" class="modal-title" style="color: red">ATENÇÃO! EDIÇÃO ENTRADA/SAÍDA</strong>
+					<button type="button" data-dismiss="modal" aria-label="Close"
+						class="close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" id="cliente">
+					<form th:action="@{/caixa/editar}" th:object="${entradaSaidaLocalizada}"
+							method="POST">
+							<div class="form-group" style="display: none">
+								<div class="i-checks" align="center">
+									<input th:each="to : ${tipooperacao}" th:value=${to}
+										name="radios" class="radio-template" required="required"
+										type="radio" th:text="${to.operacao}" style="margin: 6px"
+										th:field="*{tipoOperacao}" readonly="readonly">
+								</div>
+							</div>
+							<div id="esconderForm">
+								<div class="form-group" id="tipoEntrada">
+									<label for="categoriaEntrada">Segmento</label> <select
+										id="categoriaEntrada" class="form-control" required="required"
+										th:field="*{categoriaEntrada}">
+										<option value="" selected="selected">Selecione...</option>
+										<option th:each="cat : ${categoriaentrada}" th:value="${cat}"
+											th:text="${cat.categoriaEntrada}">ATIVO</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Observação <span
+										style="font-size: 11px; vertical-align: top; color: white">(
+											Opcional )</span></label> <input type="text" id="descricao"
+										placeholder="Sdicione algumas informações..."
+										class="form-control" th:field="*{descricao}">
+								</div>
+								<div class="form-group">
+									<label>Valor R$ <span
+										style="font-size: 11px; vertical-align: top; color: red">(
+											Valor c/ Desconto Aplicado! )</span></label> <input type="text" value="0"
+										class="form-control" th:field="*{valor}" required="required">
+								</div>
+								<div class="form-group" id="descontoDiv">
+									<label>Desconto % <span
+										style="font-size: 11px; vertical-align: top; color: red">(
+											Desconto já aplicado! )</span></label> <input type="text" value="0" class="form-control"
+										th:field="*{desconto}">
+								</div>
+								<div class="form-group" id="formaPagamento">
+									<label for="formaPagamento">Forma de pagamento</label> <select
+										id="formaPagamento" class="form-control" required="required"
+										th:field="*{formaPagamento}">
+										<option value="" selected="selected">Selecione...</option>
+										<option th:each="fp : ${formapagamento}" th:value="${fp}"
+											th:text="${fp.pagamento}">ATIVO</option>
+									</select>
+								</div>
+								<div class="form-group form-group-typeahead">
+									<label>Cliente <span
+										style="font-size: 11px; vertical-align: top; color: red">(
+											Alterar o cliente a quem pertece o lançamento! )</span></label> <input id="typeaheadIdInstaNomeCliente"
+										type="text" placeholder="Pesquise por Nome ou @Instagram"
+										class="form-control" th:field="*{cliente.id}">
+								</div>
+								<div class="form-group">
+									<div style="display: none">
+										<select th:field="*{caixa.id}"><option
+												th:value="${idcaixadia}"></option></select>
+												<input type="hidden" th:field="*{id}" class="form-control">
+									</div>
+									<div align="right">
+										<button type="submit" class="btn btn-primary">Gerar</button>
+									</div>
+								</div>
+							</div>
+						</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+	$(document).ready(function() {
+	    $('#encerrarAgendamento').modal('show');
+		$("#desconto").val(0);
+	    $('#encerrarAgendamento').on('hide.bs.modal', function () { window.location.href = '/caixa/fluxo'; })
+	    
+// 	    $("#esconderForm").hide();
+	
+	    
+	    $(document).ready(function() {
+	    	if($('input:radio[name="tipoOperacao"]:checked').val() == "ENTRADA"){
+	    		$("#esconderForm").show();
+				$("#descontoDiv").show();
+				$("#clienteId").show();
+	    	}else {
+	    		$("#esconderForm").show();
+				$("#btn_simular").hide();
+				$("#descontoDiv").hide();
+				$("#clienteId").hide();
+	    	}
+		});
+
+		$("input[name='valor']").TouchSpin({
+			min : 0,
+			max : 100000,
+			step : 0.01,
+			decimals : 2,
+			boostat : 5,
+			maxboostedstep : 100000,
+			prefix : 'R$',
+		});
+
+		$("input[name='desconto']").TouchSpin({
+			min : 0,
+			max : 100,
+			step : 5,
+			boostat : 5,
+			maxboostedstep : 10,
+			prefix : '%',
+		});
+
+	})
+	</script>
+</body>
+</html>

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,6 +57,8 @@ public class FluxoCaixaController {
 	private EntradaSaidaService servicoEntradaSaida;
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
+	private static final String MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA = "modal/modal-confimar-exclusao-entrada-saida";
+	private static final String MODAL_EDITAR_ENTRADA_SAIDA = "modal/modal-editar-entrada-saida";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
 	@GetMapping("fluxo")
@@ -125,6 +128,41 @@ public class FluxoCaixaController {
 		}
 		// TODO - CALCULO DEBITO/CREDITO/AVISTA
 		// TODO - CHAMA MODAL COM DADOS DO FECHAMENTO DO CAIXA
+		return ATUALIZAR_PAGINA;
+	}
+
+	@GetMapping("editar/{id}")
+	public String preEditarEntradaSaida(@PathVariable("id") Long id, RedirectAttributes attr, Model model) {
+
+		if (servicoEntradaSaida.buscarPorId(id).isPresent()) {
+			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
+			return MODAL_EDITAR_ENTRADA_SAIDA;
+		} else {
+			attr.addFlashAttribute("entradaNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
+			return ATUALIZAR_PAGINA;
+		}
+	}
+
+	@PostMapping("editar")
+	public String editar(EntradaSaida entradaSaida) {
+		servicoEntradaSaida.editar(entradaSaida);
+		return ATUALIZAR_PAGINA;
+	}
+
+	@GetMapping("excluir/{id}")
+	public String preExcluirEntradaOuSaida(@PathVariable("id") Long id, RedirectAttributes attr, Model model) {
+		if (servicoEntradaSaida.buscarPorId(id).isPresent()) {
+			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
+			return MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA;
+		} else {
+			attr.addFlashAttribute("entradaNaoEncontrada", true); // TODO - FALTA IMPLEMENTAR ESSE HUBSPOT MENSSEGER
+			return ATUALIZAR_PAGINA;
+		}
+	}
+
+	@PostMapping("excluir")
+	public String excluirEntradaSaida(EntradaSaida entradaSaida) {
+		servicoEntradaSaida.deletar(entradaSaida.getId());
 		return ATUALIZAR_PAGINA;
 	}
 

@@ -63,30 +63,33 @@ public class ClienteController {
 		model.addAttribute("totalCadastroMesAtual", "+" + totalClientesCM.size());
 		model.addAttribute("totalCadastroMesAnterio", "+" + totalClientesCMA.size());
 		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
-		List<Cliente> clientesAtivos = clientesTotal.stream().filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInativos = clientesTotal.stream().filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInadimplentes = clientesTotal.stream().filter(x -> StatusClienteEnum.INADIMPLENTE.equals(x.getStatusCliente())).collect(Collectors.toList());
-		model.addAttribute("totalAtivos",clientesAtivos.size());
-		model.addAttribute("totalInativos",clientesInativos.size());
-		model.addAttribute("totalInadim",clientesInadimplentes.size());
-		
+		List<Cliente> clientesAtivos = clientesTotal.stream()
+				.filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
+		List<Cliente> clientesInativos = clientesTotal.stream()
+				.filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
+		List<Cliente> clientesInadimplentes = clientesTotal.stream()
+				.filter(x -> StatusClienteEnum.INADIMPLENTE.equals(x.getStatusCliente())).collect(Collectors.toList());
+		model.addAttribute("totalAtivos", clientesAtivos.size());
+		model.addAttribute("totalInativos", clientesInativos.size());
+		model.addAttribute("totalInadim", clientesInadimplentes.size());
+
 		ModelAndView mav = new ModelAndView("usuario");
 		mav.addObject("totalAtivosTeste", clientesAtivos.size());
-		
+
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		if(cliente.getInstagram().isEmpty()) {
+		if (cliente.getInstagram().isEmpty()) {
 			servicoCliente.salvar(cliente);
 			attr.addFlashAttribute("salvou", true);
-		}else {
-			String insta = "@"+cliente.getInstagram();
-			if(servicoCliente.buscarPorInstagram(insta).isEmpty()) {
+		} else {
+			String insta = "@" + cliente.getInstagram();
+			if (servicoCliente.buscarPorInstagram(insta).isEmpty()) {
 				servicoCliente.salvar(cliente);
 				attr.addFlashAttribute("salvou", true);
-			}else {
+			} else {
 				attr.addFlashAttribute("instaJaExiste", true);
 			}
 		}

@@ -26,7 +26,7 @@ public class PaginaErro implements ErrorViewResolver{
 				model.addObject("message", "A url para a página '  " + map.get("path") + "' Não existe.");
 				break;
 			case 403:
-				model.addObject("error", "Usuario sem permissão para acessar essa pagina");
+				model.addObject("error", "Usuario sem permissão para acessar essa página e/ou executar essa ação");
 				model.addObject("message", "A url para a página '  " + map.get("path") + "' Não existe.");
 				break;
 			case 500:
