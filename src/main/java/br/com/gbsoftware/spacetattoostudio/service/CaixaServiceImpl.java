@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -13,6 +14,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
@@ -29,16 +31,15 @@ public class CaixaServiceImpl implements CaixaService {
 
 	@Override
 	public void salvar(Caixa caixa) {
-		System.err.println("------qtd lancamentos------> " + getLancamentos().size());
-		System.err.println("-----vlr somatorio entrada-------> " + sumValorEntradaDia().get());
-		System.err.println("-----vlr somatorio saida-------> " + sumValorSaidaDia().get());
-		System.err.println("-----total caixa-------> " + calculoValorTotalDia());
-//		caixaRepository.save(caixa);
+		caixaRepository.save(caixa);
 	}
 
 	@Override
 	public void editar(Caixa caixa) {
-
+		caixa.setTotal(calculoValorTotalDia());
+		caixa.setTotalAvista(calculoTotalAVista());
+		caixa.setTotalCredito(calculoTotalCredito());
+		caixa.setTotalDebito(calculoTotalDebito());
 		caixaRepository.saveAndFlush(caixa);
 	}
 
@@ -64,8 +65,13 @@ public class CaixaServiceImpl implements CaixaService {
 
 	// TODO - BUSCAR TODOS LANCAMENTOS DO DIA ENTRADA/SAIDA
 	@Override
-	public List<EntradaSaida> getLancamentos() {
-		return entradaSaidaServico.busarTodosDoDia(getDiaAtual().getId());
+	public List<EntradaSaida> getLancamentos() throws NullPointerException {
+		if (getDiaAtual() == null) {
+			List<EntradaSaida> dados = new ArrayList<EntradaSaida>();
+			return dados;
+		} else {
+			return entradaSaidaServico.busarTodosDoDia(getDiaAtual().getId());
+		}
 	}
 
 	// TODO - SOMA VALORES ENTRADA DO DIA
@@ -81,13 +87,106 @@ public class CaixaServiceImpl implements CaixaService {
 		return getLancamentos().stream().filter(x -> TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
 				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
 	}
-	
-	// TODO - SOMA TOTAL CAIXA 
+
+	// TODO - SOMA TOTAL CAIXA
 	@Override
 	public BigDecimal calculoValorTotalDia() {
 		Optional<BigDecimal> entrada = sumValorEntradaDia();
 		Optional<BigDecimal> saida = sumValorSaidaDia();
-		return entrada.get().subtract(saida.get());
+		if (entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dado = entrada.get().subtract(saida.get());
+			return dado;
+		} else if (entrada.isPresent() && !saida.isPresent()) {
+			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
+			return dadoSemSaida;
+		} else if (!entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
+			return dadoSemEntrada;
+		} else {
+			BigDecimal dadoZero = new BigDecimal(0);
+			return dadoZero;
+		}
+	}
+
+	@Override
+	public BigDecimal calculoTotalDebito() {
+		Optional<BigDecimal> entrada = getLancamentos().stream()
+				.filter(x -> FormaPagamentoEnum.DEBITO.equals(x.getFormaPagamento())
+						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+
+		Optional<BigDecimal> saida = getLancamentos().stream()
+				.filter(x -> FormaPagamentoEnum.DEBITO.equals(x.getFormaPagamento())
+						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+
+		if (entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dado = entrada.get().subtract(saida.get());
+			return dado;
+		} else if (entrada.isPresent() && !saida.isPresent()) {
+			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
+			return dadoSemSaida;
+		} else if (!entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
+			return dadoSemEntrada;
+		} else {
+			BigDecimal dadoZero = new BigDecimal(0);
+			return dadoZero;
+		}
+	}
+
+	@Override
+	public BigDecimal calculoTotalCredito() {
+		Optional<BigDecimal> entrada = getLancamentos().stream()
+				.filter(x -> FormaPagamentoEnum.CREDITO.equals(x.getFormaPagamento())
+						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+
+		Optional<BigDecimal> saida = getLancamentos().stream()
+				.filter(x -> FormaPagamentoEnum.CREDITO.equals(x.getFormaPagamento())
+						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+
+		if (entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dado = entrada.get().subtract(saida.get());
+			return dado;
+		} else if (entrada.isPresent() && !saida.isPresent()) {
+			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
+			return dadoSemSaida;
+		} else if (!entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
+			return dadoSemEntrada;
+		} else {
+			BigDecimal dadoZero = new BigDecimal(0);
+			return dadoZero;
+		}
+	}
+
+	@Override
+	public BigDecimal calculoTotalAVista() {
+		Optional<BigDecimal> entrada = getLancamentos().stream()
+				.filter(x -> FormaPagamentoEnum.A_VISTA.equals(x.getFormaPagamento())
+						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+
+		Optional<BigDecimal> saida = getLancamentos().stream()
+				.filter(x -> FormaPagamentoEnum.A_VISTA.equals(x.getFormaPagamento())
+						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+
+		if (entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dado = entrada.get().subtract(saida.get());
+			return dado;
+		} else if (entrada.isPresent() && !saida.isPresent()) {
+			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
+			return dadoSemSaida;
+		} else if (!entrada.isPresent() && saida.isPresent()) {
+			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
+			return dadoSemEntrada;
+		} else {
+			BigDecimal dadoZero = new BigDecimal(0);
+			return dadoZero;
+		}
 	}
 
 }

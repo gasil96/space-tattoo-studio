@@ -35,9 +35,18 @@ public class Caixa extends EntidadeBase<Long> {
 	@Column(name = "data_hora_fechamento")
 	private LocalDateTime dataHoraFechamento;
 
-	@Column(length = 65, precision = 12, scale = 2)
+	@Column(name = "total_geral", length = 65, precision = 12, scale = 2)
 	private BigDecimal total;
- 
+
+	@Column(name = "total_avista", length = 65, precision = 12, scale = 2)
+	private BigDecimal totalAvista;
+
+	@Column(name = "total_credito", length = 65, precision = 12, scale = 2)
+	private BigDecimal totalCredito;
+
+	@Column(name = "total_debito", length = 65, precision = 12, scale = 2)
+	private BigDecimal totalDebito;
+
 	@NotNull
 	@Column(name = "operador_abertura", updatable = false, length = 30)
 	private String operadorAbertura;
@@ -45,7 +54,7 @@ public class Caixa extends EntidadeBase<Long> {
 	@Column(name = "operador_fechamento", length = 30)
 	private String operadorFechamento;
 
-	@Type(type="true_false") 
+	@Type(type = "true_false")
 	private Boolean aberto;
 
 	@OneToMany(mappedBy = "caixa")
@@ -56,16 +65,43 @@ public class Caixa extends EntidadeBase<Long> {
 	}
 
 	public Caixa(LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento, BigDecimal total,
-			@NotNull String operadorAbertura, @NotNull String operadorFechamento, Boolean aberto,
-			List<EntradaSaida> entradaSaida) {
+			BigDecimal totalAvista, BigDecimal totalCredito, BigDecimal totalDebito, @NotNull String operadorAbertura,
+			String operadorFechamento, Boolean aberto, List<EntradaSaida> entradaSaida) {
 		super();
 		this.dataHoraAbertura = dataHoraAbertura;
 		this.dataHoraFechamento = dataHoraFechamento;
 		this.total = total;
+		this.totalAvista = totalAvista;
+		this.totalCredito = totalCredito;
+		this.totalDebito = totalDebito;
 		this.operadorAbertura = operadorAbertura;
 		this.operadorFechamento = operadorFechamento;
 		this.aberto = aberto;
 		this.entradaSaida = entradaSaida;
+	}
+
+	public BigDecimal getTotalAvista() {
+		return totalAvista;
+	}
+
+	public void setTotalAvista(BigDecimal totalAvista) {
+		this.totalAvista = totalAvista;
+	}
+
+	public BigDecimal getTotalCredito() {
+		return totalCredito;
+	}
+
+	public void setTotalCredito(BigDecimal totalCredito) {
+		this.totalCredito = totalCredito;
+	}
+
+	public BigDecimal getTotalDebito() {
+		return totalDebito;
+	}
+
+	public void setTotalDebito(BigDecimal totalDebito) {
+		this.totalDebito = totalDebito;
 	}
 
 	public Boolean getAberto() {
@@ -127,8 +163,8 @@ public class Caixa extends EntidadeBase<Long> {
 	@Override
 	public String toString() {
 		return "Caixa [dataHoraAbertura=" + dataHoraAbertura + ", dataHoraFechamento=" + dataHoraFechamento + ", total="
-				+ total + ", operadorAbertura=" + operadorAbertura + ", operadorFechamento=" + operadorFechamento
+				+ total + ", totalAvista=" + totalAvista + ", totalCredito=" + totalCredito + ", totalDebito="
+				+ totalDebito + ", operadorAbertura=" + operadorAbertura + ", operadorFechamento=" + operadorFechamento
 				+ ", aberto=" + aberto + ", entradaSaida=" + entradaSaida + "]";
 	}
-
 }

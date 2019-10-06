@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
 
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -34,11 +35,11 @@ public class Cliente extends EntidadeBase<Long> {
 
 	@NotNull
 	@Column(length = 50)
-	@JsonProperty(value="nome")
+	@JsonProperty(value = "nome")
 	private String nome;
 
 	@Column(length = 20)
-	@JsonProperty(value="telefone")
+	@JsonProperty(value = "telefone")
 	private String telefone;
 
 	@JsonIgnore
@@ -53,11 +54,12 @@ public class Cliente extends EntidadeBase<Long> {
 	private LocalDateTime dataCadastro;
 
 	@Column(length = 30)
-	@JsonProperty(value="instagram")
+	@JsonProperty(value = "instagram")
 	private String instagram;
 
 	@JsonIgnore
-	private Double saldo;
+	@Column(precision = 12, scale = 2)
+	private BigDecimal saldo;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
@@ -66,8 +68,8 @@ public class Cliente extends EntidadeBase<Long> {
 	public Cliente() {
 	}
 
-	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, LocalDateTime dataCadastro,
-			String instagram, Double saldo, List<Servico> servicos) {
+	public Cliente(@NotNull String nome, String telefone, @NotNull StatusClienteEnum statusCliente,
+			LocalDateTime dataCadastro, String instagram, BigDecimal saldo, List<Servico> servicos) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
@@ -126,11 +128,11 @@ public class Cliente extends EntidadeBase<Long> {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Double getSaldo() {
+	public BigDecimal getSaldo() {
 		return saldo;
 	}
 
-	public void setSaldo(Double saldo) {
+	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
 	}
 
@@ -150,6 +152,8 @@ public class Cliente extends EntidadeBase<Long> {
 	@Override
 	public String toString() {
 		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
-				+ ", dataCadastro=" + dataCadastro + ", saldo=" + saldo + "]";
+				+ ", dataCadastro=" + dataCadastro + ", instagram=" + instagram + ", saldo=" + saldo + ", servicos="
+				+ servicos + "]";
 	}
+
 }

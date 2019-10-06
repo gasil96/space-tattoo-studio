@@ -33,5 +33,11 @@ public interface CaixaService {
 	Optional<BigDecimal> sumValorSaidaDia();
 
 	BigDecimal calculoValorTotalDia();
+
+	BigDecimal calculoTotalDebito();
+
+	BigDecimal calculoTotalCredito();
+
+	BigDecimal calculoTotalAVista();
 	
 }

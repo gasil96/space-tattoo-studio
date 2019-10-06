@@ -57,19 +57,28 @@ public class FluxoCaixaController {
 	private EntradaSaidaService servicoEntradaSaida;
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
+	private static final String PAGINA_DETALHAMENTO_FINANCEIRO = "detalhamento/financeiro-detalhado";
 	private static final String MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA = "modal/modal-confimar-exclusao-entrada-saida";
 	private static final String MODAL_CONFIRMAR_FECHAMENTO_CAIXA = "modal/modal-confimar-fechamento-caixa";
 	private static final String MODAL_EDITAR_ENTRADA_SAIDA = "modal/modal-editar-entrada-saida";
+	private static final String MODAL_DETALHAMENTO_FECHAMENTO_CAIXA = "modal/modal-detalhamento-fechamento-caixa";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
+	@GetMapping("detalhamento")
+	public String detalhamentoFinanceiro() {
+		return PAGINA_DETALHAMENTO_FINANCEIRO;
+	}
+	
 	@GetMapping("fluxo")
 	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Cliente cliente) {
 		caixa = servicoCaixa.getDiaAtual();
 		model.addAttribute("classActiveCaixa", "active");
 		model.addAttribute("calculoValorTotalDia", servicoCaixa.calculoValorTotalDia());
-		model.addAttribute("sumValorEntradaDia", servicoCaixa.sumValorEntradaDia().get());
-		model.addAttribute("sumValorSaidaDia", servicoCaixa.sumValorSaidaDia().get());
-		
+		model.addAttribute("sumValorEntradaDia",
+				servicoCaixa.sumValorEntradaDia().isPresent() ? servicoCaixa.sumValorEntradaDia().get() : 0);
+		model.addAttribute("sumValorSaidaDia",
+				servicoCaixa.sumValorSaidaDia().isPresent() ? servicoCaixa.sumValorSaidaDia().get() : 0);
+
 		if (caixa == null) {
 			model.addAttribute("caixaAberto", false);
 		} else {
@@ -86,13 +95,13 @@ public class FluxoCaixaController {
 			if (servicoCliente.buscarPorId(entradaSaida.getCliente().getId()).isPresent()
 					&& servicoCaixa.buscarPorId(entradaSaida.getCaixa().getId()).isPresent()) {
 				servicoEntradaSaida.salvar(entradaSaida);
-				attr.addFlashAttribute("adicionou", true); 
+				attr.addFlashAttribute("adicionou", true);
 			} else {
-				attr.addFlashAttribute("erroAdicionar", true); 
+				attr.addFlashAttribute("erroAdicionar", true);
 			}
 		} else {
 
-			attr.addFlashAttribute("caixaFechado", true); 
+			attr.addFlashAttribute("caixaFechado", true);
 		}
 		return ATUALIZAR_PAGINA;
 	}
@@ -109,13 +118,13 @@ public class FluxoCaixaController {
 			caixaNovo.setOperadorAbertura(usuarioLogadoNome);
 			caixaNovo.setAberto(true);
 			servicoCaixa.salvar(caixaNovo);
-			attr.addFlashAttribute("caixaAbertoSucesso", true); 
+			attr.addFlashAttribute("caixaAbertoSucesso", true);
 		} else {
 			caixa.setAberto(true);
 			caixa.setDataHoraFechamento(null);
 			caixa.setOperadorFechamento(null);
 			servicoCaixa.salvar(caixa);
-			attr.addFlashAttribute("caixaReaberto", true); 
+			attr.addFlashAttribute("caixaReaberto", true);
 		}
 		return ATUALIZAR_PAGINA;
 	}
@@ -127,34 +136,37 @@ public class FluxoCaixaController {
 			if (caixa != null) {
 				return MODAL_CONFIRMAR_FECHAMENTO_CAIXA;
 			} else {
-				attr.addFlashAttribute("caixaNaoLocalizado", true); 
+				attr.addFlashAttribute("caixaNaoLocalizado", true);
 			}
 
 		} else {
-			attr.addFlashAttribute("erroFecharCaixa", true); 
+			attr.addFlashAttribute("erroFecharCaixa", true);
 		}
 		return ATUALIZAR_PAGINA;
 	}
 
 	@PostMapping("fechar-caixa")
-	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr) {
+	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr, Model model) {
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
 		caixa = servicoCaixa.getDiaAtual();
 		if (caixa == null) {
-			attr.addFlashAttribute("erroFecharCaixa", true); 
+			attr.addFlashAttribute("erroFecharCaixa", true);
 		} else {
 			caixa.setDataHoraFechamento(LocalDateTime.now());
 			caixa.setOperadorFechamento(usuarioLogadoNome);
 			caixa.setAberto(false);
 
 			attr.addFlashAttribute("caixaFechadoSucesso", true);
-			servicoCaixa.salvar(caixa);
+			servicoCaixa.editar(caixa);
 		}
-		// TODO - CALCULO DEBITO/CREDITO/AVISTA
-		// TODO - CHAMA MODAL COM DADOS DO FECHAMENTO DO CAIXA
-		return ATUALIZAR_PAGINA;
+		
+		model.addAttribute("total", servicoCaixa.calculoValorTotalDia());
+		model.addAttribute("credito", servicoCaixa.calculoTotalCredito());
+		model.addAttribute("debito", servicoCaixa.calculoTotalDebito());
+		model.addAttribute("avista", servicoCaixa.calculoTotalAVista());
+		return MODAL_DETALHAMENTO_FECHAMENTO_CAIXA;
 	}
 
 	@GetMapping("editar/{id}")
@@ -164,7 +176,7 @@ public class FluxoCaixaController {
 			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
 			return MODAL_EDITAR_ENTRADA_SAIDA;
 		} else {
-			attr.addFlashAttribute("esNaoEncontrada", true); 
+			attr.addFlashAttribute("esNaoEncontrada", true);
 			return ATUALIZAR_PAGINA;
 		}
 	}
@@ -181,7 +193,7 @@ public class FluxoCaixaController {
 			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
 			return MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA;
 		} else {
-			attr.addFlashAttribute("esNaoEncontrada", true); 
+			attr.addFlashAttribute("esNaoEncontrada", true);
 			return ATUALIZAR_PAGINA;
 		}
 	}
