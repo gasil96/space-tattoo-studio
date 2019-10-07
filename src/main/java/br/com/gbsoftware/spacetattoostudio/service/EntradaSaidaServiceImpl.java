@@ -14,6 +14,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
 import br.com.gbsoftware.spacetattoostudio.repository.EntradaSaidaRepository;
 
@@ -23,14 +24,24 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	@Autowired
 	private EntradaSaidaRepository entradaSaidaRepository;
 
+	@Autowired
+	private ClienteService servicoCliente;
+
 	@Override
 	public void salvar(EntradaSaida entradaSaida) {
 
+		Optional<Cliente> cliente = servicoCliente.buscarPorId(entradaSaida.getCliente().getId());
+
+		if (cliente.isPresent()) {
+			cliente.get().setSaldo(cliente.get().getSaldo().add(entradaSaida.getValor()));
+		}
+		
 		if (entradaSaida.getDesconto() == null) {
 
 			entradaSaidaRepository.save(entradaSaida);
 		} else {
-			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto()).divide(new BigDecimal(100)));
+			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto())
+					.divide(new BigDecimal(100)));
 			entradaSaida.setValor(entradaSaida.getValor().subtract(resultadoValorComDesconto));
 			entradaSaidaRepository.save(entradaSaida);
 		}
@@ -39,12 +50,13 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 
 	@Override
 	public void editar(EntradaSaida entradaSaida) {
-			entradaSaida.setHorarioOperacao(LocalDateTime.now());
+		entradaSaida.setHorarioOperacao(LocalDateTime.now());
 		if (entradaSaida.getDesconto() == null) {
 
 			entradaSaidaRepository.save(entradaSaida);
 		} else {
-			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto()).divide(new BigDecimal(100)));
+			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto())
+					.divide(new BigDecimal(100)));
 			entradaSaida.setValor(entradaSaida.getValor().subtract(resultadoValorComDesconto));
 			entradaSaidaRepository.save(entradaSaida);
 		}

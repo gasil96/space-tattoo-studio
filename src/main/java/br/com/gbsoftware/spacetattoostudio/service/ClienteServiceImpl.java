@@ -75,4 +75,9 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<Cliente> getClienteIdInstaNome() {
 		return clienteRepository.getClienteIdInstaNome();
 	}
+
+	@Override
+	public void salvarOptional(Optional<Cliente> cliente) {
+//		System.err.println(cliente.toString());
+	}
 }

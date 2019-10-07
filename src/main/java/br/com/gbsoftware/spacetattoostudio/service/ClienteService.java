@@ -29,4 +29,7 @@ public interface ClienteService {
 	List<Cliente> getPorCadastroMesAnterio();
 	
 	List<Cliente> getClienteIdInstaNome();
+
+	void salvarOptional(Optional<Cliente> cliente);
+
 }

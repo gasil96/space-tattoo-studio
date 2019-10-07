@@ -7,6 +7,7 @@ package br.com.gbsoftware.spacetattoostudio.repository;
  * @version 2019 - Criação
  */
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +33,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
 	@Query(value = "select clt.id, clt.instagram, clt.nome, clt.telefone from cliente clt", nativeQuery = true)
 	List<Cliente> getClienteIdInstaNome();
+
+	Object save(Optional<Cliente> cliente);
 }
