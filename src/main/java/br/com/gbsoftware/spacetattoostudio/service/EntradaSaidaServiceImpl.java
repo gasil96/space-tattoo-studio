@@ -29,13 +29,7 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 
 	@Override
 	public void salvar(EntradaSaida entradaSaida) {
-
-		Optional<Cliente> cliente = servicoCliente.buscarPorId(entradaSaida.getCliente().getId());
-
-		if (cliente.isPresent()) {
-			cliente.get().setSaldo(cliente.get().getSaldo().add(entradaSaida.getValor()));
-		}
-		
+		addGastoTotalCliente(entradaSaida);
 		if (entradaSaida.getDesconto() == null) {
 
 			entradaSaidaRepository.save(entradaSaida);
@@ -50,6 +44,7 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 
 	@Override
 	public void editar(EntradaSaida entradaSaida) {
+		addGastoTotalCliente(entradaSaida);
 		entradaSaida.setHorarioOperacao(LocalDateTime.now());
 		if (entradaSaida.getDesconto() == null) {
 
@@ -82,4 +77,20 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 		return entradaSaidaRepository.findByEntradaSaida(iDCaixaFK);
 	}
 
+	@Override
+	public void addGastoTotalCliente(EntradaSaida entradaSaida) {
+		Optional<Cliente> cliente = servicoCliente.buscarPorId(entradaSaida.getCliente().getId());
+		if (cliente.isPresent()) {
+			cliente.get().setSaldo(cliente.get().getSaldo().add(entradaSaida.getValor()));
+		}
+	}
+
+	// TODO - REMOVER ENTRADA DO GASTO TOTAL METODO A SER IMPL
+	@Override
+	public void removeGastoTotalCliente(EntradaSaida entradaSaida) {
+		Optional<Cliente> cliente = servicoCliente.buscarPorId(entradaSaida.getCliente().getId());
+		if (cliente.isPresent()) {
+			cliente.get().setSaldo(cliente.get().getSaldo().subtract(entradaSaida.getValor()));
+		}
+	}
 }
