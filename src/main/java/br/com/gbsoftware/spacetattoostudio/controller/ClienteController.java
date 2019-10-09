@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -109,6 +110,26 @@ public class ClienteController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@PostMapping("credito")
+	public String credito(@Valid Cliente cliente, RedirectAttributes attr) {
+		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+		BigDecimal valorCredito = cliente.getCreditoCliente().add(clienteLocalizado.getCreditoCliente());
+		Long idCliente = cliente.getId();
+		servicoCliente.updateCredito(valorCredito, idCliente);
+		attr.addFlashAttribute("creditoAdicionado", true);
+		return ATUALIZAR_PAGINA;
+	}
+
+	@PostMapping("remover-credito")
+	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
+		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+		BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
+		Long idCliente = cliente.getId();
+		servicoCliente.updateCredito(valorCredito, idCliente);
+		attr.addFlashAttribute("creditoRemovido", true);
+		return ATUALIZAR_PAGINA;
+	}
+	
 	@ModelAttribute("servicos")
 	public List<Servico> getServicos() {
 		return servicoServico.buscarTodos();

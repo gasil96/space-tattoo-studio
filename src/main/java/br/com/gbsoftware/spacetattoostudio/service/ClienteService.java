@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -13,6 +14,8 @@ import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 public interface ClienteService {
 
 	void salvar(Cliente cliente);
+	
+	void updateCredito(BigDecimal valorCredito, Long idCliente);
 
 	void editar(Cliente cliente);
 	
@@ -30,6 +33,5 @@ public interface ClienteService {
 	
 	List<Cliente> getClienteIdInstaNome();
 
-	void salvarOptional(Optional<Cliente> cliente);
-
+	BigDecimal calcularGastoTotalCliente(Cliente cliente);
 }

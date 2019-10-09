@@ -17,7 +17,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -27,14 +26,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
-
 @Entity
 @SuppressWarnings("serial")
 @Table(name = "CLIENTE")
 public class Cliente extends EntidadeBase<Long> {
 
-	@NotNull
-	@Column(length = 50)
+	@Column(length = 50, nullable = false)
 	@JsonProperty(value = "nome")
 	private String nome;
 
@@ -42,10 +39,12 @@ public class Cliente extends EntidadeBase<Long> {
 	@JsonProperty(value = "telefone")
 	private String telefone;
 
+	@Column(name = "credito_cliente", precision = 12, scale = 2)
+	private BigDecimal creditoCliente;
+
 	@JsonIgnore
-	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status", length = 30)
+	@Column(name = "status", length = 30, nullable = false)
 	private StatusClienteEnum statusCliente;
 
 	@JsonIgnore
@@ -68,11 +67,13 @@ public class Cliente extends EntidadeBase<Long> {
 	public Cliente() {
 	}
 
-	public Cliente(@NotNull String nome, String telefone, @NotNull StatusClienteEnum statusCliente,
-			LocalDateTime dataCadastro, String instagram, BigDecimal saldo, List<Servico> servicos) {
+	public Cliente( String nome, String telefone, BigDecimal creditoCliente,
+			 StatusClienteEnum statusCliente, LocalDateTime dataCadastro, String instagram, BigDecimal saldo,
+			List<Servico> servicos) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
+		this.creditoCliente = creditoCliente;
 		this.statusCliente = statusCliente;
 		this.dataCadastro = dataCadastro;
 		this.instagram = instagram;
@@ -80,12 +81,26 @@ public class Cliente extends EntidadeBase<Long> {
 		this.servicos = servicos;
 	}
 
+	public Cliente(BigDecimal saldo) {
+		super();
+		this.saldo = saldo;
+	}
+
+	
 	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, String instagram) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
 		this.statusCliente = statusCliente;
 		this.instagram = instagram;
+	}
+
+	public BigDecimal getCreditoCliente() {
+		return creditoCliente;
+	}
+
+	public void setCreditoCliente(BigDecimal creditoCliente) {
+		this.creditoCliente = creditoCliente;
 	}
 
 	public void setStatusCliente(StatusClienteEnum statusCliente) {
@@ -151,9 +166,9 @@ public class Cliente extends EntidadeBase<Long> {
 
 	@Override
 	public String toString() {
-		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", statusCliente=" + statusCliente
-				+ ", dataCadastro=" + dataCadastro + ", instagram=" + instagram + ", saldo=" + saldo + ", servicos="
-				+ servicos + "]";
+		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", creditoCliente=" + creditoCliente
+				+ ", statusCliente=" + statusCliente + ", dataCadastro=" + dataCadastro + ", instagram=" + instagram
+				+ ", saldo=" + saldo + ", servicos=" + servicos + "]";
 	}
 
 }

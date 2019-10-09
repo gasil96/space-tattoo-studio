@@ -63,7 +63,6 @@ public class CaixaServiceImpl implements CaixaService {
 		return caixaRepository.getCaixaDiaAtual();
 	}
 
-	// TODO - BUSCAR TODOS LANCAMENTOS DO DIA ENTRADA/SAIDA
 	@Override
 	public List<EntradaSaida> getLancamentos() throws NullPointerException {
 		if (getDiaAtual() == null) {
@@ -74,21 +73,18 @@ public class CaixaServiceImpl implements CaixaService {
 		}
 	}
 
-	// TODO - SOMA VALORES ENTRADA DO DIA
 	@Override
 	public Optional<BigDecimal> sumValorEntradaDia() {
 		return getLancamentos().stream().filter(x -> TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
 				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
 	}
 
-	// TODO - SOMA VALORES SAIDA DO DIA
 	@Override
 	public Optional<BigDecimal> sumValorSaidaDia() {
 		return getLancamentos().stream().filter(x -> TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
 				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
 	}
 
-	// TODO - SOMA TOTAL CAIXA
 	@Override
 	public BigDecimal calculoValorTotalDia() {
 		Optional<BigDecimal> entrada = sumValorEntradaDia();

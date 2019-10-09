@@ -31,7 +31,6 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 	public void salvar(EntradaSaida entradaSaida) {
 		addGastoTotalCliente(entradaSaida);
 		if (entradaSaida.getDesconto() == null) {
-
 			entradaSaidaRepository.save(entradaSaida);
 		} else {
 			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto())
@@ -39,7 +38,6 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 			entradaSaida.setValor(entradaSaida.getValor().subtract(resultadoValorComDesconto));
 			entradaSaidaRepository.save(entradaSaida);
 		}
-
 	}
 
 	@Override
@@ -77,20 +75,14 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 		return entradaSaidaRepository.findByEntradaSaida(iDCaixaFK);
 	}
 
-	@Override
 	public void addGastoTotalCliente(EntradaSaida entradaSaida) {
+		BigDecimal gastoLista = buscarTodos().stream()
+				.filter(x -> entradaSaida.getCliente().getId().equals(x.getCliente().getId()))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+		BigDecimal gastoTotalCliente = gastoLista.add(entradaSaida.getValor());
 		Optional<Cliente> cliente = servicoCliente.buscarPorId(entradaSaida.getCliente().getId());
 		if (cliente.isPresent()) {
-			cliente.get().setSaldo(cliente.get().getSaldo().add(entradaSaida.getValor()));
-		}
-	}
-
-	// TODO - REMOVER ENTRADA DO GASTO TOTAL METODO A SER IMPL
-	@Override
-	public void removeGastoTotalCliente(EntradaSaida entradaSaida) {
-		Optional<Cliente> cliente = servicoCliente.buscarPorId(entradaSaida.getCliente().getId());
-		if (cliente.isPresent()) {
-			cliente.get().setSaldo(cliente.get().getSaldo().subtract(entradaSaida.getValor()));
+			cliente.get().setSaldo(gastoTotalCliente);
 		}
 	}
 }

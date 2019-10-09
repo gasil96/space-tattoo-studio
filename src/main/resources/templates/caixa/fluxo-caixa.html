@@ -26,7 +26,8 @@
 									<i class="fa fa-caret-up"></i>
 								</div>
 								<div class="stats-2-content">
-									<strong class="d-block">R$ <strong th:text="${sumValorEntradaDia}">2387.00</strong></strong><span
+									<strong class="d-block">R$ <strong
+										th:text="${sumValorEntradaDia}">2387.00</strong></strong><span
 										class="d-block">Entrada</span>
 									<div class="progress progress-template progress-small">
 										<div role="progressbar" style="width: 35%;" aria-valuenow="30"
@@ -40,7 +41,8 @@
 									<i class="fa fa-caret-down"></i>
 								</div>
 								<div class="stats-2-content">
-									<strong class="d-block">R$ <strong th:text=${sumValorSaidaDia}>758.00</strong></strong><span
+									<strong class="d-block">R$ <strong
+										th:text=${sumValorSaidaDia}>758.00</strong></strong><span
 										class="d-block">Saída</span>
 									<div class="progress progress-template progress-small">
 										<div role="progressbar" style="width: 35%;" aria-valuenow="30"
@@ -54,7 +56,8 @@
 									<i class="fa fa-caret-up"></i>
 								</div>
 								<div class="stats-2-content">
-									<strong class="d-block">R$ <strong th:text="${calculoValorTotalDia}">3145.00</strong></strong><span
+									<strong class="d-block">R$ <strong
+										th:text="${calculoValorTotalDia}">3145.00</strong></strong><span
 										class="d-block">Saldo Atual</span>
 									<div class="progress progress-template progress-small">
 										<div role="progressbar" style="width: 60%;" aria-valuenow="30"
@@ -68,6 +71,38 @@
 				</div>
 			</div>
 		</section>
+		<section>
+			<div class="col-lg-8">
+				<div class="block">
+					<div class="title">
+						<strong>Adicionar Crédito ao Cliente!</strong>
+					</div>
+					<div class="block-body">
+						<form class="form-inline" th:action="@{/cliente/credito}"
+							th:object="${cliente}" method="POST">
+							<div class="form-group">
+								<input id="inlineFormInput" style="margin-right: 0px"
+									th:field="*{creditoCliente}" type="text"
+									placeholder="Valor Pago" class="form-control">
+							</div>
+							<div class="form-group">
+								<div class="form-group">
+									<div class="input-group">
+										<input type="text" class="form-control"
+											style="margin-left: 20px" id="typeaheadIdInstaNomeCliente"
+											placeholder="Insira o Cliente" th:field="*{id}">
+										<div class="input-group-append">
+											<button type="submit" class="btn btn-primary">Adicionar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		
 		<section>
 			<div class="col-lg-8">
 				<div class="block">
@@ -95,6 +130,8 @@
 				</div>
 			</div>
 		</section>
+		
+		
 
 		<section id="fluxo" style="display: block;" th:if="${caixaAberto}">
 			<div class="col-lg-8">
@@ -128,8 +165,8 @@
 									<label>Observação <span
 										style="font-size: 11px; vertical-align: top; color: white">(
 											Opcional )</span></label> <input type="text" id="descricao"
-										placeholder="Observações aqui..."
-										class="form-control" th:field="*{descricao}">
+										placeholder="Observações aqui..." class="form-control"
+										th:field="*{descricao}">
 								</div>
 								<div class="form-group">
 									<label>Valor R$</label> <input type="text" value="0"
@@ -154,9 +191,11 @@
 									</select>
 								</div>
 								<div class="form-group form-group-typeahead">
-									<label id="idClienteFk">Cliente</label> <input id="typeaheadIdInstaNomeCliente"
-										type="text" placeholder="Pesquise por Nome ou @Instagram"
-										class="form-control" th:field="*{cliente.id}" required="required">
+									<label id="idClienteFk">Cliente</label> <input
+										id="typeaheadIdInstaNomeCliente" type="text"
+										placeholder="Pesquise por Nome ou @Instagram"
+										class="form-control" th:field="*{cliente.id}"
+										required="required">
 								</div>
 								<div class="form-group">
 									<!-- 									<input type="text" class="form-control"	placeholder="Id do Caixa Referencial" th:field="*{caixa.id}" th:value="${idcaixadia}"> -->
@@ -203,15 +242,17 @@
 								</thead>
 								<tbody>
 									<tr th:each="es :${teste}">
-										<td ><div th:if="${es.descricao != ''}"><i class="material-icons"
-											style="align-self: center; color: #ffc107"
-											data-toggle="popover" title="Observações"
-											data-placement="left" data-container="body"
-											th:attr="data-content=${#strings.concat(
+										<td><div th:if="${es.descricao != ''}">
+												<i class="material-icons"
+													style="align-self: center; color: #ffc107"
+													data-toggle="popover" title="Observações"
+													data-placement="left" data-container="body"
+													th:attr="data-content=${#strings.concat(
 											es.descricao,
 											'  ',
 	                                    )}">
-												info </i></div></td>
+													info </i>
+											</div></td>
 										<td th:switch="${#strings.capitalizeWords(es.tipoOperacao)}">
 											<span style="color: #429244;" th:case="ENTRADA">ENTRADA</span>
 											<span style="color: #bb414d;" th:case="SAIDA">SAIDA</span>
@@ -248,6 +289,7 @@
 				</div>
 			</div>
 		</section>
+
 		<div th:if="${adicionou == true} " id="adicionou"></div>
 		<div th:if="${erroAdicionar == true} " id="erroAdicionar"></div>
 		<div th:if="${caixaFechado == true} " id="caixaFechado"></div>
@@ -268,63 +310,81 @@
 			});
 		});
 
-		$(document).ready(function() {
-			$('#adicionou').show(function() {
-				Messenger().post({
-					message : 'Lançamento adicionado com sucesso!',
-					type : 'success'
-				});
-			});
-			$('#erroAdicionar').show(function() {
-				Messenger().post({
-					message : 'Erro ao tentar inserir um novo lançamento!',
-					type : 'error'
-				});
-			});
-			$('#caixaFechado').show(function() {
-				Messenger().post({
-					message : 'Impossivel inserir laçamento com caixa fechado!',
-					type : 'error'
-				});
-			});
-			$('#caixaAbertoSucesso').show(function() {
-				Messenger().post({
-					message : 'Caixa foi aberto com sucesso!',
-					type : 'success'
-				});
-			});
-			$('#caixaReaberto').show(function() {
-				Messenger().post({
-					message : 'Caixa reaberto com sucesso!',
-					type : 'success'
-				});
-			});
-			$('#caixaNaoLocalizado').show(function() {
-				Messenger().post({
-					message : 'Não foi possoivel localizar o cliente',
-					type : 'error'
-				});
-			});
-			$('#erroFecharCaixa').show(function() {
-				Messenger().post({
-					message : 'Erro ao tentar fechar o caixa',
-					type : 'error'
-				});
-			});
-			$('#caixaFechadoSucesso').show(function() {
-				Messenger().post({
-					message : 'O caixa foi fechado!',
-					type : 'success'
-				});
-			});
-			$('#esNaoEncontrada').show(function() {
-				Messenger().post({
-					message : 'Lançamento não encontrado',
-					type : 'error'
-				});
-			});
-		});
-		
+		$(document)
+				.ready(
+						function() {
+							$('#adicionou')
+									.show(
+											function() {
+												Messenger()
+														.post(
+																{
+																	message : 'Lançamento adicionado com sucesso!',
+																	type : 'success'
+																});
+											});
+							$('#erroAdicionar')
+									.show(
+											function() {
+												Messenger()
+														.post(
+																{
+																	message : 'Erro ao tentar inserir um novo lançamento!',
+																	type : 'error'
+																});
+											});
+							$('#caixaFechado')
+									.show(
+											function() {
+												Messenger()
+														.post(
+																{
+																	message : 'Impossivel inserir laçamento com caixa fechado!',
+																	type : 'error'
+																});
+											});
+							$('#caixaAbertoSucesso').show(function() {
+								Messenger().post({
+									message : 'Caixa foi aberto com sucesso!',
+									type : 'success'
+								});
+							});
+							$('#caixaReaberto').show(function() {
+								Messenger().post({
+									message : 'Caixa reaberto com sucesso!',
+									type : 'success'
+								});
+							});
+							$('#caixaNaoLocalizado')
+									.show(
+											function() {
+												Messenger()
+														.post(
+																{
+																	message : 'Não foi possoivel localizar o cliente',
+																	type : 'error'
+																});
+											});
+							$('#erroFecharCaixa').show(function() {
+								Messenger().post({
+									message : 'Erro ao tentar fechar o caixa',
+									type : 'error'
+								});
+							});
+							$('#caixaFechadoSucesso').show(function() {
+								Messenger().post({
+									message : 'O caixa foi fechado!',
+									type : 'success'
+								});
+							});
+							$('#esNaoEncontrada').show(function() {
+								Messenger().post({
+									message : 'Lançamento não encontrado',
+									type : 'error'
+								});
+							});
+						});
+
 		var valor = $("#valor");
 		var desconto = $("#desconto");
 		$("#btn_simular").hide();
@@ -408,6 +468,14 @@
 			prefix : '%',
 		});
 
+		$("input[name='creditoCliente']").TouchSpin({
+			min : 0,
+			max : 1000,
+			boostat : 5,
+			maxboostedstep : 10,
+			prefix : 'R$',
+		});
+
 		$(document)
 				.ready(
 						function() {
@@ -419,7 +487,7 @@
 											{
 												dom : 'lBfrtip',
 												order : [],
-												searching : false,
+												searching : true,
 												buttons : [
 														{
 															extend : 'pdf',

@@ -24,8 +24,4 @@ public interface EntradaSaidaService {
 	
 	List<EntradaSaida> busarTodosDoDia(Long iDCaixaFK);
 
-	void addGastoTotalCliente(EntradaSaida entradaSaida);
-
-	void removeGastoTotalCliente(EntradaSaida entradaSaida);
-
 }
