@@ -92,14 +92,14 @@
 													style="align-self: center; color: #429244"
 													data-toggle="popover" title="Crédito Disponivel"
 													data-placement="left" data-container="body"
-													th:attr="data-content=${#strings.concat(
-													'R$: ', c.creditoCliente 
-	                                    )}">
+													th:attr="data-content=${#strings.concat('R$: ', c.creditoCliente)}">
 													local_atm </i>
 											</div></td>
 										<td th:text="${c.id}">1<a></a></td>
 										<td th:text="${c.nome}">Gabriel Silva</td>
-										<td th:text="${c.telefone}">(91) 9 9552-2735</td>
+										<td><a th:text="${c.telefone}"
+											th:attr="href=${#strings.toLowerCase(#strings.replace(#strings.replace(#strings.replace(#strings.replace('https://wa.me/55' + c.telefone, '(',''), ')',''),'-',''),' ',''))}"
+											target="_blank"></a></td>
 										<td th:text="${c.instagram}">gasil96</td>
 										<td th:text="${c.statusCliente}">ATIVO</td>
 										<td
