@@ -116,16 +116,10 @@
 								AM</h2>
 							<h2 style="text-decoration: line-through; color: red"
 								th:if="${pa.horarioConclusaoAgendamento}">ENCERRADO</h2>
-							<a
-								th:attr="href=${#strings.concat(#strings.replace(#strings.replace(#strings.replace
-											(#strings.replace('https://wa.me/55' + pa.cliente.telefone, '(',''), ')',''),'-',''),' ','')
-											+'?text= Olá ' + pa.cliente.nome+ ' aqui é do Space Tattoo Studio gostaríamos da sua confirmação para a seu agendamento de *'
-											+pa.tipoServico+'* marcado para esta '+ 
-											#temporals.dayOfWeekName(pa.horarioAgendamento)+' às '+#temporals.format(pa.horarioAgendamento,  'HH:mm'))}"
-								target="_blank" class="user-title"> <strong class="h5"
-								th:text="${pa.cliente.nome}">Gabriel Silva</strong> <br> <span
-								th:text="${pa.cliente.instagram}">@gasil96</span>
-							</a>
+							<strong class="h5" th:text="${pa.cliente.nome}">Gabriel
+								Silva</strong> <br> <span th:text="${pa.cliente.instagram}">@gasil96
+							</span>
+							<div align="right"></div>
 							<div class="contributions" th:text="${pa.tipoServico}"
 								data-toggle="popover" title="dados" data-placement="bottom"
 								data-container="body"
@@ -134,6 +128,16 @@
 	                                    	',
 	                                    	'Categoria: ' , pa.categoria
 	                                    )}">TATTOO</div>
+							<a
+								th:attr="href=${#strings.concat(#strings.replace(#strings.replace(#strings.replace
+											(#strings.replace('https://wa.me/55' + pa.cliente.telefone, '(',''), ')',''),'-',''),' ','')
+											+'?text= Olá ' + pa.cliente.nome+ ' aqui é do Space Tattoo Studio gostaríamos da sua confirmação para a seu agendamento de *'
+											+pa.tipoServico+'* marcado para esta '+ 
+											#temporals.dayOfWeekName(pa.horarioAgendamento)+' às '+#temporals.format(pa.horarioAgendamento,  'HH:mm'))}"
+								target="_blank" class="user-title"><i class="material-icons"
+								style="color: white" onmouseover="iconOnOver(this)"
+								onmouseout="iconNormal(this)" title="ENVIAR ALERTA">
+									add_to_home_screen </i></a>
 						</div>
 					</div>
 				</div>
