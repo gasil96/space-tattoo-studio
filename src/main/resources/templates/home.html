@@ -9,12 +9,13 @@
 	<li layout:fragment="caminho" hidden></li>
 
 	<div layout:fragment="corpo">
-	<section>
+		<section>
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xl-12">
 						<div class="block">
-							<input class="form-control" id="consultaCadastroCliente" placeholder="Consulte se o cliente possui cadastro">
+							<input class="form-control" id="consultaCadastroCliente"
+								placeholder="Consulte se o cliente possui cadastro">
 						</div>
 					</div>
 				</div>
@@ -115,7 +116,13 @@
 								AM</h2>
 							<h2 style="text-decoration: line-through; color: red"
 								th:if="${pa.horarioConclusaoAgendamento}">ENCERRADO</h2>
-							<a href="#" class="user-title"> <strong class="h5"
+							<a
+								th:attr="href=${#strings.concat(#strings.replace(#strings.replace(#strings.replace
+											(#strings.replace('https://wa.me/55' + pa.cliente.telefone, '(',''), ')',''),'-',''),' ','')
+											+'?text= Olá ' + pa.cliente.nome+ ' aqui é do Space Tattoo Studio gostaríamos da sua confirmação para a seu agendamento de *'
+											+pa.tipoServico+'* marcado para esta '+ 
+											#temporals.dayOfWeekName(pa.horarioAgendamento)+' às '+#temporals.format(pa.horarioAgendamento,  'HH:mm'))}"
+								target="_blank" class="user-title"> <strong class="h5"
 								th:text="${pa.cliente.nome}">Gabriel Silva</strong> <br> <span
 								th:text="${pa.cliente.instagram}">@gasil96</span>
 							</a>

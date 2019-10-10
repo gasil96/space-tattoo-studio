@@ -98,7 +98,8 @@
 										<td th:text="${c.id}">1<a></a></td>
 										<td th:text="${c.nome}">Gabriel Silva</td>
 										<td><a th:text="${c.telefone}"
-											th:attr="href=${#strings.toLowerCase(#strings.replace(#strings.replace(#strings.replace(#strings.replace('https://wa.me/55' + c.telefone, '(',''), ')',''),'-',''),' ',''))}"
+											th:attr="href=${#strings.toLowerCase(#strings.replace(#strings.replace(#strings.replace
+											(#strings.replace('https://wa.me/55' + c.telefone, '(',''), ')',''),'-',''),' ',''))}"
 											target="_blank"></a></td>
 										<td th:text="${c.instagram}">gasil96</td>
 										<td th:text="${c.statusCliente}">ATIVO</td>
