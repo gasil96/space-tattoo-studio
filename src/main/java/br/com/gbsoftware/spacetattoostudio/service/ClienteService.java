@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
 public interface ClienteService {
@@ -16,6 +17,8 @@ public interface ClienteService {
 	void salvar(Cliente cliente);
 	
 	void updateCredito(BigDecimal valorCredito, Long idCliente);
+
+	void updateStatus(String statusCliente, Long idCliente);
 
 	void editar(Cliente cliente);
 	

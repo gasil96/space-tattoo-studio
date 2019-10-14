@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
 @Repository
@@ -45,4 +46,8 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Query("UPDATE Cliente SET credito_cliente = ?1 WHERE id = ?2")
 	void updateCredito(BigDecimal valorCredito, Long idCliente);
 
+	@Transactional
+	@Modifying
+	@Query("UPDATE Cliente SET status = ?1 WHERE id = ?2")
+	void updateStatus(String statusCliente, Long idCliente);
 }

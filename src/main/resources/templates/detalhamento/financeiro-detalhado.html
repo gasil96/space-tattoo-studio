@@ -9,6 +9,21 @@
 
 	<div layout:fragment="corpo">
 
+		<section>
+			<div class="block-body">
+				<div id="fechar-caixa" th:if="${caixaAberto}">
+					<form class="form-inline" th:action="@{/caixa/pre-fechar-caixa}">
+						<div class="form-group">
+							<input type="submit" value="FECHAR CAIXA" class="btn btn-danger">
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+		<div id="corpo-financeiro" th:unless="${caixaAberto}">
+		DETALHAMENTO
+		</div>
+
 	</div>
 </body>
 </html>

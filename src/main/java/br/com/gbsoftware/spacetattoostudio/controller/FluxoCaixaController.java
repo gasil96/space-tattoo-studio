@@ -57,18 +57,12 @@ public class FluxoCaixaController {
 	private EntradaSaidaService servicoEntradaSaida;
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
-	private static final String PAGINA_DETALHAMENTO_FINANCEIRO = "detalhamento/financeiro-detalhado";
 	private static final String MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA = "modal/modal-confimar-exclusao-entrada-saida";
 	private static final String MODAL_CONFIRMAR_FECHAMENTO_CAIXA = "modal/modal-confimar-fechamento-caixa";
 	private static final String MODAL_EDITAR_ENTRADA_SAIDA = "modal/modal-editar-entrada-saida";
 	private static final String MODAL_DETALHAMENTO_FECHAMENTO_CAIXA = "modal/modal-detalhamento-fechamento-caixa";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
-	@GetMapping("detalhamento")
-	public String detalhamentoFinanceiro() {
-		return PAGINA_DETALHAMENTO_FINANCEIRO;
-	}
-	
 	@GetMapping("fluxo")
 	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Cliente cliente) {
 		caixa = servicoCaixa.getDiaAtual();

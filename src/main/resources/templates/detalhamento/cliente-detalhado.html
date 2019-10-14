@@ -87,12 +87,13 @@
 								</thead>
 								<tbody>
 									<tr th:each="c :${listaCliente}">
-										<td><div th:if="${c.creditoCliente > 0}">
+										<td><div th:if="${c.creditoCliente != 0 && c.creditoCliente != null}">
 												<i class="material-icons"
 													style="align-self: center; color: #429244"
 													data-toggle="popover" title="Crédito Disponivel"
 													data-placement="left" data-container="body"
-													th:attr="data-content=${#strings.concat('R$: ', c.creditoCliente)}">
+													th:attr="data-content=${#strings.concat('R$: ', c.creditoCliente)}"
+													>
 													local_atm </i>
 											</div></td>
 										<td th:text="${c.id}">1<a></a></td>
