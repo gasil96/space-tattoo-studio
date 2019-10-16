@@ -185,4 +185,9 @@ public class CaixaServiceImpl implements CaixaService {
 		}
 	}
 
+	@Override
+	public List<Caixa> buscarPorIntervalo(String dataInicial, String dataFinal) {
+		return caixaRepository.findByInterval(dataInicial, dataFinal);
+	}
+
 }

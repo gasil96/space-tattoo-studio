@@ -21,25 +21,26 @@
 			</div>
 		</section>
 		<section>
-			<div class="container-fluid"  id="corpo-financeiro" th:unless="${caixaAberto}">
+			<div class="container-fluid" id="corpo-financeiro"
+				th:unless="${caixaAberto}">
 				<div class="row">
-						<div class="col-lg-12">
-							<div class="bar-chart block chart">
-								<div class="title">
-									<strong>Arrecadamento Semestral</strong>
-								</div>
-								<div class="bar-chart chart">
-									<canvas id="barChartCustom3"></canvas>
-								</div>
+					<div class="col-lg-12">
+						<div class="bar-chart block chart">
+							<div class="title">
+								<strong>Arrecadamento Semestral R$</strong>
+							</div>
+							<div class="bar-chart chart">
+								<canvas id="arrecadamentoSemestral"></canvas>
 							</div>
 						</div>
+					</div>
 					<div class="col-lg-6">
 						<div class="pie-chart chart block">
 							<div class="title">
-								<strong>Gastos Mês Atual</strong>
+								<strong>Gastos Mês Atual R$</strong>
 							</div>
 							<div class="pie-chart chart margin-bottom-sm">
-								<canvas id="pieChartCustom1"></canvas>
+								<canvas id="gastoMesAtual"></canvas>
 							</div>
 						</div>
 					</div>
@@ -56,6 +57,236 @@
 				</div>
 			</div>
 		</section>
+		<section>
+			<div class="col-lg-12">
+				<div class="block">
+					<div class="title">
+						<strong>Pesquisar Historico Caixa!</strong>
+					</div>
+					<div class="block-body">
+						<form class="form-inline" th:action="@{/financeiro/pesquisar-caixa}"
+							>
+							<div class="form-group">
+								<div class="input-group date" id="dataInicial"
+									data-target-input="nearest">
+									<input type="text" class="form-control " required="required"
+										data-target="#dataInicial" placeholder="Data inicial" th:name="dataInicial">
+									<div class="input-group-append" data-target="#dataInicial" 
+										data-toggle="datetimepicker">
+										<div class="input-group-text">
+											<i class="fa fa-calendar"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<span style="margin: 5px">entre </span>
+							<div class="form-group">
+								<div class="input-group date" id="dataFinal"
+									data-target-input="nearest">
+									<input type="text" class="form-control " required="required"
+										data-target="#dataFinal" placeholder="Data final"  th:name="dataFinal">
+									<div class="input-group-append" data-target="#dataFinal"
+										data-toggle="datetimepicker">
+										<div class="input-group-text">
+											<i class="fa fa-calendar"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+									<input type="submit" value="Submit" class="btn btn-primary">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="block">
+					<div class="title">
+						<strong>Histórico Fechamento Caixa</strong>
+					</div>
+					<div class="block-body">
+						<div class="table-responsive">
+							<table id="dataTableCaixaDia" style="width: 100%;" class="table">
+								<thead>
+									<tr>
+										<th>Operador Fechamento</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="c : ${caixas}">
+										<td th:text="${c.operadorFechamento}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 	</div>
+	<script type="text/javascript" layout:fragment="script">
+		// DATA INICIAL
+
+		$(function() {
+			$('#dataInicial').datetimepicker({
+				format : 'DD-MM-YYYY',
+				autoclose : true,
+				locale : 'pt-BR'
+			});
+		});
+
+		// DATA FINAL
+		$(function() {
+			$('#dataFinal').datetimepicker({
+				format : 'DD-MM-YYYY',
+				autoclose : true,
+				locale : 'pt-BR'
+			});
+		});
+
+		// DATATABLE CAIXAS POR DIA;
+
+		$(document)
+				.ready(
+						function() {
+							$('#dataTableCaixaDia')
+									.DataTable(
+											{
+												dom : 'lBfrtip',
+												order : [],
+												buttons : [
+														{
+															extend : 'excel',
+															text : 'Planilha',
+															className : 'btn btn-primary btn-sm',
+															title : 'SpaceTattooStudio Agendamentos',
+															exportOptions : {
+																columns : ':visible'
+															},
+														},
+														{
+															extend : 'print',
+															text : 'Impressão',
+															className : 'btn btn-primary btn-sm',
+															title : 'SpaceTattooStudio Agendamentos',
+															exportOptions : {
+																columns : ':visible'
+															},
+														},
+														{
+															extend : 'pdf',
+															className : 'btn btn-primary btn-sm',
+															title : 'SpaceTattooStudio Agendamentos',
+															exportOptions : {
+																columns : ':visible'
+															},
+														} ],
+												language : {
+													"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+												}
+											});
+						});
+
+		// TODO - ARRECADAMENTO SEMESTRAL
+
+		var BARCHARTEXMPLE = $('#arrecadamentoSemestral');
+		var barChartExample = new Chart(BARCHARTEXMPLE,
+				{
+					type : 'bar',
+					options : {
+						scales : {
+							xAxes : [ {
+								display : true,
+								gridLines : {
+									color : 'transparent'
+								}
+							} ],
+							yAxes : [ {
+								display : true,
+								gridLines : {
+									color : 'transparent'
+								}
+							} ]
+						},
+					},
+					data : {
+						labels : [ "January", "February", "March", "April",
+								"May", "June", "July" ],
+						datasets : [
+								{
+									label : "TATTOO",
+									backgroundColor : [ "#4682B4", "#4682B4",
+											"#4682B4", "#4682B4", "#4682B4",
+											"#4682B4", "#4682B4" ],
+									hoverBackgroundColor : [ "#4682B4",
+											"#4682B4", "#4682B4", "#4682B4",
+											"#4682B4", "#4682B4", "#4682B4" ],
+									borderColor : [ "#4682B4", "#4682B4",
+											"#4682B4", "#4682B4", "#4682B4",
+											"#4682B4", "#4682B4" ],
+									borderWidth : 0.5,
+									data : [ 65, 59, 80, 81, 56, 55, 40 ],
+								},
+								{
+									label : "PIERCING",
+									backgroundColor : [ "#F0F8FF", "#F0F8FF",
+											"#F0F8FF", "#F0F8FF", "#F0F8FF",
+											"#F0F8FF", "#F0F8FF"
+
+									],
+									hoverBackgroundColor : [ "#F0F8FF",
+											"#F0F8FF", "#F0F8FF", "#F0F8FF",
+											"#F0F8FF", "#F0F8FF", "#F0F8FF" ],
+									borderColor : [ "#F0F8FF", "#F0F8FF",
+											"#F0F8FF", "#F0F8FF", "#F0F8FF",
+											"#F0F8FF", "#F0F8FF" ],
+									borderWidth : 0.5,
+									data : [ 35, 40, 60, 47, 88, 27, 30 ],
+								},
+								{
+									label : "BARBEARIA",
+									backgroundColor : [ "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9" ],
+									hoverBackgroundColor : [ "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9" ],
+									borderColor : [ "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9" ],
+									borderWidth : 0.5,
+									data : [ 35, 40, 60, 47, 88, 27, 30 ],
+								} ]
+					}
+				});
+
+		// TODO - GASTO MES ATUAL
+		var PIECHARTEXMPLE = $('#gastoMesAtual');
+		var pieChartExample = new Chart(PIECHARTEXMPLE, {
+			type : 'pie',
+			options : {
+				legend : {
+					display : true,
+					position : "left"
+				}
+			},
+			data : {
+				labels : [ "PIERCING", "TATTOO", "BARBEARIA" ],
+				datasets : [ {
+					data : [ 300, 50, 100 ],
+					borderWidth : 0,
+					backgroundColor : [ "#F0F8FF", "#4682B4", "#864DD9" ],
+					hoverBackgroundColor : [ "#F0F8FF", "#4682B4", "#864DD9" ]
+				} ]
+			}
+		});
+
+		var pieChartExample = {
+			responsive : true
+		};
+	</script>
 </body>
 </html>

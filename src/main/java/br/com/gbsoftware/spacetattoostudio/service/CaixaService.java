@@ -39,5 +39,7 @@ public interface CaixaService {
 	BigDecimal calculoTotalCredito();
 
 	BigDecimal calculoTotalAVista();
+
+	List<Caixa> buscarPorIntervalo(String dataInicial, String dataFinal);
 	
 }
