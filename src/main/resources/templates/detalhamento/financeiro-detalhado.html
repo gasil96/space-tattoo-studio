@@ -8,7 +8,8 @@
 	<li layout:fragment="caminho">Financeiro</li>
 
 	<div layout:fragment="corpo">
-
+	<div th:if="${consultado}" id="caixaLocalizado"></div>
+	<div th:if="${vazio}" id="caixaNaoLocalizado"></div>
 		<section>
 			<div class="block-body">
 				<div id="fechar-caixa" th:if="${caixaAberto}">
@@ -101,7 +102,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="no-padding-top">
+		<section class="no-padding-top" th:if=${consultado}>
 			<div class="container-fluid">
 				<div class="block">
 					<div class="title">
@@ -112,12 +113,34 @@
 							<table id="dataTableCaixaDia" style="width: 100%;" class="table">
 								<thead>
 									<tr>
-										<th>Operador Fechamento</th>
+										<th>Abertura</th>
+										<th>Fechamento</th>
+										<th>Débito</th>
+										<th>Crédito</th>
+										<th>À vista</th>
+										<th>Total</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="c : ${caixas}">
-										<td th:text="${c.operadorFechamento}"></td>
+										<td><span th:text="${#temporals.format(c.dataHoraAbertura, 'dd/MM  HH:mm')}" 
+											data-toggle="popover"
+											title="Operador Abertura" data-placement="bottom"
+											data-container="body"
+											th:attr="data-content=${#strings.concat(
+											c.operadorAbertura 
+											)}"></span></td>
+										<td><span th:text="${#temporals.format(c.dataHoraFechamento, 'dd/MM  HH:mm')}"
+											data-toggle="popover"
+											title="Operador fechamento" data-placement="bottom"
+											data-container="body"
+											th:attr="data-content=${#strings.concat(
+											c.operadorFechamento
+											)}"></span></td>
+										<td>R$<span th:text="${c.totalDebito}"></span></td>
+										<td>R$<span th:text="${c.totalCredito}"></span></td>
+										<td>R$<span th:text="${c.totalAvista}"></span></td>
+										<td>R$<span th:text="${c.total}"></span></td>
 									</tr>
 								</tbody>
 							</table>
@@ -128,7 +151,26 @@
 		</section>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-		// DATA INICIAL
+		
+	$(document).ready(function() {
+		$('#caixaLocalizado').show(function() {
+			Messenger().post({
+				message : 'Pesquisa efetuada com sucesso!',
+				type : 'success'
+			});
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#caixaNaoLocalizado').show(function() {
+			Messenger().post({
+				message : 'Não foi encontrado nenhum retorno para este intervalo de tempo!',
+				type : 'error'
+			});
+		});
+	});
+	
+	// DATA INICIAL
 
 		$(function() {
 			$('#dataInicial').datetimepicker({

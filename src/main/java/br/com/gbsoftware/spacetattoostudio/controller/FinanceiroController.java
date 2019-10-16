@@ -1,5 +1,8 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,13 +46,17 @@ public class FinanceiroController {
 	}
 
 	@RequestMapping("pesquisar-caixa")
-	public String pesquisarCaixaTeste(@RequestParam(value = "dataInicial", required = true) String dataInicial, @RequestParam(value = "dataFinal", required = true) String dataFinal, Model model) {
+	public String pesquisarCaixaTeste(@RequestParam(value = "dataInicial", required = true) String dataInicial,
+			@RequestParam(value = "dataFinal", required = true) String dataFinal, Model model) {
 		
-		System.err.println("Data Inicio = " + dataInicial);
-		System.err.println("Data Final = " + dataFinal);
+		List<Caixa> caixas = servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal);
 		
-		model.addAttribute("caixas",servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal));
+		if(caixas.isEmpty()) {
+			model.addAttribute("vazio", true);
+		}
 		
+		model.addAttribute("caixas", caixas);
+		model.addAttribute("consultado", caixas.isEmpty() ? false : true);
 		
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
