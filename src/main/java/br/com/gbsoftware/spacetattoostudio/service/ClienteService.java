@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
 public interface ClienteService {

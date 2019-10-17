@@ -1,7 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
 import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
-import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
-import br.com.gbsoftware.spacetattoostudio.service.EntradaSaidaService;
-import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 
 @Controller
 @RequestMapping("financeiro")
@@ -22,17 +18,17 @@ public class FinanceiroController {
 
 	private static final String PAGINA_DETALHAMENTO_FINANCEIRO = "detalhamento/financeiro-detalhado";
 
-	@Autowired
-	private UsuarioService servicoUsuario;
+//	@Autowired
+//	private UsuarioService servicoUsuario;
 
-	@Autowired
-	private ClienteService servicoCliente;
+//	@Autowired
+//	private ClienteService servicoCCliente;
 
 	@Autowired
 	private CaixaService servicoCaixa;
 
-	@Autowired
-	private EntradaSaidaService servicoEntradaSaida;
+//	@Autowired
+//	private EntradaSaidaService servicoEntradaSaida;
 
 	@GetMapping("detalhamento")
 	public String detalhamentoFinanceiro(Caixa caixa, Model model) {
