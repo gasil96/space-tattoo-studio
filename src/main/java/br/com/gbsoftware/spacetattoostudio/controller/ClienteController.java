@@ -129,10 +129,10 @@ public class ClienteController {
 	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
 		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
 		Long idCliente = cliente.getId();
-		if(clienteLocalizado.getCreditoCliente() == null) {
+		if (clienteLocalizado.getCreditoCliente() == null) {
 			servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), idCliente);
 			attr.addFlashAttribute("creditoRemovido", true);
-		}else {
+		} else {
 			BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
 			servicoCliente.updateCredito(valorCredito, idCliente);
 			attr.addFlashAttribute("creditoRemovido", true);

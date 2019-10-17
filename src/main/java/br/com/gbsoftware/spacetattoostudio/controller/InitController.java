@@ -53,7 +53,6 @@ public class InitController {
 		model.addAttribute("totalAgendamentosDia", getAgendamentoDoDia().size());
 		model.addAttribute("totalAgendamentosSemana", getAgendamentoDaSemana().size());
 		model.addAttribute("proximosAgendamentos", servicoService.getProximosSeisAgendamentos());
-		salvarClientePadrao();
 		return PAGINA_INICIAL;
 	}
 
@@ -105,12 +104,4 @@ public class InitController {
 		return listaServicosJson;
 	}
 
-	public void salvarClientePadrao() {
-		Cliente sts = new Cliente();
-		sts.setId((long) 1);
-		sts.setNome("SpaceTattooStudio");
-		sts.setStatusCliente(StatusClienteEnum.ATIVO);
-		sts.setInstagram("spacetattoostudiopub");
-		servicoCliente.salvar(sts);
-	}
 }
