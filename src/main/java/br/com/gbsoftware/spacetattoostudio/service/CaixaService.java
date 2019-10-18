@@ -46,8 +46,5 @@ public interface CaixaService {
 
 	List<Caixa> buscarTodosMes(String relGeralMensal);
 
-	ArrayList<Object> relatorio();
-
 	ArrayList<Object> relatorio(String relGeralMensal);
-
 }
