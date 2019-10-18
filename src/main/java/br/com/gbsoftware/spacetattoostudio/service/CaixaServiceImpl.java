@@ -204,13 +204,18 @@ public class CaixaServiceImpl implements CaixaService {
 		
 		if (!listaRelGeral.isEmpty()) {
 //TODO - RETORNANDO NULO
-//			BigDecimal arrecadacao = listaRelGeral.stream().filter(x -> x.getTotal() != null).map(Caixa::getTotal).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+			Optional<BigDecimal> totalGeral = listaRelGeral.stream().filter(x -> x.getTotal() != null).map(Caixa::getTotal).reduce(BigDecimal::add);;
 
-			BigDecimal lucro = new BigDecimal(200.00);
+			Optional<BigDecimal> totalCredito = listaRelGeral.stream().filter(x -> x.getTotalCredito() != null).map(Caixa::getTotalCredito).reduce(BigDecimal::add);;
+			
+			Optional<BigDecimal> totalDebito = listaRelGeral.stream().filter(x -> x.getTotalDebito() != null).map(Caixa::getTotalDebito).reduce(BigDecimal::add);;
+			
+			Optional<BigDecimal> totalAVista = listaRelGeral.stream().filter(x -> x.getTotalAvista() != null).map(Caixa::getTotalAvista).reduce(BigDecimal::add);;
 
-			BigDecimal gasto = new BigDecimal(200.00);
-
-			relatorio.add(lucro);
+			relatorio.add(totalGeral);
+			relatorio.add(totalCredito);
+			relatorio.add(totalDebito);
+			relatorio.add(totalAVista);
 
 			return relatorio;
 
