@@ -22,7 +22,7 @@
           <li th:class="${classActiveSubAgendamento}"><a th:href="@{/agendamento/detalhamento}"><i class="icon icon-padnote"></i>Agendamentos</a></li>
           <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamento</a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled" >
-	          <li th:class="${classActivePromocional}"><a th:href="@{/promocional/promo}">Promocional</a></li>
+<!-- 	          <li th:class="${classActivePromocional}"><a th:href="@{/promocional/promo}">Promocional</a></li> -->
               <li  sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:class="${classActiveSubFinanceiro}"><a th:href="@{/financeiro/detalhamento}">Financeiro</a></li>
             </ul>
           </li>

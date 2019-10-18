@@ -44,16 +44,32 @@ public class FinanceiroController {
 	@RequestMapping("pesquisar-caixa")
 	public String pesquisarCaixaTeste(@RequestParam(value = "dataInicial", required = true) String dataInicial,
 			@RequestParam(value = "dataFinal", required = true) String dataFinal, Model model) {
-		
+
 		List<Caixa> caixas = servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal);
-		
-		if(caixas.isEmpty()) {
+
+		if (caixas.isEmpty()) {
 			model.addAttribute("vazio", true);
 		}
-		
+
 		model.addAttribute("caixas", caixas);
 		model.addAttribute("consultado", caixas.isEmpty() ? false : true);
+
+		return PAGINA_DETALHAMENTO_FINANCEIRO;
+	}
+
+	@RequestMapping("relatorio-geral-mensal")
+	public String pesquisarRelatorioGeralMes(
+			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal) {
+
+		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
 		
+		if(!listaRelatorioGeralMensal.isEmpty()) {
+			System.err.println("Quantidade de elementos na lista (DEVE SER 3)@ ----> "+ listaRelatorioGeralMensal.size());
+		}else {
+			System.err.println("Lista Vazia ----> "+ listaRelatorioGeralMensal.size());
+		}
+		
+		System.err.println("testar lista" + servicoCaixa.relatorio(relGeralMensal));
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 

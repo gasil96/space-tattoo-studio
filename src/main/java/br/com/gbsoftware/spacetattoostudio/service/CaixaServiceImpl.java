@@ -190,4 +190,39 @@ public class CaixaServiceImpl implements CaixaService {
 		return caixaRepository.findByInterval(dataInicial, dataFinal);
 	}
 
+	@Override
+	public List<Caixa> buscarTodosMes(String relGeralMensal) {
+		return caixaRepository.findByMes(relGeralMensal);
+	}
+
+	@Override
+	public ArrayList<Object> relatorio(String relGeralMensal) {
+
+		ArrayList<Object> relatorio = new ArrayList<>();
+
+		List<Caixa> listaRelGeral = buscarTodosMes(relGeralMensal);
+		
+		if (!listaRelGeral.isEmpty()) {
+//TODO - RETORNANDO NULO
+//			BigDecimal arrecadacao = listaRelGeral.stream().filter(x -> x.getTotal() != null).map(Caixa::getTotal).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+			BigDecimal lucro = new BigDecimal(200.00);
+
+			BigDecimal gasto = new BigDecimal(200.00);
+
+			relatorio.add(lucro);
+
+			return relatorio;
+
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public ArrayList<Object> relatorio() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

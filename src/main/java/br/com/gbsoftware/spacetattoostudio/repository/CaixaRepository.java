@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.repository;
+
 import java.util.List;
 
 /**
@@ -20,6 +21,9 @@ public interface CaixaRepository extends JpaRepository<Caixa, Long>{
 	Caixa getCaixaDiaAtual();
 
 	@Query(value = "select *  \r\n" + 
-			"from caixa where  date_format(data_hora_fechamento, '%d-%m-%Y') between :dataInicial and :dataFinal", nativeQuery =true)
+			"from caixa where  date_format(data_hora_fechamento, '%d-%m-%Y') between :dataInicial and :dataFinal", nativeQuery =true )
 	List<Caixa> findByInterval(@Param("dataInicial")String dataInicial, @Param("dataFinal") String dataFinal);
+	
+	@Query( value = "SELECT * FROM caixa WHERE DATE_FORMAT(data_hora_fechamento, '%Y-%m') = :relGeralMensal", nativeQuery = true )
+	List<Caixa> findByMes(@Param("relGeralMensal")String relGeralMensal);
 }

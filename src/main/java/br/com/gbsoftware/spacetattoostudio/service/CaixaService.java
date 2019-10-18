@@ -1,5 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -19,11 +21,11 @@ public interface CaixaService {
 	void editar(Caixa caixa);
 
 	void detelar(Long id);
-	
+
 	Optional<Caixa> buscarPorId(Long id);
 
 	List<Caixa> buscarTodos();
-	
+
 	Caixa getDiaAtual();
 
 	List<EntradaSaida> getLancamentos();
@@ -41,5 +43,11 @@ public interface CaixaService {
 	BigDecimal calculoTotalAVista();
 
 	List<Caixa> buscarPorIntervalo(String dataInicial, String dataFinal);
-	
+
+	List<Caixa> buscarTodosMes(String relGeralMensal);
+
+	ArrayList<Object> relatorio();
+
+	ArrayList<Object> relatorio(String relGeralMensal);
+
 }
