@@ -18,17 +18,8 @@ public class FinanceiroController {
 
 	private static final String PAGINA_DETALHAMENTO_FINANCEIRO = "detalhamento/financeiro-detalhado";
 
-//	@Autowired
-//	private UsuarioService servicoUsuario;
-
-//	@Autowired
-//	private ClienteService servicoCCliente;
-
 	@Autowired
 	private CaixaService servicoCaixa;
-
-//	@Autowired
-//	private EntradaSaidaService servicoEntradaSaida;
 
 	@GetMapping("detalhamento")
 	public String detalhamentoFinanceiro(Caixa caixa, Model model) {
@@ -57,18 +48,19 @@ public class FinanceiroController {
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
+	// TODO - MÉTODO EM ANDAMENTO
 	@RequestMapping("relatorio-geral-mensal")
 	public String pesquisarRelatorioGeralMes(
 			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal) {
 
 		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
-		
-		if(!listaRelatorioGeralMensal.isEmpty()) {
-			System.err.println("Quantidade de elementos na lista (DEVE SER 3)@ ----> "+ listaRelatorioGeralMensal.size());
-		}else {
-			System.err.println("Lista Vazia ----> "+ listaRelatorioGeralMensal.size());
+
+		if (!listaRelatorioGeralMensal.isEmpty()) {
+			System.err.println("Quantidade de elementos na lista (DEVE SER 3)@ ----> " + listaRelatorioGeralMensal.size());
+		} else {
+			System.err.println("Lista Vazia ----> " + listaRelatorioGeralMensal.size());
 		}
-		
+
 		System.err.println("testar lista" + servicoCaixa.relatorio(relGeralMensal));
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
