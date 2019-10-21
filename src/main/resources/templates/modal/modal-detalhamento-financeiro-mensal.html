@@ -12,7 +12,8 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<strong id="tituloModalEditarCliente" class="modal-title"
-							style="color: #429244">Relatório Financeiro  <span style="color: #ffc107 ">(Mês da pesquisa)</span></strong>
+							style="color: #429244">Relatório Financeiro <span
+							style="color: #ffc107">(Mês da pesquisa)</span></strong>
 						<button type="button" data-dismiss="modal" aria-label="Close"
 							class="close">
 							<span aria-hidden="true">×</span>
@@ -20,13 +21,26 @@
 					</div>
 					<div class="modal-body">
 						<div class="row">
-									<div class="card-body" align="center" >
-										<h5 class="card-title">Total Arrecadado no Crédito: R$ <span th:text=${totalCredito}>0.00</span></h5>
-										<h5 class="card-title">Total Arrecadado no Débito: R$ <span th:text=${totalDebito}>0.00</span></h5>
-										<h5 class="card-title">Total Arrecadado  À Vista: R$ <span th:text=${totalAvista}>0.00</span></h5>
-										<h5 class="card-title" style="color: #ffc107">Total Geral: R$ <span th:text=${totalGeral}>0.00</span></h5>
-									</div>
+							<div class="card-body" align="center">
+								<h5 class="card-title">
+									Total Arrecadado no Crédito: R$ <span th:text=${totalCredito}>0.00</span>
+								</h5>
+								<h5 class="card-title">
+									Total Arrecadado no Débito: R$ <span th:text=${totalDebito}>0.00</span>
+								</h5>
+								<h5 class="card-title">
+									Total Arrecadado À Vista: R$ <span th:text=${totalAvista}>0.00</span>
+								</h5>
+								<h5 class="card-title" style="color: #ffc107">
+									Total Geral: R$ <span th:text=${totalGeral}>0.00</span>
+								</h5>
+							</div>
 						</div>
+					</div>
+					<div class="modal-footer">
+					<form th:action="@{/financeiro/gerar-pdf}">
+						<button data-style="zoom-in" class="btn btn-info ladda-button" type="submit"><span class="ladda-label">zoom-in</span></button>
+					</form>
 					</div>
 				</div>
 			</div>
@@ -39,6 +53,7 @@
 				window.location.href = '/financeiro/detalhamento';
 			})
 
+			Ladda.bind('button[type=submit]', { timeout: 2000 } );
 		})
 	</script>
 </body>
