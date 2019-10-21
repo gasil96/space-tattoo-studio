@@ -1,7 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.repository;
 
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -35,8 +35,8 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 			+ "BETWEEN CURDATE() AND DATE_ADD(NOW(), INTERVAL 7 DAY)", nativeQuery = true)
 	List<Servico> agendamentoDaSemana();
 
-	@Query(value = "SELECT * FROM servico WHERE horario_agendamento BETWEEN CURRENT_TIMESTAMP()"
-			+ " AND DATE_ADD(NOW(), INTERVAL 1 DAY) LIMIT 3", nativeQuery = true)
+	@Query(value = "SELECT * FROM servico WHERE horario_agendamento BETWEEN CURRENT_TIMESTAMP() AND DATE_ADD(NOW(), INTERVAL 1 DAY)"
+			+ " order by horario_agendamento asc limit 3", nativeQuery = true)
 	List<Servico> proximosSeisAgendamentos();
 
 	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
@@ -49,5 +49,12 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	@Query(value = "select * from servico where month(horario_agendamento) = month(current_timestamp())", nativeQuery = true)
 	List<Servico> agendamentosMesAtual();
+	
+	@Query(value = "SELECT * FROM servico ORDER BY horario_agendamento DESC", nativeQuery = true)
+	List<Servico> findAll();
+	
+	@Query(value = "select * from servico where (month(horario_agendamento) = month(current_timestamp())"
+			+ " and (status_agendamento = 'ENCERRADO'))", nativeQuery = true)
+	List<Servico> encerramentoMesAtual();
 
 }

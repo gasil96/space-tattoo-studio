@@ -1,6 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.config;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -27,8 +27,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
 		.antMatchers(HttpMethod.GET, "/login").permitAll()
-		.antMatchers(HttpMethod.GET, "/caixa/detalhamento").hasAnyRole("ADMIN","GERENTE")
-		.antMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN")
+		.antMatchers(HttpMethod.GET, "/financeiro/detalhamento").hasAnyRole("ADMIN","GERENTE")
+//		.antMatchers(HttpMethod.GET, "/caixa/excluir").hasAnyRole("ADMIN","GERENTE")
+//		.antMatchers(HttpMethod.GET, "/caixa/excluir/{id}").hasAnyRole("ADMIN","GERENTE")
+//		.antMatchers(HttpMethod.GET, "/caixa/editar").hasAnyRole("ADMIN","GERENTE")
+//		.antMatchers(HttpMethod.GET, "/caixa/editar/{id}").hasAnyRole("ADMIN","GERENTE")
+		.antMatchers(HttpMethod.GET, "/promocional/promo").hasAnyRole("ADMIN","GERENTE","USUARIO")
+		.antMatchers(HttpMethod.GET, "/adm/administracao").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/login").permitAll()
 		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

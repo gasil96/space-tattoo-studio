@@ -1,7 +1,8 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
+import java.math.BigDecimal;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -63,24 +64,36 @@ public class ClienteController {
 		model.addAttribute("totalCadastroMesAtual", "+" + totalClientesCM.size());
 		model.addAttribute("totalCadastroMesAnterio", "+" + totalClientesCMA.size());
 		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
-		List<Cliente> clientesAtivos = clientesTotal.stream().filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInativos = clientesTotal.stream().filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInadimplentes = clientesTotal.stream().filter(x -> StatusClienteEnum.INADIMPLENTE.equals(x.getStatusCliente())).collect(Collectors.toList());
-		model.addAttribute("totalAtivos",clientesAtivos.size());
-		model.addAttribute("totalInativos",clientesInativos.size());
-		model.addAttribute("totalInadim",clientesInadimplentes.size());
-		
+		List<Cliente> clientesAtivos = clientesTotal.stream()
+				.filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
+		List<Cliente> clientesInativos = clientesTotal.stream()
+				.filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
+		List<Cliente> clientesInadimplentes = clientesTotal.stream()
+				.filter(x -> StatusClienteEnum.INADIMPLENTE.equals(x.getStatusCliente())).collect(Collectors.toList());
+		model.addAttribute("totalAtivos", clientesAtivos.size());
+		model.addAttribute("totalInativos", clientesInativos.size());
+		model.addAttribute("totalInadim", clientesInadimplentes.size());
+
 		ModelAndView mav = new ModelAndView("usuario");
 		mav.addObject("totalAtivosTeste", clientesAtivos.size());
-		
+
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
-	
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
-		servicoCliente.salvar(cliente);
-		attr.addFlashAttribute("salvou", true);
+		if (cliente.getInstagram().isEmpty()) {
+			servicoCliente.salvar(cliente);
+			attr.addFlashAttribute("salvou", true);
+		} else {
+			String insta = "@" + cliente.getInstagram();
+			if (servicoCliente.buscarPorInstagram(insta).isEmpty()) {
+				servicoCliente.salvar(cliente);
+				attr.addFlashAttribute("salvou", true);
+			} else {
+				attr.addFlashAttribute("instaJaExiste", true);
+			}
+		}
 		return ATUALIZAR_PAGINA;
 	}
 
@@ -94,6 +107,36 @@ public class ClienteController {
 	public String editar(@Valid Cliente cliente, RedirectAttributes attr) {
 		servicoCliente.editar(cliente);
 		attr.addFlashAttribute("editou", true);
+		return ATUALIZAR_PAGINA;
+	}
+
+	@PostMapping("credito")
+	public String credito(@Valid Cliente cliente, RedirectAttributes attr) {
+		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+		Long idCliente = cliente.getId();
+		if (clienteLocalizado.getCreditoCliente() == null) {
+			servicoCliente.updateCredito(cliente.getCreditoCliente(), idCliente);
+			attr.addFlashAttribute("creditoAdicionado", true);
+		} else {
+			BigDecimal valorCredito = cliente.getCreditoCliente().add(clienteLocalizado.getCreditoCliente());
+			servicoCliente.updateCredito(valorCredito, idCliente);
+			attr.addFlashAttribute("creditoAdicionado", true);
+		}
+		return ATUALIZAR_PAGINA;
+	}
+
+	@PostMapping("remover-credito")
+	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
+		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+		Long idCliente = cliente.getId();
+		if (clienteLocalizado.getCreditoCliente() == null) {
+			servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), idCliente);
+			attr.addFlashAttribute("creditoRemovido", true);
+		} else {
+			BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
+			servicoCliente.updateCredito(valorCredito, idCliente);
+			attr.addFlashAttribute("creditoRemovido", true);
+		}
 		return ATUALIZAR_PAGINA;
 	}
 

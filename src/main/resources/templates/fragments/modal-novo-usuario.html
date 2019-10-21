@@ -34,7 +34,13 @@
                         <label for="confirm_password" class="form-control-label">Confirmar Senha</label>
                         <input id="confirm_password" type="password"  class="mr-sm-3 form-control form-control" th:field="*{senha}" required="required">
                       </div>
-                      
+                      <div class="form-group"> 
+                        <label for="cargo" class="form-control-label">Cargo</label>
+                       		 <select	 id="cargo" class="mr-sm-3 form-control form-control" th:field="*{cargo}" required="required">
+								<option value="" selected="selected">Selecione...</option>
+								<option th:each="c : ${cargo}" th:value="${c}" th:text="${c.cargo}">Desenvolvedor</option>
+							</select>
+                      </div>
                       <div class="form-group"> 
                         <label for="usuarios" class="form-control-label">Permissão de acesso</label>
                        		 <select	 id="role" class="mr-sm-3 form-control form-control" th:field="*{roles}" required="required">

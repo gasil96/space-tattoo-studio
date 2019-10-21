@@ -1,6 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -89,6 +89,11 @@ public class ServicoServiceImpl implements ServicoService {
 	@Override
 	public List<Servico> getProximosSeisAgendamentos() {
 		return servicoRepository.proximosSeisAgendamentos();
+	}
+
+	@Override
+	public List<Servico> encerramentoMesAtual() {
+		return servicoRepository.encerramentoMesAtual();
 	}
 
 }

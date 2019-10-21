@@ -1,6 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.gbsoftware.spacetattoostudio.domain.enums.CargoUsuarioEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoRole;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Role;
@@ -71,4 +72,10 @@ public class AdministracaoController {
 	public TipoRole[] getTipoRole() {
 		return TipoRole.values();
 	}
+	
+	@ModelAttribute("cargo")
+	public CargoUsuarioEnum[] getCargo() {
+		return CargoUsuarioEnum.values();
+	}
+	
 }

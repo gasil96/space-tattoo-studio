@@ -1,1 +1,37 @@
 /* your styles go here */
+
+.texto-login {
+  font-family:  font-login-LemonJelly;
+  font-size: 95px;
+  background: -webkit-linear-gradient(#aaa	, #aaa);
+  -webkit-background-clip: text;
+/*   -webkit-text-fill-color: transparent; */
+  color: white;
+ transform: rotate(-11deg);
+}
+
+@font-face {
+  font-family: "font-login-LemonJelly";
+  src: url("../fonts/LemonJellyPersonalUse-dEqR.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.popover {
+    background-color: #26292d !important; 
+    font-size: 15px;
+    color: red;
+  }
+  
+.popover-header{
+	background-color: #26292d !important;
+	color: #429244;
+	text-transform: uppercase;
+	text-align: center;
+	font-style: inherit;
+}
+  
+.popover-body{
+	color: #8a8d93;
+	text-transform: uppercase;
+}

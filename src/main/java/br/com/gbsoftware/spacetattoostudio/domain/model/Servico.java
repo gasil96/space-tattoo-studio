@@ -2,7 +2,7 @@ package br.com.gbsoftware.spacetattoostudio.domain.model;
 
 import java.math.BigDecimal;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -43,6 +43,7 @@ public class Servico extends EntidadeBase<Long> {
 	private TipoServicoEnum tipoServico;
 
 	@Column(length = 40)
+	@JsonProperty(value = "categoria")
 	private String categoria;
 
 	@JsonProperty(value = "start")

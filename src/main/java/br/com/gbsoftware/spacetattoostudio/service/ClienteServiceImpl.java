@@ -1,6 +1,8 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+
+import java.math.BigDecimal;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
 import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
 
 @Service
@@ -19,6 +22,9 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EntradaSaidaService entradaSaidaServico;
 
 	@Override
 	public void salvar(Cliente cliente) {
@@ -69,5 +75,28 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public List<Cliente> getPorCadastroMesAnterio() {
 		return clienteRepository.getPorCadastroMesPassado();
+	}
+
+	@Override
+	public List<Cliente> getClienteIdInstaNome() {
+		return clienteRepository.getClienteIdInstaNome();
+	}
+
+	@Override
+	public BigDecimal calcularGastoTotalCliente(Cliente cliente) {
+		BigDecimal gastoTotalCliente = entradaSaidaServico.buscarTodos().stream()
+				.filter(x -> cliente.getId().equals(x.getCliente().getId())).map(EntradaSaida::getValor)
+				.reduce(BigDecimal::add).orElse(new BigDecimal(0));
+		return gastoTotalCliente;
+	}
+
+	@Override
+	public void updateCredito(BigDecimal valorCredito, Long idCliente) {
+		clienteRepository.updateCredito(valorCredito, idCliente);
+	}
+
+	@Override
+	public void updateStatus(String statusCliente, Long idCliente) {
+		clienteRepository.updateStatus(statusCliente, idCliente);
 	}
 }

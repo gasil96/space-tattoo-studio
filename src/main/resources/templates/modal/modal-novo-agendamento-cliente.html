@@ -14,7 +14,6 @@
 					</button>
 				</div>
 
-				<div class="modal-body">
 					
 					<form th:action="@{/agendamento/salvar}" th:object="${servico}"	method="POST">
 				<div class="modal-body">
@@ -27,7 +26,7 @@
 						</div>
 						<div class="form-group">
 							<label>Cateogira</label> 
-							<input type="text" class="form-control" id="cat" required="required" placeholder="maori, aquarela, relógio"  th:field="*{categoria}" maxlength="40">
+							<input type="text" class="form-control" id="cat" required="required" placeholder="maori, aquarela, piercing orelha, corte + barba"  th:field="*{categoria}" maxlength="40">
 						</div>
 						<div class="form-group">
 							<label>Data/Horário</label> 
@@ -59,7 +58,6 @@
 						</div>
 						
 						<div class="form-group">
-							<label>Código do cliente</label> 
 							<div style="display: none">	<select th:field="*{cliente.id}"><option th:value="${id_cliente_referente}"></option></select></div>
 						</div>
 			
@@ -70,7 +68,6 @@
 				</div>
 					</form>
 					
-				</div>
 			</div>
 		</div>
 	</div>

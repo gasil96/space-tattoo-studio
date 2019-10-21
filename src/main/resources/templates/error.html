@@ -18,16 +18,16 @@
 		<style type="text/css" >
 		#main {
    				 height: 100vh;
+   				 background-color: #34373d; 
    			  }	
     	</style>
 		</head>
-		
 		<body class="text-center">
 			<div class="d-flex justify-content-center align-items-center" id="main">
-			    <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center" th:text="${status}" >codigo do error</h1>
+			    <h1 class="mr-3 pr-3 align-top border-right inline-block align-content-center" th:text="${status}" style="color: white">codigo do error</h1>
 			    <div class="inline-block align-middle">
-			    	<h2 class="font-weight-normal lead" id="desc" th:text="${error}">Menssagem do error</h2>
-			    	<h2 class="font-weight-normal lead" id="desc2" ><a href="/">Retornar</a></h2>
+			    	<h2 class="font-weight-normal lead" id="desc" th:text="${error}" style="color: white;">Menssagem do error</h2>
+			    	<h2 class="font-weight-normal lead" id="desc2" ><a href="/" style="color: #429244">Retornar</a></h2>
     			</div>
 			</div>
 		</body>

@@ -1,6 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.controller.error;
 /**
- * <b>GB Software</b>
+ * <b>Gabriel S. Sofware</b>
  * 
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
@@ -26,7 +26,7 @@ public class PaginaErro implements ErrorViewResolver{
 				model.addObject("message", "A url para a página '  " + map.get("path") + "' Não existe.");
 				break;
 			case 403:
-				model.addObject("error", "Usuario sem permissão para acessar essa pagina");
+				model.addObject("error", "Usuario sem permissão para acessar essa página e/ou executar essa ação");
 				model.addObject("message", "A url para a página '  " + map.get("path") + "' Não existe.");
 				break;
 			case 500:

@@ -33,7 +33,7 @@
 						<div class="form-group">
 							<label>Data/Horário</label> 
 							<div class="input-group date" id="horarioAgendamento" data-target-input="nearest">
-			                    <input type="text" class="form-control " required="required" data-target="#horarioAgendamento" th:field="*{horarioAgendamento}">
+			                    <input type="text" class="form-control " required="required" data-target="#horarioAgendamento" th:field="*{horarioAgendamento}" name="teste">
 			                    <div class="input-group-append" data-target="#horarioAgendamento" data-toggle="datetimepicker">
 			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
 			                    </div>
@@ -59,11 +59,8 @@
 							</select>
 						</div>
 						
-						<div class="form-group">
-							<label>Código do cliente</label> 
 							<input type="hidden" class="form-control" id="idC" placeholder="" th:field="*{cliente.id}" required="required">
 							<input type="hidden" class="form-control" id="idS" th:field="*{id}" placeholder="id agendamento">
-						</div>
 			
 						<div class="modal-footer">
 							<button type="button" data-dismiss="modal"	class="btn btn-secondary">Cancelar</button>
@@ -79,6 +76,8 @@
 	
 	</div>
 	<script type="text/javascript" layout:fragment="script">
+	
+	
 	$(document).ready(function() {
 	    $('#editarNovoAgendamento').modal('show');
 	
@@ -89,8 +88,7 @@
         $('#horarioAgendamento').datetimepicker({
       	  format: 'DD-MM-YYYY HH:mm', 
       	  autoclose: true,
-      	  locale: 'pt-BR',
-      	  minDate: new Date()
+      	  locale: 'pt-BR'
         });
     });
 
