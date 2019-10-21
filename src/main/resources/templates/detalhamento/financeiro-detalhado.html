@@ -10,6 +10,7 @@
 	<div layout:fragment="corpo">
 		<div th:if="${consultado}" id="caixaLocalizado"></div>
 		<div th:if="${vazio}" id="caixaNaoLocalizado"></div>
+		<div th:if="${msgSemRelatorio == true}" id="msgSemRelatorio"></div>
 		<section>
 			<div class="block-body">
 				<div id="fechar-caixa" th:if="${caixaAberto}">
@@ -156,7 +157,7 @@
 			<div class="col-lg-8" th:unless="${caixaAberto}">
 				<div class="block">
 					<div class="title">
-						<strong>Gerar Relátorio Geral</strong>
+						<strong>Gerar Relatório Geral</strong>
 					</div>
 					<div class="block-body">
 						<form class="form-inline" th:action="@{/financeiro/relatorio-geral-mensal}">
@@ -179,6 +180,14 @@
 				Messenger().post({
 					message : 'Pesquisa efetuada com sucesso!',
 					type : 'success'
+				});
+			});
+		});
+		$(document).ready(function() {
+			$('#msgSemRelatorio').show(function() {
+				Messenger().post({
+					message : 'Não foi encontrado relátorios para este mês',
+					type : 'error'
 				});
 			});
 		});

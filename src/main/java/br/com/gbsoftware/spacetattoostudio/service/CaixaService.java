@@ -1,7 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -46,5 +45,5 @@ public interface CaixaService {
 
 	List<Caixa> buscarTodosMes(String relGeralMensal);
 
-	ArrayList<Object> relatorio(String relGeralMensal);
+	List<Object> relatorio(String relGeralMensal);
 }

@@ -17,6 +17,7 @@ import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
 public class FinanceiroController {
 
 	private static final String PAGINA_DETALHAMENTO_FINANCEIRO = "detalhamento/financeiro-detalhado";
+	private static final String MODAL_DETALHAMENTO_MENSAL = "modal/modal-detalhamento-financeiro-mensal";
 
 	@Autowired
 	private CaixaService servicoCaixa;
@@ -51,18 +52,24 @@ public class FinanceiroController {
 	// TODO - MÉTODO EM ANDAMENTO
 	@RequestMapping("relatorio-geral-mensal")
 	public String pesquisarRelatorioGeralMes(
-			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal) {
+			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal, Model model) {
 
 		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
 
 		if (!listaRelatorioGeralMensal.isEmpty()) {
-			System.err.println("Quantidade de elementos na lista (DEVE SER 3)@ ----> " + listaRelatorioGeralMensal.size());
+			List<Object> relatorio =  servicoCaixa.relatorio(relGeralMensal);
+						model.addAttribute("totalGeral", relatorio.get(0));
+						model.addAttribute("totalCredito", relatorio.get(1));
+						model.addAttribute("totalDebito", relatorio.get(2));
+						model.addAttribute("totalAvista", relatorio.get(3));
+			
+			return MODAL_DETALHAMENTO_MENSAL;
+
 		} else {
-			System.err.println("Lista Vazia ----> " + listaRelatorioGeralMensal.size());
+			model.addAttribute("msgSemRelatorio", true);
+			return PAGINA_DETALHAMENTO_FINANCEIRO;
 		}
 
-		System.err.println("testar lista" + servicoCaixa.relatorio(relGeralMensal));
-		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
 }
