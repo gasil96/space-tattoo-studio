@@ -1,16 +1,17 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.xml.ws.Response;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itextpdf.text.Document;
@@ -60,9 +61,9 @@ public class FinanceiroController {
 	}
 
 	// TODO - MÉTODO EM ANDAMENTO
-	@RequestMapping("relatorio-geral-mensal")
+	@RequestMapping(value = "relatorio-geral-mensal", method = RequestMethod.GET)
 	public String pesquisarRelatorioGeralMes(
-			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal, Model model) {
+			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal, HttpServletResponse response, Model model) {
 
 		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
 
@@ -73,12 +74,13 @@ public class FinanceiroController {
 			model.addAttribute("totalDebito", relatorio.get(2));
 			model.addAttribute("totalAvista", relatorio.get(3));
 
+			response.setContentType("application/pdf");
 			Document relatorioPDF = new Document();
 			try {
 
-//				PdfWriter.getInstance(relatorioPDF,
-//						new FileOutputStream("Relatorio_Mensal_Space_Tattoo_Studio.pdf"));
-				PdfWriter.getInstance(relatorioPDF, new FileOutputStream(relGeralMensal));
+				PdfWriter.getInstance(relatorioPDF,
+						response.getOutputStream());
+				response.getOutputStream().flush();
 				relatorioPDF.open();
 
 				// adicionando um parágrafo ao documento
@@ -111,46 +113,4 @@ public class FinanceiroController {
 
 	}
 
-//	// TODO - MÉTODO EM ANDAMENTO
-//	@RequestMapping("gerar-pdf")
-//	public String gerarPdf(@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal,
-//			Model model) {
-//		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
-//
-//		if (!listaRelatorioGeralMensal.isEmpty()) {
-//			List<Object> relatorio = servicoCaixa.relatorio(relGeralMensal);
-//			Document relatorioPDF = new Document();
-//			try {
-//
-//				PdfWriter.getInstance(relatorioPDF,
-//						new FileOutputStream("C:\\Users\\14882\\Downloads\\pdf_ReceitasDeCodigo.pdf"));
-//				relatorioPDF.open();
-//
-//				// adicionando um parágrafo ao documento
-//				relatorioPDF.add(new Paragraph("Relatório Mensal (nomeDoMes)"));
-//
-//				// adicionando um parágrafo com fonte diferente ao arquivo
-//				relatorioPDF.add(new Paragraph("Total Geral: R$ " + relatorio.get(0),
-//						FontFactory.getFont(FontFactory.COURIER, 12)));
-//				relatorioPDF.add(new Paragraph("Total Arrecadado no Crédito: R$ " + relatorio.get(1),
-//						FontFactory.getFont(FontFactory.COURIER, 12)));
-//				relatorioPDF.add(new Paragraph("Total Arrecadado no Débito: R$ " + relatorio.get(2),
-//						FontFactory.getFont(FontFactory.COURIER, 12)));
-//				relatorioPDF.add(new Paragraph("Total Arrecadado À Vista: R$ " + relatorio.get(3),
-//						FontFactory.getFont(FontFactory.COURIER, 12)));
-//
-//			} catch (DocumentException de) {
-//				System.err.println(de.getMessage());
-//			} catch (IOException ioe) {
-//				System.err.println(ioe.getMessage());
-//			} finally {
-//				relatorioPDF.close();
-//			}
-//			return MODAL_DETALHAMENTO_MENSAL;
-//
-//		} else {
-//			model.addAttribute("msgSemRelatorio", true);
-//			return PAGINA_DETALHAMENTO_FINANCEIRO;
-//		}
-//	}
 }
