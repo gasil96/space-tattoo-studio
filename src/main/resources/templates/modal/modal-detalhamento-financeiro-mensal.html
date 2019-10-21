@@ -12,8 +12,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<strong id="tituloModalEditarCliente" class="modal-title"
-							style="color: #429244">Relatório Financeiro <span
-							style="color: #ffc107">(Mês da pesquisa)</span></strong>
+							style="color: #429244">Relatório Financeiro <span th:text="${relGeralMensal}"></span></strong>
 						<button type="button" data-dismiss="modal" aria-label="Close"
 							class="close">
 							<span aria-hidden="true">×</span>
@@ -31,15 +30,16 @@
 								<h5 class="card-title">
 									Total Arrecadado À Vista: R$ <span th:text=${totalAvista}>0.00</span>
 								</h5>
-								<h5 class="card-title" style="color: #ffc107">
+								<h5 class="card-title">
 									Total Geral: R$ <span th:text=${totalGeral}>0.00</span>
 								</h5>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-					<form th:action="@{/financeiro/gerar-pdf}">
-						<button data-style="zoom-in" class="btn btn-info ladda-button" type="submit"><span class="ladda-label">zoom-in</span></button>
+					<form th:action="@{/financeiro/relatorio-mensal-pdf}">
+					<input type="hidden" class="form-control" th:value=*{relGeralMensal} th:name="relGeralMensal">
+						<button  data-style="zoom-in" class="btn btn-warning" type="submit"  formtarget="_blank"><span class="ladda-label">Gerar Relátorio PDF</span></button>
 					</form>
 					</div>
 				</div>

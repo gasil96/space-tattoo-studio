@@ -1,6 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.itextpdf.text.Document;
@@ -60,10 +58,10 @@ public class FinanceiroController {
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
-	// TODO - MÉTODO EM ANDAMENTO
-	@RequestMapping(value = "relatorio-geral-mensal", method = RequestMethod.GET)
+	@RequestMapping("relatorio-geral-mensal")
 	public String pesquisarRelatorioGeralMes(
-			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal, HttpServletResponse response, Model model) {
+			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal,
+			HttpServletResponse response, Model model) {
 
 		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
 
@@ -73,20 +71,29 @@ public class FinanceiroController {
 			model.addAttribute("totalCredito", relatorio.get(1));
 			model.addAttribute("totalDebito", relatorio.get(2));
 			model.addAttribute("totalAvista", relatorio.get(3));
+			model.addAttribute("relGeralMensal", relGeralMensal);
+			return MODAL_DETALHAMENTO_MENSAL;
 
+		} else {
+			model.addAttribute("msgSemRelatorio", true);
+			return PAGINA_DETALHAMENTO_FINANCEIRO;
+		}
+
+	}
+
+	@RequestMapping("relatorio-mensal-pdf")
+	public void gerarPDF(@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal,
+			HttpServletResponse response) {
+		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
+		if (!listaRelatorioGeralMensal.isEmpty()) {
+			List<Object> relatorio = servicoCaixa.relatorio(relGeralMensal);
 			response.setContentType("application/pdf");
 			Document relatorioPDF = new Document();
 			try {
-
-				PdfWriter.getInstance(relatorioPDF,
-						response.getOutputStream());
+				PdfWriter.getInstance(relatorioPDF, response.getOutputStream());
 				response.getOutputStream().flush();
 				relatorioPDF.open();
-
-				// adicionando um parágrafo ao documento
-				relatorioPDF.add(new Paragraph("Relatório Mensal (nomeDoMes)"));
-
-				// adicionando um parágrafo com fonte diferente ao arquivo
+				relatorioPDF.add(new Paragraph("Relatório Financeiro Mensal ( " + relGeralMensal + " )"));
 				relatorioPDF.add(new Paragraph("Total Geral: R$ " + relatorio.get(0),
 						FontFactory.getFont(FontFactory.COURIER, 12)));
 				relatorioPDF.add(new Paragraph("Total Arrecadado no Crédito: R$ " + relatorio.get(1),
@@ -95,7 +102,6 @@ public class FinanceiroController {
 						FontFactory.getFont(FontFactory.COURIER, 12)));
 				relatorioPDF.add(new Paragraph("Total Arrecadado À Vista: R$ " + relatorio.get(3),
 						FontFactory.getFont(FontFactory.COURIER, 12)));
-
 			} catch (DocumentException de) {
 				System.err.println(de.getMessage());
 			} catch (IOException ioe) {
@@ -103,12 +109,8 @@ public class FinanceiroController {
 			} finally {
 				relatorioPDF.close();
 			}
-
-			return MODAL_DETALHAMENTO_MENSAL;
-
 		} else {
-			model.addAttribute("msgSemRelatorio", true);
-			return PAGINA_DETALHAMENTO_FINANCEIRO;
+			System.err.println("erro");
 		}
 
 	}
