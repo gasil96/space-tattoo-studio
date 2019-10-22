@@ -174,6 +174,7 @@ public class FinanceiroController {
 		map.put("dataInicial", dataInicial);
 		map.put("dataFinal", dataFinal);
 		String listaGasto = new Gson().toJson(map);
+		System.err.println(listaGasto);
 		return listaGasto;
 	}
 
@@ -209,6 +210,7 @@ public class FinanceiroController {
 		map.put("dataInicial", dataInicial);
 		map.put("dataFinal", dataFinal);
 		String listaArrecadacao = new Gson().toJson(map);
+		System.err.println(listaArrecadacao);
 		return listaArrecadacao;
 	}
 
