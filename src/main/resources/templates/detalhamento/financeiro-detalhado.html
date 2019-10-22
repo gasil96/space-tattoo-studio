@@ -29,7 +29,7 @@
 						<strong>Pesquisar Histórico Caixa!</strong>
 					</div>
 					<div class="block-body">
-						<form class="form-inline"
+						<form class="form-inline" id="teste"
 							th:action="@{/financeiro/pesquisar-caixa}">
 							<div class="form-group">
 								<div class="input-group date" id="dataInicial"
@@ -61,8 +61,8 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<input type="submit" value="Pesquisar!" class="btn btn-primary"
-									style="margin: 10px">
+								<input id="btn_pesquisa" type="submit" value="Pesquisar!"
+									class="btn btn-primary" style="margin: 10px">
 							</div>
 						</form>
 					</div>
@@ -94,12 +94,12 @@
 						</div>
 					</div>
 					<div class="col-lg-6">
-						<div class="doughnut-chart chart block">
+						<div class="pie-chart chart block">
 							<div class="title">
-								<strong>FeedBack</strong>
+								<strong>Arrecadação Mês Atual R$</strong>
 							</div>
-							<div class="doughnut-chart chart margin-bottom-sm">
-								<canvas id="doughnutChartCustom1"></canvas>
+							<div class="pie-chart chart margin-bottom-sm">
+								<canvas id="arrecadacaoMesAtual"></canvas>
 							</div>
 						</div>
 					</div>
@@ -160,9 +160,11 @@
 						<strong>Gerar Relatório Geral</strong>
 					</div>
 					<div class="block-body">
-						<form class="form-inline" th:action="@{/financeiro/relatorio-geral-mensal}">
+						<form class="form-inline"
+							th:action="@{/financeiro/relatorio-geral-mensal}">
 							<div class="form-group">
-							<input type="month"  class="form-control " th:name="relGeralMensal">
+								<input type="month" class="form-control "
+									th:name="relGeralMensal">
 							</div>
 							<div class="form-group">
 								<input type="submit" value="Gerar Relátorio Geral"
@@ -212,12 +214,11 @@
 		$(function() {
 			$('#pesquisaRelatorio').datetimepicker({
 				format : 'M-YYYY',
-				viewMode: 'years',
+				viewMode : 'years',
 				autoclose : true,
 				locale : 'pt-BR'
 			});
 		});
-
 
 		// DATA INICIAL
 
@@ -321,6 +322,21 @@
 									borderWidth : 0.5,
 									data : [ 65, 59, 80, 81, 56, 55, 40 ],
 								},
+
+								{
+									label : "BARBEARIA",
+									backgroundColor : [ "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9" ],
+									hoverBackgroundColor : [ "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9" ],
+									borderColor : [ "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9", "#864DD9",
+											"#864DD9", "#864DD9" ],
+									borderWidth : 0.5,
+									data : [ 35, 40, 60, 47, 88, 27, 30 ],
+								},
 								{
 									label : "PIERCING",
 									backgroundColor : [ "#F0F8FF", "#F0F8FF",
@@ -338,46 +354,124 @@
 									data : [ 35, 40, 60, 47, 88, 27, 30 ],
 								},
 								{
-									label : "BARBEARIA",
-									backgroundColor : [ "#864DD9", "#864DD9",
-											"#864DD9", "#864DD9", "#864DD9",
-											"#864DD9", "#864DD9" ],
-									hoverBackgroundColor : [ "#864DD9",
-											"#864DD9", "#864DD9", "#864DD9",
-											"#864DD9", "#864DD9", "#864DD9" ],
-									borderColor : [ "#864DD9", "#864DD9",
-											"#864DD9", "#864DD9", "#864DD9",
-											"#864DD9", "#864DD9" ],
+									label : "PRODUTO",
+									backgroundColor : [ "#9932CC", "#9932CC",
+											"#9932CC", "#9932CC", "#9932CC",
+											"#9932CC", "#9932CC" ],
+									hoverBackgroundColor : [ "#9932CC",
+											"#9932CC", "#9932CC", "#9932CC",
+											"#9932CC", "#9932CC", "#9932CC" ],
+									borderColor : [ "#9932CC", "#9932CC",
+											"#9932CC", "#9932CC", "#9932CC",
+											"#9932CC", "#9932CC" ],
 									borderWidth : 0.5,
 									data : [ 35, 40, 60, 47, 88, 27, 30 ],
 								} ]
 					}
 				});
 
-		// TODO - GASTO MES ATUAL
-		var PIECHARTEXMPLE = $('#gastoMesAtual');
-		var pieChartExample = new Chart(PIECHARTEXMPLE, {
-			type : 'pie',
-			options : {
-				legend : {
-					display : true,
-					position : "left"
-				}
-			},
+		$(document).ready(function() {
+			$("teste").submit(function() {
+				alert("Form submitted Successfully");
+			});
+			$("button").click(function() {
+				$("teste").submit();
+			});
+		});
+
+		// 		TODO - GASTO MES ATUAL
+
+		$(document).ready(
+				function() {
+					$.ajax({
+						type : "POST",
+						url : "/financeiro/pesquisa-intervalo-gasto",
+						data : {
+							dataInicial : "01-10-2019",
+							dataFinal : "30-10-2019"
+						},
+						dataType : 'json',da
+						success : function(data) {
+							var PIECHARTEXMPLE = $('#gastoMesAtual');
+							var pieChartExample = new Chart(PIECHARTEXMPLE,
+									{
+										type : 'pie',
+										options : {
+											legend : {
+												display : true,
+												position : "left"
+											}
+										},
+										data : {
+											labels : [ "Barbearia", "Tattoo",
+													"Piercing", "Produto" ],
+											datasets : [ {
+												data : [
+														data.gasTotalBarbearia,
+														data.gasTotalTattoo,
+														data.gasTotalPercieng,
+														data.gasTotalProduto ],
+												borderWidth : 0,
+												backgroundColor : [ '#864dd9',
+														"#4682B4", "#f0f8ff",
+														"#9932CC" ],
+												hoverBackgroundColor : [
+														'#864dd9', "#4682B4",
+														"#f0f8ff", "#9932CC" ]
+											} ]
+										}
+									});
+						},
+						error : function(e) {
+							alert("Ocorreu um erro ao buscar os eventos!");
+						}
+					});
+
+				});
+		// TODO - ARRECADACAO MES ATUAL
+
+		$.ajax({
+			type : "POST",
+			url : "/financeiro/pesquisa-intervalo-arrecadacao",
+			dataType : 'json',
 			data : {
-				labels : [ "PIERCING", "TATTOO", "BARBEARIA" ],
-				datasets : [ {
-					data : [ 300, 50, 100 ],
-					borderWidth : 0,
-					backgroundColor : [ "#F0F8FF", "#4682B4", "#864DD9" ],
-					hoverBackgroundColor : [ "#F0F8FF", "#4682B4", "#864DD9" ]
-				} ]
+				dataInicial : "01-10-2019",
+				dataFinal : "30-10-2019"
+			},
+			success : function(data) {
+				var PIECHARTEXMPLE = $('#arrecadacaoMesAtual');
+				var pieChartExample = new Chart(PIECHARTEXMPLE,
+						{
+							type : 'pie',
+							options : {
+								legend : {
+									display : true,
+									position : "left"
+								}
+							},
+							data : {
+								labels : [ "Barbearia", "Tattoo", "Piercing",
+										"Produto" ],
+								datasets : [ {
+									data : [ data.arrTotalBarbearia,
+											data.arrTotalTattoo,
+											data.arrTotalPercieng,
+											data.arrTotalProduto ],
+									borderWidth : 0,
+									backgroundColor : [ '#864dd9', "#4682B4",
+											"#f0f8ff", "#9932CC" ],
+									hoverBackgroundColor : [ '#864dd9',
+											"#4682B4", "#f0f8ff", "#9932CC" ]
+								} ]
+							}
+						});
+			},
+			error : function(e) {
+				alert("Ocorreu um erro ao buscar os eventos!");
 			}
 		});
 
-		var pieChartExample = {
-			responsive : true
-		};
+		// 				});
 	</script>
 </body>
 </html>

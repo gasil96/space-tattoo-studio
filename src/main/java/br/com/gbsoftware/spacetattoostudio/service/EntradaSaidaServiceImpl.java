@@ -85,4 +85,9 @@ public class EntradaSaidaServiceImpl implements EntradaSaidaService {
 			cliente.get().setSaldo(gastoTotalCliente);
 		}
 	}
+
+	@Override
+	public List<EntradaSaida> buscarPorIntervalo(String dataInicial, String dataFinal) {
+		return entradaSaidaRepository.findByInterval(dataInicial, dataFinal);
+	}
 }

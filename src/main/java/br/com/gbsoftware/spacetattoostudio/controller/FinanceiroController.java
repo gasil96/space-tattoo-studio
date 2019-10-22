@@ -1,7 +1,10 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,16 +13,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.gson.Gson;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
 import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
+import br.com.gbsoftware.spacetattoostudio.service.EntradaSaidaService;
 
 @Controller
 @RequestMapping("financeiro")
@@ -30,6 +44,9 @@ public class FinanceiroController {
 
 	@Autowired
 	private CaixaService servicoCaixa;
+
+	@Autowired
+	private EntradaSaidaService servicoEntradaSaida;
 
 	@GetMapping("detalhamento")
 	public String detalhamentoFinanceiro(Caixa caixa, Model model) {
@@ -44,14 +61,12 @@ public class FinanceiroController {
 
 	@RequestMapping("pesquisar-caixa")
 	public String pesquisarCaixaTeste(@RequestParam(value = "dataInicial", required = true) String dataInicial,
-			@RequestParam(value = "dataFinal", required = true) String dataFinal, Model model) {
-
+			@RequestParam(value = "dataFinal", required = true) String dataFinal, Model model)
+			throws JsonProcessingException {
 		List<Caixa> caixas = servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal);
-
 		if (caixas.isEmpty()) {
 			model.addAttribute("vazio", true);
 		}
-
 		model.addAttribute("caixas", caixas);
 		model.addAttribute("consultado", caixas.isEmpty() ? false : true);
 
@@ -112,7 +127,89 @@ public class FinanceiroController {
 		} else {
 			System.err.println("erro");
 		}
-
 	}
 
+	@RequestMapping(value = "/pesquisa-intervalo", method = RequestMethod.GET)
+	public @ResponseBody String pesquisaIntervalo(String dataInicial, String dataFinal) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+		mapper.registerModule(new JavaTimeModule());
+		List<Caixa> caixas = servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal);
+		String lista = mapper.writeValueAsString(caixas);
+		return lista;
+	}
+
+	@RequestMapping(value = "/pesquisa-intervalo-gasto", method = RequestMethod.POST)
+	public @ResponseBody String pesquisaIntervaloGasto(String dataInicial, String dataFinal)
+			throws JsonProcessingException {
+		List<EntradaSaida> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
+
+		BigDecimal gasTotalPercieng = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PIERCING)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		BigDecimal gasTotalTattoo = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.TATTOO)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		BigDecimal gasTotalBarbearia = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.BARBEARIA)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		BigDecimal gasTotalProduto = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PRODUTO)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("gasTotalPercieng", gasTotalPercieng);
+		map.put("gasTotalTattoo", gasTotalTattoo);
+		map.put("gasTotalBarbearia", gasTotalBarbearia);
+		map.put("gasTotalProduto", gasTotalProduto);
+		map.put("dataInicial", dataInicial);
+		map.put("dataFinal", dataFinal);
+		String listaGasto = new Gson().toJson(map);
+		System.err.println(listaGasto); // TODO REMOVER
+		return listaGasto;
+	}
+
+	@RequestMapping(value = "/pesquisa-intervalo-arrecadacao", method = RequestMethod.POST)
+	public @ResponseBody String pesquisaIntervaloArrecadacao(String dataInicial, String dataFinal)
+			throws JsonProcessingException {
+		List<EntradaSaida> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
+
+		BigDecimal arrTotalPercieng = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PIERCING)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		BigDecimal arrTotalTattoo = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.TATTOO)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		BigDecimal arrTotalBarbearia = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.BARBEARIA)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		BigDecimal arrTotalProduto = entradaSaida.stream()
+				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PRODUTO)
+						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
+				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("arrTotalPercieng", arrTotalPercieng);
+		map.put("arrTotalTattoo", arrTotalTattoo);
+		map.put("arrTotalBarbearia", arrTotalBarbearia);
+		map.put("arrTotalProduto", arrTotalProduto);
+		map.put("dataInicial", dataInicial);
+		map.put("dataFinal", dataFinal);
+		String listaArrecadacao = new Gson().toJson(map);
+		System.err.println(listaArrecadacao);// TODO - REMOVER
+		return listaArrecadacao;
+	}
 }

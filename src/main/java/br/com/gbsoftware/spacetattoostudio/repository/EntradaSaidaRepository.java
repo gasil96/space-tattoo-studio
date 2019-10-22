@@ -25,4 +25,9 @@ public interface EntradaSaidaRepository extends JpaRepository<EntradaSaida, Long
 			"inner join cliente c on es.id_cliente_fk = c.id " + 
 			"where es.id_caixa_fk = :iDCaixaFK", nativeQuery = true)
 	List<EntradaSaida> findByEntradaSaida(@Param("iDCaixaFK") Long iDCaixaFK);
+	
+	@Query(value = "select *  \r\n" + 
+			"from entrada_saida where  date_format(horario_operacao, '%d-%m-%Y') between :dataInicial and :dataFinal", nativeQuery =true )
+	List<EntradaSaida> findByInterval(@Param("dataInicial")String dataInicial, @Param("dataFinal") String dataFinal);
+	
 }

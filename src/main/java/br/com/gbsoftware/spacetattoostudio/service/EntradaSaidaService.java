@@ -24,4 +24,5 @@ public interface EntradaSaidaService {
 	
 	List<EntradaSaida> busarTodosDoDia(Long iDCaixaFK);
 
+	List<EntradaSaida> buscarPorIntervalo(String dataInicial, String dataFinal);
 }
