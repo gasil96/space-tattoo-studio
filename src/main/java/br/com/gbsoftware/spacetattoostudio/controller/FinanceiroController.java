@@ -66,10 +66,12 @@ public class FinanceiroController {
 		List<Caixa> caixas = servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal);
 		if (caixas.isEmpty()) {
 			model.addAttribute("vazio", true);
+		} else {
+			model.addAttribute("caixas", caixas);
+			model.addAttribute("consultado", caixas.isEmpty() ? false : true);
+			model.addAttribute("dataInicial", dataInicial);
+			model.addAttribute("dataFinal", dataFinal);
 		}
-		model.addAttribute("caixas", caixas);
-		model.addAttribute("consultado", caixas.isEmpty() ? false : true);
-
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
@@ -172,7 +174,6 @@ public class FinanceiroController {
 		map.put("dataInicial", dataInicial);
 		map.put("dataFinal", dataFinal);
 		String listaGasto = new Gson().toJson(map);
-		System.err.println(listaGasto); // TODO REMOVER
 		return listaGasto;
 	}
 
@@ -200,7 +201,6 @@ public class FinanceiroController {
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PRODUTO)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
 				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("arrTotalPercieng", arrTotalPercieng);
 		map.put("arrTotalTattoo", arrTotalTattoo);
@@ -209,7 +209,7 @@ public class FinanceiroController {
 		map.put("dataInicial", dataInicial);
 		map.put("dataFinal", dataFinal);
 		String listaArrecadacao = new Gson().toJson(map);
-		System.err.println(listaArrecadacao);// TODO - REMOVER
 		return listaArrecadacao;
 	}
+
 }
