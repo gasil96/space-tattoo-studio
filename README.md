@@ -39,7 +39,7 @@
   - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
 + Modelagem e Construção do Banco de Dados
   - O Banco de dados escolhido foi o **MYSQL**, incialmente modelado atraves da ferramenta Workbench 
-    **IMAGEM 01 - WORKBENCH MODELANDO O BD***
+    **IMAGEM 01 - WORKBENCH MODELANDO O BD**
     e posteriomente implementado atráves do *Hibernate* com anotações *JPA*  tenologias que serão explicados mais especificamentes no       decorrer deste artigo.
 + Cadastro, controle e detalhamento de clientes, agendamentos, usuários. 
   - Cadastro de cliente, agendamento e usuários, seus respectivos CRUD's implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão a mesma deve ser feita diretamente no banco de dados. Tambem foi implementado gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... amostragem gráficas de cancelamentos de agendamento, periodiciade, e comparativos com o segmento do serviços escolhidos pelos clientes cadastrados no sistema.
@@ -54,9 +54,9 @@
   - Abertura diária do caixa com controles de entrada e saída de qualquer segmento de produto ou agendamento,
   - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
     no sistema.
-  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico, ****IMAGEM 04 DETALHAMENTO FINANCEIRO**.
+  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico, **IMAGEM 04 DETALHAMENTO FINANCEIRO**.
 + Integração com API WhatsApp
-  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos **IMAGEM 05CARD DOS PRÓXIMOS         AGENDAMENTOS **.
+  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos **IMAGEM 05 CARD DOS PRÓXIMOS         AGENDAMENTOS**.
   - Poder enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes apartir de um click no número listado.
 ### FASE 3
 + Processo de **Homogação**
