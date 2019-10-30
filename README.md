@@ -1,1 +1,72 @@
-# spacetattoostudio
+## O que foi utilizado ?
+### Back-End 
+| Tecnologia | Descrição |
+| ------ | ------ |
+| Java 8 | Linguagem de programação orientada a objetos |
+| SpringBoot | Spring Boot é um projeto da Spring que veio para facilitar o processo de configuração e publicação de nossas aplicações. Você escolhe os módulos que deseja através dos starters que inclui no pom.xml do seu projeto. Eles, basicamente, são dependências que agrupam outras dependências. |
+| Spring MVC | O framework Spring, é um dos frameworks Java mais conhecido e utilizado. Esse framework implementa um grande número de funções, como injeção de dependência, persistência de dados e uma implementação para o padrão MVC para a criação de aplicações WEB|
+| Hibernate | Hibernate é o framework para persistência de dados mais utilizado em projetos Java. Sendo uma das primeiras opções a implementar o conceito de mapeamento objeto-relacional (ORM), em pouco tempo se tornou referência entre os desenvolvedores, tendo influenciado, inclusive, a criação da especificação JPA.|
+| JPA | JPA é a especificação do Java que dita como os frameworks ORM devem ser implementados. Ela foi criada com o intuito de padronizar essas soluções. Antes de sua criação existiam diversos frameworks e bibliotecas que abstraiam os desafios da persistência com ORM em Java.|
+| Spring Security | O Spring Security é uma estrutura Java / Java EE que fornece autenticação, autorização e outros recursos de segurança para aplicativos corporativos. |
+
+### Front-End 
+| Tecnologia | Descrição |
+| ------ | ------ |
+| Thymeleaf | Thymeleaf é um mecanismo de modelo Java XML / XHTML / HTML5 que pode funcionar tanto em ambientes web como fora da web. É mais adequado para servir XHTML / HTML5 na camada de visualização de aplicativos da web baseados em MVC, mas pode processar qualquer arquivo XML mesmo em ambientes off-line. |
+| Javascript | JavaScript é uma linguagem de programação interpretada estruturada, de script em alto nível com tipagem dinâmica fraca e multi-paradigma. Juntamente com HTML e CSS, o JavaScript é uma das três principais tecnologias da World Wide Web. |
+| Jquery | jQuery é uma biblioteca de funções JavaScript que interage com o HTML, desenvolvida para simplificar os scripts interpretados no navegador do cliente. |
+| Bootstrap | Bootstrap é um framework web com código-fonte aberto para desenvolvimento de componentes de interface e front-end para sites e aplicações web usando HTML, CSS e JavaScript, baseado em modelos de design para a tipografia, melhorando a experiência do usuário em um site amigável e responsivo. |
+### Principais Bibliotecas
+- DataTable
+- TouchSping
+- Input Masks
+- Full Calendar IO
+- Typehead
+- Mensseger HubSpot
+- Entre outras...
+
+## Metodologia Ágil
+#### O sistema foi subdivido em 3 fases
+**FASE 1**
++ Definição da interfaace prinpal (TEMPLATE)
+  - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
++ Modelagem e Construção do Banco de Dados
+  - O Banco de dados escolhido foi o **MYSQL**, incialmente modelado atraves da ferramenta Workbench 
+    **IMAGEM 01 - WORKBENCH MODELANDO O BD***
+    e posteriomente implementado atráves do *Hibernate* com anotações *JPA*  tenologias que serão explicados mais especificamentes no       decorrer deste artigo.
++ Cadastro, controle e detalhamento de clientes, agendamentos, usuários. 
+  - Cadastro de cliente, agendamento e usuários, seus respectivos CRUD's implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão a mesma deve ser feita diretamente no banco de dados. Tambem foi implementado gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... amostragem gráficas de cancelamentos de agendamento, periodiciade, e comparativos com o segmento do serviços escolhidos pelos clientes cadastrados no sistema.
++ Paginação principal
+  **IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO**
+  -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha **IMAGEM 03 THYMELEAF COM FRAGMENTO**.
++ Definição de Permissões
+  - Foram criadas regras de acesso e implementados com *thymleaf* *sec:transaction* que define que usuário logado pode acessar    
+    determinado conteúdo dentro do sistema.
+**FASE 2**
++ Controle e Fluxo de Caixa
+  - Abertura diária do caixa com controles de entrada e saída de qualquer segmento de produto ou agendamento,
+  - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
+    no sistema.
+  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico, ****IMAGEM 04 DETALHAMENTO FINANCEIRO**.
++ Integração com API WhatsApp
+  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos **IMAGEM 05CARD DOS PRÓXIMOS         AGENDAMENTOS **.
+  - Poder enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes apartir de um click no número listado.
+**FASE 3**
++ Processo de **Homogação**
+  - Fase onde o cliente ja pode utilizar a aplicação em um versão a ser homologada/testada por ele mesmo onde o feedback infere as novas     atualizações com modificações, correções de erros, inclusão de especificações solicitadas pelos usuários do sistema
++ Build e Deploy em nuvem
+  - A nuvem escolhida para armazenamento do sistema foi a [HEROKU](https://www.heroku.com/)
+  - Mysqldump em para nuvem do banco de dados local
+  - Versionamento de acordo com alterações feitas 
+  - Contem dois ambientes **PRODUÇÃO** E **HOMOLOGAÇÃO** onde respectivamente um serve para a versão final do usuário, e outro para         versão de testes ( melhorias, e novas implementações ).
++ Entrega
+  - Criação do relátorio final da aplicação para fins de consulta **(MarkDown)**.
+  - Ensinamento do passo a passo de uso para o cliente.
+
+## Exigências do Cliente 
+  
+## Requisitos
+   Como foi feito e o que foi necessário para levantamento do requisito
+## Procedimentos Passo à Passo
+   como utilizar a aplicação passo a passo para o cliente ( novo usuário )
+## 
