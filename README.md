@@ -34,7 +34,7 @@
 
 ## Metodologia Ágil
 #### O sistema foi subdivido em 3 fases
-**FASE 1**
+### FASE 1
 + Definição da interfaace prinpal (TEMPLATE)
   - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
 + Modelagem e Construção do Banco de Dados
@@ -49,7 +49,7 @@
 + Definição de Permissões
   - Foram criadas regras de acesso e implementados com *thymleaf* *sec:transaction* que define que usuário logado pode acessar    
     determinado conteúdo dentro do sistema.
-**FASE 2**
+### FASE 2
 + Controle e Fluxo de Caixa
   - Abertura diária do caixa com controles de entrada e saída de qualquer segmento de produto ou agendamento,
   - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
@@ -58,7 +58,7 @@
 + Integração com API WhatsApp
   - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos **IMAGEM 05CARD DOS PRÓXIMOS         AGENDAMENTOS **.
   - Poder enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes apartir de um click no número listado.
-**FASE 3**
+### FASE 3
 + Processo de **Homogação**
   - Fase onde o cliente ja pode utilizar a aplicação em um versão a ser homologada/testada por ele mesmo onde o feedback infere as novas     atualizações com modificações, correções de erros, inclusão de especificações solicitadas pelos usuários do sistema
 + Build e Deploy em nuvem
