@@ -44,9 +44,14 @@
     e posteriomente implementado atráves do *Hibernate* com anotações *JPA*  tenologias que serão explicados mais especificamentes no       decorrer deste artigo.
 + Cadastro, controle e detalhamento de clientes, agendamentos, usuários. 
   - Cadastro de cliente, agendamento e usuários, seus respectivos CRUD's implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão a mesma deve ser feita diretamente no banco de dados. Tambem foi implementado gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... amostragem gráficas de cancelamentos de agendamento, periodiciade, e comparativos com o segmento do serviços escolhidos pelos clientes cadastrados no sistema.
-+ Paginação principal
-  **IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO**
-  -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha **IMAGEM 03 THYMELEAF COM FRAGMENTO**.
++ Paginação principal</br>
+ ![Menu principal](https://user-images.githubusercontent.com/48265863/67949769-128ffa00-fbc7-11e9-8b15-f43f84338d57.PNG)
+ </br>
+  - Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha </br>
+  ``` html
+    <div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
+  ``` 
+</br>
 + Definição de Permissões
   - Foram criadas regras de acesso e implementados com *thymleaf* *sec:transaction* que define que usuário logado pode acessar    
     determinado conteúdo dentro do sistema.
@@ -55,9 +60,15 @@
   - Abertura diária do caixa com controles de entrada e saída de qualquer segmento de produto ou agendamento,
   - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
     no sistema.
-  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico, **IMAGEM 04 DETALHAMENTO FINANCEIRO**.
+  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico.
+  </br>
+  ![detalhamento-financeiro-pesquisado](https://user-images.githubusercontent.com/48265863/67947826-45d08a00-fbc3-11e9-9baa-     df9a56e1a120.PNG)
+  </br>
 + Integração com API WhatsApp
-  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos **IMAGEM 05 CARD DOS PRÓXIMOS         AGENDAMENTOS**.
+  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos 
+  </br>
+  ![Card Proximo Agendamento](https://user-images.githubusercontent.com/48265863/67949138-ed4ebc00-fbc5-11e9-84ac-45e482c66de5.PNG)
+  </br>
   - Poder enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes apartir de um click no número listado.
 ### FASE 3
 + Processo de **Homogação**
@@ -97,4 +108,7 @@
    + Horas
       - Necessário ao menos 200h de trabalho para aprimoramento e execução das atividades pre definidas (funcionalidades extras não inseridas neste tempo).
 ## Procedimentos Passo à Passo
-   **PASSO A PASSO PARA O CLIENTE DE COMO UTILIZAR A APLICAÇÃO**
+#### 1 - Login 
+ Essa é a primeira tela do sistema para um usuário que ainda não esta logado, você pode logar usando seu usuário e senha cadastrados préviamentes pelo administrador do sistema, *caso seja o primeiro uso da aplicação* o administrador contem um usuário padrão para gerar novos usuários.
+ ![Login](https://user-images.githubusercontent.com/48265863/67949236-22f3a500-fbc6-11e9-92af-bca6ef86736a.PNG)</br>
+#### 2 - Pagina Principal (HOME)
