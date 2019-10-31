@@ -1,4 +1,4 @@
-## O que foi utilizado ?
+## Passo a passo criação de sistema do começo até a entrega ao cliente.
 ### Back-End 
 | Tecnologia | Descrição |
 | ------ | ------ |
@@ -29,6 +29,7 @@
 - Input Masks
 - Full Calendar IO
 - Typehead
+- MommentJS
 - Mensseger HubSpot
 - Entre outras...
 
@@ -71,9 +72,29 @@
   - Ensinamento do passo a passo de uso para o cliente.
 
 ## Exigências do Cliente 
-  
+  Durante as primeiras reuniões o cliente demonstrou interesse em um sistema que fosse auxiliar a ter controle de seus clientes como contato, cadastro, e tambem um controle financeiro para sua movimentação.
+  Baseado no desejo do cliente os requisitos foram pouco a pouco sendo levantado com muita conversa e feedback.
 ## Requisitos
-   Como foi feito e o que foi necessário para levantamento do requisito
+   Com a ideia principal ja estabelecida e alinhada junto ao cliente, chega a hora de definirmos oque vai ser necessário para a elaboração do projeto.
+   ##### Conhecimento
+   + Requisitos de Conhecimento
+     - Domínio aprofundado em *Java* com *SpringBoot* para back-end e *Javascript* com *Bootstrap* para front-end
+     - Template padrão para ser utizado como base
+     - Bibliotecas de auxilio para funcionalidades específicas como, MommentJs, FullCalendarIO
+     - Padronização MVC
+   #### Softwares  
+   + Softwares
+     - Spring Tool Suite 4
+     - Mysql Workbench
+     - Heroku (Plataforma Online)
+     - Git (versionamento com github)
+     - Trello (Plataforma Online)
+     - Maven (Gerenciamento de Dependencias)
+   #### Ambiente Físico e Horas
+   + Ambiente
+      - Pc/Notebook com no minimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa qualidade)
+      - Espaço neutro para trabalho
+   + Horas
+      - Necessário ao menos 200h de trabalho para aprimoramento e execução das atividades pre definidas (funcionalidades extras não inseridas neste tempo).
 ## Procedimentos Passo à Passo
-   como utilizar a aplicação passo a passo para o cliente ( novo usuário )
-## 
+   **PASSO A PASSO PARA O CLIENTE DE COMO UTILIZAR A APLICAÇÃO**
