@@ -46,12 +46,13 @@
   - Cadastro de cliente, agendamento e usuários, seus respectivos CRUD's implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão a mesma deve ser feita diretamente no banco de dados. Tambem foi implementado gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... amostragem gráficas de cancelamentos de agendamento, periodiciade, e comparativos com o segmento do serviços escolhidos pelos clientes cadastrados no sistema.
 + Paginação principal</br>
  ![Menu principal](https://user-images.githubusercontent.com/48265863/67949769-128ffa00-fbc7-11e9-8b15-f43f84338d57.PNG)
- </br>
-  - Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha </br>
-  ``` html
+ </br></br>
+  - Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,     utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha. 
+</br></br></br>
+``` html
     <div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
-  ``` 
-</br>
+```
+</br></br>
 + Definição de Permissões
   - Foram criadas regras de acesso e implementados com *thymleaf* *sec:transaction* que define que usuário logado pode acessar    
     determinado conteúdo dentro do sistema.
@@ -61,14 +62,14 @@
   - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
     no sistema.
   - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico.
-  </br>
-  ![detalhamento-financeiro-pesquisado](https://user-images.githubusercontent.com/48265863/67947826-45d08a00-fbc3-11e9-9baa-     df9a56e1a120.PNG)
-  </br>
+</br></br></br>
+![detalhamento-financeiro-pesquisado](https://user-images.githubusercontent.com/48265863/67950881-3f451100-fbc9-11e9-9e47-d9ab2218b928.PNG)
+</br></br></br>
 + Integração com API WhatsApp
   - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos 
-  </br>
+   </br></br>
   ![Card Proximo Agendamento](https://user-images.githubusercontent.com/48265863/67949138-ed4ebc00-fbc5-11e9-84ac-45e482c66de5.PNG)
-  </br>
+   </br></br>
   - Poder enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes apartir de um click no número listado.
 ### FASE 3
 + Processo de **Homogação**
