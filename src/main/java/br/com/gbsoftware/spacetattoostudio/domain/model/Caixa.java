@@ -20,6 +20,9 @@ import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 
 @Entity
@@ -27,36 +30,46 @@ import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 @SuppressWarnings("serial")
 public class Caixa extends EntidadeBase<Long> {
 
+	@JsonProperty(value = "horaAbertura")
 	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
 	@Column(name = "data_hora_abertura", updatable = false)
 	private LocalDateTime dataHoraAbertura;
 
+	@JsonProperty(value = "horaFechamento")
 	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
 	@Column(name = "data_hora_fechamento")
 	private LocalDateTime dataHoraFechamento;
-
+	
+	@JsonProperty(value = "totalGeral")
 	@Column(name = "total_geral", length = 65, precision = 12, scale = 2)
 	private BigDecimal total;
 
+	@JsonProperty(value = "totalAvista")
 	@Column(name = "total_avista", length = 65, precision = 12, scale = 2)
 	private BigDecimal totalAvista;
 
+	@JsonProperty(value = "totalCredito")
 	@Column(name = "total_credito", length = 65, precision = 12, scale = 2)
 	private BigDecimal totalCredito;
 
+	@JsonProperty(value = "totalDebito")
 	@Column(name = "total_debito", length = 65, precision = 12, scale = 2)
 	private BigDecimal totalDebito;
 
+	@JsonProperty(value = "operadorAbertura")
 	@NotNull
 	@Column(name = "operador_abertura", updatable = false, length = 30)
 	private String operadorAbertura;
 
+	@JsonProperty(value = "operadorFechamento")
 	@Column(name = "operador_fechamento", length = 30)
 	private String operadorFechamento;
 
+	@JsonIgnore
 	@Type(type = "true_false")
 	private Boolean aberto;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "caixa")
 	private List<EntradaSaida> entradaSaida;
 

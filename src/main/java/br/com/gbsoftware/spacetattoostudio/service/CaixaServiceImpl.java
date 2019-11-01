@@ -196,32 +196,29 @@ public class CaixaServiceImpl implements CaixaService {
 	}
 
 	@Override
-	public ArrayList<Object> relatorio(String relGeralMensal) {
+	public List<Object> relatorio(String relGeralMensal) {
 
-		ArrayList<Object> relatorio = new ArrayList<>();
+		List<Object> relatorio = new ArrayList<>();
 
 		List<Caixa> listaRelGeral = buscarTodosMes(relGeralMensal);
 
 		if (!listaRelGeral.isEmpty()) {
-			Optional<BigDecimal> totalGeral = listaRelGeral.stream().filter(x -> x.getTotal() != null)
-					.map(Caixa::getTotal).reduce(BigDecimal::add);
+			BigDecimal totalGeral = listaRelGeral.stream().filter(x -> x.getTotal() != null).map(Caixa::getTotal)
+					.reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
-			Optional<BigDecimal> totalCredito = listaRelGeral.stream().filter(x -> x.getTotalCredito() != null)
-					.map(Caixa::getTotalCredito).reduce(BigDecimal::add);
+			BigDecimal totalCredito = listaRelGeral.stream().filter(x -> x.getTotalCredito() != null)
+					.map(Caixa::getTotalCredito).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
-			Optional<BigDecimal> totalDebito = listaRelGeral.stream().filter(x -> x.getTotalDebito() != null)
-					.map(Caixa::getTotalDebito).reduce(BigDecimal::add);
+			BigDecimal totalDebito = listaRelGeral.stream().filter(x -> x.getTotalDebito() != null)
+					.map(Caixa::getTotalDebito).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
-			Optional<BigDecimal> totalAVista = listaRelGeral.stream().filter(x -> x.getTotalAvista() != null)
-					.map(Caixa::getTotalAvista).reduce(BigDecimal::add);
-
-			relatorio.add(totalGeral);
-			relatorio.add(totalCredito);
-			relatorio.add(totalDebito);
-			relatorio.add(totalAVista);
-
+			BigDecimal totalAVista = listaRelGeral.stream().filter(x -> x.getTotalAvista() != null)
+					.map(Caixa::getTotalAvista).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+			relatorio.add(0, totalGeral);
+			relatorio.add(1, totalCredito);
+			relatorio.add(2, totalDebito);
+			relatorio.add(3, totalAVista);
 			return relatorio;
-
 		} else {
 			return null;
 		}

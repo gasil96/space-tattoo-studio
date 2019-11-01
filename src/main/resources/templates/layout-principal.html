@@ -9,6 +9,8 @@
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
+<!-- Ladda-->
+<link rel="stylesheet" th:href="@{/vendor/ladda/ladda-themeless.min.css}">
 <!-- Bootstrap CSS-->
 <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
 <!-- Font Awesome CSS-->
@@ -75,6 +77,10 @@
 		</div>
 	</div>
 
+	<!-- Loading buttons-->
+    <script th:src="@{/vendor/ladda/spin.min.js}">   </script>
+    <script th:src="@{/vendor/ladda/ladda.min.js}">     </script>
+    <script th:src="@{/js/components-ladda.js}"></script>
 	<!-- JavaScript files-->
 	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/vendor/popper.js/umd/popper.min.js}"></script>
