@@ -9,8 +9,7 @@ public enum CategoriaEntradaEnum {
 	TATTOO("TATTOO"),
 	PIERCING("PIERCING"),
 	BARBEARIA("BARBEARIA"),
-	PRODUTO("PRODUTO"),
-	DIVERSOS("DIVERSOS");
+	PRODUTO("PRODUTO");
 
 	private String categoriaEntrada;
 
