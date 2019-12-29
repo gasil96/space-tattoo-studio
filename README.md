@@ -97,6 +97,35 @@
       - Necessário ao menos 90h de trabalho para aprimoramento e execução das atividades pre definidas (funcionalidades extras não inseridas neste tempo).
 ## Procedimentos Passo à Passo
    como utilizar a aplicação - passo à passo para o cliente [NOVO USUÁRIO]
-## Tela de Login
 
+## Login  
+IMAGEM - TELA LOGIN
+Cada usuário ja deverá conter seu acesso, caso contrário entre em contato com o administrador do sistema junto ao gerente do espaço para definir seu **login** e **senha** e tipo de acesso.
+OBS | Nem todos os usuários conseguem visualizar e alterar certas informações... varia de acordo com o tipo de usuário 
+* ADMINISTRADOR
+* GERENTE
+* USUÁRIO
+## Principal
+A *Dashboard* principal contem as principais funcionalidades do sistemas resumidas e mais algumas adicionais como:
+* Número total de Clientes Cadastrados
+* Agendamentos do Dia
+* Agendamentos da Semana
+* Controle do Caixa
+Tambem contem um avíso com os proximos 3 agendamentos:
+**IMAGEM PROXIMOS 3 AGENDAMENTOS**
+Onde contem infomações dos proximos agendamentos junto a infomações do cliente como telefone, nome e a opção de enviar mensagem para o cliente via o *whatsapp* (basta clicar sobre o  número do cliente), tambem contém o *Calendário Geral* que mostra por padrão a visão geral do mês e dos seus agendamentos por dia e categoria.
+**IMAGEM CALENDARIO GERAL**
 
+## Caixa
+O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*
+
+É possivel abrir o caixa e visualizar os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um calculo baseado em entrada e saida e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adiconar um fundo de crédio ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
+## Clientes
+
+## Agendamentos
+
+## Detalhamento
+
+### Financeiro
+
+## **Administração**
