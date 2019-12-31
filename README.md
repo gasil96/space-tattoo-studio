@@ -40,13 +40,13 @@
   - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
 + Modelagem e Construção do Banco de Dados
   - O Banco de dados escolhido foi o **MYSQL**, incialmente modelado atraves da ferramenta Workbench 
-    **IMAGEM 01 - WORKBENCH MODELANDO O BD**
     e posteriomente implementado atráves do *Hibernate* com anotações *JPA*  tenologias que serão explicados mais especificamentes no       decorrer deste artigo.
 + Cadastro, controle e detalhamento de clientes, agendamentos, usuários. 
   - Cadastro de cliente, agendamento e usuários, seus respectivos CRUD's implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão a mesma deve ser feita diretamente no banco de dados. Tambem foi implementado gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... amostragem gráficas de cancelamentos de agendamento, periodiciade, e comparativos com o segmento do serviços escolhidos pelos clientes cadastrados no sistema.
 + Paginação principal
-  **IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO**
-  -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha **IMAGEM 03 THYMELEAF COM FRAGMENTO**.
+ ![IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ANINHADO.PNG)
+  -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha 
+  ![IMAGEM 03 THYMELEAF COM FRAGMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-THYMELEAF-COM-FRAGMENTO.PNG)
 + Definição de Permissões
   - Foram criadas regras de acesso e implementados com *thymleaf* *sec:transaction* que define que usuário logado pode acessar    
     determinado conteúdo dentro do sistema.
@@ -55,9 +55,11 @@
   - Abertura diária do caixa com controles de entrada e saída de qualquer segmento de produto ou agendamento,
   - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
     no sistema.
-  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico, **IMAGEM 04 DETALHAMENTO FINANCEIRO**.
+  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico.
+  ![DETALHAMENTO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-DETALHAMENTO-FINANCEIRO.PNG)
 + Integração com API WhatsApp
-  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos **IMAGEM 05 CARD DOS PRÓXIMOS         AGENDAMENTOS**.
+  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos 
+   ![CARD-DOS-PROXIMOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CARD-PROXIMO-AGENDAMENTO.PNG)
   - Poder enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes apartir de um click no número listado.
 ### FASE 3
 + Processo de **Homogação**
@@ -68,12 +70,12 @@
   - Versionamento de acordo com alterações feitas 
   - Contem dois ambientes **PRODUÇÃO** E **HOMOLOGAÇÃO** onde respectivamente um serve para a versão final do usuário, e outro para         versão de testes ( melhorias, e novas implementações ).
 + Entrega
-  - Criação do relátorio final da aplicação para fins de consulta **(MarkDown)**.
-  - Ensinamento do passo a passo de uso para o cliente.
+  - Criação do relátorio final da aplicação para fins de consulta **(Markdown)**.
+  - Passo à passo de uso para o Cliente.
 
 ## Exigências do Cliente 
-  Durante as primeiras reuniões o cliente demonstrou interesse em um sistema que fosse auxiliar a ter controle de seus clientes como contato, cadastro, e tambem um controle financeiro para sua movimentação.
-  Baseado no desejo do cliente os requisitos foram pouco a pouco sendo levantado com muita conversa e feedback.
+  Durante as primeiras reuniões o cliente demonstrou interesse em um sistema que fosse auxiliar a ter controle de seus clientes como       contato, cadastro, e tambem um controle financeiro para sua movimentação.
+  Baseado no desejo do cliente os requisitos foram pouco a pouco sendo levantados com interação e feedback.
 ## Requisitos
    Com a ideia principal ja estabelecida e alinhada junto ao cliente, chega a hora de definirmos oque vai ser necessário para a elaboração do projeto.
    ##### Conhecimento
@@ -92,14 +94,15 @@
      - Maven (Gerenciamento de Dependencias)
    #### Ambiente Físico e Horas
     + Ambiente Físico
-      - Pc/Notebook com no minimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa qualidade)
+      - Pc/Notebook com no minimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa performace)
     + Horas
-      - Necessário ao menos 90h de trabalho para aprimoramento e execução das atividades pre definidas (funcionalidades extras não inseridas neste tempo).
+      - Necessário ao menos 50h de trabalho para aprimoramento e execução das atividades pre definidas (funcionalidades extras não inseridas neste tempo).
 ## Procedimentos Passo à Passo
-   como utilizar a aplicação - passo à passo para o cliente [NOVO USUÁRIO]
+   Como utilizar a aplicação - passo à passo para o cliente [NOVO USUÁRIO]
 
 ## Login  
-IMAGEM - TELA LOGIN
+![IMAGEM - TELA LOGIN](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TELALOGIN.PNG)
+
 Cada usuário ja deverá conter seu acesso, caso contrário entre em contato com o administrador do sistema junto ao gerente do espaço para definir seu **login** e **senha** e tipo de acesso.
 OBS | Nem todos os usuários conseguem visualizar e alterar certas informações... varia de acordo com o tipo de usuário 
 * ADMINISTRADOR
