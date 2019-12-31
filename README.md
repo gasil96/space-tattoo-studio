@@ -170,5 +170,30 @@ Apos a listagem geral de **TODOS** agendamentos neste sub-menu você ira encontr
 Informa com mais detalhes alguns items do sistema
 ### Financeiro
 Para ter acesso ao detalhamento financeiro é necessário que o caixa esteja fechado, pois alguns calculos so podem ser realizados após todos os lançamentos do dia serem encerrados.
-
+#### Histórico Caixa Por Tempo Determinado
+Você pode determinar um intervalo de tempo entre dias, meses, anos que desejar e realizar a pesquisa dos lançamentos diários e tambem gerar gráficos comparativos.
+**IMAGEM PESQUISA HISTORICO CAIXA**
+Gráficos E Históricos Caixa
+**IMAGEM GRÁFICO E HISTORICO FINANCEIRO**
+#### Relátorio Geral Por Mês Escolhido
+Aqui você pode gerar um relátorio para um mes específico
+**IMAGEM RELATORIO GERAL**
+com a opção de gerar um *pdf* deste relátorio.
+**IMAGEM RELATORIO GERAL POR MES**
 ## **Administração**
+Este sub-menu é voltado somente para o uso do administrador do sistema, para observar todos os usuários criados e suas respectivas permissões.
+**IMAGEM MENU ADM**
+tambem é possivel criar novos usuários e definir o nível de visualização de cada um
+**IMAGEM NOVO USUÁRIO DO SISTEMA**
+1 - **Nome** e Sobrenome do Usuário
+2 - **Login** que o usuário usará para se conectar ao sistema geralmente usado *nome.sobrenome*
+3 - **Senha** pessoal para cada usuário, contem criptografia então no caso de esquecimeneto sera necessário contatar o adminsitrador para cadastro de uma nova senha.
+4 - **Confirmar Senha** confirmar senha anterior para impedir erros de digitação.
+5 - **Cargo** necessário para saber qual tipo de permissão de acesso deve ser dada
+6 - **Permissão de Acesso** - Defini quais sub-menus e ações o usuário poderar acessar/executar dentro do sistema
+### Entenda o Grau de Permissões de Acesso
+|CARGO|PRINCIPAL|CAIXA|CLIENTE|AGENDAMENTO|FINANCEIRO|ADMINISTRAÇÃO|PODE EXCLUIR|
+|-----|-----|-----|-----|-----|-----|-----|-----|
+|DESENVOLVEDOR|SIM|SIM|SIM|SIM|SIM|SIM|SIM|
+|GERENTE|SIM|SIM|SIM|SIM|SIM|NÃO|SIM|
+|FUNCIONÁRIO|SIM|SIM|SIM|SIM|NÃO|NÃO|NÃO|
