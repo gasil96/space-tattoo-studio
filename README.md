@@ -128,7 +128,7 @@ Lembre-se sempre que apos o encerramento do dia é necessário fechar ou caixa.
 ### Como adicionar um novo cliente:
 É possivel adicionar um novo cliente de 2 formas diferentes através da **dashboard** clicando no ícone
 **IMAGEM ICONE ADD NOVO CLIENTE**
-ou diretamente no sub-menu de **cliente** clicando no mesmo ícone 
+ou diretamente no sub-menu de **Clientes** clicando no mesmo ícone 
 **IMAGEM MODAL NOVO CLIENTE**
 O campo **instagram** e **telefone** são opcionais.
 ### Como consumir crédito:
@@ -147,9 +147,28 @@ Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o clien
 Ao final desse sub-menu encontraremos informações pertinentes aos clientes cadastrados, como: comparação do ultimo mês com o mês atual, quantos clientes se encontram **INADIMPLENTES**...
 **IMAGEM INFORMAÇÕES DE CLIENTES**
 ## Agendamentos
-
+Assim como **Clientes** os **Agendamentos** possuem duas formas de serem feitos, na **dashboard** pelo ícone
+**IMAGEM ICONE ADD NOVO AGENDAMENTO**
+ou diretamente no sub-menu **Agendamentos** clicando no mesmo icone. 
+### Modal/Campo agendamento:
+**IMAGEM NOVO AGENDAMENTO**
+### Item TODOS poderemos realizar algumas atividades como:
+**IMAGEM TODOS AGENDAMENTOS***
+1 - Gerar planilha, pdf ou impressão da listagem de agendamentos associadas aos clientes
+2 - Realizar pesquisa filtrando, nome cliente, tipo agendamento, categoria, status, etc...
+3 - Alterar Agendamento
+**IMAGEM ALTERAR AGENDAMENTO**
+4 - Encerrar Agendamento
+**IMAGEM ENCERRAR AGENDAMENTO**
+4.1 Reabrir Agendamento
+**IMAGEM REABRIR AGENDAMENTO**
+Obs: Na lista **TODOS** se o relogio de um agendamento se encontra vermelho significa que você pode encerrar caso encontre-se laranja o agendamento ja foi encerrado e agora pode ser reaberto em uma nova data.
+### Informações Visuais Agendamentos
+Apos a listagem geral de **TODOS** agendamentos neste sub-menu você ira encontrar vários gráficos que informam detalhes financeiros, comparativos, quantitativos e qualitativos sobre os agendamentos.
+**IMAGEM GRÁFICOS AGENDAMENTOS**
 ## Detalhamento
-
+Informa com mais detalhes alguns items do sistema
 ### Financeiro
+Para ter acesso ao detalhamento financeiro é necessário que o caixa esteja fechado, pois alguns calculos so podem ser realizados após todos os lançamentos do dia serem encerrados.
 
 ## **Administração**
