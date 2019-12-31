@@ -118,10 +118,33 @@ Onde contem infomações dos proximos agendamentos junto a infomações do clien
 
 ## Caixa
 O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*
-
-É possivel abrir o caixa e visualizar os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um calculo baseado em entrada e saida e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adiconar um fundo de crédio ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
+**IMAGEM CAIXA SALDOS**
+É possivel **abrir** o caixa e visualizar, incluir e *excluir( somente se o seu login tiver as permissões necessárias )*
+**IMAGEM ADICIONAR LANCAMENTO** os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um calculo baseado em entrada e saida e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adicionar um fundo de crédito ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
+**IMAGEM CAIXA ADD CRÉDITO**
+Lembre-se sempre que apos o encerramento do dia é necessário fechar ou caixa.
+**IMAGEM FECHAR CAIXA**
 ## Clientes
-
+### Como adicionar um novo cliente:
+É possivel adicionar um novo cliente de 2 formas diferentes através da **dashboard** clicando no ícone
+**IMAGEM ICONE ADD NOVO CLIENTE**
+ou diretamente no sub-menu de **cliente** clicando no mesmo ícone 
+**IMAGEM MODAL NOVO CLIENTE**
+O campo **instagram** e **telefone** são opcionais.
+Também no mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que possuem crédito.
+**IMAGEM CONSUMIR CREDITO CLIENTE**
+Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o cliente possui (verde) ou esta devendo (vermelho).
+**IMAGEM CREDITO CLIENTE**
+Nesse mesmo item **TODOS** voce pode:
+**IMAGEM TODOS CLIENTES**
+1 - Gerar uma planilha, um pdf, um imprimir diretamente todas suas informações pertinentes a **Clientes** ou simplesmente a listagem de números para **whtasapp** ou todos **instagrams**
+2 - Filtrar a pesquisa geral de **TODOS** por nome, número, instagram, etc...
+3 - Abrir o modal/campo de editar dados dos clientes 
+**IMAGEM ALTERAR CLIENTE**
+4 - Abrir o modal/campo para agendar um serviço para o cliente escolhido.
+**IMAGEM AGENDAMENTO PARA CLIENTE**
+Ao final desse sub-menu encontraremos informações pertinentes a clientes cadastrados como comparação o ultimo mês com o mês atual, quantos clientes se encontram **INADIMPLENTES**...
+**IMAGEM INFORMAÇÕES DE CLIENTES**
 ## Agendamentos
 
 ## Detalhamento
