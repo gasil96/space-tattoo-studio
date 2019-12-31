@@ -131,11 +131,12 @@ Lembre-se sempre que apos o encerramento do dia é necessário fechar ou caixa.
 ou diretamente no sub-menu de **cliente** clicando no mesmo ícone 
 **IMAGEM MODAL NOVO CLIENTE**
 O campo **instagram** e **telefone** são opcionais.
-Também no mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que possuem crédito.
+### Como consumir crédito:
+No mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que possuem crédito.
 **IMAGEM CONSUMIR CREDITO CLIENTE**
 Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o cliente possui (verde) ou esta devendo (vermelho).
 **IMAGEM CREDITO CLIENTE**
-Nesse mesmo item **TODOS** voce pode:
+### Nesse mesmo item **TODOS** voce pode:
 **IMAGEM TODOS CLIENTES**
 1 - Gerar uma planilha, um pdf, um imprimir diretamente todas suas informações pertinentes a **Clientes** ou simplesmente a listagem de números para **whtasapp** ou todos **instagrams**
 2 - Filtrar a pesquisa geral de **TODOS** por nome, número, instagram, etc...
@@ -143,7 +144,7 @@ Nesse mesmo item **TODOS** voce pode:
 **IMAGEM ALTERAR CLIENTE**
 4 - Abrir o modal/campo para agendar um serviço para o cliente escolhido.
 **IMAGEM AGENDAMENTO PARA CLIENTE**
-Ao final desse sub-menu encontraremos informações pertinentes a clientes cadastrados como comparação o ultimo mês com o mês atual, quantos clientes se encontram **INADIMPLENTES**...
+Ao final desse sub-menu encontraremos informações pertinentes aos clientes cadastrados, como: comparação do ultimo mês com o mês atual, quantos clientes se encontram **INADIMPLENTES**...
 **IMAGEM INFORMAÇÕES DE CLIENTES**
 ## Agendamentos
 
