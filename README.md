@@ -1,4 +1,4 @@
-# Passo à passo: Criação de um sistema, do processo de modelagem e requisitos até a entrega ao cliente.
+# Criação de um sistema do processo de modelagem e requisitos até a entrega ao cliente.
 ### Back-End 
 | Tecnologia | Descrição |
 | ------ | ------ |
