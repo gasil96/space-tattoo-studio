@@ -86,7 +86,7 @@
   Baseado no desejo do cliente os requisitos foram pouco a pouco sendo levantados com o feedback.
 ## Requisitos
    Com a ideia principal ja estabelecida e alinhada junto ao cliente, conseguimos definir oque vai ser necessário para a elaboração do projeto.
-   ##### Conhecimento
+   #### Conhecimento
    + Requisitos de Conhecimento
      - Domínio em *Java* com *SpringBoot* para back-end e *Javascript* com *Bootstrap* para front-end
      - Template padrão para ser utizado como base
@@ -129,18 +129,23 @@ Onde contem infomações dos proximos agendamentos junto a infomações do clien
 ![IMAGEM-CALENDARIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CALENDARIO-GERAL.PNG)
 ## Caixa
 O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*
-**IMAGEM CAIXA SALDOS**
+![IMAGEM-CAIXA-SALDOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CAIXA-SALDOS.PNG)
 É possivel **abrir** o caixa e visualizar, incluir e *excluir( somente se o seu login tiver as permissões necessárias )*
-**IMAGEM ADICIONAR LANCAMENTO** os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um calculo baseado em entrada e saida e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adicionar um fundo de crédito ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
-**IMAGEM CAIXA ADD CRÉDITO**
-Lembre-se sempre que apos o encerramento do dia é necessário fechar ou caixa.
-**IMAGEM FECHAR CAIXA**
+
+![IMAGEM-ADICIONAR-LANCAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ADICIONAR-LANCAMENTO.PNG)
+
+os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um cálculo baseado em entrada e saída e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adicionar um fundo de crédito ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
+
+![IMAGEM-CAIXA-ADD-CREDITO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CAIXA-ADD-CREDITO.PNG)
+
+Lembre-se sempre que após o encerramento do dia é necessário fechar ou caixa.
+![IMAGEM-FECHAR-CAIXA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-FECHAR-CAIXA.PNG)
 ## Clientes
 ### Como adicionar um novo cliente:
 É possivel adicionar um novo cliente de 2 formas diferentes através da **dashboard** clicando no ícone
-**IMAGEM ICONE ADD NOVO CLIENTE**
+![IMAGEM-ICON-ADD-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ICON-ADD-CLIENTE.PNG)
 ou diretamente no sub-menu de **Clientes** clicando no mesmo ícone 
-**IMAGEM MODAL NOVO CLIENTE**
+![IMAGEM-MODAL-NOVO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MODAL-NOVO-CLIENTE.PNG)
 O campo **instagram** e **telefone** são opcionais.
 ### Como consumir crédito:
 No mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que possuem crédito.
