@@ -1,4 +1,4 @@
-## Passo a passo criação de sistema do começo até a entrega ao cliente.
+# Passo à passo: Criação de um sistema, do processo de modelagem e requisitos até a entrega ao cliente.
 ### Back-End 
 | Tecnologia | Descrição |
 | ------ | ------ |
@@ -36,93 +36,97 @@
 ## Metodologia Ágil
 #### O sistema foi subdivido em 3 fases
 ### FASE 1
-+ Definição da interfaace prinpal (TEMPLATE)
-  - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
++ Definição da interface principal (TEMPLATE)
+  - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada, ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
 + Modelagem e Construção do Banco de Dados
-  - O Banco de dados escolhido foi o **MYSQL**, incialmente modelado atraves da ferramenta Workbench 
-    e posteriomente implementado atráves do *Hibernate* com anotações *JPA*  tenologias que serão explicados mais especificamentes no       decorrer deste artigo.
+  - O Banco de dados escolhido foi o **MYSQL**, incialmente modelado através da ferramenta *Workbench* 
+    e posteriomente implementado atráves do *Hibernate* com anotações *JPA*  tecnologias que serão explicados de melhor forma no       decorrer deste artigo.
 + Cadastro, controle e detalhamento de clientes, agendamentos, usuários. 
-  - Cadastro de cliente, agendamento e usuários, seus respectivos CRUD's implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão a mesma deve ser feita diretamente no banco de dados. Tambem foi implementado gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... amostragem gráficas de cancelamentos de agendamento, periodiciade, e comparativos com o segmento do serviços escolhidos pelos clientes cadastrados no sistema.
+  - Cadastro de cliente, agendamentos e usuários esses respectivos CRUD's estão implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão, deve ser feito diretamente no banco de dados. Tambem foram implementados gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... cancelamentos de agendamentos, periodicidade, e comparativos com os segmentos dos serviços escolhidos pelos clientes cadastrados no sistema.
 + Paginação principal
-  -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha 
+  -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em *modal* (recurso que abre uma nova tela sem sair da anterior),   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves de somente uma linha.
+  
   **PAGINAÇÃO**
+  
    ![IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ANINHADO.PNG)
+ 
  **THYMELEAF**
+ 
  ![IMAGEM 03 THYMELEAF COM FRAGMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-THYMELEAF-COM-FRAGMENTO.PNG)
+
 + Definição de Permissões
-  - Foram criadas regras de acesso e implementados com *thymleaf* *sec:transaction* que define que usuário logado pode acessar    
-    determinado conteúdo dentro do sistema.
-  - Como os menus demarcados em *azul* com acesso somente para o **Gerente** e **Desenvolvedor** e *preto* somente para **Desenvolvedor**
+  - Foram criadas regras de acesso e implementados com *thymeleaf* *sec:transaction* que define que o usuário logado pode acessar    
+    determinado conteúdo dentro do sistema se possuir a *transação/regra* correta.
+  - Como nos menus demarcados em *azul* com acesso somente para o **Gerente** e **Desenvolvedor** e *preto* somente para **Desenvolvedor**
 ### FASE 2
 + Controle e Fluxo de Caixa
-  - Abertura diária do caixa com controles de entrada e saída de qualquer segmento de produto ou agendamento,
+  - Abertura diária do caixa com controle de entrada e saída de produto ou agendamento,
   - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
-    no sistema.
-  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário do sistema ou gerar um relátorio de um mês em         especifico.
+    no sistema. (ou algum caso que venha ser necessário o pagamento adiantado)
+  - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário ou gerar um relátorio de um mês em especifico.
   ![DETALHAMENTO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-DETALHAMENTO-FINANCEIRO.PNG)
 + Integração com API WhatsApp
-  - Opção de enviar uma menssagem padrão para o usuário apartir do vencimento dos próximos agendamentos 
+  - Opção de enviar uma menssagem padrão para o usuário a partir do vencimento dos próximos agendamentos 
    ![CARD-DOS-PROXIMOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CARD-PROXIMO-AGENDAMENTO.PNG)
-  - Poder enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes apartir de um click no número listado.
+  - Enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes a partir de um click no número listado.
 ### FASE 3
 + Processo de **Homogação**
-  - Fase onde o cliente ja pode utilizar a aplicação em um versão a ser homologada/testada por ele mesmo onde o feedback infere as novas     atualizações com modificações, correções de erros, inclusão de especificações solicitadas pelos usuários do sistema
+  - Fase onde o cliente ja pode utilizar a aplicação em um versão a ser *homologada/testada* por ele mesmo e todos os usuários que irão futuramente utilizar o sistema final, onde o feedback interfere as novas atualizações, com modificações, correções de erros, inclusão de especificações solicitadas.
 + Build e Deploy em nuvem
-  - A nuvem escolhida para armazenamento do sistema foi a [HEROKU](https://www.heroku.com/)
-  - Mysqldump em para nuvem do banco de dados local
+  - A nuvem escolhida para armazenamento do sistema foi a [HEROKU](https://www.heroku.com/) uma plataforma internacional.
   - Versionamento de acordo com alterações feitas 
-  - Contem dois ambientes **PRODUÇÃO** E **HOMOLOGAÇÃO** onde respectivamente um serve para a versão final do usuário, e outro para         versão de testes ( melhorias, e novas implementações ).
+  - Contem dois ambientes **PRODUÇÃO** e **HOMOLOGAÇÃO** onde respectivamente um serve para a versão final do usuário, e outro para         versão de testes ( melhorias, e novas implementações ).
 + Entrega
+  - Aplicação em ambiente de produção.
   - Criação do relátorio final da aplicação para fins de consulta **(Markdown)**.
   - Passo à passo de uso para o Cliente.
 
 ## Exigências do Cliente 
   Durante as primeiras reuniões o cliente demonstrou interesse em um sistema que fosse auxiliar a ter controle de seus clientes como       contato, cadastro, e tambem um controle financeiro para sua movimentação.
-  Baseado no desejo do cliente os requisitos foram pouco a pouco sendo levantados com interação e feedback.
+  Baseado no desejo do cliente os requisitos foram pouco a pouco sendo levantados com o feedback.
 ## Requisitos
-   Com a ideia principal ja estabelecida e alinhada junto ao cliente, chega a hora de definirmos oque vai ser necessário para a elaboração do projeto.
+   Com a ideia principal ja estabelecida e alinhada junto ao cliente, conseguimos definir oque vai ser necessário para a elaboração do projeto.
    ##### Conhecimento
    + Requisitos de Conhecimento
-     - Domínio aprofundado em *Java* com *SpringBoot* para back-end e *Javascript* com *Bootstrap* para front-end
+     - Domínio em *Java* com *SpringBoot* para back-end e *Javascript* com *Bootstrap* para front-end
      - Template padrão para ser utizado como base
      - Bibliotecas de auxilio para funcionalidades específicas como, MommentJs, FullCalendarIO
      - Padronização MVC
+     - Versionamento com Git/Github
    #### Softwares  
    + Softwares
      - Spring Tool Suite 4
-     - Mysql Workbench
-     - Heroku (Plataforma Online)
-     - Git (versionamento com github)
+     - Mysql com Workbench
+     - Heroku (Plataforma de Nuvem Online)
+     - Git (Versionamento com github)
      - Trello (Plataforma Online)
-     - Maven (Gerenciamento de Dependencias)
+     - Maven (Gerenciamento de Dependências)
    #### Ambiente Físico e Horas
     + Ambiente Físico
-      - Pc/Notebook com no minimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa performace)
+      - Pc/Notebook com no mínimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa performace)
     + Horas
-      - Necessário ao menos 50h de trabalho para aprimoramento e execução das atividades pre definidas (funcionalidades extras não inseridas neste tempo).
-## Procedimentos Passo à Passo
-   Como utilizar a aplicação - passo à passo para o cliente [NOVO USUÁRIO]
+      - Necessário ao menos 50h de trabalho para aprimoramento e execução das atividades pré-definidas (funcionalidades extras não inseridas neste tempo).
+# Procedimentos Passo à Passo
+   Como utilizar a aplicação - passo à passo para o cliente e/ou [NOVO USUÁRIO]
 
 ## Login  
 ![IMAGEM - TELA LOGIN](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TELALOGIN.PNG)
 
-Cada usuário ja deverá conter seu acesso, caso contrário entre em contato com o administrador do sistema junto ao gerente do espaço para definir seu **login** e **senha** e tipo de acesso.
+Cada usuário deverá conter suas credenciais de acesso (login e senha), caso contrário entre em contato com o administrador do sistema junto ao gerente do espaço para definir seu **login** e **senha** e tipo de acesso.
 OBS | Nem todos os usuários conseguem visualizar e alterar certas informações... varia de acordo com o tipo de usuário 
 * ADMINISTRADOR
 * GERENTE
 * USUÁRIO
 ## Principal
-A *Dashboard* principal contem as principais funcionalidades do sistemas resumidas e mais algumas adicionais como:
+A **Dashboard** principal contem as principais funcionalidades do sistemas resumidas e mais algumas adicionais como:
 * Número total de Clientes Cadastrados
 * Agendamentos do Dia
 * Agendamentos da Semana
 * Controle do Caixa
 Tambem contem um avíso com os proximos 3 agendamentos:
-**IMAGEM PROXIMOS 3 AGENDAMENTOS**
 ![IMAGEM-PROXIMOS-TRES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-PROXIMOS-TRES.PNG)
-Onde contem infomações dos proximos agendamentos junto a infomações do cliente como telefone, nome e a opção de enviar mensagem para o cliente via o *whatsapp* (basta clicar sobre o  número do cliente), tambem contém o *Calendário Geral* que mostra por padrão a visão geral do mês e dos seus agendamentos por dia e categoria.
+Onde contem infomações dos proximos agendamentos junto a infomações do cliente, como: telefone, nome e a opção de enviar uma mensagem padronizada para o cliente via o *whatsapp* (basta clicar sobre o  icone de celular com uma setinha), tambem contém o *Calendário Geral* que mostra por padrão a visão geral do mês e dos seus agendamentos por dia definidos com a categoria do agendamento e uma breve descrição caso você clique sobre a *tag*
 ![IMAGEM-CALENDARIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CALENDARIO-GERAL.PNG)
-
 ## Caixa
 O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*
 **IMAGEM CAIXA SALDOS**
