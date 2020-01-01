@@ -44,12 +44,15 @@
 + Cadastro, controle e detalhamento de clientes, agendamentos, usuários. 
   - Cadastro de cliente, agendamento e usuários, seus respectivos CRUD's implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão a mesma deve ser feita diretamente no banco de dados. Tambem foi implementado gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... amostragem gráficas de cancelamentos de agendamento, periodiciade, e comparativos com o segmento do serviços escolhidos pelos clientes cadastrados no sistema.
 + Paginação principal
- ![IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ANINHADO.PNG)
   -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em modal,   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves  de     somente um linha 
-  ![IMAGEM 03 THYMELEAF COM FRAGMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-THYMELEAF-COM-FRAGMENTO.PNG)
+  **PAGINAÇÃO**
+   ![IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ANINHADO.PNG)
+ **THYMELEAF**
+ ![IMAGEM 03 THYMELEAF COM FRAGMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-THYMELEAF-COM-FRAGMENTO.PNG)
 + Definição de Permissões
   - Foram criadas regras de acesso e implementados com *thymleaf* *sec:transaction* que define que usuário logado pode acessar    
     determinado conteúdo dentro do sistema.
+  - Como os menus demarcados em *azul* com acesso somente para o **Gerente** e **Desenvolvedor** e *preto* somente para **Desenvolvedor**
 ### FASE 2
 + Controle e Fluxo de Caixa
   - Abertura diária do caixa com controles de entrada e saída de qualquer segmento de produto ou agendamento,
@@ -116,8 +119,9 @@ A *Dashboard* principal contem as principais funcionalidades do sistemas resumid
 * Controle do Caixa
 Tambem contem um avíso com os proximos 3 agendamentos:
 **IMAGEM PROXIMOS 3 AGENDAMENTOS**
+![IMAGEM-PROXIMOS-TRES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-PROXIMOS-TRES.PNG)
 Onde contem infomações dos proximos agendamentos junto a infomações do cliente como telefone, nome e a opção de enviar mensagem para o cliente via o *whatsapp* (basta clicar sobre o  número do cliente), tambem contém o *Calendário Geral* que mostra por padrão a visão geral do mês e dos seus agendamentos por dia e categoria.
-**IMAGEM CALENDARIO GERAL**
+![IMAGEM-CALENDARIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CALENDARIO-GERAL.PNG)
 
 ## Caixa
 O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*
