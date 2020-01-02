@@ -64,10 +64,14 @@
   - Adicionar ou remover crédito ao cliente que deseja guardar uma reserva financeira para consumir futuramente algum serviço prestado 
     no sistema. (ou algum caso que venha ser necessário o pagamento adiantado)
   - Geração de relátorios, podendo realizar pesquisa por tempo estipulado pelo usuário ou gerar um relátorio de um mês em especifico.
+  
   ![DETALHAMENTO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-DETALHAMENTO-FINANCEIRO.PNG)
+  
 + Integração com API WhatsApp
   - Opção de enviar uma menssagem padrão para o usuário a partir do vencimento dos próximos agendamentos 
+  
    ![CARD-DOS-PROXIMOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CARD-PROXIMO-AGENDAMENTO.PNG)
++   
   - Enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes a partir de um click no número listado.
 ### FASE 3
 + Processo de **Homogação**
