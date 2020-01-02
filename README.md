@@ -178,9 +178,9 @@ No mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que
 
 Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o cliente possui (verde) ou esta devendo (vermelho).
 
-![IMAGEM-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE.PNG)
+![IMAGEM-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE.png)
 
-![IMAGEM-CREDITO-CLIENTE-VERDE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE-VERDE.PNG)
+![IMAGEM-CREDITO-CLIENTE-VERDE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE-VERDE.png)
 
 ### Nesse mesmo item **TODOS** voce pode:
 
