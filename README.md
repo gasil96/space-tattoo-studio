@@ -168,7 +168,7 @@ TODO - FALTA DESCREVER PRINCIPAIS CARACTERÍSCTICAS DO CÓDIGO DO PROJETO, COM A
 
 ## Guia Usuário
  
- Este guia irá mostrar todas as telas da aplicação e o passo à passo de como utilizar a aplicação de forma correta.
+ Este guia irá mostrar todas as telas da aplicação e o passo à passo de como utiliza-la de forma correta.
 
 ### Login  
 
