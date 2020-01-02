@@ -186,13 +186,13 @@ Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o clien
 
 ![IMAGEM-TODOS-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-CLIENTES.PNG)
 
-1 - Gerar uma planilha, um pdf, um imprimir diretamente todas suas informações pertinentes a **Clientes** ou simplesmente a listagem de números para **whtasapp** ou todos **instagrams**
-2 - Filtrar a pesquisa geral de **TODOS** por nome, número, instagram, etc...
-3 - Abrir o campo de editar dados dos clientes 
+- 1 - Gerar uma planilha, um pdf, um imprimir diretamente todas suas informações pertinentes a **Clientes** ou simplesmente a listagem de números para **whtasapp** ou todos **instagrams**
+- 2 - Filtrar a pesquisa geral de **TODOS** por nome, número, instagram, etc...
+- 3 - Abrir o campo de editar dados dos clientes 
 
 ![IMAGEM-ALTERAR-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ALTERAR-CLIENTE.PNG)
 
-4 - Abrir o campo para agendar um serviço para o cliente escolhido.
+- 4 - Abrir o campo para agendar um serviço para o cliente escolhido.
 
 ![IMAGEM-AGENDAMENTO-PARA-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-AGENDAMENTO-PARA-CLIENTE.PNG)
 
@@ -214,17 +214,17 @@ ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone.
 
 ![IMAGEM-TODOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-AGENDAMENTOS.PNG)
 
-1 - Gerar planilha, pdf ou impressão da listagem de agendamentos associadas aos clientes
-2 - Realizar pesquisa filtrando, nome cliente, tipo agendamento, categoria, status, etc...
-3 - Alterar Agendamento
+- 1 - Gerar planilha, pdf ou impressão da listagem de agendamentos associadas aos clientes
+- 2 - Realizar pesquisa filtrando, nome cliente, tipo agendamento, categoria, status, etc...
+- 3 - Alterar Agendamento
 
 ![IMAGEM-ALTERAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ALTERAR-AGENDAMENTO.PNG)
 
-4 Reabrir Agendamento 
+- 4 Reabrir Agendamento 
 
 ![IMAGEM-REABRIR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-REABRIR-AGENDAMENTO.PNG)
 
-4.1 - Encerrar Agendamento 
+- 4.1 - Encerrar Agendamento 
 
 ![IMAGEM-ENCERRAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ENCERRAR-AGENDAMENTO.PNG)
 
@@ -265,12 +265,12 @@ tambem é possivel criar novos usuários e definir o nível de visualização de
 
 ![IMAGEM-NOVO-USUARIO-SISTEMA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-NOVO-USUARIO-SISTEMA.PNG)
 
-1 - **Nome** e Sobrenome do Usuário
-2 - **Login** que o usuário usará para se conectar ao sistema geralmente usado *nome.sobrenome*
-3 - **Senha** pessoal para cada usuário, contem criptografia então no caso de esquecimeneto sera necessário contatar o adminsitrador para cadastro de uma nova senha.
-4 - **Confirmar Senha** confirmar senha anterior para impedir erros de digitação.
-5 - **Cargo** necessário para saber qual tipo de permissão de acesso deve ser dada
-6 - **Permissão de Acesso** - Defini quais sub-menus e ações o usuário poderar acessar/executar dentro do sistema
+- 1 - **Nome** e Sobrenome do Usuário
+- 2 - **Login** que o usuário usará para se conectar ao sistema geralmente usado *nome.sobrenome*
+- 3 - **Senha** pessoal para cada usuário, contem criptografia então no caso de esquecimeneto sera necessário contatar o adminsitrador para cadastro de uma nova senha.
+- 4 - **Confirmar Senha** confirmar senha anterior para impedir erros de digitação.
+- 5 - **Cargo** necessário para saber qual tipo de permissão de acesso deve ser dada
+- 6 - **Permissão de Acesso** - Defini quais sub-menus e ações o usuário poderar acessar/executar dentro do sistema
 ### Entenda o Grau de Permissão de Acesso
 
 |CARGO|PRINCIPAL|CAIXA|CLIENTE|AGENDAMENTO|FINANCEIRO|ADMINISTRAÇÃO|PODE EXCLUIR|
