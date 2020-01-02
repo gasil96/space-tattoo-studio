@@ -114,6 +114,7 @@
    Como utilizar a aplicação - passo à passo para o cliente e/ou [NOVO USUÁRIO]
 
 ## Login  
+
 ![IMAGEM - TELA LOGIN](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TELALOGIN.PNG)
 
 Cada usuário deverá conter suas credenciais de acesso (login e senha), caso contrário entre em contato com o administrador do sistema junto ao gerente do espaço para definir seu **login** e **senha** e tipo de acesso.
@@ -128,7 +129,9 @@ A **Dashboard** principal contem as principais funcionalidades do sistemas resum
 * Agendamentos da Semana
 * Controle do Caixa
 Tambem contem um avíso com os proximos 3 agendamentos:
+
 ![IMAGEM-PROXIMOS-TRES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-PROXIMOS-TRES.PNG)
+
 Onde contem infomações dos proximos agendamentos junto a infomações do cliente, como: telefone, nome e a opção de enviar uma mensagem padronizada para o cliente via o *whatsapp* (basta clicar sobre o  icone de celular com uma setinha), tambem contém o *Calendário Geral* que mostra por padrão a visão geral do mês e dos seus agendamentos por dia definidos com a categoria do agendamento e uma breve descrição caso você clique sobre a *tag*.
 
 ![IMAGEM-CALENDARIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CALENDARIO-GERAL.PNG)
@@ -143,6 +146,13 @@ O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão
 ![IMAGEM-ADICIONAR-LANCAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ADICIONAR-LANCAMENTO.PNG)
 
 os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um cálculo baseado em entrada e saída e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adicionar um fundo de crédito ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
+
+OBS | A opção **Simular Desconto** irá calcular o novo valor encima do desconto aplicado. *(O desconto é opcional)*
+
+
+![IMAGEM-DESCONTO-SIMULADO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-DESCONTO-SIMULADO.PNG)
+
+OBS | Caso a opção para lançamento no **caixa** seja **saída** não é necessário incluir o **cliente**
 
 ![IMAGEM-CAIXA-ADD-CREDITO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CAIXA-ADD-CREDITO.PNG)
 
@@ -169,6 +179,8 @@ No mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que
 Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o cliente possui (verde) ou esta devendo (vermelho).
 
 ![IMAGEM-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+
+![IMAGEM-CREDITO-CLIENTE-VERDE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE-VERDE.PNG)
 
 ### Nesse mesmo item **TODOS** voce pode:
 
