@@ -184,55 +184,55 @@ Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o clien
 
 ### Nesse mesmo item **TODOS** voce pode:
 
-![IMAGEM-TODOS-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-TODOS-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-CLIENTES.PNG)
 
 1 - Gerar uma planilha, um pdf, um imprimir diretamente todas suas informações pertinentes a **Clientes** ou simplesmente a listagem de números para **whtasapp** ou todos **instagrams**
 2 - Filtrar a pesquisa geral de **TODOS** por nome, número, instagram, etc...
-3 - Abrir o modal/campo de editar dados dos clientes 
+3 - Abrir o campo de editar dados dos clientes 
 
-![IMAGEM-ALTERAR-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-ALTERAR-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ALTERAR-CLIENTE.PNG)
 
-4 - Abrir o modal/campo para agendar um serviço para o cliente escolhido.
+4 - Abrir o campo para agendar um serviço para o cliente escolhido.
 
-![IMAGEM-AGENDAMENTO-PARA-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-AGENDAMENTO-PARA-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-AGENDAMENTO-PARA-CLIENTE.PNG)
 
 Ao final desse sub-menu encontraremos informações pertinentes aos clientes cadastrados, como: comparação do ultimo mês com o mês atual, quantos clientes se encontram **INADIMPLENTES**...
 
-![IMAGEM-INFORMACOES-DE-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-INFORMACOES-DE-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-INFORMACOES-DE-CLIENTES.PNG)
 
 ## Agendamentos
-Assim como **Clientes** os **Agendamentos** possuem duas formas de serem feitos, na **dashboard** pelo ícone.
+Assim como em **Clientes** os **Agendamentos** possuem duas formas de serem feitos, na **dashboard** pelo ícone.
 
-![IMAGEM-ICONE-ADD-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-ICONE-ADD-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ICONE-ADD-NOVO-AGENDAMENTO.PNG)
 
 ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone. 
 ### Modal/Campo agendamento:
 
-![IMAGEM-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-NOVO-AGENDAMENTO.PNG)
 
 ### Item TODOS poderemos realizar algumas atividades como:
 
-![IMAGEM-TODOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-TODOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-AGENDAMENTOS.PNG)
 
 1 - Gerar planilha, pdf ou impressão da listagem de agendamentos associadas aos clientes
 2 - Realizar pesquisa filtrando, nome cliente, tipo agendamento, categoria, status, etc...
 3 - Alterar Agendamento
 
-![IMAGEM-ALTERAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-ALTERAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ALTERAR-AGENDAMENTO.PNG)
 
-4 - Encerrar Agendamento
+4 Reabrir Agendamento 
 
-![IMAGEM-ENCERRAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-REABRIR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-REABRIR-AGENDAMENTO.PNG)
 
-4.1 Reabrir Agendamento
+4.1 - Encerrar Agendamento 
 
-![IMAGEM-REABRIR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-ENCERRAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ENCERRAR-AGENDAMENTO.PNG)
 
 Obs: Na lista **TODOS** se o relogio de um agendamento se encontra vermelho significa que você pode encerrar caso encontre-se laranja o agendamento ja foi encerrado e agora pode ser reaberto em uma nova data.
 ### Informações Visuais Agendamentos
 Apos a listagem geral de **TODOS** agendamentos neste sub-menu você ira encontrar vários gráficos que informam detalhes financeiros, comparativos, quantitativos e qualitativos sobre os agendamentos.
 
-![IMAGEM-GRAFICOS-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-GRAFICOS-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-GRAFICOS-AGENDAMENTO.PNG)
 
 ## Detalhamento
 Informa com mais detalhes alguns items do sistema
@@ -241,29 +241,29 @@ Para ter acesso ao detalhamento financeiro é necessário que o caixa esteja fec
 #### Histórico Caixa Por Tempo Determinado
 Você pode determinar um intervalo de tempo entre dias, meses, anos que desejar e realizar a pesquisa dos lançamentos diários e tambem gerar gráficos comparativos.
 
-![IMAGEM-PESQUISA-HISTORICO-CAIXA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-PESQUISA-HISTORICO-CAIXA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-PESQUISA-HISTORICO-CAIXA.PNG)
 
 Gráficos E Históricos Caixa
 
-![IMAGEM-GRAFICO-HISTORICO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-GRAFICO-HISTORICO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-GRAFICO-HISTORICO-FINANCEIRO.PNG)
 
 #### Relátorio Geral Por Mês Escolhido
 Aqui você pode gerar um relátorio para um mes específico.
 
-![IMAGEM-RELATORIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-RELATORIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL.PNG)
 
 com a opção de gerar um *pdf* deste relátorio.
 
-![IMAGEM-RELATORIO-GERAL-POR-MES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-RELATORIO-GERAL-POR-MES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL-POR-MES.PNG)
 
 ## **Administração**
 Este sub-menu é voltado somente para o uso do administrador do sistema, para observar todos os usuários criados e suas respectivas permissões.
 
-![IMAGEM-MENU-ADM](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-MENU-ADM](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ADM.PNG)
 
 tambem é possivel criar novos usuários e definir o nível de visualização de cada um.
 
-![IMAGEM-NOVO-USUARIO-SISTEMA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-NOVO-USUARIO-SISTEMA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-NOVO-USUARIO-SISTEMA.PNG)
 
 1 - **Nome** e Sobrenome do Usuário
 2 - **Login** que o usuário usará para se conectar ao sistema geralmente usado *nome.sobrenome*
