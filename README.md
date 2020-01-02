@@ -86,7 +86,7 @@ O sistema foi subdivido em 3 fases
   - Cadastro de cliente, agendamentos e usuários esses respectivos CRUD's estão implementados nesta fase, **foi vetada a exclusão de qualquer registro pela interface do usuário** caso seja necessário realizar algum tipo de exclusão, deve ser feito diretamente no banco de dados. Tambem foram implementados gráficos com gerenciamento de clientes ativos, inativos, inadimplentes... cancelamentos de agendamentos, periodicidade, e comparativos com os segmentos dos serviços escolhidos pelos clientes cadastrados no sistema.
 + Paginação principal
   -Definido todos os setores e menus principais e seus respectivos *aninhamentos*, muitas páginas de formulários foram feitos em *modal* (recurso que abre uma nova tela sem sair da anterior),   utilizando o recurso do *thymeleaf* de **fragments** que torna o código reutilizavel diversas vezes em  qualquer página atráves de somente uma linha.
-  
+ 
   **PAGINAÇÃO**
   
    ![IMAGEM 03 PRINT MENU ANINHADO DA APLICAÇÃO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ANINHADO.PNG)
@@ -125,6 +125,16 @@ O sistema foi subdivido em 3 fases
   - Aplicação em ambiente de produção.
   - Criação do relátorio final da aplicação para fins de consulta **(Markdown)**.
   - Passo à passo de uso para o Cliente.
+
+Obs | Todas as *fases* foram organizadas e gerenciadas através do [TRELLO](http://trello.com/).
+
+![IMAGEM-TRELLO-FASE-1](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-1.PNG)
+
+![IMAGEM-TRELLO-FASE-2](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-2.PNG)
+
+![IMAGEM-TRELLO-FASE-3](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-31.PNG)
+
+![IMAGEM-TRELLO-FASE-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-GERAL.PNG)
 
 ## Exigências do Cliente 
   Durante as primeiras reuniões o cliente demonstrou interesse em um sistema que fosse auxiliar a ter controle de seus clientes como       contato, cadastro, e tambem um controle financeiro para sua movimentação.
@@ -170,12 +180,12 @@ OBS | Nem todos os usuários conseguem visualizar e alterar certas informações
 * GERENTE
 * USUÁRIO
 ### Principal
-A **Dashboard** principal contem as principais funcionalidades do sistemas resumidas e mais algumas adicionais como:
+A **Dashboard** principal contem as principais funcionalidades do sistema resumidas e mais algumas adicionais como:
 * Número total de Clientes Cadastrados
 * Agendamentos do Dia
 * Agendamentos da Semana
 * Controle do Caixa
-Tambem contem um avíso com os proximos 3 agendamentos:
+Tambem contém um avíso com os próximos 3 agendamentos:
 
 ![IMAGEM-PROXIMOS-TRES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-PROXIMOS-TRES.PNG)
 
@@ -184,15 +194,15 @@ Onde contem infomações dos proximos agendamentos junto a infomações do clien
 ![IMAGEM-CALENDARIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CALENDARIO-GERAL.PNG)
 
 ### Caixa
-O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*.
+O caixa é sub-menu referente ao controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*.
 
 ![IMAGEM-CAIXA-SALDOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CAIXA-SALDOS.PNG)
 
-É possivel **abrir** o caixa e visualizar, incluir e *excluir( somente se o seu login tiver as permissões necessárias )*.
+É possivel **abrir** o caixa e visualizar, incluir e *excluir (somente se o seu login tiver as permissões necessárias)*.
 
 ![IMAGEM-ADICIONAR-LANCAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ADICIONAR-LANCAMENTO.PNG)
 
-os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um cálculo baseado em entrada e saída e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adicionar um fundo de crédito ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
+Os lançamentos do dia, e ao final do uso ao **fechar o caixa** sera feito um cálculo baseado em entrada e saída e mostrará o **LUCRO DIÁRIO**. No mesmo sub-menu tambem contém o **crédito do cliente** podem adicionar um fundo de crédito ao cliente para possíveis agendamentos, falta de troco ou pagamento antecipado.
 
 OBS | A opção **Simular Desconto** irá calcular o novo valor encima do desconto aplicado. *(O desconto é opcional)*
 
@@ -213,7 +223,7 @@ Lembre-se sempre que após o encerramento do dia é necessário fechar ou caixa.
 
 ![IMAGEM-ICON-ADD-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ICON-ADD-CLIENTE.PNG)
 
-ou diretamente no sub-menu de **Clientes** clicando no mesmo ícone.
+Ou diretamente no sub-menu de **Clientes** clicando no mesmo ícone.
 
 ![IMAGEM-MODAL-NOVO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MODAL-NOVO-CLIENTE.PNG)
 
@@ -252,7 +262,7 @@ Assim como em **Clientes** os **Agendamentos** possuem duas formas de serem feit
 
 ![IMAGEM-ICONE-ADD-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ICONE-ADD-NOVO-AGENDAMENTO.PNG)
 
-ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone. 
+Ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone. 
 #### Adicionar Novo agendamento:
 
 ![IMAGEM-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-NOVO-AGENDAMENTO.PNG)
@@ -290,7 +300,7 @@ Você pode determinar um intervalo de tempo entre dias, meses, anos que desejar 
 
 ![IMAGEM-PESQUISA-HISTORICO-CAIXA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-PESQUISA-HISTORICO-CAIXA.PNG)
 
-Gráficos E Históricos Caixa
+Gráficos e Históricos do Caixa
 
 ![IMAGEM-GRAFICO-HISTORICO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-GRAFICO-HISTORICO-FINANCEIRO.PNG)
 
@@ -299,7 +309,7 @@ Aqui você pode gerar um relátorio para um mes específico.
 
 ![IMAGEM-RELATORIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL.PNG)
 
-com a opção de gerar um *pdf* deste relátorio.
+Com a opção de gerar um *pdf* deste relátorio.
 
 ![IMAGEM-RELATORIO-GERAL-POR-MES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL-POR-MES.PNG)
 
@@ -308,7 +318,7 @@ Este sub-menu é voltado somente para o uso do administrador do sistema, para ob
 
 ![IMAGEM-MENU-ADM](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ADM.PNG)
 
-tambem é possivel criar novos usuários e definir o nível de visualização de cada um.
+Tambem é possivel criar novos usuários e definir o nível de visualização de cada um.
 
 ![IMAGEM-NOVO-USUARIO-SISTEMA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-NOVO-USUARIO-SISTEMA.PNG)
 
