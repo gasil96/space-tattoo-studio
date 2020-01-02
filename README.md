@@ -172,7 +172,7 @@ Utilizamos o padrão de projetos *MVC* - **Model View Controller**.
 >MVC é nada mais que um padrão de arquitetura de software, separando sua aplicação em 3 camadas.
 >A camada de interação do usuário(view), a camada de manipulação dos dados(model) e a camada de controle(controller).
 
-![IMAGEM-MVC](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MVC.PNG)
+![IMAGEM-MVC](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MVC.png)
 
 ### Versionamento Com Git
 Nossa plataforma em nuvem para armazenar o código-fonte foi o [Github](github.com), onde criamos 3 *branches*.
