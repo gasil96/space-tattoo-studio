@@ -126,13 +126,13 @@ O sistema foi subdivido em 3 fases
   - Criação do relátorio final da aplicação para fins de consulta **(Markdown)**.
   - Passo à passo de uso para o Cliente.
 
-Obs | Todas as *fases* foram organizadas e gerenciadas através do [TRELLO](http://trello.com/).
+Obs | Todas as *fases* foram organizadas e gerenciadas através do [TRELLO](http://trello.com/) utilizando o *Kanban*.
 
-![IMAGEM-TRELLO-FASE-1](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-1.PNG)
+Confira um exemplo do método *Kanban* de execução de processos na **Fase 2**
 
 ![IMAGEM-TRELLO-FASE-2](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-2.PNG)
 
-![IMAGEM-TRELLO-FASE-3](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-31.PNG)
+Alguns processos podem ter sido adiantados ou atrasados conforme a necessidade tenha surgido.
 
 ![IMAGEM-TRELLO-FASE-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TRELLO-FASE-GERAL.PNG)
 
@@ -164,7 +164,184 @@ Obs | Todas as *fases* foram organizadas e gerenciadas através do [TRELLO](http
 
 ## Código Fonte
 
-TODO - FALTA DESCREVER PRINCIPAIS CARACTERÍSCTICAS DO CÓDIGO DO PROJETO, COM ALGUNS SCREENSHOTS DAS ENTIDADES JPA (2 OU 3 ), DOS @SERVICES ( SOMENTE DO PRINCIPAL **CLIENTE** ) DOS CONTROLLERS (**CLIENTE E AGENDAMENTO**) DO SPRING SECURITY, DO THYMELEAF, DOS FORMLURARIOS, ESTRUTURA DE PACOTE, PADRAO MVC, CONTROLLER ADVICE, POM.XML, PROCFILE, PROPERTIES
+Veja à seguir alguns dos principais trechos de código da aplicação com comentários mostrando a necessidade e/ou objetivo da implementação
+
+### Padrão MVC 
+Utilizamos o padrão de projetos *MVC* - **Model View Controller**.
+
+>MVC é nada mais que um padrão de arquitetura de software, separando sua aplicação em 3 camadas.
+>A camada de interação do usuário(view), a camada de manipulação dos dados(model) e a camada de controle(controller).
+
+![IMAGEM-MVC](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MVC.PNG)
+
+### Versionamento Com Git
+Nossa plataforma em nuvem para armazenar o código-fonte foi o [Github](github.com), onde criamos 3 *branches*.
+
+1. **Master** Gerada automaticamente ao criar o projeto, é onde a versão final, estavel da aplicação fica armazenada (deploy e build), versão de **PRODUÇÃO**
+2. **HML** Versão para testes de mudanças, novas funcionalidades etc.. pelos usuários antes de ser implatada em **produção**
+3. **DSV** Versão de desenvolvimento, primeira camada a ser implementada, todas novas funcionalidades ou atualizações são primeiramente colocadas aqui.
+
+![IMAGEM-BRANCHES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-BRANCHES.PNG)
+
+### Java com SpringBoot 
+A anotação *@Controller* transforma a classe em um *bean* do Spring e faz com ela seja reconhecida pelo framework como camada de controller, existem várias outras anotações importantes que usamos nessa implementação, como @RequestMapping que define o *path* de acesso desse controller, @GetMapping, @PutMapping e todos os outros métodos *Http's*.
+
+Outra anotação muito utilizada em nossa aplicação é a *@Autowired* que define uma injeção de depedência.
+
+~~~java
+@Controller
+@RequestMapping("cliente")
+public class ClienteController {
+
+	private static final String PAGINA_CLIENTE_DETALHADO = "detalhamento/cliente-detalhado";
+	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
+	private static final String MODAL_EDITAR_CLIENTE = "modal/modal-editar-cliente";
+	private static final String MODAL_NOVO_AGENDAMENTO_CLIENTE = "modal/modal-novo-agendamento-cliente";
+
+	@Autowired
+	private ClienteService servicoCliente;
+
+	@Autowired
+	private ServicoService servicoServico;
+
+	@GetMapping("agendar/{id}")
+	public String preAgendar(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("servico", servicoServico.buscarPorId(id));
+		model.addAttribute("id_cliente_referente", id);
+		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
+		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
+	}
+~~~
+
+
+### Java Persistence API com Hibernate 
+Utilizamos *JPA* como modelagem para nossa *entidade*  
+
+~~~java
+package br.com.gbsoftware.spacetattoostudio.domain.model;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
+// Outros 'imports' foram omitidos.
+
+@Entity // Jpa Anotação
+@SuppressWarnings("serial")
+@Table(name = "CLIENTE")
+public class Cliente extends EntidadeBase<Long> {
+
+	@Column(length = 50, nullable = false)
+	@JsonProperty(value = "nome")
+	private String nome;
+
+	@Column(length = 20)
+	@JsonProperty(value = "telefone") // Jackson anotação
+	private String telefone;
+
+	@Column(name = "credito_cliente", precision = 12, scale = 2)
+	private BigDecimal creditoCliente;
+
+	@JsonIgnore
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", length = 30, nullable = false)
+	private StatusClienteEnum statusCliente;
+
+	@JsonIgnore
+	@DateTimeFormat(iso = ISO.DATE)
+	@Column(name = "data_cadastro", nullable = false, updatable = false)
+	private LocalDateTime dataCadastro;
+
+	@Column(length = 30)
+	@JsonProperty(value = "instagram")
+	private String instagram;
+
+	@JsonIgnore
+	@Column(precision = 12, scale = 2)
+	private BigDecimal saldo;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Servico> servicos;
+
+	public Cliente() {
+	}
+
+	public Cliente( String nome, String telefone, BigDecimal creditoCliente,
+			 StatusClienteEnum statusCliente, LocalDateTime dataCadastro, String instagram, BigDecimal saldo,
+			List<Servico> servicos) {
+		super();
+		this.nome = nome;
+		this.telefone = telefone;
+		this.creditoCliente = creditoCliente;
+		this.statusCliente = statusCliente;
+		this.dataCadastro = dataCadastro;
+		this.instagram = instagram;
+		this.saldo = saldo;
+		this.servicos = servicos;
+	}
+~~~
+
+Para acesso a Banco de Dados, utilizamos *@Repository* e extendemos a classe *JpaRepository* com todos os métodos de **CRUD** ja carregados.
+
+Obs| Mesmo **JpaRepository** sendo uma extensão podemos criar *Querys* porsonalizadas com anotação *@Query* nativa ou não. 
+
+### Spring Security
+
+A autenticação de usuário foi implementadas partir do Spring Security.
+
+>O Spring Security é uma estrutura Java / Java EE que fornece autenticação, autorização e outros recursos de segurança para aplicativos >corporativos.
+
+~~~java
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private ImplementsUserDetailsService userDetailsService;
+	
+	@Override // DEFINE QUAIS PATHS PODEM SER ACESSADO POR DETERMINADO GRUPO DE ACESSO
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeRequests()
+		.antMatchers(HttpMethod.GET, "/login").permitAll()
+		.antMatchers(HttpMethod.GET, "/financeiro/detalhamento").hasAnyRole("ADMIN","GERENTE","USUARIO")
+//		.antMatchers(HttpMethod.GET, "/caixa/excluir").hasAnyRole("ADMIN","GERENTE")
+//		.antMatchers(HttpMethod.GET, "/caixa/excluir/{id}").hasAnyRole("ADMIN","GERENTE")
+//		.antMatchers(HttpMethod.GET, "/caixa/editar").hasAnyRole("ADMIN","GERENTE")
+//		.antMatchers(HttpMethod.GET, "/caixa/editar/{id}").hasAnyRole("ADMIN","GERENTE")
+		.antMatchers(HttpMethod.GET, "/promocional/promo").hasAnyRole("ADMIN","GERENTE","USUARIO")
+		.antMatchers(HttpMethod.GET, "/adm/administracao").hasRole("ADMIN")
+		.anyRequest().authenticated()
+		.and().formLogin().loginPage("/login").permitAll()
+		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+		auth.userDetailsService(userDetailsService)
+		.passwordEncoder(new BCryptPasswordEncoder());
+		auth.inMemoryAuthentication().withUser("OMITIDO").password("OMITIDO").roles("ADMIN");
+	}
+	 
+	@Override // DEFINE QUIAS PASTAM DEVEM SER IGNORADAS PELO SECURITY (GERALMENTE ARQUIVOS DE IMAGENS E CSS)
+	public void configure(WebSecurity web) throws Exception{
+		web.ignoring().antMatchers("/css/**","/data/**","/fonts/**","/icons-reference/**","/img/**","/js/**","/vendor/**");
+	}
+}
+~~~
+O método sobrescrito *configure* com **.auth** define duas formas de logar e se manter autenticado na aplicação. via memória com *user* e *password* fixados para uso restrito do administrador e via JPA com usuários, senhas, e regras de permissões armazenadaS no banco de dados.
+
+### Controller Advice
+TODO - MOSTRAR COMO CRIAR UM VARAIVEL GLOBAL NO ADVICE
+
+### Properties
+TODO - DIFERENCA ENTRE PROPERTIES DE DSV E HML PARA O DE PRODUCAO NA HEROKU ( EXPLICAR ACESSO A BASE )
+
+### Pom.xml
+TODO - HIGLTS DO ARTIFACT E VERSAO
+EXPLICAO DO VERSIONAMENTO
+
+### Thymeleaf
+TODO - SEC TRANSCTION, FRAGMENTS, LAYOUT
+
+### Bootstrap
+TODO - HIGHLITS DO CSS COM EXPLICAÇÃP DE CUSTOM
 
 ## Guia Usuário
  
