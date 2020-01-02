@@ -1,19 +1,19 @@
 # Criando uma aplicação web do processo de modelagem/requisitos até a entrega ao cliente.
 
-#Índice 
+# Índice 
 1. [Tecnologias Utilizadas](#tecnologias-utilizadas)
     1. [Back-End](#back-end)
     2. [Front-End](#front-end)
     3. [Ferramentas](#ferramentas)
     4. [Principais Bibliotecas](#principais-bibliotecas)
-2. [Métodologia Ágil](#metodologia-agil)
+2. [Metodologia Ágil](#metodologia-ágil)
     1. [Fase 1](#fase1)
     2. [Fase 2](#fase2)
     3. [Fase 3](#fase3)
 4. [Exigencias do Cliente](#exigencias-do-cliente)
 5. [Requisitos](#requisitos)
     1. [Conhecimento](#conhecimento)
-    2. [Softwares](#software)
+    2. [Softwares](#softwares)
     3. [Ambiente Físico e Horas](#ambiente-fisico-e-horas)
 6. [Código](#codigo)    
 7. [Guia Usuário](#guia-usuario)    
@@ -66,7 +66,9 @@
 - Entre outras...
 
 ## Metodologia Ágil
- O sistema foi subdivido em 3 fases
+
+O sistema foi subdivido em 3 fases
+
 ### FASE 1
 + Definição da interface principal (TEMPLATE)
   - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada, ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
