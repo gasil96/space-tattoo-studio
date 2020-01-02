@@ -22,11 +22,18 @@
     3. [Caixa](#caixa)
     4. [Clientes](#clientes)
        1. [Adicionar Novo Cliente](#adicionar-novo-cliente)
-       2. [Consumir Crédito](#consumir-credito)
-       3. [Item Todos Clientes](#item-todos-clientes)
+       2. [Consumir Crédito](#consumir-crédito)
+       3. [Tabela Todos Clientes](#Tabela-todos-clientes)
     5. [Agendamentos](#agendamentos)
+         [Adicionar Novo Agendamento](#adicionar-novo-agendamento)
+         [Tabela Todos Agendamentos](#tabela-todos-agendamentos)
+         [Informações Agendamentos](informações-agendamentos)
     6. [Detalhamento](#detalhamento)
-    7. [Administração](#administracao)
+         [Financeiro](#financeiro)
+            [Histórico Caixa Por Tempo Determinado](histórico-caixa-por-tempo-determinado)
+            [Relatório Geral Por Mês Escolhido](relatório-geral-por-mês-escolhido)
+    + [Administração](#administracao)
+     - [Grau de Permissão de Acesso](grau-de-permissão-de-acesso)   
 ---
 
 ## Tecnologias Utilizadas
@@ -222,7 +229,7 @@ Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o clien
 
 ![IMAGEM-CREDITO-CLIENTE-VERDE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE-VERDE.png)
 
-#### Item TODOS Clientes
+#### Tabela TODOS Clientes
 
 ![IMAGEM-TODOS-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-CLIENTES.PNG)
 
@@ -250,7 +257,7 @@ ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone.
 
 ![IMAGEM-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-NOVO-AGENDAMENTO.PNG)
 
-#### Item TODOS Agendamentos:
+#### Tabela TODOS Agendamentos:
 
 ![IMAGEM-TODOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-AGENDAMENTOS.PNG)
 
