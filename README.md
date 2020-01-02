@@ -110,8 +110,10 @@
       - Pc/Notebook com no mínimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa performace)
     + Horas
       - Necessário ao menos 50h de trabalho para aprimoramento e execução das atividades pré-definidas (funcionalidades extras não inseridas neste tempo).
-# Procedimentos Passo à Passo
-   Como utilizar a aplicação - passo à passo para o cliente e/ou [NOVO USUÁRIO]
+
+# Space Tattoo Studio - Guia passo à passo para uso da aplicação. V1.0
+ 
+ Este guia irá mostrar todas as telas da aplicação e qual a melhor forma para utiliza-las.
 
 ## Login  
 
@@ -278,3 +280,11 @@ tambem é possivel criar novos usuários e definir o nível de visualização de
 |DESENVOLVEDOR|SIM|SIM|SIM|SIM|SIM|SIM|SIM|
 |GERENTE|SIM|SIM|SIM|SIM|SIM|NÃO|SIM|
 |FUNCIONÁRIO|SIM|SIM|SIM|SIM|NÃO|NÃO|NÃO|
+
+---
+Para outras informações sobre o uso do sistema entre em contato com o *suporte* pelo número:
+**+55 (91) 9 8217-9201** WhatsApp e Ligação
+
+---
+
+**Created and developed by *Gabriel Silva* &copy; *GB Software* 2019**
