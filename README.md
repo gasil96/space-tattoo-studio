@@ -71,7 +71,7 @@
   - Opção de enviar uma menssagem padrão para o usuário a partir do vencimento dos próximos agendamentos 
   
    ![CARD-DOS-PROXIMOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CARD-PROXIMO-AGENDAMENTO.PNG)
-+   
+  
   - Enviar menssagem para qualquer cliente localizado no detalhamento geral de clientes a partir de um click no número listado.
 ### FASE 3
 + Processo de **Homogação**
