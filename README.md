@@ -342,4 +342,4 @@ Para outras informações sobre o uso do sistema entre em contato com o *suporte
 
 ---
 
-**Created and developed by *Gabriel Silva* &copy; *GB Software* 2019**
+**Created and developed by *Gabriel Silva* &copy; *Gabriel S. Software* 2019**
