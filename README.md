@@ -1,4 +1,36 @@
-# Criação de um sistema do processo de modelagem e requisitos até a entrega ao cliente.
+# Criando uma aplicação web do processo de modelagem/requisitos até a entrega ao cliente.
+
+#Índice 
+1. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+    1. [Back-End](#back-end)
+    2. [Front-End](#front-end)
+    3. [Ferramentas](#ferramentas)
+    4. [Principais Bibliotecas](#principais-bibliotecas)
+2. [Métodologia Ágil](#metodologia-agil)
+    1. [Fase 1](#fase1)
+    2. [Fase 2](#fase2)
+    3. [Fase 3](#fase3)
+4. [Exigencias do Cliente](#exigencias-do-cliente)
+5. [Requisitos](#requisitos)
+    1. [Conhecimento](#conhecimento)
+    2. [Softwares](#software)
+    3. [Ambiente Físico e Horas](#ambiente-fisico-e-horas)
+6. [Código](#codigo)    
+7. [Guia Usuário](#guia-usuario)    
+    1. [Login](#login)
+    2. [Principal](#principal)
+    3. [Caixa](#caixa)
+    4. [Clientes](#clientes)
+      1. [Adicionar Novo Cliente](#adicionar-novo-cliente)
+      2. [Consumir Crédito](#consumir-credito)
+      3. [Item Todos Clientes](#item-todos-clientes)
+    5. [Agendamentos](#agendamentos)
+    6. [Detalhamento](#detalhamento)
+    7. [Administração](#administracao)
+---
+
+## Tecnologias Utilizadas
+
 ### Back-End 
 | Tecnologia | Descrição |
 | ------ | ------ |
@@ -34,7 +66,7 @@
 - Entre outras...
 
 ## Metodologia Ágil
-#### O sistema foi subdivido em 3 fases
+ O sistema foi subdivido em 3 fases
 ### FASE 1
 + Definição da interface principal (TEMPLATE)
   - A interface principal foi feita encima de um template R$(PREMIUM) produzido por uma empresa especializada, ja carregando diversos componentes necessários para serem utilizados no front-end (alguns componentes foram atualizados para suas versões mais recentes) [TEMPLATE](https://demo.bootstrapious.com/dark-admin-premium/1-4-5/index.html)
@@ -90,14 +122,14 @@
   Baseado no desejo do cliente os requisitos foram pouco a pouco sendo levantados com o feedback.
 ## Requisitos
    Com a ideia principal ja estabelecida e alinhada junto ao cliente, conseguimos definir oque vai ser necessário para a elaboração do projeto.
-   #### Conhecimento
+### Conhecimento
    + Requisitos de Conhecimento
      - Domínio em *Java* com *SpringBoot* para back-end e *Javascript* com *Bootstrap* para front-end
      - Template padrão para ser utizado como base
      - Bibliotecas de auxilio para funcionalidades específicas como, MommentJs, FullCalendarIO
      - Padronização MVC
      - Versionamento com Git/Github
-   #### Softwares  
+### Softwares  
    + Softwares
      - Spring Tool Suite 4
      - Mysql com Workbench
@@ -105,17 +137,21 @@
      - Git (Versionamento com github)
      - Trello (Plataforma Online)
      - Maven (Gerenciamento de Dependências)
-   #### Ambiente Físico e Horas
-    + Ambiente Físico
-      - Pc/Notebook com no mínimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa performace)
-    + Horas
-      - Necessário ao menos 50h de trabalho para aprimoramento e execução das atividades pré-definidas (funcionalidades extras não inseridas neste tempo).
+### Ambiente Físico e Horas
+   + Ambiente Físico
+     - Pc/Notebook com no mínimo 4GB de ram e processador com 2.0 GHZ (Para rodar o STS em boa performace)
+   + Horas
+     - Necessário ao menos 50h de trabalho para aprimoramento e execução das atividades pré-definidas (funcionalidades extras não inseridas neste tempo).
 
-# Space Tattoo Studio - Guia passo à passo para uso da aplicação. V1.0
+## Código
+
+TODO - FALTA FAZER 
+
+## Guia Usuário
  
- Este guia irá mostrar todas as telas da aplicação e qual a melhor forma para utiliza-las.
+ Este guia irá mostrar todas as telas da aplicação e o passo à passo de como utilizar a aplicação de forma correta.
 
-## Login  
+### Login  
 
 ![IMAGEM - TELA LOGIN](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TELALOGIN.PNG)
 
@@ -124,7 +160,7 @@ OBS | Nem todos os usuários conseguem visualizar e alterar certas informações
 * ADMINISTRADOR
 * GERENTE
 * USUÁRIO
-## Principal
+### Principal
 A **Dashboard** principal contem as principais funcionalidades do sistemas resumidas e mais algumas adicionais como:
 * Número total de Clientes Cadastrados
 * Agendamentos do Dia
@@ -138,7 +174,7 @@ Onde contem infomações dos proximos agendamentos junto a infomações do clien
 
 ![IMAGEM-CALENDARIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CALENDARIO-GERAL.PNG)
 
-## Caixa
+### Caixa
 O caixa é sub-menu referente ao tipo de controle de fluxo de caixa, por padrão ja irá carregar as informações de * R$ Entrada*, *R$ Saída* e *R$ Saldo Atual*.
 
 ![IMAGEM-CAIXA-SALDOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CAIXA-SALDOS.PNG)
@@ -162,8 +198,8 @@ Lembre-se sempre que após o encerramento do dia é necessário fechar ou caixa.
 
 ![IMAGEM-FECHAR-CAIXA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-FECHAR-CAIXA.PNG)
 
-## Clientes
-### Como adicionar um novo cliente:
+### Clientes
+#### Adicionar Novo cliente:
 É possivel adicionar um novo cliente de 2 formas diferentes através da **dashboard** clicando no ícone.
 
 ![IMAGEM-ICON-ADD-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ICON-ADD-CLIENTE.PNG)
@@ -173,7 +209,7 @@ ou diretamente no sub-menu de **Clientes** clicando no mesmo ícone.
 ![IMAGEM-MODAL-NOVO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MODAL-NOVO-CLIENTE.PNG)
 
 O campo **instagram** e **telefone** são opcionais.
-### Como consumir crédito:
+#### Consumir crédito:
 No mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que possuem crédito.
 
 ![IMAGEM-CONSUMIR-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CONSUMIR-CREDITO-CLIENTE.PNG)
@@ -184,7 +220,7 @@ Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o clien
 
 ![IMAGEM-CREDITO-CLIENTE-VERDE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE-VERDE.png)
 
-### Nesse mesmo item **TODOS** voce pode:
+#### Item TODOS Clientes
 
 ![IMAGEM-TODOS-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-CLIENTES.PNG)
 
@@ -202,17 +238,17 @@ Ao final desse sub-menu encontraremos informações pertinentes aos clientes cad
 
 ![IMAGEM-INFORMACOES-DE-CLIENTES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-INFORMACOES-DE-CLIENTES.PNG)
 
-## Agendamentos
+### Agendamentos
 Assim como em **Clientes** os **Agendamentos** possuem duas formas de serem feitos, na **dashboard** pelo ícone.
 
 ![IMAGEM-ICONE-ADD-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ICONE-ADD-NOVO-AGENDAMENTO.PNG)
 
 ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone. 
-### Modal/Campo agendamento:
+#### Novo agendamento:
 
 ![IMAGEM-NOVO-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-NOVO-AGENDAMENTO.PNG)
 
-### Item TODOS poderemos realizar algumas atividades como:
+#### Item TODOS Agendamentos:
 
 ![IMAGEM-TODOS-AGENDAMENTOS](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-TODOS-AGENDAMENTOS.PNG)
 
@@ -231,16 +267,16 @@ ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone.
 ![IMAGEM-ENCERRAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ENCERRAR-AGENDAMENTO.PNG)
 
 Obs: Na lista **TODOS** se o relogio de um agendamento se encontra vermelho significa que você pode encerrar caso encontre-se laranja o agendamento ja foi encerrado e agora pode ser reaberto em uma nova data.
-### Informações Visuais Agendamentos
+#### Informações Agendamentos
 Apos a listagem geral de **TODOS** agendamentos neste sub-menu você ira encontrar vários gráficos que informam detalhes financeiros, comparativos, quantitativos e qualitativos sobre os agendamentos.
 
 ![IMAGEM-GRAFICOS-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-GRAFICOS-AGENDAMENTO.PNG)
 
-## Detalhamento
+### Detalhamento
 Informa com mais detalhes alguns items do sistema
-### Financeiro
+#### Financeiro
 Para ter acesso ao detalhamento financeiro é necessário que o caixa esteja fechado, pois alguns calculos so podem ser realizados após todos os lançamentos do dia serem encerrados.
-#### Histórico Caixa Por Tempo Determinado
+##### Histórico Caixa Por Tempo Determinado
 Você pode determinar um intervalo de tempo entre dias, meses, anos que desejar e realizar a pesquisa dos lançamentos diários e tambem gerar gráficos comparativos.
 
 ![IMAGEM-PESQUISA-HISTORICO-CAIXA](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-PESQUISA-HISTORICO-CAIXA.PNG)
@@ -249,7 +285,7 @@ Gráficos E Históricos Caixa
 
 ![IMAGEM-GRAFICO-HISTORICO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-GRAFICO-HISTORICO-FINANCEIRO.PNG)
 
-#### Relátorio Geral Por Mês Escolhido
+##### Relátorio Geral Por Mês Escolhido
 Aqui você pode gerar um relátorio para um mes específico.
 
 ![IMAGEM-RELATORIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL.PNG)
@@ -258,7 +294,7 @@ com a opção de gerar um *pdf* deste relátorio.
 
 ![IMAGEM-RELATORIO-GERAL-POR-MES](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL-POR-MES.PNG)
 
-## **Administração**
+### **Administração**
 Este sub-menu é voltado somente para o uso do administrador do sistema, para observar todos os usuários criados e suas respectivas permissões.
 
 ![IMAGEM-MENU-ADM](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-MENU-ADM.PNG)
@@ -273,7 +309,7 @@ tambem é possivel criar novos usuários e definir o nível de visualização de
 - 4 - **Confirmar Senha** confirmar senha anterior para impedir erros de digitação.
 - 5 - **Cargo** necessário para saber qual tipo de permissão de acesso deve ser dada
 - 6 - **Permissão de Acesso** - Defini quais sub-menus e ações o usuário poderar acessar/executar dentro do sistema
-### Entenda o Grau de Permissão de Acesso
+#### Grau de Permissão de Acesso
 
 |CARGO|PRINCIPAL|CAIXA|CLIENTE|AGENDAMENTO|FINANCEIRO|ADMINISTRAÇÃO|PODE EXCLUIR|
 |-----|-----|-----|-----|-----|-----|-----|-----|
