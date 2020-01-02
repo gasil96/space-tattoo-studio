@@ -10,20 +10,20 @@
     1. [Fase 1](#fase-1)
     2. [Fase 2](#fase-2)
     3. [Fase 3](#fase-3)
-4. [Exigencias do Cliente](#exigencias-do-cliente)
+4. [Exigencias do Cliente](#exigências-do-cliente)
 5. [Requisitos](#requisitos)
     1. [Conhecimento](#conhecimento)
     2. [Softwares](#softwares)
-    3. [Ambiente Físico e Horas](#ambiente-fisico-e-horas)
-6. [Código](#codigo)    
-7. [Guia Usuário](#guia-usuario)    
+    3. [Ambiente Físico e Horas](#ambiente-físico-e-horas)
+6. [Código](#código)    
+7. [Guia Usuário](#guia-usuário)    
     1. [Login](#login)
     2. [Principal](#principal)
     3. [Caixa](#caixa)
     4. [Clientes](#clientes)
-      1. [Adicionar Novo Cliente](#adicionar-novo-cliente)
-      2. [Consumir Crédito](#consumir-credito)
-      3. [Item Todos Clientes](#item-todos-clientes)
+       1. [Adicionar Novo Cliente](#adicionar-novo-cliente)
+       2. [Consumir Crédito](#consumir-credito)
+       3. [Item Todos Clientes](#item-todos-clientes)
     5. [Agendamentos](#agendamentos)
     6. [Detalhamento](#detalhamento)
     7. [Administração](#administracao)
@@ -132,7 +132,7 @@ O sistema foi subdivido em 3 fases
      - Padronização MVC
      - Versionamento com Git/Github
 ### Softwares  
-   + Softwares
+   + Requisitos de Softwares
      - Spring Tool Suite 4
      - Mysql com Workbench
      - Heroku (Plataforma de Nuvem Online)
