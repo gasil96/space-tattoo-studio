@@ -280,7 +280,20 @@ public class Cliente extends EntidadeBase<Long> {
 
 Para acesso a Banco de Dados, utilizamos *@Repository* e extendemos a classe *JpaRepository* com todos os métodos de **CRUD** ja carregados.
 
-Obs| Mesmo **JpaRepository** sendo uma extensão podemos criar *Querys* porsonalizadas com anotação *@Query* nativa ou não. 
+Obs | Mesmo **JpaRepository** sendo uma extensão podemos criar *Querys* porsonalizadas com anotação *@Query* nativa ou não. 
+~~~java
+	// QUERY NATIVA
+	@Query(value = "select clt.id, clt.instagram, clt.nome, clt.telefone from cliente clt", nativeQuery = true)
+	List<Cliente> getClienteIdInstaNome();
+
+	Object save(Optional<Cliente> cliente);
+
+	// QUERY
+	@Transactional
+	@Modifying
+	@Query("UPDATE Cliente SET credito_cliente = ?1 WHERE id = ?2")
+	void updateCredito(BigDecimal valorCredito, Long idCliente);
+~~~
 
 ### Spring Security
 
