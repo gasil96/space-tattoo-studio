@@ -10,12 +10,12 @@
     - [Fase 1](#fase-1)
     - [Fase 2](#fase-2)
     - [Fase 3](#fase-3)
-+ [Exigencias do Cliente](#exigências-do-cliente)
++ [Exigências do Cliente](#exigências-do-cliente)
 + [Requisitos](#requisitos)
     - [Conhecimento](#conhecimento)
     - [Softwares](#softwares)
     - [Ambiente Físico e Horas](#ambiente-físico-e-horas)
-+ [Código](#código)    
++ [Código Fonte](#código-fonte)    
 + [Guia Usuário](#guia-usuário)    
     - [Login](#login)
     - [Principal](#principal)
@@ -152,9 +152,9 @@ O sistema foi subdivido em 3 fases
    + Horas
      - Necessário ao menos 50h de trabalho para aprimoramento e execução das atividades pré-definidas (funcionalidades extras não inseridas neste tempo).
 
-## Código
+## Código Fonte
 
-TODO - FALTA FAZER 
+TODO - FALTA DESCREVER PRINCIPAIS CARACTERÍSCTICAS DO CÓDIGO DO PROJETO, COM ALGUNS SCREENSHOTS DAS ENTIDADES JPA (2 OU 3 ), DOS @SERVICES ( SOMENTE DO PRINCIPAL **CLIENTE** ) DOS CONTROLLERS (**CLIENTE E AGENDAMENTO**) DO SPRING SECURITY, DO THYMELEAF, DOS FORMLURARIOS, ESTRUTURA DE PACOTE, PADRAO MVC, CONTROLLER ADVICE, POM.XML, PROCFILE, PROPERTIES
 
 ## Guia Usuário
  
