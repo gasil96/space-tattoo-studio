@@ -173,12 +173,12 @@ ou diretamente no sub-menu de **Clientes** clicando no mesmo ícone.
 O campo **instagram** e **telefone** são opcionais.
 ### Como consumir crédito:
 No mesmo sub-menu se encontra a opção de CONSUMIR os créditos de clientes que possuem crédito.
-------------------todo---------------------todo------------------------------------todo--------------------------todo---------------
-![IMAGEM-CONSUMIR-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+
+![IMAGEM-CONSUMIR-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CONSUMIR-CREDITO-CLIENTE.PNG)
 
 Na listagem de **TODOS**  é possivel visualizar o valor de crédito que o cliente possui (verde) ou esta devendo (vermelho).
 
-![IMAGEM-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-.PNG)
+![IMAGEM-CREDITO-CLIENTE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE.PNG)
 
 ![IMAGEM-CREDITO-CLIENTE-VERDE](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-CREDITO-CLIENTE-VERDE.PNG)
 
