@@ -40,7 +40,7 @@
     - [Detalhamento](#detalhamento)
         + [Financeiro](#financeiro)
            - [Histórico Caixa Por Tempo Determinado](#histórico-caixa-por-tempo-determinado)
-           - [Relatório Geral Por Mês Escolhido](#relatório-geral)
+           - [Relatório Geral](#relatório-geral)
     + [Administração](#administração)
        - [Grau de Permissão de Acesso](#grau-de-permissão-de-acesso)   
 ---
