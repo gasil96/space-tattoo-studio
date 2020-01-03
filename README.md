@@ -22,7 +22,7 @@
     - [Java Persistence API com Hibernate](#java-persistence-api-com-hibernate)
     - [Spring Security](#spring-security)
     - [Arquivo Properties](#arquivo-properties)
-    - [Pom.xml](#pom.xml)
+    - [Pom.xml](#arquivo-pom)
     - [Thymeleaf](#thymeleaf)
     - [Bootstrap](#bootstrap)
 + [Guia Usuário](#guia-usuário)    
@@ -36,13 +36,13 @@
     - [Agendamentos](#agendamentos)
        + [Adicionar Novo Agendamento](#adicionar-novo-agendamento)
        + [Tabela Todos Agendamentos](#tabela-todos-agendamentos)
-       + [Informações Agendamentos](informações-agendamentos)
+       + [Informações Agendamentos](#informações-agendamentos)
     - [Detalhamento](#detalhamento)
         + [Financeiro](#financeiro)
-           - [Histórico Caixa Por Tempo Determinado](histórico-caixa-por-tempo-determinado)
-           - [Relatório Geral Por Mês Escolhido](relatório-geral-por-mês-escolhido)
+           - [Histórico Caixa Por Tempo Determinado](#histórico-caixa-por-tempo-determinado)
+           - [Relatório Geral Por Mês Escolhido](#relatório-geral-por-mês-escolhido)
     + [Administração](#administração)
-       - [Grau de Permissão de Acesso](grau-de-permissão-de-acesso)   
+       - [Grau de Permissão de Acesso](#grau-de-permissão-de-acesso)   
 ---
 
 ## Tecnologias Utilizadas
@@ -394,7 +394,7 @@ spring.thymeleaf.cache= true
 project.version = @project.version@
 ~~~
 
-### Pom.xml
+### Arquivo POM
 >Project Object Model (literalmente "projeto modelo de objeto"), ou POM, é a peça fundamental de um projeto do Apache Maven.
 >Um POM possui as infomações básicas de um projeto, bem como as diretivas de como o artefato final deste projeto deve ser construido.
 >A versão 1.0 do Maven utiliza o arquivo project.xml para definição do POM. Na versão 2.0, este arquivo passa a se chamar pom.xml. 
@@ -646,6 +646,7 @@ Ou diretamente no sub-menu **Agendamentos** clicando no mesmo ícone.
 ![IMAGEM-ENCERRAR-AGENDAMENTO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-ENCERRAR-AGENDAMENTO.PNG)
 
 Obs: Na lista **TODOS** se o relogio de um agendamento se encontra vermelho significa que você pode encerrar caso encontre-se laranja o agendamento ja foi encerrado e agora pode ser reaberto em uma nova data.
+
 #### Informações Agendamentos
 Apos a listagem geral de **TODOS** agendamentos neste sub-menu você ira encontrar vários gráficos que informam detalhes financeiros, comparativos, quantitativos e qualitativos sobre os agendamentos.
 
@@ -653,8 +654,10 @@ Apos a listagem geral de **TODOS** agendamentos neste sub-menu você ira encontr
 
 ### Detalhamento
 Informa com mais detalhes alguns items do sistema
+
 #### Financeiro
 Para ter acesso ao detalhamento financeiro é necessário que o caixa esteja fechado, pois alguns calculos so podem ser realizados após todos os lançamentos do dia serem encerrados.
+
 ##### Histórico Caixa Por Tempo Determinado
 Você pode determinar um intervalo de tempo entre dias, meses, anos que desejar e realizar a pesquisa dos lançamentos diários e tambem gerar gráficos comparativos.
 
