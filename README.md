@@ -15,7 +15,16 @@
     - [Conhecimento](#conhecimento)
     - [Softwares](#softwares)
     - [Ambiente Físico e Horas](#ambiente-físico-e-horas)
-+ [Código Fonte](#código-fonte)    
++ [Código Fonte](#código-fonte)  
+    - [Padrão MVC](#padrão-mvc)
+    - [Versionamento com Git](#versionamento-com-git)
+    - [Java com Springboot](#java-com-springboot)
+    - [Java Persistence API com Hibernate](#java-persistence-api-com-hibernate)
+    - [Spring Security](#spring-security)
+    - [Arquivo Properties](#arquivo-properties)
+    - [Pom.xml](#pom.xml)
+    - [Thymeleaf](#thymeleaf)
+    - [Bootstrap](#bootstrap)
 + [Guia Usuário](#guia-usuário)    
     - [Login](#login)
     - [Principal](#principal)
@@ -506,7 +515,7 @@ A maioria das customizações de css foram implementadas no arquivo **custom.css
 .texto-login {
   font-family:  font-login-LemonJelly;
   font-size: 95px;
-  background: -webkit-linear-gradient(#aaa	, #aaa);
+  background: -webkit-linear-gradient(#aaa, #aaa);
   -webkit-background-clip: text;
 /*   -webkit-text-fill-color: transparent; */
   color: white;
@@ -514,6 +523,8 @@ A maioria das customizações de css foram implementadas no arquivo **custom.css
 }
 
 ~~~
+
+Para mais informações navega no projeto pelo repositório no github.
 
 ## Guia Usuário
  
