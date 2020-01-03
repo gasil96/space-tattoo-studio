@@ -42,7 +42,8 @@
 	     - [Histórico Caixa Por Tempo Determinado](#histórico-caixa-por-tempo-determinado)
 	     - [Relatório Geral](#relatório-geral)
     - [Administração](#administração)
-       + [Grau de Permissão de Acesso](#grau-de-permissão-de-acesso)   
+       + [Grau de Permissão de Acesso](#grau-de-permissão-de-acesso)
++ [Créditos](#créditos)     
 ---
 
 ## Tecnologias Utilizadas
@@ -667,7 +668,7 @@ Gráficos e Históricos do Caixa
 
 ![IMAGEM-GRAFICO-HISTORICO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-GRAFICO-HISTORICO-FINANCEIRO.PNG)
 
-##### Relátorio Geral
+##### Relatório Geral
 Aqui você pode gerar um relátorio para um mes específico.
 
 ![IMAGEM-RELATORIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL.PNG)
@@ -702,7 +703,8 @@ Tambem é possivel criar novos usuários e definir o nível de visualização de
 ---
 Para outras informações sobre o uso do sistema entre em contato com o *suporte* pelo número:
 **+55 (91) 9 8217-9201** WhatsApp e Ligação
-
 ---
+
+## Créditos
 
 **Created and developed by *Gabriel Silva* &copy; *Gabriel S. Software* 2019**
