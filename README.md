@@ -281,6 +281,7 @@ public class Cliente extends EntidadeBase<Long> {
 Para acesso a Banco de Dados, utilizamos *@Repository* e extendemos a classe *JpaRepository* com todos os métodos de **CRUD** ja carregados.
 
 Obs | Mesmo **JpaRepository** sendo uma extensão podemos criar *Querys* porsonalizadas com anotação *@Query* nativa ou não. 
+
 ~~~java
 	// QUERY NATIVA
 	@Query(value = "select clt.id, clt.instagram, clt.nome, clt.telefone from cliente clt", nativeQuery = true)
@@ -303,10 +304,10 @@ A autenticação de usuário foi implementadas partir do Spring Security.
 
 ~~~java
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity // HABILITA O SECURITY
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	@Autowired
+	@Autowired // INJEÇÃO DE DEPENDÊNCIA
 	private ImplementsUserDetailsService userDetailsService;
 	
 	@Override // DEFINE QUAIS PATHS PODEM SER ACESSADO POR DETERMINADO GRUPO DE ACESSO
@@ -338,23 +339,181 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 }
 ~~~
-O método sobrescrito *configure* com **.auth** define duas formas de logar e se manter autenticado na aplicação. via memória com *user* e *password* fixados para uso restrito do administrador e via JPA com usuários, senhas, e regras de permissões armazenadaS no banco de dados.
+O método sobrescrito *configure* com **.auth** define duas formas de logar e se manter autenticado na aplicação. via memória com o *user* e *password* fixados para uso restrito do administrador e via JPA com os mesmos  armazenados no banco de dados, podendo alterar, criar novos ou excluir.
 
-### Controller Advice
-TODO - MOSTRAR COMO CRIAR UM VARAIVEL GLOBAL NO ADVICE
+### Arquivo Properties
+>A aplicação com Spring Boot converte as propriedades da linha de comandos em propriedades do Spring Boot Environment. 
+> As propriedades da linha de comando têm precedência sobre as outras fontes de propriedade.
 
-### Properties
-TODO - DIFERENCA ENTRE PROPERTIES DE DSV E HML PARA O DE PRODUCAO NA HEROKU ( EXPLICAR ACESSO A BASE )
+Nesse arquivo iremos colocar a *url*, *login*, *senha* do banco de dados. Tambem, informações como porta que desejamos pra iniciar, configurações de cache para o *Thymeleaf* e configurações do *JPA*.
+
+~~~properties
+#MYSQL
+spring.datasource.url= jdbc:mysql://localhost:3306/spacetattoo_dsv?createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=America/Belem
+spring.datasource.username=root
+spring.datasource.password=mysql
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5Dialect
+
+#PORTA PARA INICIAR LOCALMENTE
+server.port=8085
+
+#JPA
+spring.jpa.hibernate.ddl-auto= update
+spring.jpa.show-sql= true
+spring.jpa.open-in-view=true
+
+# THYMELEAF (ThymeleafAutoConfiguration)
+spring.thymeleaf.cache= false 
+
+project.version = @project.version@
+~~~
+
+Note que temos *dois* arquivos *properties* um que usamos para **desenvolvimento local** e outro com dados de acesso para o banco em produção.
+
+~~~properties
+#MYSQL			       {----login---} {-pass-} {--------------url------------_} {-----database-------}	      	   						
+spring.datasource.url= mysql://##############:########@us-cdbr-iron-eas#############net/heroku_7bd6###########?reconnect=true
+#JPA
+spring.jpa.hibernate.ddl-auto= update
+spring.jpa.show-sql= false
+spring.jpa.open-in-view=true
+
+# THYMELEAF (ThymeleafAutoConfiguration)
+spring.thymeleaf.cache= true
+
+# Transforma a versão atual do projeto (anotada no maven) em uma variavel global na aplicação
+project.version = @project.version@
+~~~
 
 ### Pom.xml
-TODO - HIGLTS DO ARTIFACT E VERSAO
-EXPLICAO DO VERSIONAMENTO
+>Project Object Model (literalmente "projeto modelo de objeto"), ou POM, é a peça fundamental de um projeto do Apache Maven.
+>Um POM possui as infomações básicas de um projeto, bem como as diretivas de como o artefato final deste projeto deve ser construido.
+>A versão 1.0 do Maven utiliza o arquivo project.xml para definição do POM. Na versão 2.0, este arquivo passa a se chamar pom.xml. 
+
+Neste arquivo carregamos a versão do nosso projeto como:
+Versão 1.0.2 onde:
+**1** Representa a 1ª versão estavel.
+**0** Indica que não houve nenhuma grande alteração nesta versão.
+**2** Houve 2 updates ou correções.
+
+~~~xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>spacetattoostudio</groupId>
+	<artifactId>spacetattoostudio</artifactId>
+	<version>1.0.2</version>
+	<packaging>jar</packaging>
+
+	<name>spacetattoostudio</name>
+	<description>Projeto SpaceTatto Studio</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.7.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEnconding>UTF-8</project.build.sourceEnconding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.56</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.17</version>
+		</dependency>
+~~~
 
 ### Thymeleaf
-TODO - SEC TRANSCTION, FRAGMENTS, LAYOUT
+
+>O Thymeleaf não é um projeto Spring, mas uma biblioteca que foi criada para facilitar a criação da camada de view com uma forte >integração com o Spring, e uma boa alternativa ao JSP.
+
+>O principal objetivo do Thymeleaf é prover uma forma elegante e bem formatada para criarmos nossas páginas. O dialeto do Thymeleaf é >bem poderoso como você verá no desenvolvimento da aplicação, mas você também pode estendê-lopara customizar de acordo com suas necessidades
+
+Utilizamos o thymeleaf para fazer a maior parte da transferencia de objeto entre back e front end, tambem utilizamos muito o recurso de fragmentação do thymeleaf que otimiza o uso de código html evitando repetição de código
+
+**Fragments**
+
+Fragmentação:
+~~~html
+<div id="novoCliente" tabindex="-1" role="dialog"	aria-labelledby="exampleModalLabel" aria-hidden="true"	class="modal fade text-left" th:fragment="modalNovoCliente">
+		<div role="document" class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<strong id="titvuloModalNovoCliente" class="modal-title">Novo Cliente</strong>
+					<button type="button" data-dismiss="modal" aria-label="Close"
+						class="close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				O código foi encurtado.
+				</div>
+			</div>
+		</div>
+	</div>
+~~~
+
+Forma de Reuso:
+~~~html
+	<div th:replace="fragments/modal-novo-cliente :: modalNovoCliente"></div>
+~~~
+basta apenas uma linha de código para reutilizar todo aquele formulário em modal visto no highlight anterior.
+
+Tambem utilizamos o thymeleaf para definir as transações(permissões) necessárias para renderização de alguns componentes ou menus.
+Como no exemplo:
+~~~html
+     <li sec:authorize="hasAnyRole('ADMIN','GERENTE', 'USUARIO')" th:class="${classActiveCaixa}"><a th:href="@{/caixa/fluxo}"><i class="icon-grid"></i>Caixa</a></li>
+~~~
+Só ira ser renderizado a *tag* para os usuários autenticados que possuirem as transações/permissões especificadas.
 
 ### Bootstrap
-TODO - HIGHLITS DO CSS COM EXPLICAÇÃP DE CUSTOM
+Como dito anteriormente o bootstrap tratou quase toda a parte visual do projeto perdendo pouco lugar para o *materializer* da google, utilizamos um template premium pronto e as customizações foram implementadas encima do projeto base. bibliotecas **javascript** foram necessárias, alguns foram incluidas outras apenas atualizadas.
+
+~~~~html
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+	<!-- 	preloader -->
+	<script th:src="@{/js/components-preloader.js}"> </script>
+	<!-- Bootstrap TypeAhead-->
+    <script th:src="@{/vendor/bootstrap-3-typeahead/bootstrap3-typeahead.min.js}"></script>
+    <!-- TypeAhead init-->
+    <script th:src="@{/js/forms-autocomplete.js}"></script>
+	<!-- 	 script's gerais -->
+	<script type="text/javascript">
+~~~~
+
+A maioria das customizações de css foram implementadas no arquivo **custom.css** como podemos ver em:
+
+~~~css
+
+.texto-login {
+  font-family:  font-login-LemonJelly;
+  font-size: 95px;
+  background: -webkit-linear-gradient(#aaa	, #aaa);
+  -webkit-background-clip: text;
+/*   -webkit-text-fill-color: transparent; */
+  color: white;
+ transform: rotate(-11deg);
+}
+
+~~~
 
 ## Guia Usuário
  
