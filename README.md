@@ -40,7 +40,7 @@
     - [Detalhamento](#detalhamento)
         + [Financeiro](#financeiro)
            - [Histórico Caixa Por Tempo Determinado](#histórico-caixa-por-tempo-determinado)
-           - [Relatório Geral Por Mês Escolhido](#relatório-geral-por-mês-escolhido)
+           - [Relatório Geral Por Mês Escolhido](#relatório-geral)
     + [Administração](#administração)
        - [Grau de Permissão de Acesso](#grau-de-permissão-de-acesso)   
 ---
@@ -667,7 +667,7 @@ Gráficos e Históricos do Caixa
 
 ![IMAGEM-GRAFICO-HISTORICO-FINANCEIRO](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-GRAFICO-HISTORICO-FINANCEIRO.PNG)
 
-##### Relátorio Geral Por Mês Escolhido
+##### Relátorio Geral
 Aqui você pode gerar um relátorio para um mes específico.
 
 ![IMAGEM-RELATORIO-GERAL](https://github.com/gasil96/spacetattoostudio/blob/hml/src/main/resources/static/img/img-readme/IMAGEM-RELATORIO-GERAL.PNG)
