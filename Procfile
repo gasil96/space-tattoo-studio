@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar target/spacetattoostudio-1.0.2.jar
+web: java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar target/spacetattoostudio-1.0.3.jar
