@@ -39,8 +39,10 @@
        + [Informações Agendamentos](#informações-agendamentos)
     - [Detalhamento](#detalhamento)
        + [Financeiro](#financeiro)
-         - [Histórico Caixa Por Tempo Determinado](#histórico-caixa-por-tempo-determinado)
-         - [Relatório Geral](#relatório-geral)
+          - [Relatório Geral](#relatório-geral)
+	  - [Relatório Geral](#relatório-geral)
+	  - [Histórico Caixa Por Tempo Determinado](#histórico-caixa-por-tempo-determinado)
+         
     + [Administração](#administração)
        - [Grau de Permissão de Acesso](#grau-de-permissão-de-acesso)   
 ---
