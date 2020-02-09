@@ -34,10 +34,10 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
-import br.com.gbsoftware.spacetattoostudio.service.EntradaSaidaService;
+import br.com.gbsoftware.spacetattoostudio.service.EntradaCaixaService;
 import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
 
 @Controller
@@ -54,7 +54,7 @@ public class FluxoCaixaController {
 	private CaixaService servicoCaixa;
 
 	@Autowired
-	private EntradaSaidaService servicoEntradaSaida;
+	private EntradaCaixaService servicoEntradaSaida;
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA = "modal/modal-confimar-exclusao-entrada-saida";
@@ -64,7 +64,7 @@ public class FluxoCaixaController {
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
 	@GetMapping("fluxo")
-	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Cliente cliente) {
+	public String caixa(Model model, Caixa caixa, EntradaCaixa entradaSaida, Cliente cliente) {
 		caixa = servicoCaixa.getDiaAtual();
 		model.addAttribute("classActiveCaixa", "active");
 		model.addAttribute("calculoValorTotalDia", servicoCaixa.calculoValorTotalDia());
@@ -83,7 +83,7 @@ public class FluxoCaixaController {
 	}
 
 	@PostMapping("/adicionar")
-	public String salvarEntradaOuSaida(EntradaSaida entradaSaida, RedirectAttributes attr) {
+	public String salvarEntradaOuSaida(EntradaCaixa entradaSaida, RedirectAttributes attr) {
 		entradaSaida.setHorarioOperacao(LocalDateTime.now());
 		if (servicoCaixa.getDiaAtual().getAberto().booleanValue() == true) {
 			if (servicoCliente.buscarPorId(entradaSaida.getCliente().getId()).isPresent()
@@ -140,7 +140,7 @@ public class FluxoCaixaController {
 	}
 
 	@PostMapping("fechar-caixa")
-	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr, Model model) {
+	public String fecharCaixa(EntradaCaixa entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr, Model model) {
 		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
 		String login = usuarioLogado.getName();
 		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
@@ -176,7 +176,7 @@ public class FluxoCaixaController {
 	}
 
 	@PostMapping("editar")
-	public String editar(EntradaSaida entradaSaida) {
+	public String editar(EntradaCaixa entradaSaida) {
 		servicoEntradaSaida.editar(entradaSaida);
 		return ATUALIZAR_PAGINA;
 	}
@@ -193,7 +193,7 @@ public class FluxoCaixaController {
 	}
 
 	@PostMapping("excluir")
-	public String excluirEntradaSaida(EntradaSaida entradaSaida) {
+	public String excluirEntradaSaida(EntradaCaixa entradaSaida) {
 		servicoEntradaSaida.deletar(entradaSaida.getId());
 		return ATUALIZAR_PAGINA;
 	}

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.repository.CaixaRepository;
 
 @Service
@@ -27,7 +27,7 @@ public class CaixaServiceImpl implements CaixaService {
 	private CaixaRepository caixaRepository;
 
 	@Autowired
-	private EntradaSaidaService entradaSaidaServico;
+	private EntradaCaixaService entradaSaidaServico;
 
 	@Override
 	public void salvar(Caixa caixa) {
@@ -64,9 +64,9 @@ public class CaixaServiceImpl implements CaixaService {
 	}
 
 	@Override
-	public List<EntradaSaida> getLancamentos() throws NullPointerException {
+	public List<EntradaCaixa> getLancamentos() throws NullPointerException {
 		if (getDiaAtual() == null) {
-			List<EntradaSaida> dados = new ArrayList<EntradaSaida>();
+			List<EntradaCaixa> dados = new ArrayList<EntradaCaixa>();
 			return dados;
 		} else {
 			return entradaSaidaServico.busarTodosDoDia(getDiaAtual().getId());
@@ -76,13 +76,13 @@ public class CaixaServiceImpl implements CaixaService {
 	@Override
 	public Optional<BigDecimal> sumValorEntradaDia() {
 		return getLancamentos().stream().filter(x -> TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 	}
 
 	@Override
 	public Optional<BigDecimal> sumValorSaidaDia() {
 		return getLancamentos().stream().filter(x -> TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 	}
 
 	@Override
@@ -109,12 +109,12 @@ public class CaixaServiceImpl implements CaixaService {
 		Optional<BigDecimal> entrada = getLancamentos().stream()
 				.filter(x -> FormaPagamentoEnum.DEBITO.equals(x.getFormaPagamento())
 						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 
 		Optional<BigDecimal> saida = getLancamentos().stream()
 				.filter(x -> FormaPagamentoEnum.DEBITO.equals(x.getFormaPagamento())
 						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 
 		if (entrada.isPresent() && saida.isPresent()) {
 			BigDecimal dado = entrada.get().subtract(saida.get());
@@ -136,12 +136,12 @@ public class CaixaServiceImpl implements CaixaService {
 		Optional<BigDecimal> entrada = getLancamentos().stream()
 				.filter(x -> FormaPagamentoEnum.CREDITO.equals(x.getFormaPagamento())
 						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 
 		Optional<BigDecimal> saida = getLancamentos().stream()
 				.filter(x -> FormaPagamentoEnum.CREDITO.equals(x.getFormaPagamento())
 						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 
 		if (entrada.isPresent() && saida.isPresent()) {
 			BigDecimal dado = entrada.get().subtract(saida.get());
@@ -163,12 +163,12 @@ public class CaixaServiceImpl implements CaixaService {
 		Optional<BigDecimal> entrada = getLancamentos().stream()
 				.filter(x -> FormaPagamentoEnum.A_VISTA.equals(x.getFormaPagamento())
 						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 
 		Optional<BigDecimal> saida = getLancamentos().stream()
 				.filter(x -> FormaPagamentoEnum.A_VISTA.equals(x.getFormaPagamento())
 						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add);
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
 
 		if (entrada.isPresent() && saida.isPresent()) {
 			BigDecimal dado = entrada.get().subtract(saida.get());

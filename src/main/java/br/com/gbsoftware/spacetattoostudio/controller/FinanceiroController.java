@@ -31,9 +31,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
-import br.com.gbsoftware.spacetattoostudio.service.EntradaSaidaService;
+import br.com.gbsoftware.spacetattoostudio.service.EntradaCaixaService;
 
 @Controller
 @RequestMapping("financeiro")
@@ -46,7 +46,7 @@ public class FinanceiroController {
 	private CaixaService servicoCaixa;
 
 	@Autowired
-	private EntradaSaidaService servicoEntradaSaida;
+	private EntradaCaixaService servicoEntradaSaida;
 
 	@GetMapping("detalhamento")
 	public String detalhamentoFinanceiro(Caixa caixa, Model model) {
@@ -144,27 +144,27 @@ public class FinanceiroController {
 	@RequestMapping(value = "/pesquisa-intervalo-gasto", method = RequestMethod.POST)
 	public @ResponseBody String pesquisaIntervaloGasto(String dataInicial, String dataFinal)
 			throws JsonProcessingException {
-		List<EntradaSaida> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
+		List<EntradaCaixa> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
 
 		BigDecimal gasTotalPercieng = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PIERCING)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
 		BigDecimal gasTotalTattoo = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.TATTOO)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
 		BigDecimal gasTotalBarbearia = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.BARBEARIA)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
 		BigDecimal gasTotalProduto = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PRODUTO)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("gasTotalPercieng", gasTotalPercieng);
@@ -181,27 +181,27 @@ public class FinanceiroController {
 	@RequestMapping(value = "/pesquisa-intervalo-arrecadacao", method = RequestMethod.POST)
 	public @ResponseBody String pesquisaIntervaloArrecadacao(String dataInicial, String dataFinal)
 			throws JsonProcessingException {
-		List<EntradaSaida> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
+		List<EntradaCaixa> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
 
 		BigDecimal arrTotalPercieng = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PIERCING)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
 		BigDecimal arrTotalTattoo = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.TATTOO)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
 		BigDecimal arrTotalBarbearia = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.BARBEARIA)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 
 		BigDecimal arrTotalProduto = entradaSaida.stream()
 				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PRODUTO)
 						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("arrTotalPercieng", arrTotalPercieng);
 		map.put("arrTotalTattoo", arrTotalTattoo);

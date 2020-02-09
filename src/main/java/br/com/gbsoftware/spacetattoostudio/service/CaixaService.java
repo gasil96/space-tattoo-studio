@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 
 public interface CaixaService {
 
@@ -27,7 +27,7 @@ public interface CaixaService {
 
 	Caixa getDiaAtual();
 
-	List<EntradaSaida> getLancamentos();
+	List<EntradaCaixa> getLancamentos();
 
 	Optional<BigDecimal> sumValorEntradaDia();
 

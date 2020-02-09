@@ -71,7 +71,7 @@ public class Caixa extends EntidadeBase<Long> {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "caixa")
-	private List<EntradaSaida> entradaSaida;
+	private List<EntradaCaixa> entradaSaida;
 
 	public Caixa() {
 
@@ -79,7 +79,7 @@ public class Caixa extends EntidadeBase<Long> {
 
 	public Caixa(LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento, BigDecimal total,
 			BigDecimal totalAvista, BigDecimal totalCredito, BigDecimal totalDebito, @NotNull String operadorAbertura,
-			String operadorFechamento, Boolean aberto, List<EntradaSaida> entradaSaida) {
+			String operadorFechamento, Boolean aberto, List<EntradaCaixa> entradaSaida) {
 		super();
 		this.dataHoraAbertura = dataHoraAbertura;
 		this.dataHoraFechamento = dataHoraFechamento;
@@ -165,11 +165,11 @@ public class Caixa extends EntidadeBase<Long> {
 		this.operadorFechamento = operadorFechamento;
 	}
 
-	public List<EntradaSaida> getEntradaSaida() {
+	public List<EntradaCaixa> getEntradaSaida() {
 		return entradaSaida;
 	}
 
-	public void setEntradaSaida(List<EntradaSaida> entradaSaida) {
+	public void setEntradaSaida(List<EntradaCaixa> entradaSaida) {
 		this.entradaSaida = entradaSaida;
 	}
 

@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
 
 @Service
@@ -24,7 +24,7 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteRepository clienteRepository;
 
 	@Autowired
-	private EntradaSaidaService entradaSaidaServico;
+	private EntradaCaixaService entradaSaidaServico;
 
 	@Override
 	public void salvar(Cliente cliente) {
@@ -85,7 +85,7 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public BigDecimal calcularGastoTotalCliente(Cliente cliente) {
 		BigDecimal gastoTotalCliente = entradaSaidaServico.buscarTodos().stream()
-				.filter(x -> cliente.getId().equals(x.getCliente().getId())).map(EntradaSaida::getValor)
+				.filter(x -> cliente.getId().equals(x.getCliente().getId())).map(EntradaCaixa::getValor)
 				.reduce(BigDecimal::add).orElse(new BigDecimal(0));
 		return gastoTotalCliente;
 	}
