@@ -1,5 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -7,6 +9,7 @@ package br.com.gbsoftware.spacetattoostudio.controller;
  * @version 2019 - Criação
  */
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,15 +49,24 @@ public class InitController {
 
 	@GetMapping("/")
 	public String home(ModelMap model, Cliente cliente, Servico servico) {
-
 		model.addAttribute("classActivePrincipal", "active");
+
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
-		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
+		List<Servico> totalAgendamentos = servicoService.buscarTodos();
+		
 		model.addAttribute("totalClientes", totalClientes.size());
-		model.addAttribute("totalAgendamentosDia", getAgendamentoDoDia().size());
-		model.addAttribute("totalAgendamentosSemana", getAgendamentoDaSemana().size());
-		model.addAttribute("proximosAgendamentos", servicoService.getProximosSeisAgendamentos());
-		model.addAttribute("totalClientes", totalClientes.size());
+ 		
+		model.addAttribute("totalAgendamentosSemana", totalAgendamentos.stream()
+				.filter(agSemana -> agSemana.getHorarioAgendamento()
+						.isAfter(LocalDateTime.now())).collect(Collectors.toList()).size());
+
+		model.addAttribute("proximosAgendamentos", totalAgendamentos.stream()
+				.filter(agSemana -> agSemana.getHorarioAgendamento()
+						.isAfter(LocalDateTime.now()))
+				.sorted(Comparator.comparing(Servico::getHorarioAgendamento))
+				.limit(3).collect(Collectors.toList()));
+		
+		
 		return PAGINA_INICIAL;
 	}
 
@@ -63,19 +75,19 @@ public class InitController {
 		return "login";
 	}
 
+//	@ModelAttribute("listaAgendamentoDia")
+//	public List<Servico> getAgendamentoDoDia() {
+//		return servicoService.getAgendamentoPorDia();
+//	}
+
+//	@ModelAttribute("listaAgendamentoDaSemana")
+//	public List<Servico> getAgendamentoDaSemana() {
+//		return servicoService.getAgendamentoPorSemana();
+//	}
+
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
-	}
-
-	@ModelAttribute("listaAgendamentoDia")
-	public List<Servico> getAgendamentoDoDia() {
-		return servicoService.getAgendamentoPorDia();
-	}
-
-	@ModelAttribute("listaAgendamentoDaSemana")
-	public List<Servico> getAgendamentoDaSemana() {
-		return servicoService.getAgendamentoPorSemana();
 	}
 
 	@ModelAttribute("tipoagendamento")
