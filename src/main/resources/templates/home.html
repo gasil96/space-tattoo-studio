@@ -152,14 +152,14 @@
 							<div class="title" style="text-align: center;">
 								<strong>Calendário Geral</strong>
 							</div>
-							<p>Todos agendamentos estarão disponivéis nesse calendário.</p>
+<!-- 							<p>Todos agendamentos estarão disponivéis nesse calendário.</p> -->
 							<div id="calendarioGeral"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-
+		<br/>
 		<section>
 
 			<span id="mensagem"></span>
@@ -207,11 +207,14 @@
 													.fullCalendar(
 															{
 																header : {
-																	left : 'prev,next today',
-																	center : 'title',
-																	right : 'month,agendaWeek,agendaDay'
+																	right : 'title',
+																	left : 'prev,next,today'
+																},
+																footer : {
+																	left : 'month,agendaWeek,agendaDay'
 																},
 																themeSystem : 'bootstrap4',
+																titleFormat: 'MM/YYYY',
 																eventClick : function(
 																		data) {
 																	Messenger()
