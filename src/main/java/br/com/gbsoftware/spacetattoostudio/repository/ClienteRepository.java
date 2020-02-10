@@ -32,9 +32,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Query(value = "SELECT * FROM cliente WHERE MONTH(data_cadastro) = (MONTH(NOW())-1)", nativeQuery = true)
 	List<Cliente> getPorCadastroMesPassado();
 
-	@Query(value = "SELECT * FROM cliente ORDER BY data_cadastro DESC", nativeQuery = true)
-	List<Cliente> findAll();
-
 	@Query(value = "select clt.id, clt.instagram, clt.nome, clt.telefone from cliente clt", nativeQuery = true)
 	List<Cliente> getClienteIdInstaNome();
 

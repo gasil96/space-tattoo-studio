@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
  */
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +55,8 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public List<Cliente> buscarTodos() {
-		return clienteRepository.findAll();
+		return clienteRepository.findAll().stream().sorted(Comparator.comparing(Cliente::getDataCadastro).reversed())
+				.collect(Collectors.toList());
 	}
 
 	@Override

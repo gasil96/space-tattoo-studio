@@ -53,19 +53,18 @@ public class InitController {
 
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
 		List<Servico> totalAgendamentos = servicoService.buscarTodos();
-		
+
 		model.addAttribute("totalClientes", totalClientes.size());
- 		
-		model.addAttribute("totalAgendamentosSemana", totalAgendamentos.stream().filter(x -> x.getHorarioAgendamento().isAfter(LocalDateTime.now()) 
-				&& x.getHorarioAgendamento().isBefore(LocalDateTime.now().plusWeeks(1))).collect(Collectors.toList()).size());
+
+		model.addAttribute("totalAgendamentosSemana",
+				totalAgendamentos.stream()
+						.filter(x -> x.getHorarioAgendamento().isAfter(LocalDateTime.now())
+								&& x.getHorarioAgendamento().isBefore(LocalDateTime.now().plusWeeks(1)))
+						.collect(Collectors.toList()).size());
 
 		model.addAttribute("proximosAgendamentos", totalAgendamentos.stream()
-				.filter(agSemana -> agSemana.getHorarioAgendamento()
-						.isAfter(LocalDateTime.now()))
-				.sorted(Comparator.comparing(Servico::getHorarioAgendamento))
-				.limit(3).collect(Collectors.toList()));
-		
-		
+				.filter(agSemana -> agSemana.getHorarioAgendamento().isAfter(LocalDateTime.now()))
+				.sorted(Comparator.comparing(Servico::getHorarioAgendamento)).limit(3).collect(Collectors.toList()));
 		return PAGINA_INICIAL;
 	}
 
