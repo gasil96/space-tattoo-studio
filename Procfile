@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar target/spacetattoostudio-1.0.3.jar -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
+web: java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar target/spacetattoostudio-1.0.3.jar -Xmx300m -Xss512k -XX:CICompilerCount=2 -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap
