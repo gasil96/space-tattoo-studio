@@ -46,6 +46,7 @@ public class InitController {
 
 	@GetMapping("/")
 	public String home(ModelMap model, Cliente cliente, Servico servico) {
+
 		model.addAttribute("classActivePrincipal", "active");
 		List<Cliente> totalClientes = servicoCliente.buscarTodos();
 		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
@@ -53,20 +54,13 @@ public class InitController {
 		model.addAttribute("totalAgendamentosDia", getAgendamentoDoDia().size());
 		model.addAttribute("totalAgendamentosSemana", getAgendamentoDaSemana().size());
 		model.addAttribute("proximosAgendamentos", servicoService.getProximosSeisAgendamentos());
+		model.addAttribute("totalClientes", totalClientes.size());
 		return PAGINA_INICIAL;
 	}
 
 	@GetMapping("/login")
 	public String login() {
 		return "login";
-	}
-
-	@GetMapping("/home")
-	public String dashboard(ModelMap model, Cliente cliente) {
-		model.addAttribute("classActivePrincipal", "active");
-		List<Cliente> totalClientes = servicoCliente.buscarTodos();
-		model.addAttribute("totalClientes", totalClientes.size());
-		return PAGINA_INICIAL;
 	}
 
 	@ModelAttribute("statuscliente")

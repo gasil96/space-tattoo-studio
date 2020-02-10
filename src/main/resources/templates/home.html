@@ -24,7 +24,7 @@
 		<section class="no-padding-top no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-3 col-sm-6">
+					<div class="col-md-4 col-sm-6">
 						<div class="statistic-block block">
 							<div
 								class="progress-details d-flex align-items-end justify-content-between">
@@ -33,7 +33,7 @@
 										<a role="button" data-toggle="modal"
 											data-target="#novoCliente" href="#" style="color: white"
 											onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
-											<i class="material-icons md-48" style="font-size: 35px">
+											<i class="material-icons md-48" style="font-size: 48px">
 												group_add </i>
 										</a>
 									</div>
@@ -46,12 +46,13 @@
 
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6">
+					<div class="col-md-4 col-sm-6">
 						<div class="statistic-block block">
 							<div
 								class="progress-details d-flex align-items-end justify-content-between">
 								<div class="title">
 									<div>
+										<div>
 										<a role="button" data-toggle="modal"
 											data-target="#novoAgendamento" href="#" style="color: white"
 											onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
@@ -59,23 +60,6 @@
 												note_add </i>
 										</a>
 									</div>
-									<strong>Agendamentos do dia</strong>
-								</div>
-								<div class="number dashtext-1" th:text="${totalAgendamentosDia}">12</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6">
-						<div class="statistic-block block">
-							<div
-								class="progress-details d-flex align-items-end justify-content-between">
-								<div class="title">
-									<div>
-										<a href="/agendamento/detalhamento" style="color: white"
-											onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
-											<i class="material-icons md-48" style="font-size: 35px">event_note
-										</i>
-										</a>
 									</div>
 									<strong><a href="/agendamento/detalhamento"
 										style="color: #8A8D93">Agendamentos da semana</a></strong>
@@ -85,7 +69,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-3 col-sm-6">
+					<div class="col-md-4 col-sm-6">
 						<div class="statistic-block block">
 							<div
 								class="progress-details d-flex align-items-end justify-content-between">
