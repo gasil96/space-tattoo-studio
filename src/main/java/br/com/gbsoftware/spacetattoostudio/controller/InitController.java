@@ -56,9 +56,8 @@ public class InitController {
 		
 		model.addAttribute("totalClientes", totalClientes.size());
  		
-		model.addAttribute("totalAgendamentosSemana", totalAgendamentos.stream()
-				.filter(agSemana -> agSemana.getHorarioAgendamento()
-						.isAfter(LocalDateTime.now())).collect(Collectors.toList()).size());
+		model.addAttribute("totalAgendamentosSemana", totalAgendamentos.stream().filter(x -> x.getHorarioAgendamento().isAfter(LocalDateTime.now()) 
+				&& x.getHorarioAgendamento().isBefore(LocalDateTime.now().plusWeeks(1))).collect(Collectors.toList()).size());
 
 		model.addAttribute("proximosAgendamentos", totalAgendamentos.stream()
 				.filter(agSemana -> agSemana.getHorarioAgendamento()
@@ -74,16 +73,6 @@ public class InitController {
 	public String login() {
 		return "login";
 	}
-
-//	@ModelAttribute("listaAgendamentoDia")
-//	public List<Servico> getAgendamentoDoDia() {
-//		return servicoService.getAgendamentoPorDia();
-//	}
-
-//	@ModelAttribute("listaAgendamentoDaSemana")
-//	public List<Servico> getAgendamentoDaSemana() {
-//		return servicoService.getAgendamentoPorSemana();
-//	}
 
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
