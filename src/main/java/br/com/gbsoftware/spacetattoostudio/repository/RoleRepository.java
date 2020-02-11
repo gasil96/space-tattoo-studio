@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -11,5 +12,5 @@ import org.springframework.stereotype.Repository;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Role;
 
 @Repository
-public interface RoleRepository extends CrudRepository<Role, String>{
+public interface RoleRepository extends JpaRepository<Role, String>{
 }

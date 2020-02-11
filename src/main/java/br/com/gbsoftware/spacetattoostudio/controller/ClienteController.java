@@ -53,7 +53,6 @@ public class ClienteController {
 		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
 	}
 
-	// TODO - OTIMIZAR CONSULTAS DESTE MÉTODO
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Servico service, Model model) {
 		model.addAttribute("classActiveSubCliente", "active");

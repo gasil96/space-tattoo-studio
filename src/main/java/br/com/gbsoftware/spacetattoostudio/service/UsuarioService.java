@@ -17,4 +17,8 @@ public interface UsuarioService {
 	Optional<Usuario> findById(String login);
 	
 	void salvar(Usuario usuario);
+	
+	void deletar(String login);
+	
+	void alterar(Usuario usuario);
 }

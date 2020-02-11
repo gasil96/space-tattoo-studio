@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
+
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -26,43 +27,49 @@ import org.springframework.security.core.userdetails.UserDetails;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.CargoUsuarioEnum;
 
 @Entity
-public class Usuario implements UserDetails, Serializable{
-	
+public class Usuario implements UserDetails, Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(length = 20, unique = true)
 	@NotNull
 	private String login;
-	
+
 	@NotNull
 	private String nomeCompleto;
-	
+
+	@NotNull
+	private String email;
+
 	@NotNull
 	@NotEmpty
 	private String senha;
-	
+
 	@Column(name = "cargo")
 	@Enumerated(EnumType.STRING)
 	private CargoUsuarioEnum cargo;
-	
+
 	@ManyToMany
-	@JoinTable(
-			name = "usuarios_roles",
-			joinColumns = @JoinColumn(
-					name = "usuario_id", referencedColumnName="login"),
-			inverseJoinColumns = @JoinColumn(
-					name = "role_id", referencedColumnName = "nomeRole"))
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "login"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "nomeRole"))
 	private List<Role> roles;
-	
+
 	public CargoUsuarioEnum getCargo() {
 		return cargo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public void setCargo(CargoUsuarioEnum cargo) {
 		this.cargo = cargo;
 	}
-	
+
 	public String getLogin() {
 		return login;
 	}

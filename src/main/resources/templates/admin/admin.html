@@ -13,7 +13,8 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<button class="btn btn-primary" data-target="#novoUsuario" data-toggle="modal"> Novo usuário</button>
+						<button class="btn btn-primary" data-target="#novoUsuario"
+							data-toggle="modal">Novo usuário</button>
 					</div>
 				</div>
 			</div>
@@ -21,29 +22,38 @@
 		</section>
 		<div th:if="${salvou == true}" id="salvouUsuario"></div>
 		<div th:if="${editou == true} " id="clienteEditado"></div>
-		
+		<div th:if="${deletou == true} " id="deletouUsuario"></div>
+		<div th:if="${error == true} " id="error"></div>
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-6">
+					<div class="col-lg-12">
 						<div class="block">
 							<div class="title">
-								<strong>Todos usuários do sistema</strong>
+								<strong>Usuários</strong>
 							</div>
 							<div class="table-responsive">
 								<table class="table table-striped table-hover">
 									<thead>
 										<tr>
+											<th></th>
 											<th>Nome</th>
 											<th>login(id)</th>
 											<th>Cargo</th>
+											<th style="text-align: center">Ação</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="u :${listaUsuarios}">
+											<td><a href="#"><i class="material-icons" title="Visualizar">
+														visibility </i></a></td>
 											<th th:text="${u.nomeCompleto}">Gabriel Silva</th>
-											<td th:text="${u.login}" >gasil96</td>
-											<td th:text="${u.cargo}" >Desenvolvedor</td>
+											<td th:text="${u.login}">gasil96</td>
+											<td th:text="${u.cargo}">Desenvolvedor</td>
+											<td style="text-align: center">
+												 <a th:href="@{/adm/excluir/{usuario-login} (usuario-login=${u.login})}" title="Excluir"><i style="color: #bb414d" class="material-icons"> delete_forever </i></a>
+												 <a th:href="@{/adm/editar/{usuario-login} (usuario-login=${u.login})}" title="Alterar" ><i style="color: yellow" class="material-icons"> update </i></a>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -53,21 +63,88 @@
 				</div>
 			</div>
 		</section>
-		
+
 		<div th:replace="fragments/modal-novo-usuario :: modalNovoUsuario"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-	
-	$(document).ready(function() {
-		$('#salvouUsuario').show(function() {
-			Messenger().post({
-				message : 'Usuário salvo com sucesso!',
-				type : 'success'
-			});
-		});
-	});
-	
+		$(document)
+				.ready(
+						function() {
+							$('#salvouUsuario').show(function() {
+								Messenger().post({
+									message : 'Usuário salvo com sucesso!',
+									type : 'success'
+								});
+							});
+							$('#deletouUsuario').show(function() {
+								Messenger().post({
+									message : 'Usuário removido!',
+									type : 'erro'
+								});
+							});
+							$('#error').show(function() {
+								Messenger().post({
+									message : 'Usuário inexistente !',
+									type : 'erro'
+								});
+							});
+
+							$('#cargo')
+									.change(
+											function() {
+												if ($('#cargo').val() == 'GERENTE') {
+													var ident = 'ROLE_GERENTE';
+													$(
+															'select option[value="'
+																	+ ident
+																	+ '"]')
+															.prop("selected",
+																	true);
+												} else if ($('#cargo').val() == 'ADMINISTRADOR') {
+													var ident = 'ROLE_ADMIN';
+													$(
+															'select option[value="'
+																	+ ident
+																	+ '"]')
+															.prop("selected",
+																	true);
+												} else if ($('#cargo').val() == 'FUNCIONARIO') {
+													var ident = 'ROLE_USUARIO';
+													$(
+															'select option[value="'
+																	+ ident
+																	+ '"]')
+															.prop("selected",
+																	true);
+												}
+											});
+						});
+
+		var password = document.getElementById("password"), confirm_password = document
+				.getElementById("confirm_password"), email = document
+				.getElementById("email"), confirm_email = document
+				.getElementById("confirm_email");
+
+		function validatePassword() {
+			if (password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Senhas não correspondem!");
+			} else {
+				confirm_password.setCustomValidity('');
+			}
+		}
+
+		function validateEmail() {
+			if (email.value != confirm_email.value) {
+				confirm_email.setCustomValidity("Emails não correspondem!");
+			} else {
+				confirm_email.setCustomValidity('');
+			}
+		}
+
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+		email.onchange = validateEmail;
+		confirm_email.onkeyup = validateEmail;
 	</script>
-	
 </body>
 </html>

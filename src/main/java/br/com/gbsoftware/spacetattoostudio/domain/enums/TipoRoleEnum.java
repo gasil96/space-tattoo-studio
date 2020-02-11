@@ -5,14 +5,14 @@ package br.com.gbsoftware.spacetattoostudio.domain.enums;
  * @author Gabriel Silva - gasil96@gmail.com
  * @version 2019 - Criação
  */
-public enum TipoRole {
+public enum TipoRoleEnum {
 	ROLE_ADMIN("ROLE_ADMIN"),
 	ROLE_GERENTE("ROLE_GERENTE"),
 	ROLE_USUARIO("ROLE_USUARIO");
 	
 	private String role;
 
-	private TipoRole(String role) {
+	private TipoRoleEnum(String role) {
 		this.role = role;
 	}
 
