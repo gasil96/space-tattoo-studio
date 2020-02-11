@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
@@ -53,29 +53,32 @@ public class ClienteController {
 		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
 	}
 
+	// TODO - OTIMIZAR CONSULTAS DESTE MÉTODO
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Servico service, Model model) {
 		model.addAttribute("classActiveSubCliente", "active");
-		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
-		List<Cliente> totalClientes = servicoCliente.buscarTodos();
-		model.addAttribute("totalClientes", totalClientes.size());
-		List<Cliente> totalClientesCM = servicoCliente.getPorCadastroMes();
-		List<Cliente> totalClientesCMA = servicoCliente.getPorCadastroMesAnterio();
-		model.addAttribute("totalCadastroMesAtual", "+" + totalClientesCM.size());
-		model.addAttribute("totalCadastroMesAnterio", "+" + totalClientesCMA.size());
-		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
-		List<Cliente> clientesAtivos = clientesTotal.stream()
-				.filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInativos = clientesTotal.stream()
-				.filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInadimplentes = clientesTotal.stream()
-				.filter(x -> StatusClienteEnum.INADIMPLENTE.equals(x.getStatusCliente())).collect(Collectors.toList());
-		model.addAttribute("totalAtivos", clientesAtivos.size());
-		model.addAttribute("totalInativos", clientesInativos.size());
-		model.addAttribute("totalInadim", clientesInadimplentes.size());
 
-		ModelAndView mav = new ModelAndView("usuario");
-		mav.addObject("totalAtivosTeste", clientesAtivos.size());
+		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
+
+		model.addAttribute("listaCliente", clientesTotal);
+
+		model.addAttribute("totalClientes", clientesTotal.size());
+
+		model.addAttribute("totalCadastroMesAtual",
+				"+" + clientesTotal.stream()
+						.filter(x -> x.getDataCadastro().getMonthValue() == LocalDate.now().getMonthValue())
+						.collect(Collectors.toList()).size());
+
+		model.addAttribute("totalCadastroMesAnterio", "+" + clientesTotal.stream()
+				.filter(x -> x.getDataCadastro().getMonthValue() == LocalDate.now().plusMonths(-1).getMonthValue())
+				.collect(Collectors.toList()).size());
+
+		model.addAttribute("totalAtivos", clientesTotal.stream()
+				.filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList()).size());
+
+		model.addAttribute("totalInativos",
+				clientesTotal.stream().filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente()))
+						.collect(Collectors.toList()).size());
 
 		return PAGINA_CLIENTE_DETALHADO;
 	}
@@ -149,5 +152,5 @@ public class ClienteController {
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
 	}
-	
+
 }

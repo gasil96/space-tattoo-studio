@@ -70,20 +70,6 @@ public class ClienteServiceImpl implements ClienteService {
 		clienteRepository.save(cliente);
 	}
 
-	@Override
-	public List<Cliente> getPorCadastroMes() {
-		return clienteRepository.getPorCadastroMesAtual();
-	}
-
-	@Override
-	public List<Cliente> getPorCadastroMesAnterio() {
-		return clienteRepository.getPorCadastroMesPassado();
-	}
-
-	@Override
-	public List<Cliente> getClienteIdInstaNome() {
-		return clienteRepository.getClienteIdInstaNome();
-	}
 
 	@Override
 	public BigDecimal calcularGastoTotalCliente(Cliente cliente) {
