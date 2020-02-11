@@ -143,13 +143,17 @@
 		$(document).ready(function() {
 			if($('#selectTipoServico').val() == 'TATTOO'){
 		        $('#sessoes').show();
+		        $('#valor-sessoes').show();
 			}else{
 	        $('#sessoes').hide();
+	        $('#valor-sessoes').hide();
 			}
 	        $('#selectTipoServico').change(function() {
 	             if ($('#selectTipoServico').val() == 'TATTOO') {
 	                $('#sessoes').show();
+	                $('#valor-sessoes').show();
 	            }  else {
+	                $('#valor-sessoes').hide();
 	                $('#sessoes').hide();
 	            }
 	        });

@@ -69,6 +69,9 @@ public class Servico extends EntidadeBase<Long> {
 	@Column(name = "numero_sessoes", length = 3)
 	private Integer numeroSessoes;
 
+	@Column(name = "valor_pago_sessao")
+	private BigDecimal valorPagoSessao;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cliente_fk")
@@ -81,7 +84,7 @@ public class Servico extends EntidadeBase<Long> {
 
 	public Servico(@NotNull TipoServicoEnum tipoServico, String categoria, LocalDateTime horarioAgendamento,
 			LocalDateTime horarioConclusaoAgendamento, @NotNull StatusServicoEnum statusAgendamento,
-			BigDecimal orcamento, Integer numeroSessoes, @NotNull Cliente cliente) {
+			BigDecimal orcamento, Integer numeroSessoes, BigDecimal valorPagoSessao, @NotNull Cliente cliente) {
 		super();
 		this.tipoServico = tipoServico;
 		this.categoria = categoria;
@@ -90,7 +93,16 @@ public class Servico extends EntidadeBase<Long> {
 		this.statusAgendamento = statusAgendamento;
 		this.orcamento = orcamento;
 		this.numeroSessoes = numeroSessoes;
+		this.valorPagoSessao = valorPagoSessao;
 		this.cliente = cliente;
+	}
+
+	public BigDecimal getValorPagoSessao() {
+		return valorPagoSessao;
+	}
+
+	public void setValorPagoSessao(BigDecimal valorPagoSessao) {
+		this.valorPagoSessao = valorPagoSessao;
 	}
 
 	public String getCategoria() {

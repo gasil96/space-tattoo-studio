@@ -57,10 +57,12 @@
 								<tbody>
 									<tr th:each="a : ${listaServico}">
 										<td th:text="${a.tipoServico}" data-toggle="popover"
-											title="Número de Sessões" data-placement="bottom"
+											title="Número da Sessão" data-placement="bottom"
 											data-container="body"
 											th:attr="data-content=${#strings.concat(
-											'Total: ', a.numeroSessoes 
+											'Total: ', a.numeroSessoes,'
+											',
+											'Valor Pago: ', a.valorPagoSessao, 
 											)}">TATTOO</td>
 										<td th:text="${a.categoria}">Mahori</td>
 										<td th:text="${a.cliente.nome}" data-toggle="popover"
