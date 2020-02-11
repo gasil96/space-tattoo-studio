@@ -9,9 +9,11 @@
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center" sec:authorize="isAuthenticated()">
             <div class="avatar"><img th:src="@{/img/favicon.ico}" alt="..." class="img-fluid rounded-circle"></div>
-          <div class="title">
-            <h1 class="h5" th:text="${usuarioLogadoNome}">Gabriel Silvaaaa</h1>
-            <p th:text="${usuarioLogadoCargo}">Desenvolvedor</p>
+          <div class="title" sec:authorize="isAuthenticated()">
+            <h1 class="h5"><span sec:authentication="name" style="text-transform: uppercase"></span></h1>
+          </div>
+          <div class="title" sec:authorize="!isAuthenticated()">
+            <h1 class="h5"><span sec:authentication="name" style="text-transform: uppercase">MODO ADMINISTRATIVO</span></h1>
           </div>
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>

@@ -102,4 +102,5 @@ public class ClienteServiceImpl implements ClienteService {
 	public void updateStatus(String statusCliente, Long idCliente) {
 		clienteRepository.updateStatus(statusCliente, idCliente);
 	}
+
 }

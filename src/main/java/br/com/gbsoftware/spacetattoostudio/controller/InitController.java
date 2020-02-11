@@ -11,8 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -89,11 +87,12 @@ public class InitController {
 	}
 
 	@RequestMapping(value = "/calendario", method = RequestMethod.GET)
-	public @ResponseBody String getCalendario(HttpServletResponse response) throws JsonProcessingException {
+	public @ResponseBody String getCalendario() throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-		List<Servico> listaServicos = servicoService.buscarTodos();
+		List<Servico> listaServicos = servicoService.buscarTodos().stream()
+				.filter(x -> x.getStatusAgendamento().equals(StatusServicoEnum.ATIVO)).collect(Collectors.toList());
 		String listaServicosJson = mapper.writeValueAsString(listaServicos);
 		return listaServicosJson;
 	}

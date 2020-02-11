@@ -31,7 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/login").permitAll()
 				.antMatchers(HttpMethod.GET, "/financeiro/detalhamento").hasAnyRole("ADMIN", "GERENTE", "USUARIO")
 				.antMatchers(HttpMethod.GET, "/promocional/promo").hasAnyRole("ADMIN", "GERENTE", "USUARIO")
-				.antMatchers(HttpMethod.GET, "/adm/administracao").hasRole("ADMIN").anyRequest().authenticated().and()
+				.antMatchers(HttpMethod.GET, "/adm/administracao").hasRole("ADMIN")
+				.anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").permitAll().and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 		http.sessionManagement().maximumSessions(2).and();
@@ -41,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-		auth.inMemoryAuthentication().withUser("adm").password("{noop}Q$&u1d&#51@").roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("administrador").password("{noop}Q$&u1d&#51@").roles("ADMIN");
 	}
 
 	@Override

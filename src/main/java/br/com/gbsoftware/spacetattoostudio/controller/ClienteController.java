@@ -149,4 +149,5 @@ public class ClienteController {
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
 	}
+	
 }

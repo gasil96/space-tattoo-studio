@@ -36,4 +36,5 @@ public interface ClienteService {
 	List<Cliente> getClienteIdInstaNome();
 
 	BigDecimal calcularGastoTotalCliente(Cliente cliente);
+	
 }
