@@ -38,15 +38,16 @@
 										<tr>
 											<th></th>
 											<th>Nome</th>
-											<th>login(id)</th>
+											<th>Login</th>
 											<th>Cargo</th>
 											<th style="text-align: center">Ação</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="u :${listaUsuarios}">
-											<td><a href="#"><i class="material-icons" title="Visualizar">
-														visibility </i></a></td>
+											<td>
+											<a th:href="@{/adm/visualizar/{usuario-login} (usuario-login=${u.login})}"><i class="material-icons" title="Visualizar">visibility </i></a>
+														</td>
 											<th th:text="${u.nomeCompleto}">Gabriel Silva</th>
 											<td th:text="${u.login}">gasil96</td>
 											<td th:text="${u.cargo}">Desenvolvedor</td>

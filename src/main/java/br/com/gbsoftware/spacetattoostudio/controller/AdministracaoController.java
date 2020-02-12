@@ -35,6 +35,7 @@ public class AdministracaoController {
 	private static final String __ADMINISTRACAO = "admin/admin";
 	private static final String ATT_PAGINA__ = "redirect:administracao";
 	private static final String MODAL_EDITAR_USUARIO = "modal/modal-editar-usuario";
+	private static final String MODAL_VISUALIZAR_USUARIO = "modal/modal-visualizar-usuario";
 	private static final String MODAL_CONFIMAR_EXCLUSAO = "fragments/modal-confirmar-exclusao";
 
 	@Autowired
@@ -55,6 +56,12 @@ public class AdministracaoController {
 	public String preEditar(@PathVariable("usuario-login") String login, Model model) {
 		model.addAttribute("usuario", servicoUsuario.findById(login));
 		return MODAL_EDITAR_USUARIO;
+	}
+	
+	@GetMapping("visualizar/{usuario-login}")
+	public String visualizarUsuario(@PathVariable("usuario-login") String login, Model model) {
+		model.addAttribute("usuario", servicoUsuario.findById(login));
+		return MODAL_VISUALIZAR_USUARIO;
 	}
 
 	@PostMapping("/editar-usuario")

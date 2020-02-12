@@ -25,7 +25,7 @@
 						<form th:action="@{/adm/excluir-usuario}" method="POST"
 							th:object="${usuario}">
 							<div class="modal-footer">
-								<input type=text th:field="*{login}" required="required">
+								<input type=hidden th:field="*{login}" required="required">
 								<button type="button" class="btn btn-danger btn-sm"
 									data-dismiss="modal">Cancelar</button>
 								<button type="submit" class="btn btn-primary btn-sm">Confirmar</button>
