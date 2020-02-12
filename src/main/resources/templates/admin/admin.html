@@ -27,7 +27,7 @@
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-8">
 						<div class="block">
 							<div class="title">
 								<strong>Usuários</strong>
@@ -39,7 +39,7 @@
 											<th></th>
 											<th>Nome</th>
 											<th>Login</th>
-											<th>Cargo</th>
+<!-- 											<th>Cargo</th> -->
 											<th style="text-align: center">Ação</th>
 										</tr>
 									</thead>
@@ -50,7 +50,7 @@
 														</td>
 											<th th:text="${u.nomeCompleto}">Gabriel Silva</th>
 											<td th:text="${u.login}">gasil96</td>
-											<td th:text="${u.cargo}">Desenvolvedor</td>
+<!-- 											<td th:text="${u.cargo}">Desenvolvedor</td> -->
 											<td style="text-align: center">
 												 <a th:href="@{/adm/excluir/{usuario-login} (usuario-login=${u.login})}" title="Excluir"><i style="color: #bb414d" class="material-icons"> delete_forever </i></a>
 												 <a th:href="@{/adm/editar/{usuario-login} (usuario-login=${u.login})}" title="Alterar" ><i style="color: yellow" class="material-icons"> update </i></a>
