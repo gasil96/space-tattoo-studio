@@ -35,6 +35,7 @@ public class AdministracaoController {
 	private static final String __ADMINISTRACAO = "admin/admin";
 	private static final String ATT_PAGINA__ = "redirect:administracao";
 	private static final String MODAL_EDITAR_USUARIO = "modal/modal-editar-usuario";
+	private static final String MODAL_CONFIMAR_EXCLUSAO = "fragments/modal-confirmar-exclusao";
 
 	@Autowired
 	private UsuarioService servicoUsuario;
@@ -45,7 +46,7 @@ public class AdministracaoController {
 	@GetMapping("administracao")
 	public String admin(ModelMap model, Cliente cliente, Servico servico, Usuario usuario, Role role) {
 		model.addAttribute("AdminAtivo", "active");
-//		salvarRoles(role);
+		salvarRoles(role);
 		model.addAttribute("listaUsuarios", servicoUsuario.buscarTodos());
 		return __ADMINISTRACAO;
 	}
@@ -60,6 +61,20 @@ public class AdministracaoController {
 	public String editar(@Valid Usuario usuario, RedirectAttributes attr) {
 		servicoUsuario.alterar(usuario);
 		attr.addFlashAttribute("editou", true);
+		return ATT_PAGINA__;
+	}
+
+	@GetMapping("/excluir/{usuario-login}")
+	public String preExcluir(@PathVariable("usuario-login") String login, Model model) {
+		model.addAttribute("usuario", servicoUsuario.findById(login));
+		System.err.println(servicoUsuario.findById(login).toString());
+		return MODAL_CONFIMAR_EXCLUSAO;
+	}
+
+	@PostMapping("/excluir-usuario")
+	public String excluirPorLogin(Usuario usuario, RedirectAttributes attr){
+		servicoUsuario.deletar(usuario.getLogin());
+		attr.addFlashAttribute("deletou", true);
 		return ATT_PAGINA__;
 	}
 	
@@ -82,15 +97,8 @@ public class AdministracaoController {
 	}
 
 	@ModelAttribute("cargo")
-	public CargoUsuarioEnum[] getCargo() {
+	public CargoUsuarioEnum[] getCargo() {	
 		return CargoUsuarioEnum.values();
-	}
-
-	@GetMapping("/excluir/{usuario-login}")
-	public String deletarPorLogin(@PathVariable("usuario-login") String login, RedirectAttributes attr) throws Exception {
-			servicoUsuario.deletar(login);
-			attr.addFlashAttribute("deletou", true);
-		return  ATT_PAGINA__;
 	}
 
 	private void salvarRoles(Role role) {

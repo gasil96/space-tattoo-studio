@@ -63,7 +63,6 @@
 				</div>
 			</div>
 		</section>
-
 		<div th:replace="fragments/modal-novo-usuario :: modalNovoUsuario"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
@@ -79,13 +78,13 @@
 							$('#deletouUsuario').show(function() {
 								Messenger().post({
 									message : 'Usuário removido!',
-									type : 'erro'
+									type : 'error'
 								});
 							});
 							$('#error').show(function() {
 								Messenger().post({
 									message : 'Usuário inexistente !',
-									type : 'erro'
+									type : 'error'
 								});
 							});
 

@@ -69,4 +69,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuario.setRoles(roles);
 		roles.add(role);
 	}
+
+	@Override
+	public void deletarPorUsuario(Usuario usuario) {
+		usuarioRepository.delete(usuario);
+	}
 }

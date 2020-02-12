@@ -21,4 +21,6 @@ public interface UsuarioService {
 	void deletar(String login);
 	
 	void alterar(Usuario usuario);
+	
+	void deletarPorUsuario(Usuario usuario);
 }
