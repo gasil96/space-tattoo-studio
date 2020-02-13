@@ -26,5 +26,4 @@ public interface UsuarioService {
 
 	Usuario buscarPorEmail(String email);
 
-	void createPasswordResetTokenForUser(Usuario usuario, String token);
 }
