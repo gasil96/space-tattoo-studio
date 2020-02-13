@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.CargoUsuarioEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoRoleEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Role;
+import br.com.gbsoftware.spacetattoostudio.domain.model.TokenResetarSenha;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Usuario;
 import br.com.gbsoftware.spacetattoostudio.repository.UsuarioRepository;
 
@@ -24,7 +25,10 @@ import br.com.gbsoftware.spacetattoostudio.repository.UsuarioRepository;
 public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private TokenResetarSenhaService tokenResetSenhaService;
 
 	@Override
 	public List<Usuario> buscarTodos() {
@@ -33,8 +37,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public void salvar(Usuario usuario) {
-
-		usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
+		usuario.setSenha(encriptarSenha(usuario.getSenha()));
 		setRoleCargo(usuario);
 		usuarioRepository.save(usuario);
 	}
@@ -51,6 +54,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public void alterar(Usuario usuario) {
+		usuario.setSenha(encriptarSenha(usuario.getSenha()));
 		setRoleCargo(usuario);
 		usuarioRepository.save(usuario);
 	}
@@ -74,4 +78,21 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void deletarPorUsuario(Usuario usuario) {
 		usuarioRepository.delete(usuario);
 	}
+
+	private String encriptarSenha(String senha) {
+		String senhaCriptografada = new BCryptPasswordEncoder().encode(senha);
+		return senhaCriptografada;
+	}
+
+	@Override
+	public Usuario buscarPorEmail(String email) {
+		return usuarioRepository.findByEmail(email);
+	}
+
+	@Override
+	public void createPasswordResetTokenForUser(Usuario usuario, String token) {
+		TokenResetarSenha myToken = new TokenResetarSenha(token, usuario);
+		tokenResetSenhaService.salvar(myToken);
+	}
+
 }

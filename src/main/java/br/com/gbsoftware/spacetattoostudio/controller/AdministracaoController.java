@@ -1,5 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
+import java.util.Optional;
+
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -61,6 +63,8 @@ public class AdministracaoController {
 	@GetMapping("visualizar/{usuario-login}")
 	public String visualizarUsuario(@PathVariable("usuario-login") String login, Model model) {
 		model.addAttribute("usuario", servicoUsuario.findById(login));
+		Optional<Usuario> user = servicoUsuario.findById(login);
+		System.err.println(user.get().getPassword());
 		return MODAL_VISUALIZAR_USUARIO;
 	}
 

@@ -40,6 +40,7 @@ public class Usuario implements UserDetails, Serializable {
 	private String nomeCompleto;
 
 	@NotNull
+	@Column(unique = true)
 	private String email;
 
 	@NotNull

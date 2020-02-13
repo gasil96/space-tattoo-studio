@@ -23,4 +23,8 @@ public interface UsuarioService {
 	void alterar(Usuario usuario);
 	
 	void deletarPorUsuario(Usuario usuario);
+
+	Usuario buscarPorEmail(String email);
+
+	void createPasswordResetTokenForUser(Usuario usuario, String token);
 }
