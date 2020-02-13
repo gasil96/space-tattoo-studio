@@ -1,7 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -14,10 +12,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
-import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.repository.CaixaRepository;
 
 @Service
@@ -26,9 +21,6 @@ public class CaixaServiceImpl implements CaixaService {
 	@Autowired
 	private CaixaRepository caixaRepository;
 
-	@Autowired
-	private EntradaCaixaService entradaSaidaServico;
-
 	@Override
 	public void salvar(Caixa caixa) {
 		caixaRepository.save(caixa);
@@ -36,10 +28,6 @@ public class CaixaServiceImpl implements CaixaService {
 
 	@Override
 	public void editar(Caixa caixa) {
-		caixa.setTotal(calculoValorTotalDia());
-		caixa.setTotalAvista(calculoTotalAVista());
-		caixa.setTotalCredito(calculoTotalCredito());
-		caixa.setTotalDebito(calculoTotalDebito());
 		caixaRepository.saveAndFlush(caixa);
 	}
 
@@ -58,169 +46,9 @@ public class CaixaServiceImpl implements CaixaService {
 		return caixaRepository.findAll();
 	}
 
-	@Override
-	public Caixa getDiaAtual() {
-		return caixaRepository.getCaixaDiaAtual();
-	}
 
-	@Override
-	public List<EntradaCaixa> getLancamentos() throws NullPointerException {
-		if (getDiaAtual() == null) {
-			List<EntradaCaixa> dados = new ArrayList<EntradaCaixa>();
-			return dados;
-		} else {
-			return entradaSaidaServico.busarTodosDoDia(getDiaAtual().getId());
-		}
-	}
 
-	@Override
-	public Optional<BigDecimal> sumValorEntradaDia() {
-		return getLancamentos().stream().filter(x -> TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-	}
 
-	@Override
-	public Optional<BigDecimal> sumValorSaidaDia() {
-		return getLancamentos().stream().filter(x -> TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-	}
 
-	@Override
-	public BigDecimal calculoValorTotalDia() {
-		Optional<BigDecimal> entrada = sumValorEntradaDia();
-		Optional<BigDecimal> saida = sumValorSaidaDia();
-		if (entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dado = entrada.get().subtract(saida.get());
-			return dado;
-		} else if (entrada.isPresent() && !saida.isPresent()) {
-			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
-			return dadoSemSaida;
-		} else if (!entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
-			return dadoSemEntrada;
-		} else {
-			BigDecimal dadoZero = new BigDecimal(0);
-			return dadoZero;
-		}
-	}
 
-	@Override
-	public BigDecimal calculoTotalDebito() {
-		Optional<BigDecimal> entrada = getLancamentos().stream()
-				.filter(x -> FormaPagamentoEnum.DEBITO.equals(x.getFormaPagamento())
-						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-
-		Optional<BigDecimal> saida = getLancamentos().stream()
-				.filter(x -> FormaPagamentoEnum.DEBITO.equals(x.getFormaPagamento())
-						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-
-		if (entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dado = entrada.get().subtract(saida.get());
-			return dado;
-		} else if (entrada.isPresent() && !saida.isPresent()) {
-			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
-			return dadoSemSaida;
-		} else if (!entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
-			return dadoSemEntrada;
-		} else {
-			BigDecimal dadoZero = new BigDecimal(0);
-			return dadoZero;
-		}
-	}
-
-	@Override
-	public BigDecimal calculoTotalCredito() {
-		Optional<BigDecimal> entrada = getLancamentos().stream()
-				.filter(x -> FormaPagamentoEnum.CREDITO.equals(x.getFormaPagamento())
-						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-
-		Optional<BigDecimal> saida = getLancamentos().stream()
-				.filter(x -> FormaPagamentoEnum.CREDITO.equals(x.getFormaPagamento())
-						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-
-		if (entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dado = entrada.get().subtract(saida.get());
-			return dado;
-		} else if (entrada.isPresent() && !saida.isPresent()) {
-			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
-			return dadoSemSaida;
-		} else if (!entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
-			return dadoSemEntrada;
-		} else {
-			BigDecimal dadoZero = new BigDecimal(0);
-			return dadoZero;
-		}
-	}
-
-	@Override
-	public BigDecimal calculoTotalAVista() {
-		Optional<BigDecimal> entrada = getLancamentos().stream()
-				.filter(x -> FormaPagamentoEnum.A_VISTA.equals(x.getFormaPagamento())
-						&& TipoOperacaoEnum.ENTRADA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-
-		Optional<BigDecimal> saida = getLancamentos().stream()
-				.filter(x -> FormaPagamentoEnum.A_VISTA.equals(x.getFormaPagamento())
-						&& TipoOperacaoEnum.SAIDA.equals(x.getTipoOperacao()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add);
-
-		if (entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dado = entrada.get().subtract(saida.get());
-			return dado;
-		} else if (entrada.isPresent() && !saida.isPresent()) {
-			BigDecimal dadoSemSaida = entrada.get().subtract(new BigDecimal(0));
-			return dadoSemSaida;
-		} else if (!entrada.isPresent() && saida.isPresent()) {
-			BigDecimal dadoSemEntrada = new BigDecimal(0).subtract(saida.get());
-			return dadoSemEntrada;
-		} else {
-			BigDecimal dadoZero = new BigDecimal(0);
-			return dadoZero;
-		}
-	}
-
-	@Override
-	public List<Caixa> buscarPorIntervalo(String dataInicial, String dataFinal) {
-		return caixaRepository.findByInterval(dataInicial, dataFinal);
-	}
-
-	@Override
-	public List<Caixa> buscarTodosMes(String relGeralMensal) {
-		return caixaRepository.findByMes(relGeralMensal);
-	}
-
-	@Override
-	public List<Object> relatorio(String relGeralMensal) {
-
-		List<Object> relatorio = new ArrayList<>();
-
-		List<Caixa> listaRelGeral = buscarTodosMes(relGeralMensal);
-
-		if (!listaRelGeral.isEmpty()) {
-			BigDecimal totalGeral = listaRelGeral.stream().filter(x -> x.getTotal() != null).map(Caixa::getTotal)
-					.reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
-			BigDecimal totalCredito = listaRelGeral.stream().filter(x -> x.getTotalCredito() != null)
-					.map(Caixa::getTotalCredito).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
-			BigDecimal totalDebito = listaRelGeral.stream().filter(x -> x.getTotalDebito() != null)
-					.map(Caixa::getTotalDebito).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
-			BigDecimal totalAVista = listaRelGeral.stream().filter(x -> x.getTotalAvista() != null)
-					.map(Caixa::getTotalAvista).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-			relatorio.add(0, totalGeral);
-			relatorio.add(1, totalCredito);
-			relatorio.add(2, totalDebito);
-			relatorio.add(3, totalAVista);
-			return relatorio;
-		} else {
-			return null;
-		}
-	}
 }
