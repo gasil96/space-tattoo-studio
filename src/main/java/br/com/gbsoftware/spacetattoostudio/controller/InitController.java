@@ -99,7 +99,6 @@ public class InitController {
 		return StatusServicoEnum.values();
 	}
 
-	//TODO - TEST CONVERTER AGENDAMENTO EM DTO CALENDAR
 	private AgendamentoCalendarDTO converterParaDTO(Servico	servico) {
 
 		ModelMapper testMapper = new ModelMapper();
@@ -117,7 +116,4 @@ public class InitController {
 		AgendamentoCalendarDTO calendarioDTO = testMapper.map(servico, AgendamentoCalendarDTO.class);
 		return calendarioDTO;
 	}
-	
-	
-	
 }

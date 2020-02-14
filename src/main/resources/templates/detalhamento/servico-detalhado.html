@@ -48,6 +48,7 @@
 										<th>R$ Orçamento</th>
 										<th>Data Agendamento</th>
 										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -129,7 +130,7 @@
 			url: "/agendamento/agendamentos",
 			dataType: 'json',
 			success :function(dado){
-				 var table = 	$('#tabela-agendamento').dataTable( {
+				$('#tabela-agendamento').dataTable( {
 					pageLength: 5,
 					lengthChange: false,
 					deferRender: true,
@@ -166,25 +167,30 @@
 					},
 					data: dado,
 					columns: [
-						{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
+						{data: "id" , render : function ( data, type, row, meta ) {
+				              return type === 'display'  ?
+				                '<a href="/agendamento/visualizar/'+ data +'" ><i class="material-icons visualizar" title="visualizer">visibility</i></a>' :
+				                data;
+				            }},
 						{data: 'cliente.nome'},
-						{data: 'title'},
+						{data: 'tipoServico'},
 						{data: 'categoria'},
 						{data: 'orcamento'},
-						{data: "start"},
-						{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
-// 						{data: "id" , render : function ( data, type, row, meta ) {
-// 				              return type === 'display'  ?
-// 				                '<a href="/cliente/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
-// 				                data;
-// 				            }},
-// 						{data: "id" , render : function ( data, type, row, meta ) {
-// 				              return type === 'display'  ?
-// 				                '<a href="/agendamento/agendar/'+ data +'" ><i class="material-icons adicionar" title="adicionar agendamento">post_add</i></a>' :
-// 				                data;
-// 				            }},
+						{data: "horarioAgendamento"},
+						{data: "id" , render : function ( data, type, row, meta ) {
+				              return type === 'display'  ?
+				                '<a href="/agendamento/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
+				                data;
+				            }},
+						{data: "horarioConclusaoAgendamento" , render : function ( data, type, row, meta, dado ) {
+				              return type === 'display'  ?
+				                '<a href="/agendamento/reabrir/'+ data +'" ><i class="material-icons adicionar" title="reabrir">timer</i></a>'+
+				               	'<a href="/agendamento/encerrar/'+ data +'" ><i class="material-icons deletar" title="encerrar">timer_off</i></a>' :
+				                data;
+				            }},
 					]
 				});
+				console.log(dado.id);
 			},
 		});
 	});
@@ -241,23 +247,13 @@
 				minDate : new Date()
 			});
 		});
-
-		//-------------------------------------------------------------------------------------------------------------
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							var mesAtual = (moment().format('MMMM'));
 							var anoAtual = (moment().format('YYYY'));
-							var mesAnoAtual = "Nº de agendamentos em "
-									+ (moment().format('MMMM')) + " de "
-									+ (moment().format('YYYY'));
-							var titleLabelComparativo = "(Período) "
-									+ moment().subtract(90, 'days').calendar()
-									+ " até "
-									+ moment().subtract(1, 'minute').calendar();
+							var mesAnoAtual = "Nº de agendamentos em "+ (moment().format('MMMM')) + " de "+ (moment().format('YYYY'));
+							var titleLabelComparativo = "(Período) "+ moment().subtract(90, 'days').calendar()+ " até "+ moment().subtract(1, 'minute').calendar();
 							document.getElementById("mesAnoAtual").innerHTML = mesAnoAtual;
-							$
-									.ajax({
+							$.ajax({
 										type : "GET",
 										url : "/agendamento/dadosUltimosTresM",
 										dataType : 'json',
@@ -317,24 +313,14 @@
 											alert("Ocorreu um erro ao buscar os eventos!");
 										}
 									});
-
 						});
-
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							var mesAtual = (moment().format('MMMM'));
 							var anoAtual = (moment().format('YYYY'));
-							var mesAnoAtual = "Nº de agendamentos em "
-									+ (moment().format('MMMM')) + " de "
-									+ (moment().format('YYYY'));
-							var titleLabelComparativoProximo = "(Período) "
-									+ moment().subtract(1, 'minute').calendar()
-									+ " até "
-									+ moment().add(90, 'days').calendar();
+							var mesAnoAtual = "Nº de agendamentos em "+(moment().format('MMMM')) + " de " +(moment().format('YYYY'));
+							var titleLabelComparativoProximo = "(Período) "+ moment().subtract(1, 'minute').calendar()+ " até "	+ moment().add(90, 'days').calendar();
 							document.getElementById("mesAnoAtual").innerHTML = mesAnoAtual;
-							$
-									.ajax({
+							$.ajax({
 										type : "GET",
 										url : "/agendamento/dadosProximosTresM",
 										dataType : 'json',
@@ -396,10 +382,7 @@
 									});
 
 						});
-
-		//-------------------------------------------------------------------------------------------------------------
-		$(document).ready(
-				function() {
+		$(document).ready(function() {
 					$.ajax({
 						type : "GET",
 						url : "/agendamento/dadosMA",
@@ -426,7 +409,7 @@
 												"#4682B4", "#f0f8ff" ],
 										hoverBackgroundColor : [ '#864dd9',
 												"#4682B4", "#f0f8ff" ]
-									} ]
+									}]
 								}
 							});
 						},
@@ -434,12 +417,8 @@
 							alert("Ocorreu um erro ao buscar os eventos!");
 						}
 					});
-
 				});
-
-		//-------------------------------------------------------------------------------------------------------------
-		$(document).ready(
-				function() {
+		$(document).ready(function() {
 					var mesAtual = (moment().format('MMMM'));
 					document.getElementById("mesAtual").innerHTML = mesAtual;
 
@@ -477,7 +456,6 @@
 							alert("Ocorreu um erro ao buscar os eventos!");
 						}
 					});
-
 				});
 	</script>
 </body>

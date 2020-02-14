@@ -44,20 +44,13 @@ public class ClienteController {
 	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
 	private static final String MODAL_EDITAR_CLIENTE = "modal/modal-editar-cliente";
 	private static final String MODAL_NOVO_AGENDAMENTO_CLIENTE = "modal/modal-novo-agendamento-cliente";
+	private static final String MODAL_VISUALIZAR_CLIENTE = "modal/modal-visualizar-cliente";
 
 	@Autowired
 	private ClienteService servicoCliente;
 
 	@Autowired
 	private ServicoService servicoServico;
-
-	@GetMapping("agendar/{id}")
-	public String preAgendar(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("servico", servicoServico.buscarPorId(id));
-		model.addAttribute("id_cliente_referente", id);
-		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
-		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
-	}
 
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Servico service, Model model) {
@@ -76,14 +69,18 @@ public class ClienteController {
 				.filter(x -> x.getDataCadastro().getMonthValue() == LocalDate.now().plusMonths(-1).getMonthValue())
 				.collect(Collectors.toList()).size());
 
-		model.addAttribute("totalAtivos", clientesTotal.stream()
-				.filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList()).size());
-
-		model.addAttribute("totalInativos",
-				clientesTotal.stream().filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente()))
-						.collect(Collectors.toList()).size());
+		model.addAttribute("totalAtivos", ativoInativo(clientesTotal, StatusClienteEnum.ATIVO).size());
+		model.addAttribute("totalInativos", ativoInativo(clientesTotal, StatusClienteEnum.INATIVO).size());
 
 		return PAGINA_CLIENTE_DETALHADO;
+	}
+
+	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
+	public @ResponseBody String getCalendario(String clientes) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+		mapper.registerModule(new JavaTimeModule());
+		return clientes = mapper.writeValueAsString(servicoCliente.buscarTodos());
 	}
 
 	@PostMapping("salvar")
@@ -103,6 +100,21 @@ public class ClienteController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@GetMapping("visualizar/{id}")
+	public String visualizar(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
+		return MODAL_VISUALIZAR_CLIENTE;
+	}
+
+	@GetMapping("agendar/{id}")
+	public String agendar(@PathVariable("id") Long id, Model model) {
+		Servico servico = servicoServico.buscarPorId(id).orElse(null);
+		model.addAttribute("servico", servico);
+		model.addAttribute("id_cliente_referente", id);
+		model.addAttribute("clienteNome", servico.getCliente().getNome());
+		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
+	}
+
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
@@ -116,50 +128,14 @@ public class ClienteController {
 		return ATUALIZAR_PAGINA;
 	}
 
-	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
-	public @ResponseBody String getCalendario(String clientes) throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
-		mapper.registerModule(new JavaTimeModule());
-		return clientes = mapper.writeValueAsString(servicoCliente.buscarTodos());
-	}
-	
-	// TODO - VERIFICAR A NECESSIDADE DESTE DOIS MÉTODOS ( SE FOREM PERMANECER,
-	// DIMINUIR A COMPLEXIDADE DE CADA E MELHROAR PERFORMACE)
-
-//	@PostMapping("credito")
-//	public String credito(@Valid Cliente cliente, RedirectAttributes attr) {
-//		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
-//		Long idCliente = cliente.getId();
-//		if (clienteLocalizado.getCreditoCliente() == null) {
-//			servicoCliente.updateCredito(cliente.getCreditoCliente(), idCliente);
-//			attr.addFlashAttribute("creditoAdicionado", true);
-//		} else {
-//			BigDecimal valorCredito = cliente.getCreditoCliente().add(clienteLocalizado.getCreditoCliente());
-//			servicoCliente.updateCredito(valorCredito, idCliente);
-//			attr.addFlashAttribute("creditoAdicionado", true);
-//		}
-//		return ATUALIZAR_PAGINA;
-//	}
-//
-//	@PostMapping("remover-credito")
-//	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
-//		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
-//		Long idCliente = cliente.getId();
-//		if (clienteLocalizado.getCreditoCliente() == null) {
-//			servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), idCliente);
-//			attr.addFlashAttribute("creditoRemovido", true);
-//		} else {
-//			BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
-//			servicoCliente.updateCredito(valorCredito, idCliente);
-//			attr.addFlashAttribute("creditoRemovido", true);
-//		}
-//		return ATUALIZAR_PAGINA;
-//	}
-
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
+	}
+
+	private List<Cliente> ativoInativo(List<Cliente> listaClientes, StatusClienteEnum statusCliente) {
+		return listaClientes.stream().filter(x -> x.getStatusCliente().equals(statusCliente))
+				.collect(Collectors.toList());
 	}
 
 }

@@ -23,8 +23,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
@@ -40,27 +38,24 @@ public class Servico extends EntidadeBase<Long> {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", length = 65)
-	@JsonProperty(value = "title")
 	private TipoServicoEnum tipoServico;
 
 	@Column(length = 40)
-	@JsonProperty(value = "categoria")
 	private String categoria;
 
-	@JsonProperty(value = "start")
 	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
 	@Column(name = "horario_agendamento", nullable = false)
 	private LocalDateTime horarioAgendamento;
 
-	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
 	@Column(name = "horario_conclusao_agendamento")
-	@JsonIgnore
 	private LocalDateTime horarioConclusaoAgendamento;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_agendamento", length = 65)
-	@JsonIgnore
 	private StatusServicoEnum statusAgendamento;
 
 	@Column(name = "valor_orcamento", length = 65, precision = 12, scale = 2)
@@ -75,7 +70,6 @@ public class Servico extends EntidadeBase<Long> {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cliente_fk")
-//	@JsonIgnore
 	private Cliente cliente;
 
 	public Servico() {

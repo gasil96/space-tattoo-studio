@@ -50,7 +50,8 @@ public class ServicoController {
 	private static final String MODAL_CONFIRMAR_ENCERRAMENTO = "modal/confirmar-encerramento";
 	private static final String MODAL_REABRIR_AGENDAMENTO = "modal/modal-reabrir-agendamento";
 	private static final String MODAL_NOVO_AGENDAMENTO_CLIENTE = "modal/modal-novo-agendamento-cliente";
-
+	private static final String MODAL_VISUALIZAR_AGENDAMENTO_CLIENTE = "modal/modal-visualizar-agendamento-cliente";
+	
 	@Autowired
 	private ServicoService servicoSevice;
 
@@ -82,6 +83,12 @@ public class ServicoController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@GetMapping("visualizar/{id}")
+	public String visualizar(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("agendamento", servicoSevice.buscarPorId(id));
+		return MODAL_VISUALIZAR_AGENDAMENTO_CLIENTE;
+	}
+	
 	@GetMapping("agendar/{id}")
 	public String preAgendar(@PathVariable("id") Long id, Model model, Servico servico) {
 		model.addAttribute("id_cliente_referente", id);

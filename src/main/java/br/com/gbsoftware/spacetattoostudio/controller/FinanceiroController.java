@@ -26,5 +26,37 @@ public class FinanceiroController {
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
+	// TODO - VERIFICAR A NECESSIDADE DESTE DOIS MÉTODOS ( SE FOREM PERMANECER,
+	// DIMINUIR A COMPLEXIDADE DE CADA E MELHROAR PERFORMACE)
+
+//	@PostMapping("credito")
+//	public String credito(@Valid Cliente cliente, RedirectAttributes attr) {
+//		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+//		Long idCliente = cliente.getId();
+//		if (clienteLocalizado.getCreditoCliente() == null) {
+//			servicoCliente.updateCredito(cliente.getCreditoCliente(), idCliente);
+//			attr.addFlashAttribute("creditoAdicionado", true);
+//		} else {
+//			BigDecimal valorCredito = cliente.getCreditoCliente().add(clienteLocalizado.getCreditoCliente());
+//			servicoCliente.updateCredito(valorCredito, idCliente);
+//			attr.addFlashAttribute("creditoAdicionado", true);
+//		}
+//		return ATUALIZAR_PAGINA;
+//	}
+//
+//	@PostMapping("remover-credito")
+//	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
+//		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+//		Long idCliente = cliente.getId();
+//		if (clienteLocalizado.getCreditoCliente() == null) {
+//			servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), idCliente);
+//			attr.addFlashAttribute("creditoRemovido", true);
+//		} else {
+//			BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
+//			servicoCliente.updateCredito(valorCredito, idCliente);
+//			attr.addFlashAttribute("creditoRemovido", true);
+//		}
+//		return ATUALIZAR_PAGINA;
+//	}
 
 }

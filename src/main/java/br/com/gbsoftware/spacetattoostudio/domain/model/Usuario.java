@@ -24,12 +24,13 @@ import javax.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.gbsoftware.spacetattoostudio.domain.enums.CargoUsuarioEnum;
 
+@SuppressWarnings("serial")
 @Entity
 public class Usuario implements UserDetails, Serializable {
-
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(length = 20, unique = true)
@@ -45,6 +46,7 @@ public class Usuario implements UserDetails, Serializable {
 
 	@NotNull
 	@NotEmpty
+	@JsonIgnore
 	private String senha;
 
 	@Column(name = "cargo")
@@ -53,7 +55,23 @@ public class Usuario implements UserDetails, Serializable {
 
 	@ManyToMany
 	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "login"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "nomeRole"))
+	@JsonIgnore
 	private List<Role> roles;
+
+	public Usuario() {
+		super();
+	}
+
+	public Usuario(@NotNull String login, @NotNull String nomeCompleto, @NotNull String email,
+			@NotNull @NotEmpty String senha, CargoUsuarioEnum cargo, List<Role> roles) {
+		super();
+		this.login = login;
+		this.nomeCompleto = nomeCompleto;
+		this.email = email;
+		this.senha = senha;
+		this.cargo = cargo;
+		this.roles = roles;
+	}
 
 	public CargoUsuarioEnum getCargo() {
 		return cargo;

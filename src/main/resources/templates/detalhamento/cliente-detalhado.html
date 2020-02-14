@@ -166,7 +166,7 @@
 												extend : 'excel',
 												text : 'Planilha',
 												className : 'btn btn-primary btn-sm',
-												title : 'SpaceTattooStudio Agendamentos',
+												title : 'SpaceTattooStudio',
 												exportOptions : {
 													columns : ':visible'
 												},
@@ -175,7 +175,7 @@
 												extend : 'print',
 												text : 'Impressão',
 												className : 'btn btn-primary btn-sm',
-												title : 'SpaceTattooStudio Agendamentos',
+												title : 'SpaceTattooStudio',
 												exportOptions : {
 													columns : ':visible'
 												},
@@ -183,7 +183,7 @@
 											{
 												extend : 'pdf',
 												className : 'btn btn-primary btn-sm',
-												title : 'SpaceTattooStudio Agendamentos',
+												title : 'SpaceTattooStudio',
 												exportOptions : {
 													columns : ':visible'
 												},
@@ -193,7 +193,11 @@
 										},
 										data: dado,
 										columns: [
-											{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
+											{data: "id" , render : function ( data, type, row, meta ) {
+									              return type === 'display'  ?
+									                '<a href="/cliente/visualizar/'+ data +'" ><i class="material-icons visualizar" title="visualizar">visibility</i></a>' :
+									                data;
+									            }},
 											{data: 'id'},
 											{data: 'nome'},
 											{data: 'instagram'},

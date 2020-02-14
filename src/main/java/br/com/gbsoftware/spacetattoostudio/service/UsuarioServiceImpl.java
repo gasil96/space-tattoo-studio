@@ -16,12 +16,13 @@ import br.com.gbsoftware.spacetattoostudio.repository.UsuarioRepository;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
 	@Override
 	public List<Usuario> buscarTodos() {
-		return (List<Usuario>) usuarioRepository.findAll();
+		return usuarioRepository.buscarTodosUsuarios();
 	}
 
 	@Override
