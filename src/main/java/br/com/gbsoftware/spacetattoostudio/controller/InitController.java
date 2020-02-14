@@ -71,9 +71,10 @@ public class InitController {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-		List<Servico> listaServicos = servicoService.buscarTodos().stream()
-				.filter(x -> x.getStatusAgendamento().equals(StatusServicoEnum.ATIVO)).collect(Collectors.toList());
-		String listaServicosJson = mapper.writeValueAsString(listaServicos);
+//		List<Servico> listaServicos = servicoService.buscarTodos().stream()
+//				.filter(x -> x.getStatusAgendamento().equals(StatusServicoEnum.ATIVO)).collect(Collectors.toList());
+		String listaServicosJson = mapper.writeValueAsString(servicoService.buscarTodos().stream()
+				.filter(x -> x.getStatusAgendamento().equals(StatusServicoEnum.ATIVO)).collect(Collectors.toList()));
 		return listaServicosJson;
 	}
 

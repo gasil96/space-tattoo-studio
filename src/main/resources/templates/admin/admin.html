@@ -65,11 +65,42 @@
 			</div>
 		</section>
 		<div th:replace="fragments/modal-novo-usuario :: modalNovoUsuario"></div>
+	
+<!-- 	TESTE @@@@@@@@@@@@@@@@@@ TESTE @@@@@@@@@@@@@@@@@@@@@@ -->
+	
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="block">
+					<div class="title">
+						<strong>Todos</strong>
+					</div>
+					<div class="block-body">
+						<div class="table-responsive">
+							<table id="example" class="table">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Código</th>
+										<th>Nome</th>
+										<th>Instagram</th>
+										<th>Telefone</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+<!-- 	TESTE @@@@@@@@@@@@@@@@@@ TESTE @@@@@@@@@@@@@@@@@@@@@@ -->
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-		$(document)
-				.ready(
-						function() {
+		$(document).ready( function() {
 							$('#salvouUsuario').show(function() {
 								Messenger().post({
 									message : 'Usuário salvo com sucesso!',
@@ -118,7 +149,64 @@
 																	true);
 												}
 											});
-						});
+						
+		$.ajax({
+			type: "GET",
+			url: "/cliente/clientes",
+			dataType: 'json',
+			success :function(dado){
+				$('#example').dataTable( {
+					dom : 'lBfrtip',
+					buttons : [
+						{
+							extend : 'excel',
+							text : 'Planilha',
+							className : 'btn btn-primary btn-sm',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						},
+						{
+							extend : 'print',
+							text : 'Impressão',
+							className : 'btn btn-primary btn-sm',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						},
+						{
+							extend : 'pdf',
+							className : 'btn btn-primary btn-sm',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						} ],
+					language : {
+						"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+					},
+					data: dado,
+					columns: [
+						{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
+						{data: 'id'},
+						{data: 'nome'},
+						{data: 'instagram'},
+						{data: "telefone"},
+						{defaultContent:  "<a href='#'><i class='material-icons' style='color: white; title='editar''>update</i></a>"},
+						{defaultContent:  "<a href='#'><i class='material-icons' style='color: white; title='agendar''>note_add</i></a>"},
+					]
+				});
+			},
+			error : function(e){
+			alert("ocorreu um erro ao processar a tabela de clientes!");
+			}
+		});
+			
+									
+		
+		});
 
 		var password = document.getElementById("password"), confirm_password = document
 				.getElementById("confirm_password"), email = document

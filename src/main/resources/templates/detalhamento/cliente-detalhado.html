@@ -121,7 +121,7 @@
 												style="color: grey;"><i class="material-icons">style</i></span>
 										</a> <a th:href="@{/agendamento/agendar/{id} (id=${c.id})}"
 											role="button"> <span title="AGENDAR" style="color: white"
-												onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)"><i
+												><i
 													class="material-icons">note_add</i></span>
 										</a></td>
 									</tr>
@@ -199,7 +199,8 @@
 									.DataTable(
 											{
 												dom : 'lBfrtip',
-												order : [],
+// 												order : [],
+												"deferRender": true,
 												buttons : [
 														{
 															extend : 'excel',

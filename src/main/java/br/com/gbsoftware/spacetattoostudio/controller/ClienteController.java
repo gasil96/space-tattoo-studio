@@ -1,6 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 /**
  * <b>Gabriel S. Sofware</b>
@@ -22,7 +21,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
@@ -112,40 +118,45 @@ public class ClienteController {
 		return ATUALIZAR_PAGINA;
 	}
 
-	@PostMapping("credito")
-	public String credito(@Valid Cliente cliente, RedirectAttributes attr) {
-		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
-		Long idCliente = cliente.getId();
-		if (clienteLocalizado.getCreditoCliente() == null) {
-			servicoCliente.updateCredito(cliente.getCreditoCliente(), idCliente);
-			attr.addFlashAttribute("creditoAdicionado", true);
-		} else {
-			BigDecimal valorCredito = cliente.getCreditoCliente().add(clienteLocalizado.getCreditoCliente());
-			servicoCliente.updateCredito(valorCredito, idCliente);
-			attr.addFlashAttribute("creditoAdicionado", true);
-		}
-		return ATUALIZAR_PAGINA;
+	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
+	public @ResponseBody String getCalendario(String clientes) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+		mapper.registerModule(new JavaTimeModule());
+		return clientes = mapper.writeValueAsString(servicoCliente.buscarTodos());
 	}
+	// TODO - VERIFICAR A NECESSIDADE DESTE DOIS MÉTODOS ( SE FOREM PERMANECER,
+	// DIMINUIR A COMPLEXIDADE DE CADA E MELHROAR PERFORMACE)
 
-	@PostMapping("remover-credito")
-	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
-		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
-		Long idCliente = cliente.getId();
-		if (clienteLocalizado.getCreditoCliente() == null) {
-			servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), idCliente);
-			attr.addFlashAttribute("creditoRemovido", true);
-		} else {
-			BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
-			servicoCliente.updateCredito(valorCredito, idCliente);
-			attr.addFlashAttribute("creditoRemovido", true);
-		}
-		return ATUALIZAR_PAGINA;
-	}
-
-	@ModelAttribute("servicos")
-	public List<Servico> getServicos() {
-		return servicoServico.buscarTodos();
-	}
+//	@PostMapping("credito")
+//	public String credito(@Valid Cliente cliente, RedirectAttributes attr) {
+//		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+//		Long idCliente = cliente.getId();
+//		if (clienteLocalizado.getCreditoCliente() == null) {
+//			servicoCliente.updateCredito(cliente.getCreditoCliente(), idCliente);
+//			attr.addFlashAttribute("creditoAdicionado", true);
+//		} else {
+//			BigDecimal valorCredito = cliente.getCreditoCliente().add(clienteLocalizado.getCreditoCliente());
+//			servicoCliente.updateCredito(valorCredito, idCliente);
+//			attr.addFlashAttribute("creditoAdicionado", true);
+//		}
+//		return ATUALIZAR_PAGINA;
+//	}
+//
+//	@PostMapping("remover-credito")
+//	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
+//		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
+//		Long idCliente = cliente.getId();
+//		if (clienteLocalizado.getCreditoCliente() == null) {
+//			servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), idCliente);
+//			attr.addFlashAttribute("creditoRemovido", true);
+//		} else {
+//			BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
+//			servicoCliente.updateCredito(valorCredito, idCliente);
+//			attr.addFlashAttribute("creditoRemovido", true);
+//		}
+//		return ATUALIZAR_PAGINA;
+//	}
 
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
