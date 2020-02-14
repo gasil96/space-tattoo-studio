@@ -40,4 +40,7 @@ public interface ServicoService {
 
 	List<Servico> encerramentoMesAtual();
 
+	List<Servico> getServicosOnCliente();
+	
+	List<Servico> getCalendarIO();
 }

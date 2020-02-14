@@ -29,15 +29,10 @@
 							<div
 								class="progress-details d-flex align-items-end justify-content-between">
 								<div class="title">
-									<div>
-										<a role="button" data-toggle="modal"
-											data-target="#novoCliente" href="#" style="color: white"
-											onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
-											<i class="material-icons md-48" style="font-size: 48px">
-												group_add </i>
-										</a>
-									</div>
-									<strong><a href="/cliente/detalhamento">Total de
+									<a data-toggle="modal" href="#" data-target="#novoCliente">
+										<i class="material-icons md-48 adicionar"
+										style="font-size: 45px"> group_add </i>
+									</a> <strong><a href="/cliente/detalhamento">Total de
 											clientes</a></strong>
 								</div>
 								<div class="number dashtext-4" th:text="${totalClientes}">253</div>
@@ -51,16 +46,15 @@
 								<div class="title">
 									<div>
 										<div>
-										<a role="button" data-toggle="modal"
-											data-target="#novoAgendamento" href="#" style="color: white"
-											onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
-											<i class="material-icons md-48" style="font-size: 35px">
-												note_add </i>
-										</a>
+											<a data-toggle="modal" data-target="#novoAgendamento"
+												href="#"> <i class="material-icons adicionar"
+												style="font-size: 40px"> post_add </i>
+											</a>
+										</div>
 									</div>
-									</div>
-									<strong><a title="7 Dias" href="/agendamento/detalhamento"
-										style="color: #8A8D93">Agendamentos próximos dias</a></strong>
+									<strong><a title="7 Dias"
+										href="/agendamento/detalhamento" style="color: #8A8D93">Agendamentos
+											próximos dias</a></strong>
 								</div>
 								<div class="number dashtext-2"
 									th:text="${totalAgendamentosSemana}">57</div>
@@ -99,10 +93,9 @@
 											+'?text= Olá ' + pa.cliente.nome+ ' aqui é do Space Tattoo Studio gostaríamos da sua confirmação para a seu agendamento de *'
 											+pa.tipoServico+'* marcado para esta '+ 
 											#temporals.dayOfWeekName(pa.horarioAgendamento)+' às '+#temporals.format(pa.horarioAgendamento,  'HH:mm'))}"
-								target="_blank" class="user-title"><i class="material-icons"
-								style="color: white" onmouseover="iconOnOver(this)"
-								onmouseout="iconNormal(this)" title="ENVIAR ALERTA">
-									add_to_home_screen </i></a>
+								target="_blank" class="user-title"><i class="material-icons adicionar"
+								title="enviar alerta">
+									mobile_screen_share </i></a>
 						</div>
 					</div>
 				</div>
@@ -123,7 +116,7 @@
 				</div>
 			</div>
 		</section>
-		<br/>
+		<br />
 		<section>
 
 			<span id="mensagem"></span>
@@ -151,51 +144,41 @@
 		var TODAY = todayDate.format('YYYY-MM-DD');
 		var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
 
-		$(document)
-				.ready(
-						function() {
-							$
-									.ajax({
-										type : "GET",
-										url : "/calendario",
-										dataType : 'json',
-										success : function(data) {
-											var jsonOk = JSON.stringify(data);
-											$('#calendarioGeral')
-													.fullCalendar(
-															{
-																header : {
-																	right : 'title',
-																	left : 'prev,next,today'
-																},
-																footer : {
-																	left : 'month,agendaWeek,agendaDay'
-																},
-																themeSystem : 'bootstrap4',
-																titleFormat: 'MM/YYYY',
-																eventClick : function(
-																		data) {
-																	Messenger()
-																			.post(
-																					{
-																						message : 'CATEGORIA: '
-																								+ data.categoria
-																								+ '!',
-																						type : 'info'
-																					});
-																},
-																eventSources : [ {
-																	url : '/calendario'
-																} ]
-															});
+		$(document).ready(function() {
+			$.ajax({
+				type : "GET",
+				url : "/calendario",
+				dataType : 'json',
+				success : function(data) {
+					var jsonOk = JSON.stringify(data);
+					$('#calendarioGeral').fullCalendar({
+						header : {
+							right : 'title',
+							left : 'prev,next,today'
+						},
+						footer : {
+							left : 'month,agendaWeek,agendaDay'
+						},
+						themeSystem : 'bootstrap4',
+						titleFormat : 'MM/YYYY',
+						eventClick : function(data) {
+							Messenger().post({
+								message : 'CATEGORIA: ' + data.categoria + '!',
+								type : 'info'
+							});
+						},
+						eventSources : [ {
+							url : '/calendario'
+						} ]
+					});
 
-										},
-										error : function(e) {
-											alert("Ocorreu um erro ao buscar os eventos!");
-										}
-									});
+				},
+				error : function(e) {
+					alert("Ocorreu um erro ao buscar os eventos!");
+				}
+			});
 
-						});
+		});
 	</script>
 </body>
 </html>

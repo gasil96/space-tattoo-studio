@@ -35,3 +35,19 @@
 	color: #8a8d93;
 	text-transform: uppercase;
 }
+
+.material-icons.alterar {
+	color: #FFD700; 
+}
+
+.material-icons.deletar {
+	color: #bb414d; 
+}
+
+.material-icons.adicionar {
+	color: #D3D3D3; 
+}
+
+.material-icons:hover{
+	opacity: 0.5
+}

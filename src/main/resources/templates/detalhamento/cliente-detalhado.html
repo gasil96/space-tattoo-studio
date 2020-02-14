@@ -17,8 +17,7 @@
 						<button role="button" data-toggle="modal"
 							style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;"
 							data-target="#novoCliente" title="Novo Cliente">
-							<i class="material-icons" style="font-size: 52px; color: white"
-								onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">
+							<i class="material-icons adicionar" style="font-size: 52px;">
 								group_add </i>
 						</button>
 					</div>
@@ -63,7 +62,6 @@
 				</div>
 			</div>
 		</section>
-
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="block">
@@ -72,59 +70,19 @@
 					</div>
 					<div class="block-body">
 						<div class="table-responsive">
-							<table id="datatableCliente" style="width: 100%;" class="table">
+							<table id="tabela-cliente" class="table">
 								<thead>
 									<tr>
 										<th></th>
 										<th>Código</th>
 										<th>Nome</th>
-										<th>Telefone</th>
 										<th>Instagram</th>
-										<th>Status/Saldo</th>
-										<th>Data Cadastro</th>
-										<th style="display: none"></th>
+										<th>Telefone</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="c :${listaCliente}">
-										<td><div th:if="${c.creditoCliente > 0 && c.creditoCliente != null}">
-												<i class="material-icons"
-													style="align-self: center; color: #429244"
-													data-toggle="popover" title="Crédito Disponivel"
-													data-placement="left" data-container="body"
-													th:attr="data-content=${#strings.concat('R$: ', c.creditoCliente)}"
-													>
-													local_atm </i>
-											</div>
-											<div th:if="${c.creditoCliente < 0 && c.creditoCliente != null}">
-												<i class="material-icons"
-													style="align-self: center; color: #bb414d"
-													data-toggle="popover" title="Crédito Disponivel"
-													data-placement="left" data-container="body"
-													th:attr="data-content=${#strings.concat('R$: ', c.creditoCliente)}"
-													>
-													local_atm </i>
-											</div>
-											</td>
-										<td th:text="${c.id}">1<a></a></td>
-										<td th:text="${c.nome}">Gabriel Silva</td>
-										<td><a th:text="${c.telefone}"
-											th:attr="href=${#strings.toLowerCase(#strings.replace(#strings.replace(#strings.replace
-											(#strings.replace('https://wa.me/55' + c.telefone, '(',''), ')',''),'-',''),' ',''))}"
-											target="_blank"></a></td>
-										<td th:text="${c.instagram}">gasil96</td>
-										<td th:text="${c.statusCliente}">ATIVO</td>
-										<td
-											th:text="${#temporals.format(c.dataCadastro, 'dd-MM-yyyy')}">11/11/2019</td>
-										<td><a th:href="@{/cliente/editar/{id} (id=${c.id})}"
-											role="button"> <span title="EDITAR" aria-hidden="true"
-												style="color: grey;"><i class="material-icons">style</i></span>
-										</a> <a th:href="@{/agendamento/agendar/{id} (id=${c.id})}"
-											role="button"> <span title="AGENDAR" style="color: white"
-												><i
-													class="material-icons">note_add</i></span>
-										</a></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -192,64 +150,68 @@
 			});
 		});
 
-		$(document)
-				.ready(
-						function() {
-							$('#datatableCliente')
-									.DataTable(
+		$(document).ready(function() {
+							$.ajax({
+								type: "GET",
+								url: "/cliente/clientes",
+								dataType: 'json',
+								success :function(dado){
+									 var table = 	$('#tabela-cliente').dataTable( {
+										pageLength: 5,
+										lengthChange: false,
+										deferRender: true,
+										dom : 'lBfrtip',
+										buttons : [
 											{
-												dom : 'lBfrtip',
-// 												order : [],
-												"deferRender": true,
-												buttons : [
-														{
-															extend : 'excel',
-															text : 'Planilha',
-															title : 'SpaceTattooStudio Clientes',
-															className : 'btn btn-primary btn-sm',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'print',
-															className : 'btn btn-primary btn-sm',
-															text : 'Impressão',
-															title : 'SpaceTattooStudio',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'pdf',
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'csv',
-															text : "WhatsApp",
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio WhatsApp',
-															exportOptions : {
-																columns :[3,2]
-															},
-														},
-														{
-															extend : 'excel',
-															text : "Instagram",
-															title : 'SpaceTattooStudio @Instagram',
-															className : 'btn btn-primary btn-sm',
-															exportOptions : {
-																columns : '4'
-															},
-														} ],
-												language : {
-													"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-												}
-											});
+												extend : 'excel',
+												text : 'Planilha',
+												className : 'btn btn-primary btn-sm',
+												title : 'SpaceTattooStudio Agendamentos',
+												exportOptions : {
+													columns : ':visible'
+												},
+											},
+											{
+												extend : 'print',
+												text : 'Impressão',
+												className : 'btn btn-primary btn-sm',
+												title : 'SpaceTattooStudio Agendamentos',
+												exportOptions : {
+													columns : ':visible'
+												},
+											},
+											{
+												extend : 'pdf',
+												className : 'btn btn-primary btn-sm',
+												title : 'SpaceTattooStudio Agendamentos',
+												exportOptions : {
+													columns : ':visible'
+												},
+											} ],
+										language : {
+											"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+										},
+										data: dado,
+										columns: [
+											{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
+											{data: 'id'},
+											{data: 'nome'},
+											{data: 'instagram'},
+											{data: "telefone"},
+											{data: "id" , render : function ( data, type, row, meta ) {
+									              return type === 'display'  ?
+									                '<a href="/cliente/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
+									                data;
+									            }},
+											{data: "id" , render : function ( data, type, row, meta ) {
+									              return type === 'display'  ?
+									                '<a href="/agendamento/agendar/'+ data +'" ><i class="material-icons adicionar" title="adicionar agendamento">post_add</i></a>' :
+									                data;
+									            }},
+										]
+									});
+								},
+							});
 						});
 
 		$(document).ready(function() {

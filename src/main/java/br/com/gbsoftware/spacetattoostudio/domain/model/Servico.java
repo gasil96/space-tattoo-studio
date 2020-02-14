@@ -75,7 +75,7 @@ public class Servico extends EntidadeBase<Long> {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cliente_fk")
-	@JsonIgnore
+//	@JsonIgnore
 	private Cliente cliente;
 
 	public Servico() {

@@ -77,7 +77,19 @@ public class InitController {
 				.filter(x -> x.getStatusAgendamento().equals(StatusServicoEnum.ATIVO)).collect(Collectors.toList()));
 		return listaServicosJson;
 	}
+	
+	@RequestMapping(value = "/calendario2", method = RequestMethod.GET)
+	public @ResponseBody String getCalendario2(String listaServicosJson) throws JsonProcessingException {
+		List<Servico> servicosAtivos = servicoService.getCalendarIO();
+		servicosAtivos.remove(1);
+		System.err.println(servicosAtivos);
+			
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("start", servicosAtivos);
+		return null;//listaServicosJson = new Gson().toJson(map);
+	}
 
+	
 	@GetMapping("/login")
 	public String login() {
 		return "login";

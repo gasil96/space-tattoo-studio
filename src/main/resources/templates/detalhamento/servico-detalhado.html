@@ -17,8 +17,8 @@
 							data-target="#novoAgendamento"
 							style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;"
 							title="Novo Agendamento">
-							<i class="material-icons" style="font-size: 44px; color: white;"
-								onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">note_add</i>
+							<i class="material-icons adicionar" style="font-size: 40px; "
+								>post_add</i>
 						</button>
 					</div>
 				</div>
@@ -38,66 +38,19 @@
 					</div>
 					<div class="block-body">
 						<div class="table-responsive">
-							<table id="datatableAgendamento" style="width: 100%;"
-								class="table">
+							<table id="tabela-agendamento" class="table">
 								<thead>
 									<tr>
-										<!-- 										<th>#</th> -->
-										<th>Tipo</th>
-										<th>Categoria</th>
+										<th></th>
 										<th>Cliente</th>
-										<th>Inicio</th>
-										<th>Término</th>
-										<th align="center">Status</th>
-										<th>R$ Valor</th>
-<!-- 										<th>Sessões</th> -->
-										<th style="display: none"></th>
+										<th>Serviço</th>
+										<th>Descrição</th>
+										<th>R$ Orçamento</th>
+										<th>Data Agendamento</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="a : ${listaServico}">
-										<td th:text="${a.tipoServico}" data-toggle="popover"
-											title="Número da Sessão" data-placement="bottom"
-											data-container="body"
-											th:attr="data-content=${#strings.concat(
-											'Total: ', a.numeroSessoes,'
-											',
-											'Valor Pago: ', a.valorPagoSessao, 
-											)}">TATTOO</td>
-										<td th:text="${a.categoria}">Mahori</td>
-										<td th:text="${a.cliente.nome}" data-toggle="popover"
-											title="Dados Cliente" data-placement="bottom"
-											data-container="body"
-											th:attr="data-content=${#strings.concat(
-											'Telefone: ', a.cliente.telefone,' 
-											',
-											'Instagram: ', a.cliente.instagram,
-	                                    )}">Breno</td>
-
-										<td
-											th:text="${#temporals.format(a.horarioAgendamento, 'dd/MM  HH:mm')}">9:00
-											AM</td>
-										<td
-											th:text="${#temporals.format(a.horarioConclusaoAgendamento, 'dd/MM  HH:mm')}">2</td>
-										<td th:text="${a.statusAgendamento}">Ativo</td>
-										<td>R$ <span th:text="${a.orcamento}"></span></td>
-<!-- 										<td th:text="${a.numeroSessoes}">3</td> -->
-										<td colspan="2"><a
-											th:href="@{/agendamento/editar/{id} (id=${a.id})}"
-											role="button"> <span title="EDITAR" aria-hidden="true"
-												style="color: white;"><i class="material-icons">style</i></span>
-										</a> <a th:href="@{/agendamento/reabrir/{id} (id=${a.id})}"
-											role="button"> <span title="REABRIR" aria-hidden="true"
-												style="color: #ffc107;"
-												th:unless="${a.horarioConclusaoAgendamento == null}"><i
-													class="material-icons">timer</i></span>
-										</a> <a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}"
-											role="button"> <span title="ENCERRAR" aria-hidden="true"
-												style="color: #bb414d;"
-												th:if="${a.horarioConclusaoAgendamento == null}"><i
-													class="material-icons md-48">timer_off</i></span>
-										</a></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -170,7 +123,71 @@
 			th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-	
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/agendamento/agendamentos",
+			dataType: 'json',
+			success :function(dado){
+				 var table = 	$('#tabela-agendamento').dataTable( {
+					pageLength: 5,
+					lengthChange: false,
+					deferRender: true,
+					dom : 'lBfrtip',
+					buttons : [
+						{
+							extend : 'excel',
+							text : 'Planilha',
+							className : 'btn btn-primary btn-sm',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						},
+						{
+							extend : 'print',
+							text : 'Impressão',
+							className : 'btn btn-primary btn-sm',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						},
+						{
+							extend : 'pdf',
+							className : 'btn btn-primary btn-sm',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						} ],
+					language : {
+						"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+					},
+					data: dado,
+					columns: [
+						{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
+						{data: 'cliente.nome'},
+						{data: 'title'},
+						{data: 'categoria'},
+						{data: 'orcamento'},
+						{data: "start"},
+						{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
+// 						{data: "id" , render : function ( data, type, row, meta ) {
+// 				              return type === 'display'  ?
+// 				                '<a href="/cliente/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
+// 				                data;
+// 				            }},
+// 						{data: "id" , render : function ( data, type, row, meta ) {
+// 				              return type === 'display'  ?
+// 				                '<a href="/agendamento/agendar/'+ data +'" ><i class="material-icons adicionar" title="adicionar agendamento">post_add</i></a>' :
+// 				                data;
+// 				            }},
+					]
+				});
+			},
+		});
+	});
 		$(document).ready(function() {
 			$('#agendamentoSalvou').show(function() {
 				Messenger().post({
@@ -215,47 +232,6 @@
 				});
 			});
 		});
-
-		$(document)
-				.ready(
-						function() {
-							$('#datatableAgendamento')
-									.DataTable(
-											{
-												dom : 'lBfrtip',
-												order : [],
-												buttons : [
-														{
-															extend : 'excel',
-															text : 'Planilha',
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio Agendamentos',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'print',
-															text : 'Impressão',
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio Agendamentos',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'pdf',
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio Agendamentos',
-															exportOptions : {
-																columns : ':visible'
-															},
-														} ],
-												language : {
-													"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-												}
-											});
-						});
 
 		$(function() {
 			$('#horarioAgendamento').datetimepicker({

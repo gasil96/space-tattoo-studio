@@ -95,4 +95,13 @@ public class ServicoServiceImpl implements ServicoService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public List<Servico> getServicosOnCliente() {
+		return servicoRepository.findAllOnCliente();
+	}
+
+	@Override
+	public List<Servico> getCalendarIO() {
+		return servicoRepository.getCaledarIO();
+	}
 }

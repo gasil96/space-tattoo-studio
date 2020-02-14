@@ -27,7 +27,7 @@
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-8">
+					<div class="col-lg-12">
 						<div class="block">
 							<div class="title">
 								<strong>Usuários</strong>
@@ -39,7 +39,7 @@
 											<th></th>
 											<th>Nome</th>
 											<th>Login</th>
-<!-- 											<th>Cargo</th> -->
+											<th>Email</th>
 											<th style="text-align: center">Ação</th>
 										</tr>
 									</thead>
@@ -50,10 +50,11 @@
 														</td>
 											<th th:text="${u.nomeCompleto}">Gabriel Silva</th>
 											<td th:text="${u.login}">gasil96</td>
+											<td th:text="${u.email}">gasil96@gmail.com</td>
 <!-- 											<td th:text="${u.cargo}">Desenvolvedor</td> -->
 											<td style="text-align: center">
-												 <a th:href="@{/adm/excluir/{usuario-login} (usuario-login=${u.login})}" title="Excluir"><i style="color: #bb414d" class="material-icons"> delete_forever </i></a>
-												 <a th:href="@{/adm/editar/{usuario-login} (usuario-login=${u.login})}" title="Alterar" ><i style="color: yellow" class="material-icons"> update </i></a>
+												 <a th:href="@{/adm/editar/{usuario-login} (usuario-login=${u.login})}" title="Alterar" ><i class="material-icons alterar"> edit </i></a>
+												 <a th:href="@{/adm/excluir/{usuario-login} (usuario-login=${u.login})}" title="Excluir"><i class="material-icons deletar"> delete_forever </i></a>
 											</td>
 										</tr>
 									</tbody>
@@ -65,39 +66,7 @@
 			</div>
 		</section>
 		<div th:replace="fragments/modal-novo-usuario :: modalNovoUsuario"></div>
-	
-<!-- 	TESTE @@@@@@@@@@@@@@@@@@ TESTE @@@@@@@@@@@@@@@@@@@@@@ -->
-	
-		<section class="no-padding-top">
-			<div class="container-fluid">
-				<div class="block">
-					<div class="title">
-						<strong>Todos</strong>
-					</div>
-					<div class="block-body">
-						<div class="table-responsive">
-							<table id="example" class="table">
-								<thead>
-									<tr>
-										<th></th>
-										<th>Código</th>
-										<th>Nome</th>
-										<th>Instagram</th>
-										<th>Telefone</th>
-										<th></th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-<!-- 	TESTE @@@@@@@@@@@@@@@@@@ TESTE @@@@@@@@@@@@@@@@@@@@@@ -->
+
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 		$(document).ready( function() {
@@ -149,65 +118,6 @@
 																	true);
 												}
 											});
-						
-		$.ajax({
-			type: "GET",
-			url: "/cliente/clientes",
-			dataType: 'json',
-			success :function(dado){
-				$('#example').dataTable( {
-					pageLength: 5,
-					lengthChange: false,
-					dom : 'lBfrtip',
-					buttons : [
-						{
-							extend : 'excel',
-							text : 'Planilha',
-							className : 'btn btn-primary btn-sm',
-							title : 'SpaceTattooStudio Agendamentos',
-							exportOptions : {
-								columns : ':visible'
-							},
-						},
-						{
-							extend : 'print',
-							text : 'Impressão',
-							className : 'btn btn-primary btn-sm',
-							title : 'SpaceTattooStudio Agendamentos',
-							exportOptions : {
-								columns : ':visible'
-							},
-						},
-						{
-							extend : 'pdf',
-							className : 'btn btn-primary btn-sm',
-							title : 'SpaceTattooStudio Agendamentos',
-							exportOptions : {
-								columns : ':visible'
-							},
-						} ],
-					language : {
-						"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-					},
-					data: dado,
-					columns: [
-						{defaultContent: "<a href='#'><i class='material-icons' title='visualizar'>visibility </i></a>"},
-						{data: 'id'},
-						{data: 'nome'},
-						{data: 'instagram'},
-						{data: "telefone"},
-						{defaultContent:  "<a href='#'><i class='material-icons' title='alterar' style='color: yellow;'>update</i></a>"},
-						{defaultContent:  "<a href='#'><i class='material-icons' title='novo agendamento' style='color: white;'>note_add</i></a>"},
-					]
-				});
-			},
-			error : function(e){
-			alert("ocorreu um erro ao processar a tabela de clientes!");
-			}
-		});
-			
-									
-		
 		});
 
 		var password = document.getElementById("password"), confirm_password = document

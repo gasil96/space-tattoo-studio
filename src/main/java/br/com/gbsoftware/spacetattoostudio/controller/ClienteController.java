@@ -65,8 +65,6 @@ public class ClienteController {
 
 		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
 
-		model.addAttribute("listaCliente", clientesTotal);
-
 		model.addAttribute("totalClientes", clientesTotal.size());
 
 		model.addAttribute("totalCadastroMesAtual",
@@ -125,6 +123,7 @@ public class ClienteController {
 		mapper.registerModule(new JavaTimeModule());
 		return clientes = mapper.writeValueAsString(servicoCliente.buscarTodos());
 	}
+	
 	// TODO - VERIFICAR A NECESSIDADE DESTE DOIS MÉTODOS ( SE FOREM PERMANECER,
 	// DIMINUIR A COMPLEXIDADE DE CADA E MELHROAR PERFORMACE)
 
