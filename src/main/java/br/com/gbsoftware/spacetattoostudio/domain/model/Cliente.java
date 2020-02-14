@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -48,8 +49,8 @@ public class Cliente extends EntidadeBase<Long> {
 	@Column(name = "status", length = 30, nullable = false)
 	private StatusClienteEnum statusCliente;
 
-	@JsonIgnore
-	@DateTimeFormat(iso = ISO.DATE)
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
 	@Column(name = "data_cadastro", nullable = false, updatable = false)
 	private LocalDateTime dataCadastro;
 

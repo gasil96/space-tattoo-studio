@@ -132,6 +132,7 @@
 			success :function(dado){
 				var tabelaAgendamento = $('#tabela-agendamento').dataTable( {
 					pageLength: 5,
+					order: [6, 'desc'],
 					lengthChange: false,
 					deferRender: true,
 					dom : 'lBfrtip',
