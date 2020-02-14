@@ -130,7 +130,7 @@
 			url: "/agendamento/agendamentos",
 			dataType: 'json',
 			success :function(dado){
-				$('#tabela-agendamento').dataTable( {
+				var tabelaAgendamento = $('#tabela-agendamento').dataTable( {
 					pageLength: 5,
 					lengthChange: false,
 					deferRender: true,
@@ -139,7 +139,7 @@
 						{
 							extend : 'excel',
 							text : 'Planilha',
-							className : 'btn btn-primary btn-sm',
+							className : 'btn-transparent',
 							title : 'SpaceTattooStudio Agendamentos',
 							exportOptions : {
 								columns : ':visible'
@@ -148,7 +148,7 @@
 						{
 							extend : 'print',
 							text : 'Impressão',
-							className : 'btn btn-primary btn-sm',
+							className : 'btn-transparent',
 							title : 'SpaceTattooStudio Agendamentos',
 							exportOptions : {
 								columns : ':visible'
@@ -156,7 +156,7 @@
 						},
 						{
 							extend : 'pdf',
-							className : 'btn btn-primary btn-sm',
+							className : 'btn-transparent',
 							title : 'SpaceTattooStudio Agendamentos',
 							exportOptions : {
 								columns : ':visible'
@@ -190,7 +190,6 @@
 				            }},
 					]
 				});
-				console.log(dado.id);
 			},
 		});
 	});

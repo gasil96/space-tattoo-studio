@@ -51,3 +51,15 @@
 .material-icons:hover{
 	opacity: 0.5
 }
+
+.btn-transparent{
+    outline: none;
+    border: 0px; 
+    box-sizing: none; 
+    background-color: transparent; 
+    color: white;
+ }
+ 
+ .btn-transparent:hover{
+	opacity: 0.5
+}

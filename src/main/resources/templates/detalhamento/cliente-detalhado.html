@@ -156,7 +156,7 @@
 								url: "/cliente/clientes",
 								dataType: 'json',
 								success :function(dado){
-									 var table = 	$('#tabela-cliente').dataTable( {
+									 var tabelaCliente = 	$('#tabela-cliente').dataTable( {
 										pageLength: 5,
 										lengthChange: false,
 										deferRender: true,
@@ -165,7 +165,7 @@
 											{
 												extend : 'excel',
 												text : 'Planilha',
-												className : 'btn btn-primary btn-sm',
+												className : 'btn-transparent',
 												title : 'SpaceTattooStudio',
 												exportOptions : {
 													columns : ':visible'
@@ -174,7 +174,7 @@
 											{
 												extend : 'print',
 												text : 'Impressão',
-												className : 'btn btn-primary btn-sm',
+												className : 'btn-transparent',
 												title : 'SpaceTattooStudio',
 												exportOptions : {
 													columns : ':visible'
@@ -182,7 +182,7 @@
 											},
 											{
 												extend : 'pdf',
-												className : 'btn btn-primary btn-sm',
+												className : 'btn-transparent',
 												title : 'SpaceTattooStudio',
 												exportOptions : {
 													columns : ':visible'
