@@ -141,11 +141,9 @@ public class ServicoController {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-		return agendamentos = mapper.writeValueAsString(servicoSevice.getServicosOnCliente());
+		return agendamentos = mapper.writeValueAsString(servicoSevice.buscarTodos());
 	}
 
-	
-	//TODO - TENTAR SUBSTISTITUIR CALENDAR IO POR ESSE ESTILO DE TROCA OBJECT POR STRING
 	@RequestMapping(value = "/dadosMA", method = RequestMethod.GET)
 	public @ResponseBody String getDadosMA(String servicosMesAtual) throws JsonProcessingException {
 		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosMesAtual();

@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,6 +32,7 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
+import br.com.gbsoftware.spacetattoostudio.dto.AgendamentoCalendarDTO;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 
@@ -67,28 +70,14 @@ public class InitController {
 	}
 
 	@RequestMapping(value = "/calendario", method = RequestMethod.GET)
-	public @ResponseBody String getCalendario() throws JsonProcessingException {
+	public @ResponseBody String getCalendario( ) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-//		List<Servico> listaServicos = servicoService.buscarTodos().stream()
-//				.filter(x -> x.getStatusAgendamento().equals(StatusServicoEnum.ATIVO)).collect(Collectors.toList());
-		String listaServicosJson = mapper.writeValueAsString(servicoService.buscarTodos().stream()
-				.filter(x -> x.getStatusAgendamento().equals(StatusServicoEnum.ATIVO)).collect(Collectors.toList()));
-		return listaServicosJson;
+		List<AgendamentoCalendarDTO> calendarioDto = servicoService.buscarTodos().stream().map(x -> converterParaDTO(x)).collect(Collectors.toList());
+		String dadosCalendarioIO = mapper.writeValueAsString(calendarioDto);
+		return dadosCalendarioIO;
 	}
-	
-	@RequestMapping(value = "/calendario2", method = RequestMethod.GET)
-	public @ResponseBody String getCalendario2(String listaServicosJson) throws JsonProcessingException {
-		List<Servico> servicosAtivos = servicoService.getCalendarIO();
-		servicosAtivos.remove(1);
-		System.err.println(servicosAtivos);
-			
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("start", servicosAtivos);
-		return null;//listaServicosJson = new Gson().toJson(map);
-	}
-
 	
 	@GetMapping("/login")
 	public String login() {
@@ -110,4 +99,25 @@ public class InitController {
 		return StatusServicoEnum.values();
 	}
 
+	//TODO - TEST CONVERTER AGENDAMENTO EM DTO CALENDAR
+	private AgendamentoCalendarDTO converterParaDTO(Servico	servico) {
+
+		ModelMapper testMapper = new ModelMapper();
+		testMapper.addMappings(new PropertyMap<Servico, AgendamentoCalendarDTO>() {
+
+			@Override
+			protected void configure() {
+			map().setCategoria(source.getCategoria());
+			map().setHorarioAgendamento(source.getHorarioAgendamento());
+			map().setTipoServico(source.getTipoServico());
+			}
+
+		});
+
+		AgendamentoCalendarDTO calendarioDTO = testMapper.map(servico, AgendamentoCalendarDTO.class);
+		return calendarioDTO;
+	}
+	
+	
+	
 }

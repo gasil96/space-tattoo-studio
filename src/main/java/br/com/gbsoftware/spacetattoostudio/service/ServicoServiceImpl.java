@@ -96,11 +96,6 @@ public class ServicoServiceImpl implements ServicoService {
 	}
 
 	@Override
-	public List<Servico> getServicosOnCliente() {
-		return servicoRepository.findAllOnCliente();
-	}
-
-	@Override
 	public List<Servico> getCalendarIO() {
 		return servicoRepository.getCaledarIO();
 	}

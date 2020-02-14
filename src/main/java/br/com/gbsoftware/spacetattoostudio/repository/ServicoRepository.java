@@ -28,9 +28,6 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	List<Servico> findByHorarioConclusaoAgendamento(LocalDateTime horarioConclusaoAgendamento);
 
-	@Query("select s from Servico s, Cliente c where s.cliente.id = c.id")
-	List<Servico> findAllOnCliente();
-	
 	@Query("select s.horarioAgendamento, s.categoria, s.tipoServico from Servico s")
 	List<Servico> getCaledarIO();
 }
