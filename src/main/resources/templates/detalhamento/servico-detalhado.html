@@ -42,12 +42,12 @@
 								<thead>
 									<tr>
 										<th></th>
+										<th>Status</th>
 										<th>Cliente</th>
 										<th>Serviço</th>
 										<th>Descrição</th>
 										<th>R$ Orçamento</th>
 										<th>Data Agendamento</th>
-										<th></th>
 										<th></th>
 									</tr>
 								</thead>
@@ -173,6 +173,12 @@
 				                '<a href="/agendamento/visualizar/'+ data +'" ><i class="material-icons visualizar" title="visualizer">visibility</i></a>' :
 				                data;
 				            }},
+						{data: "statusAgendamento" , render : function ( data, type, row, meta ) {
+				              return data === 'ENCERRADO'  ?
+				                "<span style='color: red;'>"+data+"</span>" :
+				                data;
+				            }},
+// 						{data: 'statusAgendamento'},
 						{data: 'cliente.nome'},
 						{data: 'tipoServico'},
 						{data: 'categoria'},
@@ -181,12 +187,6 @@
 						{data: "id" , render : function ( data, type, row, meta ) {
 				              return type === 'display'  ?
 				                '<a href="/agendamento/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
-				                data;
-				            }},
-						{data: "horarioConclusaoAgendamento" , render : function ( data, type, row, meta, dado ) {
-				              return type === 'display'  ?
-				                '<a href="/agendamento/reabrir/'+ data +'" ><i class="material-icons adicionar" title="reabrir">timer</i></a>'+
-				               	'<a href="/agendamento/encerrar/'+ data +'" ><i class="material-icons deletar" title="encerrar">timer_off</i></a>' :
 				                data;
 				            }},
 					]

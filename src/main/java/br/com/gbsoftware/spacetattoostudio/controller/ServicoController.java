@@ -85,7 +85,13 @@ public class ServicoController {
 
 	@GetMapping("visualizar/{id}")
 	public String visualizar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("agendamento", servicoSevice.buscarPorId(id));
+		Servico servico = servicoSevice.buscarPorId(id).orElse(null);
+		model.addAttribute("agendamento", servico);
+		if(servico.getHorarioConclusaoAgendamento() != null) {
+			model.addAttribute("encerrado", true);
+		}else {
+			model.addAttribute("encerrado", false);
+		}
 		return MODAL_VISUALIZAR_AGENDAMENTO_CLIENTE;
 	}
 	
