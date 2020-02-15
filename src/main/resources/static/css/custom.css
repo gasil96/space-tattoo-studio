@@ -1,65 +1,84 @@
 /* your styles go here */
-
 .texto-login {
-  font-family:  font-login-LemonJelly;
-  font-size: 95px;
-  background: -webkit-linear-gradient(#aaa	, #aaa);
-  -webkit-background-clip: text;
-/*   -webkit-text-fill-color: transparent; */
-  color: white;
- transform: rotate(-11deg);
+	font-family: font-login-LemonJelly;
+	font-size: 95px;
+	background: -webkit-linear-gradient(#aaa, #aaa);
+	-webkit-background-clip: text;
+	/*   -webkit-text-fill-color: transparent; */
+	color: white;
+	transform: rotate(-11deg);
 }
 
 @font-face {
-  font-family: "font-login-LemonJelly";
-  src: url("../fonts/LemonJellyPersonalUse-dEqR.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
+	font-family: "font-login-LemonJelly";
+	src: url("../fonts/LemonJellyPersonalUse-dEqR.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
 }
 
 .popover {
-    background-color: #26292d !important; 
-    font-size: 15px;
-    color: red;
-  }
-  
-.popover-header{
+	background-color: #26292d !important;
+	font-size: 15px;
+	color: red;
+}
+
+.popover-header {
 	background-color: #26292d !important;
 	color: #429244;
 	text-transform: uppercase;
 	text-align: center;
 	font-style: inherit;
 }
-  
-.popover-body{
+
+.popover-body {
 	color: #8a8d93;
 	text-transform: uppercase;
 }
 
 .material-icons.alterar {
-	color: #FFD700; 
+	color: #FFD700;
 }
 
 .material-icons.deletar {
-	color: #bb414d; 
+	color: #bb414d;
 }
 
 .material-icons.adicionar {
-	color: #D3D3D3; 
+	color: #D3D3D3;
 }
 
-.material-icons:hover{
+.material-icons:hover {
 	opacity: 0.5
 }
 
-.btn-transparent{
-    outline: none;
-    border: 0px; 
-    box-sizing: none; 
-    background-color: transparent; 
-    color: white;
- }
- 
- .btn-transparent:hover{
+.btn-transparent {
+	outline: none;
+	border: 0px;
+	box-sizing: none;
+	background-color: transparent;
+	color: white;
+}
+
+.btn-transparent:hover {
 	opacity: 0.5
+}
+
+.carregando {
+	width: 250px;
+	height: 20px;
+	top: 50%;
+	left: 50%;
+	margin: -10px 0 0 -125px;
+	position: fixed;
+	z-index: 9999;
+	display: none;
+}
+
+.carregando strong {
+	font-size: 12px;
+	text-align: center;
+	float: left;
+	display: block;
+	width: 100%;
+	color: red
 }

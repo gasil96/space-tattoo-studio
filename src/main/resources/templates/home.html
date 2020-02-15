@@ -101,7 +101,6 @@
 				</div>
 			</div>
 		</section>
-
 		<section>
 			<div class="container-fluid">
 				<div class="row">
@@ -128,7 +127,13 @@
 	</div>
 
 	<script type="text/javascript" layout:fragment="script">
-		$(function() {
+		var $loading = $("#divCorpo").fadeOut(0);
+		$(document).ajaxStart(function () {
+		    $loading.show();
+		  }).ajaxStop(function () {
+			$loading.fadeOut();
+		  });
+	$(function() {
 			$('#horarioAgendamento').datetimepicker({
 				format : 'DD-MM-YYYY HH:mm',
 				autoclose : true,
@@ -175,7 +180,7 @@
 				},
 				error : function(e) {
 					alert("Ocorreu um erro ao buscar os eventos!");
-				}
+				},
 			});
 
 		});

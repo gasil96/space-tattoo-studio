@@ -9,7 +9,7 @@
 	<li layout:fragment="caminho">Cliente</li>
 
 	<div layout:fragment="corpo">
-
+		<div id="divCorpo"></div>
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="row">
@@ -62,6 +62,7 @@
 				</div>
 			</div>
 		</section>
+		<div id="divCorpo"></div>
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="block">
@@ -141,7 +142,19 @@
 	</div>
 
 	<script type="text/javascript" layout:fragment="script">
-		$(function() {
+	$(document).ready(function()
+			{
+			    $(".carregando").ajaxStart(function(){
+			        $(this).fadeIn(300);
+			    });
+			    $(".carregando").ajaxStop(function(){
+			        $(this).fadeOut(200);
+			    });
+			    
+			    
+			    
+			});
+	$(function() {
 			$('#horarioAgendamento').datetimepicker({
 				format : 'DD-MM-YYYY HH:mm',
 				autoclose : true,
@@ -159,7 +172,7 @@
 									 var tabelaCliente = 	$('#tabela-cliente').dataTable( {
 										pageLength: 5,
 										order: 1,
-										destroy: true, //retirar essa linha caso você nunca recarregar a tabela
+										destroy: true,
 									    sPaginationType: 'simple_numbers',
 									 	lengthChange: false,
 										deferRender: true,
