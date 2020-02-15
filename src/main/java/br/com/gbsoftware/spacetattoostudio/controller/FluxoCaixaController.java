@@ -1,10 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -16,19 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
-import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 
 @Controller
 @RequestMapping("caixa")
