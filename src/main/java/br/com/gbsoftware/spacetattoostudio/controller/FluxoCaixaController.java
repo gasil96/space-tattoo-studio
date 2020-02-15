@@ -26,7 +26,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
-import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
@@ -58,7 +57,7 @@ public class FluxoCaixaController {
 //	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
 	@GetMapping("fluxo")
-	public String caixa(Model model, Caixa caixa, EntradaCaixa entradaSaida, Cliente cliente) {
+	public String caixa(Model model, EntradaCaixa entradaSaida, Cliente cliente) {
 		model.addAttribute("classActiveCaixa", "active");
 
 		return PAGINA_FLUXO_CAIXA;

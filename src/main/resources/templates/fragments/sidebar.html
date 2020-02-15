@@ -22,11 +22,14 @@
           <li sec:authorize="hasAnyRole('ADMIN')" th:class="${classActiveCaixa}"><a th:href="@{/caixa/fluxo}"><i class="icon-grid"></i>Caixa</a></li>
           <li th:class="${classActiveSubCliente}"><a th:href="@{/cliente/detalhamento}"><i class="icon icon-user"></i>Clientes</a></li>
           <li th:class="${classActiveSubAgendamento}"><a th:href="@{/agendamento/detalhamento}"><i class="icon icon-padnote"></i>Agendamentos</a></li>
-           <span class="heading" sec:authorize="hasAnyRole('ADMIN','GERENTE')">Extras</span>
+         
+        </ul>
+          <span class="heading" sec:authorize="hasAnyRole('ADMIN','GERENTE')">Extras</span>
+        <ul class="list-unstyled">
           <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamento</a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled" >
-              <li  sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:class="${classActiveSubFinanceiro}"><a th:href="@{/financeiro/detalhamento}"><i class="material-icons">attach_money</i>Financeiro</a></li>
               <li  sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:class="${classActiveSubFinanceiro}"><a th:href="@{/financeiro/detalhamento}"><i class="material-icons">enhanced_encryption</i>Promoções</a></li>
+              <li  sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:class="${classActiveSubFinanceiro}"><a th:href="@{/financeiro/detalhamento}"><i class="material-icons">attach_money</i>Financeiro</a></li>
             </ul>
           </li>
         </ul>

@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
+
 @Entity
 @SuppressWarnings("serial")
 @Table(name = "CLIENTE")
@@ -59,19 +60,14 @@ public class Cliente extends EntidadeBase<Long> {
 	private String instagram;
 
 	@JsonIgnore
-	@Column(precision = 12, scale = 2)
-	private BigDecimal saldo;
-
-	@JsonIgnore
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
 	private List<Servico> servicos;
 
 	public Cliente() {
 	}
 
-	public Cliente( String nome, String telefone, BigDecimal creditoCliente,
-			 StatusClienteEnum statusCliente, LocalDateTime dataCadastro, String instagram, BigDecimal saldo,
-			List<Servico> servicos) {
+	public Cliente(String nome, String telefone, BigDecimal creditoCliente, StatusClienteEnum statusCliente,
+			LocalDateTime dataCadastro, String instagram, List<Servico> servicos) {
 		super();
 		this.nome = nome;
 		this.telefone = telefone;
@@ -79,22 +75,7 @@ public class Cliente extends EntidadeBase<Long> {
 		this.statusCliente = statusCliente;
 		this.dataCadastro = dataCadastro;
 		this.instagram = instagram;
-		this.saldo = saldo;
 		this.servicos = servicos;
-	}
-
-	public Cliente(BigDecimal saldo) {
-		super();
-		this.saldo = saldo;
-	}
-
-	
-	public Cliente(String nome, String telefone, StatusClienteEnum statusCliente, String instagram) {
-		super();
-		this.nome = nome;
-		this.telefone = telefone;
-		this.statusCliente = statusCliente;
-		this.instagram = instagram;
 	}
 
 	public BigDecimal getCreditoCliente() {
@@ -145,14 +126,6 @@ public class Cliente extends EntidadeBase<Long> {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public BigDecimal getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(BigDecimal saldo) {
-		this.saldo = saldo;
-	}
-
 	public List<Servico> getServicos() {
 		return servicos;
 	}
@@ -170,7 +143,7 @@ public class Cliente extends EntidadeBase<Long> {
 	public String toString() {
 		return "Cliente [nome=" + nome + ", telefone=" + telefone + ", creditoCliente=" + creditoCliente
 				+ ", statusCliente=" + statusCliente + ", dataCadastro=" + dataCadastro + ", instagram=" + instagram
-				+ ", saldo=" + saldo + ", servicos=" + servicos + "]";
+				+ ", servicos=" + servicos + "]";
 	}
 
 }

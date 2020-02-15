@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
+import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 
 @Controller
 @RequestMapping("financeiro")
@@ -21,7 +21,7 @@ public class FinanceiroController {
 //	private EntradaCaixaService servicoEntradaSaida;
 
 	@GetMapping("detalhamento")
-	public String detalhamentoFinanceiro(Caixa caixa, Model model) {
+	public String detalhamentoFinanceiro(Model model, Cliente cliente) {
 
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}

@@ -14,16 +14,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
-import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 
 @Entity
@@ -39,38 +35,27 @@ public class SaidaCaixa extends EntidadeBase<Long> {
 	private String descricao;
 
 	@Column(precision = 12, scale = 2)
-	private BigDecimal valor;
+	private BigDecimal desconto;
 
 	@Column(precision = 12, scale = 2)
-	private BigDecimal desconto;
+	private BigDecimal valor;
 
 	@Column(name = "forma_pagamento")
 	@Enumerated(EnumType.STRING)
 	private FormaPagamentoEnum formaPagamento;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "categoria_entrada")
-	private CategoriaEntradaEnum categoriaEntrada;
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "id_caixa_fk")
-	private Caixa caixa;
-
 	public SaidaCaixa() {
 
 	}
 
-	public SaidaCaixa(LocalDateTime horarioOperacao, String descricao, BigDecimal valor, BigDecimal desconto,
-			FormaPagamentoEnum formaPagamento, CategoriaEntradaEnum categoriaEntrada, @NotNull Caixa caixa) {
+	public SaidaCaixa(LocalDateTime horarioOperacao, String descricao, BigDecimal desconto, BigDecimal valor,
+			FormaPagamentoEnum formaPagamento) {
 		super();
 		this.horarioOperacao = horarioOperacao;
 		this.descricao = descricao;
-		this.valor = valor;
 		this.desconto = desconto;
+		this.valor = valor;
 		this.formaPagamento = formaPagamento;
-		this.categoriaEntrada = categoriaEntrada;
-		this.caixa = caixa;
 	}
 
 	public LocalDateTime getHorarioOperacao() {
@@ -89,20 +74,20 @@ public class SaidaCaixa extends EntidadeBase<Long> {
 		this.descricao = descricao;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
-	}
-
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
 	public BigDecimal getDesconto() {
 		return desconto;
 	}
 
 	public void setDesconto(BigDecimal desconto) {
 		this.desconto = desconto;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
 	}
 
 	public FormaPagamentoEnum getFormaPagamento() {
@@ -113,27 +98,10 @@ public class SaidaCaixa extends EntidadeBase<Long> {
 		this.formaPagamento = formaPagamento;
 	}
 
-	public CategoriaEntradaEnum getCategoriaEntrada() {
-		return categoriaEntrada;
-	}
-
-	public void setCategoriaEntrada(CategoriaEntradaEnum categoriaEntrada) {
-		this.categoriaEntrada = categoriaEntrada;
-	}
-
-	public Caixa getCaixa() {
-		return caixa;
-	}
-
-	public void setCaixa(Caixa caixa) {
-		this.caixa = caixa;
-	}
-
 	@Override
 	public String toString() {
-		return "SaidaCaixa [horarioOperacao=" + horarioOperacao + ", descricao=" + descricao + ", valor=" + valor
-				+ ", desconto=" + desconto + ", formaPagamento=" + formaPagamento + ", categoriaEntrada="
-				+ categoriaEntrada + ", caixa=" + caixa + "]";
+		return "SaidaCaixa [horarioOperacao=" + horarioOperacao + ", descricao=" + descricao + ", desconto=" + desconto
+				+ ", valor=" + valor + ", formaPagamento=" + formaPagamento + "]";
 	}
 
 }

@@ -14,7 +14,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.repository.EntradaCaixaRepository;
 
@@ -24,12 +23,8 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 	@Autowired
 	private EntradaCaixaRepository entradaSaidaRepository;
 
-	@Autowired
-	private ClienteService servicoCliente;
-
 	@Override
 	public void salvar(EntradaCaixa entradaSaida) {
-		addGastoTotalCliente(entradaSaida);
 		if (entradaSaida.getDesconto() == null) {
 			entradaSaidaRepository.save(entradaSaida);
 		} else {
@@ -42,7 +37,6 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 
 	@Override
 	public void editar(EntradaCaixa entradaSaida) {
-		addGastoTotalCliente(entradaSaida);
 		entradaSaida.setHorarioOperacao(LocalDateTime.now());
 		if (entradaSaida.getDesconto() == null) {
 
@@ -73,17 +67,6 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 	@Override
 	public List<EntradaCaixa> busarTodosDoDia(Long iDCaixaFK) {
 		return entradaSaidaRepository.findByEntradaSaida(iDCaixaFK);
-	}
-
-	public void addGastoTotalCliente(EntradaCaixa entradaSaida) {
-		BigDecimal gastoLista = buscarTodos().stream()
-				.filter(x -> entradaSaida.getCliente().getId().equals(x.getCliente().getId()))
-				.map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-		BigDecimal gastoTotalCliente = gastoLista.add(entradaSaida.getValor());
-		Optional<Cliente> cliente = servicoCliente.buscarPorId(entradaSaida.getCliente().getId());
-		if (cliente.isPresent()) {
-			cliente.get().setSaldo(gastoTotalCliente);
-		}
 	}
 
 	@Override
