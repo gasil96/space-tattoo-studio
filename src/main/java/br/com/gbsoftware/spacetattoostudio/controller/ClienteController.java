@@ -12,7 +12,12 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -33,6 +39,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
+import br.com.gbsoftware.spacetattoostudio.dto.ClienteDTO;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 
@@ -82,7 +89,18 @@ public class ClienteController {
 		mapper.registerModule(new JavaTimeModule());
 		return clientes = mapper.writeValueAsString(servicoCliente.buscarTodos());
 	}
-
+	
+	@RequestMapping(value = "/clientes-teste", produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET)
+	@JsonIgnore
+	public ResponseEntity<List<ClienteDTO>> listAllProducts() {
+	    List<ClienteDTO> clientesDTO = servicoCliente.buscarTodos().stream().map(x -> converterParaDTO(x)).collect(Collectors.toList());
+		
+		if (clientesDTO.isEmpty()) {
+	        return new ResponseEntity<List<ClienteDTO>>(HttpStatus.NO_CONTENT);
+	    }
+	    return new ResponseEntity<List<ClienteDTO>>(clientesDTO, HttpStatus.OK);
+	}
+	
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		if (cliente.getInstagram().isEmpty()) {
@@ -138,4 +156,19 @@ public class ClienteController {
 				.collect(Collectors.toList());
 	}
 
+	private ClienteDTO converterParaDTO(Cliente	cliente) {
+
+		ModelMapper testMapper = new ModelMapper();
+		testMapper.addMappings(new PropertyMap<Cliente, ClienteDTO>() {
+
+			@Override
+			protected void configure() {
+		
+			}
+		});
+
+		ClienteDTO clienteDto = testMapper.map(cliente, ClienteDTO.class);
+		return clienteDto;
+	}
+	
 }

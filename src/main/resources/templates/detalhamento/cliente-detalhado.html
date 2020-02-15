@@ -159,7 +159,9 @@
 									 var tabelaCliente = 	$('#tabela-cliente').dataTable( {
 										pageLength: 5,
 										order: 1,
-										lengthChange: false,
+										destroy: true, //retirar essa linha caso você nunca recarregar a tabela
+									    sPaginationType: 'simple_numbers',
+									 	lengthChange: false,
 										deferRender: true,
 										dom : 'lBfrtip',
 										buttons : [
