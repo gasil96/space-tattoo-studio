@@ -44,7 +44,11 @@ public class FluxoCaixaController {
 	@GetMapping("fluxo")
 	public String caixa(Model model, EntradaCaixa entradaSaida, Cliente cliente) {
 		model.addAttribute("classActiveCaixa", "active");
+
 		//TODO - CARREGAR FLUXO CAIXA AQUI
+		model.addAttribute("totalEntradaDiario", 300L);
+		model.addAttribute("totalSaidaDiario", 300L);
+		model.addAttribute("saldoTotalDiario", -900L);
 		return PAGINA_FLUXO_CAIXA;
 	}
 
