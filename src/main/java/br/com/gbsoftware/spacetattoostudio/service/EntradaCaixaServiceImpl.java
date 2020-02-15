@@ -1,7 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -21,56 +19,31 @@ import br.com.gbsoftware.spacetattoostudio.repository.EntradaCaixaRepository;
 public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 
 	@Autowired
-	private EntradaCaixaRepository entradaSaidaRepository;
+	private EntradaCaixaRepository entradaRepository;
 
 	@Override
 	public void salvar(EntradaCaixa entradaSaida) {
-		if (entradaSaida.getDesconto() == null) {
-			entradaSaidaRepository.save(entradaSaida);
-		} else {
-			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto())
-					.divide(new BigDecimal(100)));
-			entradaSaida.setValor(entradaSaida.getValor().subtract(resultadoValorComDesconto));
-			entradaSaidaRepository.save(entradaSaida);
-		}
+		entradaRepository.save(entradaSaida);
 	}
 
 	@Override
-	public void editar(EntradaCaixa entradaSaida) {
-		entradaSaida.setHorarioOperacao(LocalDateTime.now());
-		if (entradaSaida.getDesconto() == null) {
-
-			entradaSaidaRepository.save(entradaSaida);
-		} else {
-			BigDecimal resultadoValorComDesconto = (entradaSaida.getValor().multiply(entradaSaida.getDesconto())
-					.divide(new BigDecimal(100)));
-			entradaSaida.setValor(entradaSaida.getValor().subtract(resultadoValorComDesconto));
-			entradaSaidaRepository.save(entradaSaida);
-		}
+	public void alterar(EntradaCaixa entradaSaida) {
+		entradaRepository.save(entradaSaida);
 	}
 
 	@Override
 	public void deletar(Long id) {
-		entradaSaidaRepository.deleteById(id);
+		entradaRepository.deleteById(id);
 	}
 
 	@Override
 	public Optional<EntradaCaixa> buscarPorId(Long id) {
-		return entradaSaidaRepository.findById(id);
+		return entradaRepository.findById(id);
 	}
 
 	@Override
 	public List<EntradaCaixa> buscarTodos() {
-		return entradaSaidaRepository.findAll();
+		return entradaRepository.findAll();
 	}
 
-	@Override
-	public List<EntradaCaixa> busarTodosDoDia(Long iDCaixaFK) {
-		return entradaSaidaRepository.findByEntradaSaida(iDCaixaFK);
-	}
-
-	@Override
-	public List<EntradaCaixa> buscarPorIntervalo(String dataInicial, String dataFinal) {
-		return entradaSaidaRepository.findByInterval(dataInicial, dataFinal);
-	}
 }

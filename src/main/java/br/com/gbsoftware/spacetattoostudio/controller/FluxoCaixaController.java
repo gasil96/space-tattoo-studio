@@ -38,16 +38,13 @@ public class FluxoCaixaController {
 //	private UsuarioService servicoUsuario;
 //
 //	@Autowired
-//	private CaixaService servicoCaixa;
-//
-//	@Autowired
 //	private EntradaCaixaService entradaCaixaService;
 //	
 //	@Autowired
 //	private SaidaCaixaService saidaCaixaService;
-	
-	@Autowired
-	private ClienteService servicoCliente;
+//	
+//	@Autowired
+//	private ClienteService servicoCliente;
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 //	private static final String MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA = "modal/modal-confimar-exclusao-entrada-saida";
@@ -59,19 +56,10 @@ public class FluxoCaixaController {
 	@GetMapping("fluxo")
 	public String caixa(Model model, EntradaCaixa entradaSaida, Cliente cliente) {
 		model.addAttribute("classActiveCaixa", "active");
-
+		//TODO - CARREGAR FLUXO CAIXA AQUI
 		return PAGINA_FLUXO_CAIXA;
 	}
 
-	@RequestMapping(value = "/input-clientes")
-	public @ResponseBody String getInputClientes(HttpServletResponse response) throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
-		mapper.registerModule(new JavaTimeModule());
-		List<Cliente> listaClientesInput = servicoCliente.buscarTodos();
-		String listaClientesInputJson = mapper.writeValueAsString(listaClientesInput);
-		return listaClientesInputJson;
-	}
 
 	@ModelAttribute("formapagamento")
 	public FormaPagamentoEnum[] getFormaPagamento() {
@@ -87,5 +75,5 @@ public class FluxoCaixaController {
 	public TipoOperacaoEnum[] getOperacao() {
 		return TipoOperacaoEnum.values();
 	}
-
+	
 }

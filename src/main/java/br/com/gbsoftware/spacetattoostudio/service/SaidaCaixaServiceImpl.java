@@ -1,5 +1,41 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
-public class SaidaCaixaServiceImpl {
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import br.com.gbsoftware.spacetattoostudio.domain.model.SaidaCaixa;
+import br.com.gbsoftware.spacetattoostudio.repository.SaidaCaixaRepository;
+
+public class SaidaCaixaServiceImpl implements SaidaCaixaService {
+
+	@Autowired
+	private SaidaCaixaRepository saidaRepository;
+
+	@Override
+	public void salvar(SaidaCaixa saidaCaixa) {
+		saidaRepository.save(saidaCaixa);
+	}
+
+	@Override
+	public void alterar(SaidaCaixa saidaCaixa) {
+		saidaRepository.save(saidaCaixa);
+	}
+
+	@Override
+	public void deletar(Long id) {
+		saidaRepository.deleteById(id);
+	}
+
+	@Override
+	public Optional<SaidaCaixa> buscarPorId(Long id) {
+		return saidaRepository.findById(id);
+	}
+
+	@Override
+	public List<SaidaCaixa> buscarTodos() {
+		return saidaRepository.findAll();
+	}
 
 }

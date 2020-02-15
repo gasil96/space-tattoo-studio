@@ -14,15 +14,11 @@ public interface EntradaCaixaService {
 
 	void salvar(EntradaCaixa entradaSaida);
 
-	void editar(EntradaCaixa entradaSaida);
+	void alterar(EntradaCaixa entradaSaida);
 
 	void deletar(Long id);
 
 	Optional<EntradaCaixa> buscarPorId(Long id);
 
 	List<EntradaCaixa> buscarTodos();
-	
-	List<EntradaCaixa> busarTodosDoDia(Long iDCaixaFK);
-
-	List<EntradaCaixa> buscarPorIntervalo(String dataInicial, String dataFinal);
 }

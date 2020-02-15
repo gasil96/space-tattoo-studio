@@ -18,7 +18,7 @@ $(document).ready(
 		function() {
 			$.ajax({
 				type : "GET",
-				url : "/caixa/input-clientes",
+				url : "/cliente/clientes",
 				dataType : 'json',
 				success : function(item) {
 					var jsonOk = JSON.stringify(item);
