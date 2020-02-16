@@ -15,9 +15,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
@@ -27,33 +30,33 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 @Table(name = "SAIDA_CAIXA")
 public class SaidaCaixa extends EntidadeBase<Long> {
 
+	@NotNull
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
 	@Column(name = "horario_operacao")
-	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private LocalDateTime horarioOperacao;
 
-	@Column(length = 65)
+	@Column(name = "DESCRICAO", length = 65)
 	private String descricao;
 
-	@Column(precision = 12, scale = 2)
-	private BigDecimal desconto;
-
-	@Column(precision = 12, scale = 2)
+	@NotNull
+	@Column(name = "VALOR", precision = 22, scale = 2)
 	private BigDecimal valor;
-
-	@Column(name = "forma_pagamento")
+	
+	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name = "FORMA_PAGAMENTO")
 	private FormaPagamentoEnum formaPagamento;
 
 	public SaidaCaixa() {
 
 	}
 
-	public SaidaCaixa(LocalDateTime horarioOperacao, String descricao, BigDecimal desconto, BigDecimal valor,
+	public SaidaCaixa(LocalDateTime horarioOperacao, String descricao, BigDecimal valor,
 			FormaPagamentoEnum formaPagamento) {
 		super();
 		this.horarioOperacao = horarioOperacao;
 		this.descricao = descricao;
-		this.desconto = desconto;
 		this.valor = valor;
 		this.formaPagamento = formaPagamento;
 	}
@@ -63,7 +66,7 @@ public class SaidaCaixa extends EntidadeBase<Long> {
 	}
 
 	public void setHorarioOperacao(LocalDateTime horarioOperacao) {
-		this.horarioOperacao = horarioOperacao;
+		this.horarioOperacao = LocalDateTime.now();
 	}
 
 	public String getDescricao() {
@@ -72,14 +75,6 @@ public class SaidaCaixa extends EntidadeBase<Long> {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public BigDecimal getDesconto() {
-		return desconto;
-	}
-
-	public void setDesconto(BigDecimal desconto) {
-		this.desconto = desconto;
 	}
 
 	public BigDecimal getValor() {
@@ -100,8 +95,8 @@ public class SaidaCaixa extends EntidadeBase<Long> {
 
 	@Override
 	public String toString() {
-		return "SaidaCaixa [horarioOperacao=" + horarioOperacao + ", descricao=" + descricao + ", desconto=" + desconto
-				+ ", valor=" + valor + ", formaPagamento=" + formaPagamento + "]";
+		return "SaidaCaixa [horarioOperacao=" + horarioOperacao + ", descricao=" + descricao + ", valor=" + valor
+				+ ", formaPagamento=" + formaPagamento + "]";
 	}
 
 }

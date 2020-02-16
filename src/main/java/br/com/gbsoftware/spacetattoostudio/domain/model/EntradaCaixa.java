@@ -16,52 +16,85 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 
 @Entity
 @SuppressWarnings("serial")
-@Table(name = "ENTRADA_SAIDA")
+@Table(name = "ENTRADA_CAIXA")
 public class EntradaCaixa extends EntidadeBase<Long> {
 
-	@Column(name = "horario_operacao")
-	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@NotNull
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@Column(name = "HORARIO_OPERACAO")
 	private LocalDateTime horarioOperacao;
 
-	@Column(length = 65)
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column(name = "SERVICO")
+	private TipoServicoEnum tipoServico;
+
+	@Column(name = "DESCRICAO", length = 65)
 	private String descricao;
 
-	@Column(precision = 12, scale = 2)
-	private BigDecimal desconto;
+	@Max(100)
+	@Column(name = "PORCENTAGEM_DESCONTO")
+	private Integer porcentagemDesconto;
 
-	@Column(precision = 12, scale = 2)
+	@Column(name = "VALOR", precision = 22, scale = 2)
+	@NotNull
 	private BigDecimal valor;
 
-	@Column(name = "forma_pagamento")
+	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name = "FORMA_PAGAMENTO")
 	private FormaPagamentoEnum formaPagamento;
 
 	@ManyToOne
-	@JoinColumn(name = "id_cliente_fk")
+	@JoinColumn(name = "ID_CLIENTE_FK")
 	private Cliente cliente;
 
 	public EntradaCaixa() {
 
 	}
 
-	public EntradaCaixa(LocalDateTime horarioOperacao, String descricao, BigDecimal desconto, BigDecimal valor,
-			FormaPagamentoEnum formaPagamento, Cliente cliente) {
+	public EntradaCaixa(LocalDateTime horarioOperacao, @NotNull TipoServicoEnum tipoServico, String descricao,
+			Integer porcentagemDesconto, @NotNull BigDecimal valor, @NotNull FormaPagamentoEnum formaPagamento,
+			Cliente cliente) {
 		super();
 		this.horarioOperacao = horarioOperacao;
+		this.tipoServico = tipoServico;
 		this.descricao = descricao;
-		this.desconto = desconto;
+		this.porcentagemDesconto = porcentagemDesconto;
 		this.valor = valor;
 		this.formaPagamento = formaPagamento;
 		this.cliente = cliente;
+	}
+
+	public TipoServicoEnum getTipoServico() {
+		return tipoServico;
+	}
+
+	public void setTipoServico(TipoServicoEnum tipoServico) {
+		this.tipoServico = tipoServico;
+	}
+
+	public Integer getPorcentagemDesconto() {
+		return porcentagemDesconto;
+	}
+
+	public void setPorcentagemDesconto(Integer porcentagemDesconto) {
+		this.porcentagemDesconto = porcentagemDesconto;
 	}
 
 	public LocalDateTime getHorarioOperacao() {
@@ -69,7 +102,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	}
 
 	public void setHorarioOperacao(LocalDateTime horarioOperacao) {
-		this.horarioOperacao = horarioOperacao;
+		this.horarioOperacao = LocalDateTime.now();
 	}
 
 	public String getDescricao() {
@@ -80,20 +113,12 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 		this.descricao = descricao;
 	}
 
-	public BigDecimal getDesconto() {
-		return desconto;
-	}
-
-	public void setDesconto(BigDecimal desconto) {
-		this.desconto = desconto;
-	}
-
 	public BigDecimal getValor() {
 		return valor;
 	}
 
 	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+		this.valor = (valor.multiply(getValor())).divide(new BigDecimal(100)); // TODO - CONFERIR ESSE CÁLCULO
 	}
 
 	public FormaPagamentoEnum getFormaPagamento() {
@@ -114,7 +139,9 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 
 	@Override
 	public String toString() {
-		return "EntradaCaixa [horarioOperacao=" + horarioOperacao + ", descricao=" + descricao + ", desconto="
-				+ desconto + ", valor=" + valor + ", formaPagamento=" + formaPagamento + ", cliente=" + cliente + "]";
+		return "EntradaCaixa [horarioOperacao=" + horarioOperacao + ", tipoServico=" + tipoServico + ", descricao="
+				+ descricao + ", porcentagemDesconto=" + porcentagemDesconto + ", valor=" + valor + ", formaPagamento="
+				+ formaPagamento + ", cliente=" + cliente + "]";
 	}
+
 }

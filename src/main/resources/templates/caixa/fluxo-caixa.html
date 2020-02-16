@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout-principal}">
 <head>
-<style type="text/css">
-.cssTeste {
-	color: red;
-}
-</style>
 <meta charset="UTF-8" />
 <body>
 	<h2 layout:fragment="titulosubCabecalho">Controle Caixa Diário</h2>
@@ -25,8 +20,8 @@
 								</div>
 								<div class="stats-2-content">
 									<strong class="d-block">R$<strong
-										th:text="${totalEntradaDiario}">758.00</strong></strong>
-										<span class="d-block">Entrada</span>
+										th:text="${totalEntradaDiario}">758.00</strong></strong> <span
+										class="d-block">Entrada</span>
 								</div>
 							</div>
 							<div class="stats-2 d-flex">
@@ -35,8 +30,8 @@
 								</div>
 								<div class="stats-2-content">
 									<strong class="d-block">R$<strong
-										th:text=${totalSaidaDiario}>758.00</strong></strong>
-										<span class="d-block">Saída</span>
+										th:text=${totalSaidaDiario}>758.00</strong></strong> <span
+										class="d-block">Saída</span>
 								</div>
 							</div>
 						</div>
@@ -74,9 +69,100 @@
 		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-12">
-						<div class="stats-2-block block d-flex">
-							<div class="stats-2 d-flex">Teste Container</div>
+					<div class="col-lg-6">
+						<div class="block">
+							<div class="title">
+								<strong class="d-block" style="color: #429244">Entrada</strong>
+								<span class="d-block">Lorem	ipsum dolor sit amet consectetur.</span>
+							</div>
+							<div class="block-body">
+								<form>
+								<div class="form-group">
+										<label for="tipoServico">Serviço</label>
+										 <select id="selecioneSevico" class="form-control" required="required">
+											<option th:each="ts : ${tiposervico}" th:value="${ts}"
+												th:text="${ts.tipoServico}">ATIVO</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="form-control-label">Descrição</label> <input
+											type="text" placeholder="Descrição" class="form-control">
+									</div>
+									<div class="form-group">
+									<label class="form-control-label">Valor</label>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">R$</span>
+											</div>
+											<input id="valorEntrada" type="number" placeholder="Valor de entrada" class="form-control" min="1" max="10000" required="required">
+										</div>
+									</div>
+									<div class="form-group" id="porcentagemDesconto" >
+									<label class="form-control-label">Aplicar Desconto</label>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">%</span>
+											</div>
+											<input id="valorDesconto" type="number" placeholder="Desconto aplicado" class="form-control" min="1" max="100">
+											<div class="input-group-append">
+												<button id="calcularDesconto" type="button" class="btn btn-info">Simular</button>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="tipoServico">Forma de Pagamento</label>
+										 <select id="selecetPagamentoEntrada" class="form-control" required="required">
+											<option th:each="fp : ${formapagamento}" th:value="${fp}"
+												th:text="${fp.pagamento}">ATIVO</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Código do cliente</label> <input type="text"
+											class="form-control" id="typeaheadIdInstaNomeCliente"
+											placeholder="">
+									</div>	
+									<div class="form-group">
+										<button type="reset" class="btn btn-light">Limpar</button>
+										<button type="submit" class="btn btn-primary">Salvar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="block">
+							<div class="title">
+								<strong class="d-block" style="color: #dc3545">Saída</strong>
+								<span class="d-block">Lorem	ipsum dolor sit amet consectetur.</span>
+							</div>
+							<div class="block-body">
+								<form>
+									<div class="form-group">
+										<label class="form-control-label">Descrição</label> <input
+											type="text" placeholder="Descrição" class="form-control">
+									</div>
+									<div class="form-group" id="valorSaida" >
+									<label class="form-control-label">Valor</label>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">R$</span>
+											</div>
+											<input type="number" placeholder="Valor de saída" class="form-control" min="0" max="10000" required="required">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="tipoServico">Forma de Pagamento</label>
+										 <select id="selectPagamentoSaida" class="form-control" required="required">
+											<option th:each="fp : ${formapagamento}" th:value="${fp}"
+												th:text="${fp.pagamento}">ATIVO</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<button type="reset" class="btn btn-light">Limpar</button>
+										<button type="submit" class="btn btn-primary">Salvar</button>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -84,7 +170,20 @@
 		</section>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-		
+	$(document).ready(function(){
+		$("#calcularDesconto").click(function(){
+			var desconto = (($("#valorEntrada").val()*$("#valorDesconto").val())/100);
+			var valorComDesconto = $("#valorEntrada").val() - desconto;
+			Messenger().post({
+				message : "Desconto Aplicado: "+ desconto,
+				type : 'info'
+			});	
+			Messenger().post({
+				message : "Valor com Desconto: " + valorComDesconto,
+				type : 'info'
+			});	
+		});
+	});			
 	</script>
 </body>
 </html>

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 
@@ -58,9 +58,9 @@ public class FluxoCaixaController {
 		return FormaPagamentoEnum.values();
 	}
 
-	@ModelAttribute("categoriaentrada")
-	public CategoriaEntradaEnum[] getCategoriaEntrada() {
-		return CategoriaEntradaEnum.values();
+	@ModelAttribute("tiposervico")
+	public TipoServicoEnum[] getServicos() {
+		return TipoServicoEnum.values();
 	}
 
 	@ModelAttribute("tipooperacao")
