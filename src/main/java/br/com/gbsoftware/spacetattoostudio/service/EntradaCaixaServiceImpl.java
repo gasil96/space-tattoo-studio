@@ -1,7 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -25,15 +23,11 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 
 	@Override
 	public void salvar(EntradaCaixa entradaCaixa) {
-		dataOperacao(entradaCaixa);
-		valorComDesconto(entradaCaixa);
 		entradaRepository.save(entradaCaixa);
 	}
 
 	@Override
 	public void alterar(EntradaCaixa entradaCaixa) {
-		valorComDesconto(entradaCaixa);
-		dataOperacao(entradaCaixa);
 		entradaRepository.save(entradaCaixa);
 	}
 
@@ -51,21 +45,4 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 	public List<EntradaCaixa> buscarTodos() {
 		return entradaRepository.findAll();
 	}
-
-	private void dataOperacao(EntradaCaixa entradaCaixa) {
-		entradaCaixa.setHorarioOperacao(LocalDateTime.now());
-
-		if (entradaCaixa.getPorcentagemDesconto() != null) {
-
-		}
-	}
-
-	private void valorComDesconto(EntradaCaixa entradaCaixa) {
-		if (entradaCaixa.getPorcentagemDesconto() != null) {
-			BigDecimal desconto = new BigDecimal(entradaCaixa.getPorcentagemDesconto()).divide(new BigDecimal(100));
-			BigDecimal valorDesconto = entradaCaixa.getValor().multiply(desconto);
-			entradaCaixa.setValor(entradaCaixa.getValor().subtract(valorDesconto));
-		}
-	}
-
 }

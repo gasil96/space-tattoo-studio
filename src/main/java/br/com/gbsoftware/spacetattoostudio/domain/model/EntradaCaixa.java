@@ -15,6 +15,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -118,7 +119,8 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	}
 
 	public void setValor(BigDecimal valor) {
-		this.valor = valor; // valor.subtract((valor.multiply(getValor())).divide(new BigDecimal(100))); // TODO - CONFERIR ESSE CÁLCULO
+		this.valor = valor; // valor.subtract((valor.multiply(getValor())).divide(new BigDecimal(100))); //
+							// TODO - CONFERIR ESSE CÁLCULO
 	}
 
 	public FormaPagamentoEnum getFormaPagamento() {
@@ -137,6 +139,18 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 		this.cliente = cliente;
 	}
 
+	@PrePersist
+	private void preSalvar() {
+		this.setHorarioOperacao(LocalDateTime.now());
+		this.setValor(valorComDesconto(this.getValor(), this.getPorcentagemDesconto()));
+	}
+
+	private BigDecimal valorComDesconto(BigDecimal valor, Integer porcentagemDesconto) {
+		BigDecimal desconto = new BigDecimal(porcentagemDesconto).divide(new BigDecimal(100));
+		BigDecimal valorDesconto = valor.multiply(desconto);
+		return valor.subtract(valorDesconto);
+	}
+	
 	@Override
 	public String toString() {
 		return "EntradaCaixa [horarioOperacao=" + horarioOperacao + ", tipoServico=" + tipoServico + ", descricao="
