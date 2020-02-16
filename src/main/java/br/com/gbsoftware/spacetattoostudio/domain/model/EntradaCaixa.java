@@ -51,7 +51,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	@Column(name = "PORCENTAGEM_DESCONTO")
 	private Integer porcentagemDesconto;
 
-	@Column(name = "VALOR", precision = 22, scale = 2)
+	@Column(name = "VALOR", precision = 12, scale = 2)
 	@NotNull
 	private BigDecimal valor;
 
@@ -102,7 +102,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	}
 
 	public void setHorarioOperacao(LocalDateTime horarioOperacao) {
-		this.horarioOperacao = LocalDateTime.now();
+		this.horarioOperacao = horarioOperacao;
 	}
 
 	public String getDescricao() {
@@ -118,7 +118,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	}
 
 	public void setValor(BigDecimal valor) {
-		this.valor = (valor.multiply(getValor())).divide(new BigDecimal(100)); // TODO - CONFERIR ESSE CÁLCULO
+		this.valor = valor; // valor.subtract((valor.multiply(getValor())).divide(new BigDecimal(100))); // TODO - CONFERIR ESSE CÁLCULO
 	}
 
 	public FormaPagamentoEnum getFormaPagamento() {
