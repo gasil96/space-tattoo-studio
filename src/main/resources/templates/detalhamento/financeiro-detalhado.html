@@ -8,193 +8,67 @@
 	<li layout:fragment="caminho">Financeiro</li>
 
 	<div layout:fragment="corpo">
-		<div th:if="${consultado}" id="caixaLocalizado"></div>
-		<div th:if="${vazio}" id="caixaNaoLocalizado"></div>
-		<div th:if="${msgSemRelatorio == true}" id="msgSemRelatorio"></div>
-		<section>
-			<div class="block-body">
-				<div id="fechar-caixa" th:if="${caixaAberto}">
-					<form class="form-inline" th:action="@{/caixa/pre-fechar-caixa}">
-						<div class="form-group">
-							<input type="submit" value="FECHAR CAIXA" class="btn btn-danger">
-						</div>
-					</form>
-				</div>
-			</div>
-		</section>
-		<section>
-			<div class="col-lg-12">
-				<div class="block">
-					<div class="title">
-						<strong>Crédito Cliente!</strong>
-					</div>
-					<div class="block-body">
-						<form class="form-inline" th:action="@{/cliente/credito}"
-							th:object="${cliente}" method="POST">
-							<div class="form-group">
-								<input id="inlineFormInput" style="margin-right: 0px"
-									th:field="*{creditoCliente}" type="text"
-									placeholder="Valor Pago" class="form-control">
-							</div>
-							<div class="form-group">
-								<div class="form-group">
-									<div class="input-group">
-										<input type="text" class="form-control"
-											style="margin-left: 20px" id="typeaheadIdInstaNomeCliente"
-											placeholder="Insira o Cliente" th:field="*{id}">
-										<div class="input-group-append">
-											<button type="submit" class="btn btn-primary">Adicionar</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-					<br>
-					<div class="block-body">
-						<form class="form-inline" th:action="@{/cliente/remover-credito}"
-							th:object="${cliente}" method="POST">
-							<div class="form-group">
-								<input id="inlineFormInput" style="margin-right: 0px"
-									th:field="*{creditoCliente}" type="text"
-									placeholder="Valor Pago" class="form-control">
-							</div>
-							<div class="form-group">
-								<div class="form-group">
-									<div class="input-group">
-										<input type="text" class="form-control"
-											style="margin-left: 20px" id="typeaheadIdInstaNomeCliente"
-											placeholder="Insira o Cliente" th:field="*{id}">
-										<div class="input-group-append">
-											<button type="submit" class="btn btn-danger">Remover</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-
-				</div>
-			</div>
-		</section>
-		<section>
-			<div class="col-lg-12" th:unless="${caixaAberto}">
-				<div class="block">
-					<div class="title">
-						<strong>Pesquisar Histórico Caixa!</strong>
-					</div>
-					<div class="block-body">
-						<form class="form-inline" id="teste"
-							th:action="@{/financeiro/pesquisar-caixa}">
-							<div class="form-group">
-								<div class="input-group date" id="dataInicial"
-									data-target-input="nearest">
-									<input type="text" class="form-control " required="required"
-										data-target="#dataInicial" placeholder="Data inicial"
-										th:name="dataInicial" th:value=${dataInicial}>
-									<div class="input-group-append" data-target="#dataInicial"
-										data-toggle="datetimepicker">
-										<div class="input-group-text">
-											<i class="fa fa-calendar"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<span style="margin: 5px">entre </span>
-							<div class="form-group">
-								<div class="input-group date" id="dataFinal"
-									data-target-input="nearest">
-									<input type="text" class="form-control " required="required"
-										data-target="#dataFinal" placeholder="Data final"
-										th:value=${dataFinal} th:name="dataFinal">
-									<div class="input-group-append" data-target="#dataFinal"
-										data-toggle="datetimepicker">
-										<div class="input-group-text">
-											<i class="fa fa-calendar"></i>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<input id="btn_pesquisa" type="submit" value="Demostrativo"
-									class="btn btn-primary" style="margin: 10px">
-							</div>
-							<div class="form-group">
-								<input id="btn" value="Gráficos" class="btn btn-warning"
-									style="margin: 0px" type="button" th:if=${consultado}>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section>
-			<div class="container-fluid" id="corpo-financeiro"
-				th:if=${consultado}>
+		<section class="no-padding-top">
+			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-6">
-						<div class="pie-chart chart block">
+					<div class="col-lg-12">
+						<div class="block">
 							<div class="title">
-								<strong>Gastos R$</strong>
+								<strong style="color: #429244">ENTRADAS</strong>
 							</div>
-							<div class="pie-chart chart margin-bottom-sm">
-								<canvas id="gastoMesAtual"></canvas>
+							<div class="row">
+							<div class="col-lg-6">
+								<p>Período de <strong>dataInicio</strong> até <strong>dataFim</strong>.</p>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="pie-chart chart block">
-							<div class="title">
-								<strong>Arrecadação R$</strong>
-							</div>
-							<div class="pie-chart chart margin-bottom-sm">
-								<canvas id="arrecadacaoMesAtual"></canvas>
+							<div class="table-responsive">
+								<table id="tabela-entradas" class="table table-striped table-hover">
+									<thead>
+										<tr>
+											<th></th>
+											<th>Data/Horário de Opereção</th>
+											<th>Serviço</th>
+											<th>Forma de Pagamento</th>
+											<th>R$ Valor</th>
+											<th></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<section class="no-padding-top" th:if=${consultado}>
+		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="block">
 					<div class="title">
-						<strong>Histórico Fechamento Caixa</strong>
+						<strong style="color: #dc3545">SAÍDAS</strong>
 					</div>
 					<div class="block-body">
+						<div class="row">
+							<div class="col-lg-6">
+								<p>Período de <strong>dataInicio</strong> até <strong>dataFim</strong>.</p>
+							</div>
+						</div>
 						<div class="table-responsive">
-							<table id="dataTableCaixaDia" style="width: 100%;" class="table">
+							<table id="tabela-saidas" class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>Abertura</th>
-										<th>Fechamento</th>
-										<th>Débito</th>
-										<th>Crédito</th>
-										<th>À vista</th>
-										<th>Total</th>
+										<th></th>
+										<th>Data/Horário de Opereção</th>
+										<th>Forma de Pagamento</th>
+										<th>R$ Valor</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="c : ${caixas}">
-										<td><span
-											th:text="${#temporals.format(c.dataHoraAbertura, 'dd/MM  HH:mm')}"
-											data-toggle="popover" title="Operador Abertura"
-											data-placement="bottom" data-container="body"
-											th:attr="data-content=${#strings.concat(
-											c.operadorAbertura 
-											)}"></span></td>
-										<td><span
-											th:text="${#temporals.format(c.dataHoraFechamento, 'dd/MM  HH:mm')}"
-											data-toggle="popover" title="Operador fechamento"
-											data-placement="bottom" data-container="body"
-											th:attr="data-content=${#strings.concat(
-											c.operadorFechamento
-											)}"></span></td>
-										<td>R$<span th:text="${c.totalDebito}"></span></td>
-										<td>R$<span th:text="${c.totalCredito}"></span></td>
-										<td>R$<span th:text="${c.totalAvista}"></span></td>
-										<td>R$<span th:text="${c.total}"></span></td>
-									</tr>
+								
 								</tbody>
 							</table>
 						</div>
@@ -202,234 +76,156 @@
 				</div>
 			</div>
 		</section>
-		<section>
-			<div class="col-lg-8" th:unless="${caixaAberto}">
-				<div class="block">
-					<div class="title">
-						<strong>Gerar Relatório Geral</strong>
-					</div>
-					<div class="block-body">
-						<form class="form-inline"
-							th:action="@{/financeiro/relatorio-geral-mensal}">
-							<div class="form-group">
-								<input type="month" class="form-control "
-									th:name="relGeralMensal">
-							</div>
-							<div class="form-group">
-								<input type="submit" value="Gerar Relátorio Geral"
-									class="btn btn-primary" style="margin: 10px">
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</section>
 	</div>
-	<script type="text/javascript" layout:fragment="script">
 	
-	var inputs = $('input').on('keyup', verificarInputs);
-	function verificarInputs() {
-	    const preenchidos = inputs.get().every(({value}) => value)
-	    $('btn').prop('disabled', !preenchidos);
-	}
-	
-	$(document).ready(function() {
-			$('#caixaLocalizado').show(function() {
-				Messenger().post({
-					message : 'Pesquisa efetuada com sucesso!',
-					type : 'success'
-				});
-			});
-		});
-		$(document).ready(function() {
-			$('#msgSemRelatorio').show(function() {
-				Messenger().post({
-					message : 'Não foi encontrado relátorios para este mês',
-					type : 'error'
-				});
-			});
-		});
-
-		$(document)
-				.ready(
-						function() {
-							$('#caixaNaoLocalizado')
-									.show(
-											function() {
-												Messenger()
-														.post(
-																{
-																	message : 'Não foi encontrado nenhum retorno para este intervalo de tempo!',
-																	type : 'error'
-																});
-											});
-						});
-
-		// MES RELATORIO GERAL
-
-		$(function() {
-			$('#pesquisaRelatorio').datetimepicker({
-				format : 'M-YYYY',
-				viewMode : 'years',
-				autoclose : true,
-				locale : 'pt-BR'
-			});
-		});
-
-		// DATA INICIAL
-
-		$(function() {
-			$('#dataInicial').datetimepicker({
-				format : 'DD-MM-YYYY',
-				autoclose : true,
-				locale : 'pt-BR'
-			});
-		});
-
-		// DATA FINAL
-		$(function() {
-			$('#dataFinal').datetimepicker({
-				format : 'DD-MM-YYYY',
-				autoclose : true,
-				locale : 'pt-BR'
-			});
-		});
-
-		// DATATABLE CAIXAS POR DIA;
-
-		$(document)
-				.ready(
-						function() {
-							$('#dataTableCaixaDia')
-									.DataTable(
-											{
-												dom : 'lBfrtip',
-												order : [],
-												buttons : [
-														{
-															extend : 'excel',
-															text : 'Planilha',
-															className : 'btn btn-primary btn-sm',
-															title : 'Space Tattoo Studio',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'print',
-															text : 'Impressão',
-															className : 'btn btn-primary btn-sm',
-															title : 'Space Tattoo Studio',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'pdf',
-															className : 'btn btn-primary btn-sm',
-															title : 'Space Tattoo Studio',
-															exportOptions : {
-																columns : ':visible'
-															},
-														} ],
-												language : {
-													"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-												}
-											});
-						});
-
-
-
-		$(function(){
-			 
-		    $("#btn").click(function(){
-		 
-		        var dataInicial = $("input[name=dataInicial]").val();
-		        var dataFinal = $("input[name=dataFinal]").val();
-		 
-		        $.ajax({
-					type : "POST",
-					url : "/financeiro/pesquisa-intervalo-gasto",
-					data : {
-						dataInicial : dataInicial,
-						dataFinal : dataFinal
+<script type="text/javascript" layout:fragment="script">
+$(document).ready(function() {
+	$.ajax({
+		type: "GET",
+		url: "/caixa/entradas-do-dia",
+		dataType: 'json',
+		success :function(dado){
+			 var tabelaCliente = 	$('#tabela-entradas').dataTable( {
+				pageLength: 5,
+				order: 1,
+				ordering: false,
+				destroy: true,
+			    sPaginationType: 'simple_numbers',
+			 	lengthChange: false,
+				deferRender: true,
+				dom : 'lBfrtip',
+				buttons : [
+					{
+						extend : 'excel',
+						text : 'Planilha',
+						className : 'btn-transparent',
+						title : 'SpaceTattooStudio',
+						exportOptions : {
+							columns : ':visible'
+						},
 					},
-					dataType : 'json',
-					success : function(data) {
-						var PIECHARTEXMPLE = $('#gastoMesAtual');
-						var pieChartExample = new Chart(PIECHARTEXMPLE,
-								{
-									type : 'pie',
-									options : {
-										legend : {
-											display : true,
-											position : "left"
-										}
-									},
-									data : {
-										labels : [ "Barbearia R$", "Tattoo R$", "Piercing R$",
-												"Produto R$" ],
-										datasets : [ {
-											data : [ data.gasTotalBarbearia,
-													data.gasTotalTattoo,
-													data.gasTotalPercieng,
-													data.gasTotalProduto ],
-											borderWidth : 0,
-											backgroundColor : [ '#864dd9', "#4682B4",
-													"#f0f8ff", "#9932CC" ],
-											hoverBackgroundColor : [ '#864dd9',
-													"#4682B4", "#f0f8ff", "#9932CC" ]
-										} ]
-									}
-								});
+					{
+						extend : 'print',
+						text : 'Impressão',
+						className : 'btn-transparent',
+						title : 'SpaceTattooStudio',
+						exportOptions : {
+							columns : ':visible'
+						},
 					},
-					error : function(e) {
-						alert("Ocorreu um erro ao buscar os eventos!");
-					}
-				}); 
-		        
-		        $.ajax({
-					type : "POST",
-					url : "/financeiro/pesquisa-intervalo-arrecadacao",
-					dataType : 'json',
-					data : {
-						dataInicial : dataInicial,
-						dataFinal : dataFinal
+					{
+						extend : 'pdf',
+						className : 'btn-transparent',
+						title : 'SpaceTattooStudio',
+						exportOptions : {
+							columns : ':visible'
+						},
+					} ],
+				language : {
+					"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+				},
+				data: dado,
+				columns: [
+					{data: "id" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                '<a href="/caixa/visualizar-entrada/'+ data +'" ><i class="material-icons visualizar" title="visualizar">visibility</i></a>' :
+			                data;
+			            }},
+					{data: 'horarioOperacao'},
+					{data: 'tipoServico'},
+					{data: 'formaPagamento'},
+					{data: "valor" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                'R$ '+ data+',00 ' :
+			                data;
+			            }},
+					{data: "id" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                '<a href="/caixa/editar-entrada/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
+			                data;
+			            }},
+					{data: "id" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                '<a href="/caixa/excluir-entrada/'+ data +'" ><i class="material-icons deletar" title="excluir">delete_forever</i></a>' :
+			                data;
+			            }},
+				]
+			});
+		},
+	});
+	$.ajax({
+		type: "GET",
+		url: "/caixa/saidas-do-dia",
+		dataType: 'json',
+		success :function(dado){
+			 var tabelaCliente = 	$('#tabela-saidas').dataTable( {
+				pageLength: 5,
+				order: 1,
+				destroy: true,
+				ordering: false,
+			    sPaginationType: 'simple_numbers',
+			 	lengthChange: false,
+				deferRender: true,
+				dom : 'lBfrtip',
+				buttons : [
+					{
+						extend : 'excel',
+						text : 'Planilha',
+						className : 'btn-transparent',
+						title : 'SpaceTattooStudio',
+						exportOptions : {
+							columns : ':visible'
+						},
 					},
-					success : function(data) {
-						var PIECHARTEXMPLE = $('#arrecadacaoMesAtual');
-						var pieChartExample = new Chart(PIECHARTEXMPLE,
-								{
-									type : 'pie',
-									options : {
-										legend : {
-											display : true,
-											position : "left"
-										}
-									},
-									data : {
-										labels : [ "Barbearia R$", "Tattoo R$", "Piercing R$",
-												"Produto R$" ],
-										datasets : [ {
-											data : [data.arrTotalBarbearia,
-													data.arrTotalTattoo,
-													data.arrTotalPercieng,
-													data.arrTotalProduto ],
-											borderWidth : 0,
-											backgroundColor : [ '#864dd9', "#4682B4",
-													"#f0f8ff", "#9932CC" ],
-											hoverBackgroundColor : [ '#864dd9',
-													"#4682B4", "#f0f8ff", "#9932CC" ]
-										} ]
-									}
-								});
+					{
+						extend : 'print',
+						text : 'Impressão',
+						className : 'btn-transparent',
+						title : 'SpaceTattooStudio',
+						exportOptions : {
+							columns : ':visible'
+						},
 					},
-					error : function(e) {
-						alert("Ocorreu um erro ao buscar os eventos!");
-					}
-				});
-		    });
-		});
-	</script>
+					{
+						extend : 'pdf',
+						className : 'btn-transparent',
+						title : 'SpaceTattooStudio',
+						exportOptions : {
+							columns : ':visible'
+						},
+					} ],
+				language : {
+					"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+				},
+				data: dado,
+				columns: [
+					{data: "id" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                '<a href="/caixa/visualizar-entrada/'+ data +'" ><i class="material-icons visualizar" title="visualizar">visibility</i></a>' :
+			                data;
+			            }},
+					{data: 'horarioOperacao'},
+					{data: 'formaPagamento'},
+					{data: "valor" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                'R$ '+ data+',00 ' :
+			                data;
+			            }},
+					{data: "id" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                '<a href="/caixa/editar-entrada/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
+			                data;
+			            }},
+					{data: "id" , render : function ( data, type, row, meta ) {
+			              return type === 'display'  ?
+			                '<a href="/caixa/excluir-entrada/'+ data +'" ><i class="material-icons deletar" title="excluir">delete_forever</i></a>' :
+			                data;
+			            }},
+				]
+			});
+		},
+	});
+});
+</script>
 </body>
 </html>

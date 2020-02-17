@@ -45,7 +45,6 @@
 										<th>Status</th>
 										<th>Cliente</th>
 										<th>Serviço</th>
-										<th>Descrição</th>
 										<th>R$ Orçamento</th>
 										<th>Data Agendamento</th>
 										<th></th>
@@ -133,6 +132,7 @@
 				var tabelaAgendamento = $('#tabela-agendamento').dataTable( {
 					pageLength: 5,
 					order: [6, 'desc'],
+					ordering: false,
 					lengthChange: false,
 					deferRender: true,
 					dom : 'lBfrtip',
@@ -178,11 +178,12 @@
 				                "<span style='color: red;'>"+data+"</span>" :
 				                data;
 				            }},
-// 						{data: 'statusAgendamento'},
 						{data: 'cliente.nome'},
 						{data: 'tipoServico'},
-						{data: 'categoria'},
-						{data: 'orcamento'},
+						{data: "orcamento" , render : function ( data, type, row, meta ) {
+				              return type === 'display'  ?
+				                'R$ '+ data +',00': data;
+				            }},
 						{data: "horarioAgendamento"},
 						{data: "id" , render : function ( data, type, row, meta ) {
 				              return type === 'display'  ?
