@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -21,4 +22,8 @@ public interface EntradaCaixaService {
 	Optional<EntradaCaixa> buscarPorId(Long id);
 
 	List<EntradaCaixa> buscarTodos();
+
+	List<EntradaCaixa> buscarTodosDoDia();
+	
+	Optional<BigDecimal> sumTotalEntrada();
 }

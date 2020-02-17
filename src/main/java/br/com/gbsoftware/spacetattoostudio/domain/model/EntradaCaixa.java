@@ -9,7 +9,6 @@ package br.com.gbsoftware.spacetattoostudio.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -46,8 +45,8 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	@Column(name = "SERVICO")
 	private TipoServicoEnum tipoServico;
 
-	@Column(name = "DESCRICAO", length = 65)
-	private String descricao;
+	@Column(name = "descricaoCaixa", length = 65)
+	private String descricaoCaixaCaixa;
 
 	@Max(100)
 	@Column(name = "PORCENTAGEM_DESCONTO")
@@ -62,7 +61,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	@Column(name = "FORMA_PAGAMENTO")
 	private FormaPagamentoEnum formaPagamento;
 
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	@JoinColumn(name = "ID_CLIENTE_FK")
 	private Cliente cliente;
 
@@ -70,13 +69,13 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 
 	}
 
-	public EntradaCaixa(LocalDateTime horarioOperacao, @NotNull TipoServicoEnum tipoServico, String descricao,
+	public EntradaCaixa(LocalDateTime horarioOperacao, @NotNull TipoServicoEnum tipoServico, String descricaoCaixa,
 			Integer porcentagemDesconto, @NotNull BigDecimal valor, @NotNull FormaPagamentoEnum formaPagamento,
 			Cliente cliente) {
 		super();
 		this.horarioOperacao = horarioOperacao;
 		this.tipoServico = tipoServico;
-		this.descricao = descricao;
+		this.descricaoCaixaCaixa = descricaoCaixa;
 		this.porcentagemDesconto = porcentagemDesconto;
 		this.valor = valor;
 		this.formaPagamento = formaPagamento;
@@ -107,12 +106,12 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 		this.horarioOperacao = horarioOperacao;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getdescricaoCaixa() {
+		return descricaoCaixaCaixa;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setdescricaoCaixa(String descricaoCaixa) {
+		this.descricaoCaixaCaixa = descricaoCaixa;
 	}
 
 	public BigDecimal getValor() {
@@ -159,8 +158,8 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	
 	@Override
 	public String toString() {
-		return "EntradaCaixa [horarioOperacao=" + horarioOperacao + ", tipoServico=" + tipoServico + ", descricao="
-				+ descricao + ", porcentagemDesconto=" + porcentagemDesconto + ", valor=" + valor + ", formaPagamento="
+		return "EntradaCaixa [horarioOperacao=" + horarioOperacao + ", tipoServico=" + tipoServico + ", descricaoCaixaCaixa="
+				+ descricaoCaixaCaixa + ", porcentagemDesconto=" + porcentagemDesconto + ", valor=" + valor + ", formaPagamento="
 				+ formaPagamento + ", cliente=" + cliente + "]";
 	}
 

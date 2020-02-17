@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -23,11 +24,13 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 
 	@Override
 	public void salvar(EntradaCaixa entradaCaixa) {
+		clienteSemCadastro(entradaCaixa);
 		entradaRepository.save(entradaCaixa);
 	}
 
 	@Override
 	public void alterar(EntradaCaixa entradaCaixa) {
+		clienteSemCadastro(entradaCaixa);
 		entradaRepository.save(entradaCaixa);
 	}
 
@@ -45,4 +48,20 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 	public List<EntradaCaixa> buscarTodos() {
 		return entradaRepository.findAll();
 	}
+
+	@Override
+	public List<EntradaCaixa> buscarTodosDoDia() {
+		return entradaRepository.findByDoDia();
+	}
+
+	private void clienteSemCadastro(EntradaCaixa entradaCaixa) {
+		if (entradaCaixa.getCliente() != null && entradaCaixa.getCliente().getId() == null)
+			entradaCaixa.setCliente(null);
+	}
+
+	@Override
+	public Optional<BigDecimal> sumTotalEntrada() {
+		return this.buscarTodosDoDia().stream().map(EntradaCaixa::getValor).reduce(BigDecimal::add);
+	}
+
 }

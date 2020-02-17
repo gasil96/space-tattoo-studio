@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +41,14 @@ public class SaidaCaixaServiceImpl implements SaidaCaixaService {
 		return saidaRepository.findAll();
 	}
 
+	@Override
+	public List<SaidaCaixa> buscarTodosDoDia() {
+		return saidaRepository.findByDiaAtual();
+	}
+
+	@Override
+	public Optional<BigDecimal> sumTotalSaida() {
+		return this.buscarTodosDoDia().stream().map(SaidaCaixa::getValor).reduce(BigDecimal::add);
+	}
+	
 }
