@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -93,6 +94,11 @@ public class SaidaCaixa extends EntidadeBase<Long> {
 		this.formaPagamento = formaPagamento;
 	}
 
+	@PrePersist
+	private void preSalvar() {
+		this.setHorarioOperacao(LocalDateTime.now());
+	}
+	
 	@Override
 	public String toString() {
 		return "SaidaCaixa [horarioOperacao=" + horarioOperacao + ", descricao=" + descricao + ", valor=" + valor

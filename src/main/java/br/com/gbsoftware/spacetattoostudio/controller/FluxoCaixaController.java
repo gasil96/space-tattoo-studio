@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
-import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.domain.model.SaidaCaixa;
 import br.com.gbsoftware.spacetattoostudio.service.EntradaCaixaService;
@@ -37,7 +36,7 @@ public class FluxoCaixaController {
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
 	@GetMapping("fluxo")
-	public String caixa(Model model, EntradaCaixa entradaSaida, Cliente cliente) {
+	public String caixa(Model model, EntradaCaixa entradaCaixa, SaidaCaixa saidaCaixa) {
 		model.addAttribute("classActiveCaixa", "active");
 
 		model.addAttribute("totalEntradaDiario", 300L); // TODO CALCULO DE TODA ENTRADA DO DIA
@@ -48,7 +47,6 @@ public class FluxoCaixaController {
 	
 	@PostMapping("salvar-entrada")
 	public String salvarEntrada(Model model, EntradaCaixa entradaCaixa) {
-		System.err.println(entradaCaixa.toString());		
 		entradaCaixaService.salvar(entradaCaixa);
 		return ATUALIZAR_PAGINA;
 	}
