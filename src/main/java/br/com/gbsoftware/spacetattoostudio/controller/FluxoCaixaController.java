@@ -42,6 +42,7 @@ public class FluxoCaixaController {
 	private SaidaCaixaService saidaCaixaService;
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
+	private static final String MODAL_FLUXO_DIARIO = "modal/modal-visualizar-fluxo-diario";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
 
 	@GetMapping("fluxo")
@@ -60,6 +61,11 @@ public class FluxoCaixaController {
 		return PAGINA_FLUXO_CAIXA;
 	}
 
+	@GetMapping("visualizar")
+	public String visualizarFluxoDiario() {
+		return MODAL_FLUXO_DIARIO;
+	}
+	
 	@PostMapping("salvar-entrada")
 	public String salvarEntrada(Model model, EntradaCaixa entradaCaixa) {
 		entradaCaixaService.salvar(entradaCaixa);

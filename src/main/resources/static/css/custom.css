@@ -47,6 +47,18 @@
 	color: #D3D3D3;
 }
 
+.material-icons.visualizar {
+	color: #429244;
+}
+
+.entrada-collapse {
+	color: #429244;
+}
+
+.entrada-collapse:hover {
+	opacity: 0.5
+}
+
 .material-icons:hover {
 	opacity: 0.5
 }
