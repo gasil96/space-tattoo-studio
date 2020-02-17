@@ -9,6 +9,7 @@ package br.com.gbsoftware.spacetattoostudio.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -61,7 +62,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	@Column(name = "FORMA_PAGAMENTO")
 	private FormaPagamentoEnum formaPagamento;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "ID_CLIENTE_FK")
 	private Cliente cliente;
 
@@ -119,8 +120,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	}
 
 	public void setValor(BigDecimal valor) {
-		this.valor = valor; // valor.subtract((valor.multiply(getValor())).divide(new BigDecimal(100))); //
-							// TODO - CONFERIR ESSE CÁLCULO
+		this.valor = valor;
 	}
 
 	public FormaPagamentoEnum getFormaPagamento() {
@@ -142,13 +142,19 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	@PrePersist
 	private void preSalvar() {
 		this.setHorarioOperacao(LocalDateTime.now());
-		this.setValor(valorComDesconto(this.getValor(), this.getPorcentagemDesconto()));
+		if(this.getPorcentagemDesconto() != null) {
+			this.setValor(valorComDesconto(this.getValor(), this.getPorcentagemDesconto()));
+		}
 	}
 
 	private BigDecimal valorComDesconto(BigDecimal valor, Integer porcentagemDesconto) {
-		BigDecimal desconto = new BigDecimal(porcentagemDesconto).divide(new BigDecimal(100));
-		BigDecimal valorDesconto = valor.multiply(desconto);
-		return valor.subtract(valorDesconto);
+		if(porcentagemDesconto != null) {
+			BigDecimal desconto = new BigDecimal(porcentagemDesconto).divide(new BigDecimal(100));
+			BigDecimal valorDesconto = valor.multiply(desconto);
+			return valor.subtract(valorDesconto);
+		}else {
+			return valor;
+		}
 	}
 	
 	@Override
