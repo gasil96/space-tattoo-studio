@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
+import br.com.gbsoftware.spacetattoostudio.dto.ClienteDTO;
 
 public interface ClienteService {
 
@@ -31,5 +32,7 @@ public interface ClienteService {
 	List<Cliente> buscarTodos();
 
 	BigDecimal calcularGastoTotalCliente(Cliente cliente);
+	
+	ClienteDTO converterParaDTO(Cliente cliente);
 
 }

@@ -34,4 +34,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Modifying
 	@Query("UPDATE Cliente SET status = ?1 WHERE id = ?2")
 	void updateStatus(String statusCliente, Long idCliente);
+
 }
+

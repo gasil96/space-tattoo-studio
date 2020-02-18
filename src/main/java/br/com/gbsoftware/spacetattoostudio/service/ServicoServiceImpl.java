@@ -99,4 +99,5 @@ public class ServicoServiceImpl implements ServicoService {
 	public List<Servico> getCalendarIO() {
 		return servicoRepository.getCaledarIO();
 	}
+
 }

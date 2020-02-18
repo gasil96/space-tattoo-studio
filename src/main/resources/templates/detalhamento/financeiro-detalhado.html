@@ -3,15 +3,104 @@
 <head>
 <meta charset="UTF-8" />
 <body>
-	<h2 layout:fragment="titulosubCabecalho">Promoções e Crédito</h2>
+	<h2 layout:fragment="titulosubCabecalho">Setor Financeiro</h2>
 
 	<li layout:fragment="caminho">Financeiro</li>
 
 	<div layout:fragment="corpo">
+	<section class="no-padding-bottom">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="line-cahrt block">
+						<canvas id="lineCahrt"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 	</div>
-	
-<script type="text/javascript" layout:fragment="script">
+
+	<script type="text/javascript" layout:fragment="script">
 $(document).ready(function() {
+	
+	 // TODO - CHART DETALHAMENTO FINANCEIRO (GRÁFICO ANUAL) 
+    var LINECHART = $('#lineCahrt');
+    var myLineChart = new Chart(LINECHART, {
+        type: 'line',
+        options: {
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        max: 60,
+                        min: 10
+                    },
+                    display: true,
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
+        },
+        data: {
+            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+            datasets: [
+                {
+                    label: "Page Visitors",
+                    fill: true,
+                    lineTension: 0.2,
+                    backgroundColor: "transparent",
+                    borderColor: '#864DD9',
+                    pointBorderColor: '#864DD9',
+                    pointHoverBackgroundColor: '#864DD9',
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    borderWidth: 2,
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 5,
+                    pointHoverRadius: 5,
+                    pointHoverBorderColor: "#fff",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 0,
+                    data: [20, 27, 20, 35, 30, 40, 33, 25, 39],
+                    spanGaps: false
+                },
+                {
+                    label: "Page Views",
+                    fill: true,
+                    lineTension: 0.2,
+                    backgroundColor: "transparent",
+                    borderColor: "#EF8C99",
+                    pointBorderColor: '#EF8C99',
+                    pointHoverBackgroundColor: "#EF8C99",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    borderWidth: 2,
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 5,
+                    pointHoverRadius: 5,
+                    pointHoverBorderColor: "#fff",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [25, 17, 28, 25, 33, 27, 30, 33, 27],
+                    spanGaps: false
+                }
+            ]
+        }
+    });
+	
 });
 </script>
 </body>

@@ -27,6 +27,8 @@ public class ClienteDTO {
 
 	private BigDecimal saldo;
 
+	private BigDecimal gastoAnual;
+
 	@JsonIgnore
 	private List<Servico> servicos;
 
@@ -35,8 +37,8 @@ public class ClienteDTO {
 	}
 
 	public ClienteDTO(Long id, String nome, String telefone, BigDecimal creditoCliente, StatusClienteEnum statusCliente,
-			LocalDateTime dataCadastro, String instagram, BigDecimal saldo, List<Servico> servicos) {
-		super();
+			LocalDateTime dataCadastro, String instagram, BigDecimal saldo, BigDecimal gastoAnual,
+			List<Servico> servicos) {
 		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
@@ -45,7 +47,16 @@ public class ClienteDTO {
 		this.dataCadastro = dataCadastro;
 		this.instagram = instagram;
 		this.saldo = saldo;
+		this.gastoAnual = gastoAnual;
 		this.servicos = servicos;
+	}
+
+	public BigDecimal getGastoAnual() {
+		return gastoAnual;
+	}
+
+	public void setGastoAnual(BigDecimal gastoAnual) {
+		this.gastoAnual = gastoAnual;
 	}
 
 	public Long getId() {
@@ -122,8 +133,10 @@ public class ClienteDTO {
 
 	@Override
 	public String toString() {
-		return "ClienteDTO [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", instagram=" + instagram + "]";
+		return "ClienteDTO [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", creditoCliente="
+				+ creditoCliente + ", statusCliente=" + statusCliente + ", dataCadastro=" + dataCadastro
+				+ ", instagram=" + instagram + ", saldo=" + saldo + ", gastoAnual=" + gastoAnual + ", servicos="
+				+ servicos + "]";
 	}
 
-	
 }

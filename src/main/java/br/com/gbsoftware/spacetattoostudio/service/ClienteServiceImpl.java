@@ -12,11 +12,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
+import br.com.gbsoftware.spacetattoostudio.dto.ClienteDTO;
 import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
 
 @Service
@@ -87,6 +90,22 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public void updateStatus(String statusCliente, Long idCliente) {
 		clienteRepository.updateStatus(statusCliente, idCliente);
+	}
+	
+	@Override
+	public ClienteDTO converterParaDTO(Cliente	cliente) {
+
+		ModelMapper testMapper = new ModelMapper();
+		testMapper.addMappings(new PropertyMap<Cliente, ClienteDTO>() {
+
+			@Override
+			protected void configure() {
+		
+			}
+		});
+
+		ClienteDTO clienteDto = testMapper.map(cliente, ClienteDTO.class);
+		return clienteDto;
 	}
 
 }

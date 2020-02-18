@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+	<h2 layout:fragment="titulosubCabecalho">Promoções e Créditos</h2>
+
+	<li layout:fragment="caminho">Promoções</li>
+
+	<div layout:fragment="corpo">
+		<section class="no-padding-bottom">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="block">
+							<div class="title">
+								<strong class="d-block" style="color: #429244">Adicionar
+									Crédito</strong> <span class="d-block">Limite de Crédito é de
+									R$10.000,00 para valores maiores refaça a opereção e insira o
+									valor a ser somado</span>
+							</div>
+							<div class="block-body">
+								<form th:action="@{/promocao/add-credito}" method="POST"
+									th:object="${cliente}">
+									<div class="form-group">
+										<label class="form-control-label">Valor</label>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text form-control-sm">R$</span>
+											</div>
+											<input id="creditoAdicionar" type="number"
+												placeholder="valor" required="required"
+												class="form-control form-control-sm" min="0" max="10000" 
+												th:field="*{creditoCliente}"
+												 >
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Código do cliente</label> <input type="text" th:field="*{id}"
+											class="form-control form-control-sm"
+											id="typeaheadIdInstaNomeCliente" placeholder="">
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-primary btn-sm">Adicionar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="block">
+							<div class="title">
+								<strong class="d-block" style="color: #dc3545">Consumir
+									Crédito</strong> <span class="d-block">Não há limítes para
+									consumir crédito do cliente, podendo até deixa-lo com saldo
+									negativo</span>
+							</div>
+							<div class="block-body">
+								<form th:action="@{/promocao/consumir-credito}" method="POST" th:object="${cliente}">
+									<div class="form-group">
+										<label class="form-control-label">Valor</label>
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text form-control-sm">R$</span>
+											</div>
+											<input id="consumirCredito" type="number" th:field="*{creditoCliente}"
+												placeholder="Valor" required="required"
+												class="form-control form-control-sm" min="0">
+										</div>
+									</div>
+									<div class="form-group">
+										<label>Código do cliente</label> <input type="text" th:field="*{id}"
+											class="form-control form-control-sm"
+											id="typeaheadIdInstaNomeCliente2" placeholder="">
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-danger btn-sm">Consumir</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		 <div class="page-header">
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Top 5 - Clientes</h2>
+          </div>
+        </div>
+		  <section class="no-padding-bottom">
+          <div class="container-fluid">
+            <div class="row">
+					<div class="col-lg-6">
+						<div class="messages-block block">
+							<div class="title">
+								<strong>Tattoo</strong>
+							</div>
+							<div class="messages" th:each="tt :${topTattoo}">
+								<a class="content">
+									<strong class="d-block" th:text="${tt.nome}">Nadia Halsey</strong>
+									<span class="d-block">Crédito <strong>R$<strong th:text="${tt.creditoCliente}">20000.00</strong></strong></span>
+									<span class="d-block">Gasto Anual: <strong>R$<strong>20000.00</strong></strong></span>
+									<small
+										class="date d-block" th:text="${'Cliente desde:	'+#temporals.format(tt.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
+								</a>
+								<div class="pull-right">
+								<a href="#" title="enviar email"><i class="material-icons visualizar">email</i> </a>
+								<a href="#" title="enviar whats"><i class="material-icons visualizar">mobile_screen_share</i></a>
+								</div>
+								<hr>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="messages-block block">
+							<div class="title">
+								<strong>Piercing</strong>
+							</div>
+							<div class="messages" th:each="tt :${topTattoo}">
+								<a class="content">
+									<strong class="d-block" th:text="${tt.nome}">Nadia Halsey</strong>
+									<span class="d-block">Crédito <strong>R$<strong th:text="${tt.creditoCliente}">20000.00</strong></strong></span>
+									<span class="d-block">Gasto Anual: <strong>R$<strong>20000.00</strong></strong></span>
+									<small
+										class="date d-block" th:text="${'Cliente desde:	'+#temporals.format(tt.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
+								</a>
+								<div class="pull-right">
+								<a href="#" title="enviar email"><i class="material-icons visualizar">email</i> </a>
+								<a href="#" title="enviar whats"><i class="material-icons visualizar">mobile_screen_share</i></a>
+								</div>
+								<hr>
+							</div>
+						</div>
+					</div>
+				</div>
+          </div>
+        </section>
+        <div class="page-header">
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Top 3</h2>
+          </div>
+        </div>
+        <section>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="stats-with-chart-2 block">
+                  <div class="title"><strong class="d-block">Credit Sales</strong><span class="d-block">Lorem ipsum dolor sit</span></div>
+                  <div class="piechart chart">
+                    <canvas id="pieChartHome1"></canvas>
+                    <div class="text"><strong class="d-block">$2.145</strong><span class="d-block">Sales</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="stats-with-chart-2 block">
+                  <div class="title"><strong class="d-block">Channel Sales</strong><span class="d-block">Lorem ipsum dolor sit</span></div>
+                  <div class="piechart chart">
+                    <canvas id="pieChartHome2"></canvas>
+                    <div class="text"><strong class="d-block">$7.784</strong><span class="d-block">Sales</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="stats-with-chart-2 block">
+                  <div class="title"><strong class="d-block">Direct Sales</strong><span class="d-block">Lorem ipsum dolor sit</span></div>
+                  <div class="piechart chart">
+                    <canvas id="pieChartHome3"></canvas>
+                    <div class="text"><strong class="d-block">$4.957</strong><span class="d-block">Sales</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+		$(document).ready(function() {
+			// TODO - CUSTOMIZAR CHART DE TOP 3 
+			var PIECHART = $('#pieChartHome3');
+			    var myPieChart = new Chart(PIECHART, {
+			        type: 'doughnut',
+			        options: {
+			            cutoutPercentage: 90,
+			            legend: {
+			                display: false
+			            }
+			        },
+			        data: {
+			            labels: [
+			                "First",
+			                "Second",
+			                "Third",
+			                "Fourth"
+			            ],
+			            datasets: [
+			                {
+			                    data: [120, 90, 77, 95],
+			                    borderWidth: [0, 0, 0, 0],
+			                    backgroundColor: [
+			                        '#da4d60',
+			                        "#e96577",
+			                        "#f28695",
+			                        "#ffb6c1"
+			                    ],
+			                    hoverBackgroundColor: [
+			                        '#da4d60',
+			                        "#e96577",
+			                        "#f28695",
+			                        "#ffb6c1"
+			                    ]
+			                }]
+			        }
+			    });
+			    
+			    var PIECHART = $('#pieChartHome2');
+			    var myPieChart = new Chart(PIECHART, {
+			        type: 'doughnut',
+			        options: {
+			            cutoutPercentage: 90,
+			            legend: {
+			                display: false
+			            }
+			        },
+			        data: {
+			            labels: [
+			                "First",
+			                "Second",
+			                "Third",
+			                "Fourth"
+			            ],
+			            datasets: [
+			                {
+			                    data: [80, 70, 100, 60],
+			                    borderWidth: [0, 0, 0, 0],
+			                    backgroundColor: [
+			                        '#9528b9',
+			                        "#b046d4",
+			                        "#c767e7",
+			                        "#e394fe"
+			                    ],
+			                    hoverBackgroundColor: [
+			                        '#9528b9',
+			                        "#b046d4",
+			                        "#c767e7",
+			                        "#e394fe"
+			                    ]
+			                }]
+			        }
+			    });
+
+			    
+			    var PIECHART = $('#pieChartHome1');
+			    var myPieChart = new Chart(PIECHART, {
+			        type: 'doughnut',
+			        options: {
+			            cutoutPercentage: 90,
+			            legend: {
+			                display: false
+			            }
+			        },
+			        data: {
+			            labels: [
+			                "First",
+			                "Second",
+			                "Third",
+			                "Fourth"
+			            ],
+			            datasets: [
+			                {
+			                    data: [300, 50, 100, 60],
+			                    borderWidth: [0, 0, 0, 0],
+			                    backgroundColor: [
+			                        '#6933b9',
+			                        "#8553d1",
+			                        "#a372ec",
+			                        "#be9df1"
+			                    ],
+			                    hoverBackgroundColor: [
+			                        '#6933b9',
+			                        "#8553d1",
+			                        "#a372ec",
+			                        "#be9df1"
+			                    ]
+			                }]
+			        }
+			    });
+		});
+	</script>
+</body>
+</html>

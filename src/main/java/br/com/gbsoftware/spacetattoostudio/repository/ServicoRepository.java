@@ -30,4 +30,5 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	@Query("select s.horarioAgendamento, s.categoria, s.tipoServico from Servico s")
 	List<Servico> getCaledarIO();
+	
 }

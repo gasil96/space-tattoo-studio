@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -93,7 +91,7 @@ public class ClienteController {
 	@RequestMapping(value = "/clientes-teste", produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET)
 	@JsonIgnore
 	public ResponseEntity<List<ClienteDTO>> listAllProducts() {
-	    List<ClienteDTO> clientesDTO = servicoCliente.buscarTodos().stream().map(x -> converterParaDTO(x)).collect(Collectors.toList());
+	    List<ClienteDTO> clientesDTO = servicoCliente.buscarTodos().stream().map(x -> servicoCliente.converterParaDTO(x)).collect(Collectors.toList());
 		
 		if (clientesDTO.isEmpty()) {
 	        return new ResponseEntity<List<ClienteDTO>>(HttpStatus.NO_CONTENT);
@@ -156,19 +154,4 @@ public class ClienteController {
 				.collect(Collectors.toList());
 	}
 
-	private ClienteDTO converterParaDTO(Cliente	cliente) {
-
-		ModelMapper testMapper = new ModelMapper();
-		testMapper.addMappings(new PropertyMap<Cliente, ClienteDTO>() {
-
-			@Override
-			protected void configure() {
-		
-			}
-		});
-
-		ClienteDTO clienteDto = testMapper.map(cliente, ClienteDTO.class);
-		return clienteDto;
-	}
-	
 }

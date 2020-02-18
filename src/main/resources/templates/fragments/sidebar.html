@@ -28,7 +28,7 @@
         <ul class="list-unstyled">
           <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-chart"></i>Detalhamento</a>
             <ul id="exampledropdownDropdown" class="collapse list-unstyled" >
-              <li  sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:class="${classActiveSubFinanceiro}"><a th:href="@{/financeiro/detalhamento}"><i class="material-icons">enhanced_encryption</i>Promoções</a></li>
+              <li  sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:class="${classActiveSubFinanceiro}"><a th:href="@{/promocao/detalhamento}"><i class="material-icons">enhanced_encryption</i>Promoções</a></li>
               <li  sec:authorize="hasAnyRole('ADMIN','GERENTE')" th:class="${classActiveSubFinanceiro}"><a th:href="@{/financeiro/detalhamento}"><i class="material-icons">attach_money</i>Financeiro</a></li>
             </ul>
           </li>
