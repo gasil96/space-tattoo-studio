@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.repository;
 
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -8,6 +9,7 @@ package br.com.gbsoftware.spacetattoostudio.repository;
  */
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,5 +32,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	@Query("select s.horarioAgendamento, s.categoria, s.tipoServico from Servico s")
 	List<Servico> getCaledarIO();
-	
+
+	@Query("select c.id, c.nome, sum(s.orcamento) as totalGasto from Servico s, Cliente c where c.id = ?2")
+	Optional<Servico> getCalculoOrcamentoCliente(BigDecimal totalGasto, Long id);
 }
