@@ -31,10 +31,9 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 @Table(name = "SAIDA_CAIXA")
 public class SaidaCaixa extends EntidadeBase<Long> {
 
-	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
 	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
-	@Column(name = "horario_operacao")
+	@Column(name = "HORARIO_OPERACAO", updatable = false)
 	private LocalDateTime horarioOperacao;
 
 	@Column(name = "DESCRICAO", length = 65)

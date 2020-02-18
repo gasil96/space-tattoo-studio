@@ -8,17 +8,6 @@
 	<li layout:fragment="caminho">Caixa</li>
 
 	<div layout:fragment="corpo">
-		<section class="no-padding-top">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<a role="button" href="/caixa/visualizar"
-							title="Fluxo Diário">
-							<i class="material-icons visualizar" style="font-size: 52px;">group_add </i></a>
-					</div>
-				</div>
-			</div>
-		</section>
 		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
@@ -76,6 +65,19 @@
 				</div>
 			</div>
 		</section>
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<a role="button" href="/caixa/visualizar"
+							title="Fluxo Diário" class="btn btn-warning btn-sm pull-right">
+							Visualizar Fluxo Caixa
+							</a>
+					</div>
+				</div>
+							<br>
+			</div>
+		</section>
 		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
@@ -83,7 +85,7 @@
 						<div class="block">
 							<div class="title">
 								<strong class="d-block" style="color: #429244">Entrada</strong>
-								<span class="d-block">Lorem	ipsum dolor sit amet consectetur.</span>
+								<span class="d-block">Para clientes não cadastrados deixe o campo 'Código do cliente' vazio.</span>
 							</div>
 							<div class="block-body">
 								<form th:action="@{/caixa/salvar-entrada}" th:object="${entradaCaixa}" method="POST">
@@ -143,7 +145,7 @@
 						<div class="block">
 							<div class="title">
 								<strong class="d-block" style="color: #dc3545">Saída</strong>
-								<span class="d-block">Lorem	ipsum dolor sit amet consectetur.</span>
+								<span class="d-block">Atenção na hora de inserir os valores de saída.</span>
 							</div>
 							<div class="block-body">
 								<form th:action="@{/caixa/salvar-saida}" th:object="${saidaCaixa}" method="POST">

@@ -34,10 +34,9 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 @Table(name = "ENTRADA_CAIXA")
 public class EntradaCaixa extends EntidadeBase<Long> {
 
-	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
 	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
-	@Column(name = "HORARIO_OPERACAO")
+	@Column(name = "HORARIO_OPERACAO", updatable = false)
 	private LocalDateTime horarioOperacao;
 
 	@NotNull
@@ -103,7 +102,7 @@ public class EntradaCaixa extends EntidadeBase<Long> {
 	}
 
 	public void setHorarioOperacao(LocalDateTime horarioOperacao) {
-		this.horarioOperacao = horarioOperacao;
+		this.horarioOperacao = LocalDateTime.now();
 	}
 
 	public String getdescricaoCaixa() {

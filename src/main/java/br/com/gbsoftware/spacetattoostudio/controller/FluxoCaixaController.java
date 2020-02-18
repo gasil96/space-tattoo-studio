@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,6 +46,12 @@ public class FluxoCaixaController {
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
 	private static final String MODAL_FLUXO_DIARIO = "modal/modal-visualizar-fluxo-diario";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
+	private static final String MODAL_EDITAR_ENTRADA_CAIXA = "modal/modal-editar-entrada-caixa";
+	private static final String MODAL_EDITAR_SAIDA_CAIXA = "modal/modal-editar-saida-caixa";
+	private static final String MODAL_VISUALIZAR_ENTRADA_CAIXA = "modal/modal-visualizar-entrada-caixa";
+	private static final String MODAL_VISUALIZAR_SAIDA_CAIXA = "modal/modal-visualizar-saida-caixa";
+	private static final String MODAL_EXCLUIR_SAIDA_CAIXA = "modal/modal-confirmar-exclusao-saida";
+	private static final String MODAL_EXCLUIR_ENTRADA_CAIXA = "modal/modal-confirmar-exclusao-entrada";
 
 	@GetMapping("fluxo")
 	public String caixa(Model model, EntradaCaixa entradaCaixa, SaidaCaixa saidaCaixa) {
@@ -65,7 +73,7 @@ public class FluxoCaixaController {
 	public String visualizarFluxoDiario() {
 		return MODAL_FLUXO_DIARIO;
 	}
-	
+
 	@PostMapping("salvar-entrada")
 	public String salvarEntrada(Model model, EntradaCaixa entradaCaixa) {
 		entradaCaixaService.salvar(entradaCaixa);
@@ -78,6 +86,66 @@ public class FluxoCaixaController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@GetMapping("editar-entrada/{id}")
+	public String preEditarEntradaCaixa(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("entradaCaixa", entradaCaixaService.buscarPorId(id));
+		return MODAL_EDITAR_ENTRADA_CAIXA;
+	}
+
+	@PostMapping("editar-entrada")
+	public String editarEntradaCaixa(EntradaCaixa entradaCaixa) {
+		entradaCaixaService.salvar(entradaCaixa);
+		return MODAL_FLUXO_DIARIO;
+	}
+
+	@GetMapping("editar-saida/{id}")
+	public String preEditarSaidaCaixa(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("saidaCaixa", saidaCaixaService.buscarPorId(id));
+		return MODAL_EDITAR_SAIDA_CAIXA;
+	}
+
+	@PostMapping("editar-saida")
+	public String editarSaidaCaixa(SaidaCaixa saidaCaixa) {
+		saidaCaixaService.salvar(saidaCaixa);
+		return MODAL_FLUXO_DIARIO;
+	}
+
+	@GetMapping("visualizar-entrada-caixa/{id}")
+	public String preVisualizarEntradaCaixa(ModelMap model, @PathVariable("id") Long id) {
+		model.addAttribute("entradaCaixa", entradaCaixaService.buscarPorId(id));
+		return MODAL_VISUALIZAR_ENTRADA_CAIXA;
+	}
+	
+	@GetMapping("visualizar-saida-caixa/{id}")
+	public String preVisualizarSaidaCaixa(ModelMap model, @PathVariable("id") Long id) {
+		model.addAttribute("saidaCaixa", saidaCaixaService.buscarPorId(id));
+		return MODAL_VISUALIZAR_SAIDA_CAIXA;
+	}
+	
+	@GetMapping("excluir-saida/{id}")
+	public String preExcluirSaida(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("saidaCaixa", saidaCaixaService.buscarPorId(id));
+		return MODAL_EXCLUIR_SAIDA_CAIXA;
+	}
+	
+	@PostMapping("excluir-saida")
+	public String excluirSaida(SaidaCaixa saidaCaixa) {
+		saidaCaixaService.deletar(saidaCaixa.getId());
+		return MODAL_FLUXO_DIARIO; 
+	}
+	
+	@GetMapping("excluir-entrada/{id}")
+	public String preExcluirEntrada(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("entradaCaixa", entradaCaixaService.buscarPorId(id));
+		return MODAL_EXCLUIR_ENTRADA_CAIXA;
+	}
+	
+	@PostMapping("excluir-entrada")
+	public String excluirEntrada(SaidaCaixa saidaCaixa) {
+		entradaCaixaService.deletar(saidaCaixa.getId());
+		return MODAL_FLUXO_DIARIO; 
+	}
+	
 	@RequestMapping(value = "saidas-do-dia", method = RequestMethod.GET)
 	public @ResponseBody String getSaidasDiaria(String saidasDiaria) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
