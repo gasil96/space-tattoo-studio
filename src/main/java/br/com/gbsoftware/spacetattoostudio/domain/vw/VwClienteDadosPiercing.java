@@ -18,8 +18,8 @@ import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
 
 @Immutable
 @Entity
-@Table(name = "VW_CLIENTE_SERVICO_DADOS")
-public class VwClienteServicoDados extends EntidadeBase<Long>{
+@Table(name = "VW_CLIENTE_DADOS_PIERCING")
+public class VwClienteDadosPiercing extends EntidadeBase<Long>{
 
 	/**
 	 * 
@@ -45,13 +45,13 @@ public class VwClienteServicoDados extends EntidadeBase<Long>{
 	@Column(name = "EMAIL")
 	private String email;
 
-	@Column(name = "TOTAL_GASTO_ANUAL", precision = 12, scale = 2)
+	@Column(name = "TOTAL_GASTO_ANUAL_PIERCING", precision = 12, scale = 2)
 	private BigDecimal totalGastoAnual;
 	
-	@Column(name = "NUMERO_AGENDAMENTOS", precision = 12, scale = 2)
+	@Column(name = "NUMERO_AGENDAMENTOS_PIERCING", precision = 12, scale = 2)
 	private Integer numeroAgendamentos;
 
-	public VwClienteServicoDados() {
+	public VwClienteDadosPiercing() {
 		
 	}
 	

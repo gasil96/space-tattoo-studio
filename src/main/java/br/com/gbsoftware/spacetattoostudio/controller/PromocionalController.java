@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
-import br.com.gbsoftware.spacetattoostudio.domain.vw.VwClienteServicoDados;
+import br.com.gbsoftware.spacetattoostudio.domain.vw.VwClienteDadosPiercing;
+import br.com.gbsoftware.spacetattoostudio.domain.vw.VwClienteDadosTattoo;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
-import br.com.gbsoftware.spacetattoostudio.service.VwClienteServicoDadosService;
+import br.com.gbsoftware.spacetattoostudio.service.VwClienteDadosPiercingService;
+import br.com.gbsoftware.spacetattoostudio.service.VwClienteDadosTattooService;
 
 @Controller
 @RequestMapping("promocao")
@@ -28,15 +30,25 @@ public class PromocionalController {
 	private ClienteService servicoCliente;
 
 	@Autowired
-	private VwClienteServicoDadosService servicoVwClienteService;
+	private VwClienteDadosTattooService servicoVwClienteTattoo;
 
+	@Autowired
+	private VwClienteDadosPiercingService servicoVwClientePiercing;
+	
 	@GetMapping("detalhamento")
 	public String detalhamentoPromocional(Cliente cliente, Model model) {
-		List<VwClienteServicoDados> listaVwClienteServiceDados = servicoVwClienteService.buscarTodos();
+		List<VwClienteDadosTattoo> listaVwTattoo = servicoVwClienteTattoo.buscarTodos();
+		List<VwClienteDadosPiercing> listaVwPiercing = servicoVwClientePiercing.buscarTodos();
+		
 		model.addAttribute("topTattoo",
-				listaVwClienteServiceDados.stream()
-						.sorted(Comparator.comparingLong(VwClienteServicoDados::getNumeroAgendamentos).reversed())
+				listaVwTattoo.stream()
+						.sorted(Comparator.comparingLong(VwClienteDadosTattoo::getNumeroAgendamentos).reversed())
 						.limit(10).collect(Collectors.toList()));
+		
+		model.addAttribute("topPiercing",
+				listaVwPiercing.stream()
+				.sorted(Comparator.comparingLong(VwClienteDadosPiercing::getNumeroAgendamentos).reversed())
+				.limit(10).collect(Collectors.toList()));
 
 		return PAGINANA_DETALHAMENTO_PROMOCIONAL;
 	}
