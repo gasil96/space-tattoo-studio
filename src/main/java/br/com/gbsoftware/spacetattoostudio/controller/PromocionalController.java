@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
+import br.com.gbsoftware.spacetattoostudio.service.VwClienteServicoDadosService;
 
 @Controller
 @RequestMapping("promocao")
@@ -23,10 +24,12 @@ public class PromocionalController {
 	@Autowired
 	private ClienteService servicoCliente;
 
+	@Autowired
+	private VwClienteServicoDadosService servicoVwClienteService;
+	
 	@GetMapping("detalhamento")
 	public String detalhamentoPromocional(Cliente cliente, Model model) {
-		model.addAttribute("topTattoo", servicoCliente.buscarTodos().stream().map(x -> servicoCliente.converterParaDTO(x)).collect(Collectors.toList()));
-		System.err.println(servicoCliente.buscarTodos().stream().map(x -> servicoCliente.converterParaDTO(x)).collect(Collectors.toList()));
+		model.addAttribute("topTattoo", servicoVwClienteService.buscarTodos().stream().limit(10).collect(Collectors.toList()));
 		return PAGINANA_DETALHAMENTO_PROMOCIONAL;
 	}
 

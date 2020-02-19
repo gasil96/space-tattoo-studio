@@ -59,8 +59,8 @@ public class Cliente extends EntidadeBase<Long> {
 	@JsonProperty(value = "instagram")
 	private String instagram;
 
-	@Column(name = "total_gasto_anual", precision = 12, scale = 2)
-	private BigDecimal totalGastoAnual;
+	@Column(name = "EMAIL")
+	private String email;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
@@ -70,23 +70,23 @@ public class Cliente extends EntidadeBase<Long> {
 	}
 
 	public Cliente(String nome, String telefone, BigDecimal creditoCliente, StatusClienteEnum statusCliente,
-			LocalDateTime dataCadastro, String instagram, BigDecimal totalGastoAnual, List<Servico> servicos) {
+			LocalDateTime dataCadastro, String instagram, String email, List<Servico> servicos) {
 		this.nome = nome;
 		this.telefone = telefone;
 		this.creditoCliente = creditoCliente;
 		this.statusCliente = statusCliente;
 		this.dataCadastro = dataCadastro;
 		this.instagram = instagram;
-		this.totalGastoAnual = totalGastoAnual;
+		this.email = email;
 		this.servicos = servicos;
 	}
 
-	public BigDecimal getTotalGastoAnual() {
-		return totalGastoAnual;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setTotalGastoAnual(BigDecimal totalGastoAnual) {
-		this.totalGastoAnual = totalGastoAnual;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public BigDecimal getCreditoCliente() {

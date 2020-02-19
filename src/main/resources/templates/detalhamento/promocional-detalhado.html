@@ -85,7 +85,7 @@
 		</section>
 		 <div class="page-header">
           <div class="container-fluid">
-            <h2 class="h5 no-margin-bottom">Top 5 - Clientes</h2>
+            <h2 class="h5 no-margin-bottom">Top 10 - Clientes</h2>
           </div>
         </div>
 		  <section class="no-padding-bottom">
@@ -94,28 +94,27 @@
 					<div class="col-lg-6">
 						<div class="messages-block block">
 							<div class="title">
-								<strong>Tattoo</strong>
+								<strong>Desconto</strong>
 							</div>
 							<div class="messages" th:each="tt :${topTattoo}">
 								<a class="content">
 									<strong class="d-block" th:text="${tt.nome}">Nadia Halsey</strong>
-									<span class="d-block">Crédito <strong>R$<strong th:text="${tt.creditoCliente}">20000.00</strong></strong></span>
-									<span class="d-block">Gasto Anual: <strong>R$<strong>20000.00</strong></strong></span>
-									<small
-										class="date d-block" th:text="${'Cliente desde:	'+#temporals.format(tt.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
+									<span class="d-block" >Crédito <strong>R$ <strong th:text="${tt.creditoCliente}">20000.00</strong></strong></span>
+									<span class="d-block">Gasto Anual: <strong>R$<strong th:text="${tt.totalGastoAnual}">20000.00</strong></strong></span>
+									<small class="date d-block" th:text="${'Cliente desde:	'+#temporals.format(tt.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
 								</a>
 								<div class="pull-right">
 								<a href="#" title="enviar email"><i class="material-icons visualizar">email</i> </a>
 								<a href="#" title="enviar whats"><i class="material-icons visualizar">mobile_screen_share</i></a>
 								</div>
-								<hr>
+								<hr class="my-4">
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="messages-block block">
 							<div class="title">
-								<strong>Piercing</strong>
+								<strong>Oferta</strong>
 							</div>
 							<div class="messages" th:each="tt :${topTattoo}">
 								<a class="content">
