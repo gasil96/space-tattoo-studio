@@ -94,18 +94,18 @@
 					<div class="col-lg-6">
 						<div class="messages-block block">
 							<div class="title">
-								<strong>Desconto</strong>
+								<strong>Recorrentes</strong>
 							</div>
 							<div class="messages" th:each="tt :${topTattoo}">
 								<a class="content">
 									<strong class="d-block" th:text="${tt.nome}">Nadia Halsey</strong>
-									<span class="d-block" >Crédito <strong>R$ <strong th:text="${tt.creditoCliente}">20000.00</strong></strong></span>
+									<span class="d-block" th:if="${tt.creditoCliente}">Crédito <strong>R$ <strong th:text="${tt.creditoCliente}">20000.00</strong></strong></span>
 									<span class="d-block">Gasto Anual: <strong>R$<strong th:text="${tt.totalGastoAnual}">20000.00</strong></strong></span>
 									<small class="date d-block" th:text="${'Cliente desde:	'+#temporals.format(tt.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
 								</a>
 								<div class="pull-right">
-								<a href="#" title="enviar email"><i class="material-icons visualizar">email</i> </a>
-								<a href="#" title="enviar whats"><i class="material-icons visualizar">mobile_screen_share</i></a>
+								<a href="#" title="enviar email" th:if="${tt.email != null && tt.email != ''}"><i class="material-icons visualizar">email</i> </a>
+								<a href="#" title="enviar whats" th:if="${tt.telefone != null && tt.telefone != ''}"><i class="material-icons visualizar">mobile_screen_share</i></a>
 								</div>
 								<hr class="my-4">
 							</div>

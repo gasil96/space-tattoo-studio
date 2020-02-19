@@ -1,6 +1,8 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
+import br.com.gbsoftware.spacetattoostudio.domain.vw.VwClienteServicoDados;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 import br.com.gbsoftware.spacetattoostudio.service.VwClienteServicoDadosService;
 
@@ -26,10 +29,15 @@ public class PromocionalController {
 
 	@Autowired
 	private VwClienteServicoDadosService servicoVwClienteService;
-	
+
 	@GetMapping("detalhamento")
 	public String detalhamentoPromocional(Cliente cliente, Model model) {
-		model.addAttribute("topTattoo", servicoVwClienteService.buscarTodos().stream().limit(10).collect(Collectors.toList()));
+		List<VwClienteServicoDados> listaVwClienteServiceDados = servicoVwClienteService.buscarTodos();
+		model.addAttribute("topTattoo",
+				listaVwClienteServiceDados.stream()
+						.sorted(Comparator.comparingLong(VwClienteServicoDados::getNumeroAgendamentos).reversed())
+						.limit(10).collect(Collectors.toList()));
+
 		return PAGINANA_DETALHAMENTO_PROMOCIONAL;
 	}
 
