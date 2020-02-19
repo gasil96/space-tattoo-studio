@@ -26,6 +26,11 @@
 									required="required">
 							</div>
 							<div class="form-group">
+							<label>Email</label> <input type="email" id="Email" disabled="disabled"
+								placeholder="Email" class="form-control"
+								th:field="*{email}" required="required">
+							</div>
+							<div class="form-group">
 								<label for="telefone">Telefone</label> <input
 									placeholder="telefone" id="telefone" type="text"
 									disabled="disabled" class="mr-sm-3 form-control"
@@ -49,12 +54,6 @@
 									id="instagram" type="text" disabled="disabled"
 									class="mr-sm-3 form-control" th:field="*{instagram}"
 									required="required">
-							</div>
-							<div class="form-group">
-								<label for="saldo">Total Gasto* R$</label> <input
-									placeholder="saldo" id="saldo" type="text"
-									disabled="disabled" class="mr-sm-3 form-control"
-									th:field="*{saldo}" required="required">
 							</div>
 						</form>
 					</div>
