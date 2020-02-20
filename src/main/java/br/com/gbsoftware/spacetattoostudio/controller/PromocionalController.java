@@ -116,8 +116,8 @@ public class PromocionalController {
 	private String msgOferta(Cliente cliente) {
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String menssagem = "Olá " + cliente.getNome()
-				+ ", você está na lista dos *MELHORES CLIENTES* do Space Tattoo Studio e "
-				+ "com isso acaba de ganhar uma oferta especial para você. Responda esssa mensagem para mais informações "
+				+ "  você está na lista dos *MELHORES CLIENTES* do Space Tattoo Studio e "
+				+ "com isso acaba de ganhar uma oferta especial. Responda esssa mensagem para mais informações. "
 				+ " *Oferta válida até:* "
 				+ LocalDateTime.now().plusDays(15).format(dateFormat);
 		return menssagem;
