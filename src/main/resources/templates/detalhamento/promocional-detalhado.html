@@ -105,7 +105,7 @@
 								</a>
 								<div class="pull-right">
 								<a href="#" title="enviar email" th:if="${tt.email != null && tt.email != ''}"><i class="material-icons visualizar">email</i> </a>
-								<a href="#" title="enviar whats" th:if="${tt.telefone != null && tt.telefone != ''}"><i class="material-icons visualizar">mobile_screen_share</i></a>
+								<a th:href="@{/promocao/whatsapp/{id} (id=${tt.id})}" title="enviar whats" target="_blank" th:if="${tt.telefone != null && tt.telefone != ''}"><i class="material-icons visualizar">mobile_screen_share</i></a>
 								</div>
 								<hr class="my-4">
 							</div>
@@ -125,7 +125,7 @@
 								</a>
 								<div class="pull-right">
 								<a href="#" title="enviar email" th:if="${tp.email != null && tp.email != ''}"><i class="material-icons visualizar">email</i> </a>
-								<a th:href="@{/promocao/whatsapp/{id} (id=${tp.id})}" title="enviar whats" th:if="${tp.telefone != null && tp.telefone != ''}"><i class="material-icons visualizar">mobile_screen_share</i></a>
+								<a th:href="@{/promocao/whatsapp/{id} (id=${tp.id})}" title="enviar whats" target="_blank" th:if="${tp.telefone != null && tp.telefone != ''}"><i class="material-icons visualizar">mobile_screen_share</i></a>
 								</div>
 								<hr class="my-4">
 							</div>
