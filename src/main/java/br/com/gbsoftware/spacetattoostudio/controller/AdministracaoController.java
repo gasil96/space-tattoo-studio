@@ -75,7 +75,6 @@ public class AdministracaoController {
 	@GetMapping("/excluir/{usuario-login}")
 	public String preExcluir(@PathVariable("usuario-login") String login, Model model) {
 		model.addAttribute("usuario", servicoUsuario.findById(login));
-		System.err.println(servicoUsuario.findById(login).toString());
 		return MODAL_CONFIMAR_EXCLUSAO;
 	}
 

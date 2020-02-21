@@ -8,23 +8,51 @@
 	<li layout:fragment="caminho">Financeiro</li>
 
 	<div layout:fragment="corpo">
+	 <div class="page-header">
+          <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Gráfico Mensal de Orçamento</h2>
+          </div>
+        </div>
 	<section class="no-padding-bottom">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="line-cahrt block">
-						<canvas id="lineCahrt"></canvas>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row">
+							<div class="col-lg-6">
+								<p>O gráfico mostra o resultado financeiro, de cada mês do ano atual de forma individual baseando-se nos valores de orçamento de cada agendamento <strong>ATIVO</strong>. Você pode marcar ou desmarcar 
+								a visualização por categoria.</p>
+							</div>
+							<div class="col-lg-6">
+								<p>Lembre-se, o mês atual corresponde aos ganhos de seviços já agendados do perido de início ao fim do mês podendo variar caso ocorra novos agendamentos ou algum encerramento!</p>
+							</div>
+						</div>
+						<div class="line-cahrt block">
+							<canvas id="lineCahrt"></canvas>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 	</div>
 
 	<script type="text/javascript" layout:fragment="script">
 $(document).ready(function() {
-	
-	 // TODO - CHART DETALHAMENTO FINANCEIRO (GRÁFICO ANUAL) 
+	$.ajax({
+		type: "GET",
+		url: "/financeiro/vw-arrecadacao-anual",
+		dataType: 'json',
+		success :function(dado){
+		var arrayPiercing = dado[1];
+		var arrayTattoo = dado[0];
+         
+        function getRangeMeses(){
+        	  var mesAtual =  moment().format('M');
+              var mesesAno = ['Janeiro', 'Fevereiro', 'Marco', "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+              var meses = []
+              for( x = 0; x < mesAtual; x++ )
+              	meses.push(mesesAno[x]);
+              return meses;
+        }
     var LINECHART = $('#lineCahrt');
     var myLineChart = new Chart(LINECHART, {
         type: 'line',
@@ -37,10 +65,6 @@ $(document).ready(function() {
                     }
                 }],
                 yAxes: [{
-                    ticks: {
-                        max: 60,
-                        min: 10
-                    },
                     display: true,
                     gridLines: {
                         display: false
@@ -49,10 +73,10 @@ $(document).ready(function() {
             }
         },
         data: {
-            labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
+            labels: getRangeMeses(),
             datasets: [
                 {
-                    label: "Page Visitors",
+                    label: "Tattoo",
                     fill: true,
                     lineTension: 0.2,
                     backgroundColor: "transparent",
@@ -71,11 +95,11 @@ $(document).ready(function() {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 0,
-                    data: [20, 27, 20, 35, 30, 40, 33, 25, 39],
+                    data: [arrayTattoo.jan, arrayTattoo.fev, arrayTattoo.mar, arrayTattoo.abr, arrayTattoo.mai, arrayTattoo.jun, arrayTattoo.jul, arrayTattoo.ago, arrayTattoo.set, arrayTattoo.out, arrayTattoo.nov, arrayTattoo.dez],
                     spanGaps: false
                 },
                 {
-                    label: "Page Views",
+                    label: "Piercing",
                     fill: true,
                     lineTension: 0.2,
                     backgroundColor: "transparent",
@@ -94,13 +118,17 @@ $(document).ready(function() {
                     pointHoverBorderWidth: 2,
                     pointRadius: 1,
                     pointHitRadius: 10,
-                    data: [25, 17, 28, 25, 33, 27, 30, 33, 27],
+                    data: [arrayPiercing.jan, arrayPiercing.fev, arrayPiercing.mar, arrayPiercing.abr, arrayPiercing.mai, arrayPiercing.jun, arrayPiercing.jul, arrayPiercing.ago, arrayPiercing.set, arrayPiercing.out, arrayPiercing.nov, arrayPiercing.dez],
                     spanGaps: false
                 }
             ]
         }
     });
-	
+		},
+		erro: function(){
+			console.log("teste")
+		}
+	});	
 });
 </script>
 </body>

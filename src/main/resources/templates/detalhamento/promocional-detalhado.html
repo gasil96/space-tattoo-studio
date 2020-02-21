@@ -64,7 +64,7 @@
 												<span class="input-group-text form-control-sm">R$</span>
 											</div>
 											<input id="consumirCredito" type="number" th:field="*{creditoCliente}"
-												placeholder="Valor" required="required"
+												placeholder="valor" required="required"
 												class="form-control form-control-sm" min="0">
 										</div>
 									</div>
@@ -134,156 +134,9 @@
 				</div>
           </div>
         </section>
-        <div class="page-header">
-          <div class="container-fluid">
-            <h2 class="h5 no-margin-bottom">Top 3</h2>
-          </div>
-        </div>
-        <section>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="stats-with-chart-2 block">
-                  <div class="title"><strong class="d-block">Credit Sales</strong><span class="d-block">Lorem ipsum dolor sit</span></div>
-                  <div class="piechart chart">
-                    <canvas id="pieChartHome1"></canvas>
-                    <div class="text"><strong class="d-block">$2.145</strong><span class="d-block">Sales</span></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="stats-with-chart-2 block">
-                  <div class="title"><strong class="d-block">Channel Sales</strong><span class="d-block">Lorem ipsum dolor sit</span></div>
-                  <div class="piechart chart">
-                    <canvas id="pieChartHome2"></canvas>
-                    <div class="text"><strong class="d-block">$7.784</strong><span class="d-block">Sales</span></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="stats-with-chart-2 block">
-                  <div class="title"><strong class="d-block">Direct Sales</strong><span class="d-block">Lorem ipsum dolor sit</span></div>
-                  <div class="piechart chart">
-                    <canvas id="pieChartHome3"></canvas>
-                    <div class="text"><strong class="d-block">$4.957</strong><span class="d-block">Sales</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 		$(document).ready(function() {
-			// TODO - CUSTOMIZAR CHART DE TOP 3 
-			var PIECHART = $('#pieChartHome3');
-			    var myPieChart = new Chart(PIECHART, {
-			        type: 'doughnut',
-			        options: {
-			            cutoutPercentage: 90,
-			            legend: {
-			                display: false
-			            }
-			        },
-			        data: {
-			            labels: [
-			                "First",
-			                "Second",
-			                "Third",
-			                "Fourth"
-			            ],
-			            datasets: [
-			                {
-			                    data: [120, 90, 77, 95],
-			                    borderWidth: [0, 0, 0, 0],
-			                    backgroundColor: [
-			                        '#da4d60',
-			                        "#e96577",
-			                        "#f28695",
-			                        "#ffb6c1"
-			                    ],
-			                    hoverBackgroundColor: [
-			                        '#da4d60',
-			                        "#e96577",
-			                        "#f28695",
-			                        "#ffb6c1"
-			                    ]
-			                }]
-			        }
-			    });
-			    
-			    var PIECHART = $('#pieChartHome2');
-			    var myPieChart = new Chart(PIECHART, {
-			        type: 'doughnut',
-			        options: {
-			            cutoutPercentage: 90,
-			            legend: {
-			                display: false
-			            }
-			        },
-			        data: {
-			            labels: [
-			                "First",
-			                "Second",
-			                "Third",
-			                "Fourth"
-			            ],
-			            datasets: [
-			                {
-			                    data: [80, 70, 100, 60],
-			                    borderWidth: [0, 0, 0, 0],
-			                    backgroundColor: [
-			                        '#9528b9',
-			                        "#b046d4",
-			                        "#c767e7",
-			                        "#e394fe"
-			                    ],
-			                    hoverBackgroundColor: [
-			                        '#9528b9',
-			                        "#b046d4",
-			                        "#c767e7",
-			                        "#e394fe"
-			                    ]
-			                }]
-			        }
-			    });
-
-			    
-			    var PIECHART = $('#pieChartHome1');
-			    var myPieChart = new Chart(PIECHART, {
-			        type: 'doughnut',
-			        options: {
-			            cutoutPercentage: 90,
-			            legend: {
-			                display: false
-			            }
-			        },
-			        data: {
-			            labels: [
-			                "First",
-			                "Second",
-			                "Third",
-			                "Fourth"
-			            ],
-			            datasets: [
-			                {
-			                    data: [300, 50, 100, 60],
-			                    borderWidth: [0, 0, 0, 0],
-			                    backgroundColor: [
-			                        '#6933b9',
-			                        "#8553d1",
-			                        "#a372ec",
-			                        "#be9df1"
-			                    ],
-			                    hoverBackgroundColor: [
-			                        '#6933b9',
-			                        "#8553d1",
-			                        "#a372ec",
-			                        "#be9df1"
-			                    ]
-			                }]
-			        }
-			    });
 		});
 	</script>
 </body>
