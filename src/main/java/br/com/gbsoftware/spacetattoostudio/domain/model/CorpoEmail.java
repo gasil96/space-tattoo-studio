@@ -1,82 +1,61 @@
 package br.com.gbsoftware.spacetattoostudio.domain.model;
 
-import java.util.Date;
+public class CorpoEmail {
 
-import javax.persistence.Entity;
+	private String assunto;
 
-import org.springframework.mail.MailMessage;
-import org.springframework.mail.MailParseException;
+	private String menssagem;
 
-import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
+	private String email;
 
-@SuppressWarnings("serial")
-@Entity
-public class CorpoEmail extends EntidadeBase<Long> implements MailMessage {
+	private String desconto;
 
-	@Override
-	public void setFrom(String from) throws MailParseException {
-		// TODO Auto-generated method stub
+	public CorpoEmail() {
 
 	}
 
-	@Override
-	public void setReplyTo(String replyTo) throws MailParseException {
-		// TODO Auto-generated method stub
+	public CorpoEmail(String assunto, String menssagem, String email) {
+		super();
+		this.assunto = assunto;
+		this.menssagem = menssagem;
+		this.email = email;
+	}
 
+	public String getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(String desconto) {
+		this.desconto = desconto;
+	}
+
+	public String getAssunto() {
+		return assunto;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setAssunto(String assunto) {
+		this.assunto = assunto;
+	}
+
+	public String getMenssagem() {
+		return menssagem;
+	}
+
+	public void setMenssagem(String menssagem) {
+		this.menssagem = menssagem;
 	}
 
 	@Override
-	public void setTo(String to) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setTo(String... to) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setCc(String cc) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setCc(String... cc) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setBcc(String bcc) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setBcc(String... bcc) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setSentDate(Date sentDate) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setSubject(String subject) throws MailParseException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setText(String text) throws MailParseException {
-		// TODO Auto-generated method stub
-
+	public String toString() {
+		return "CorpoEmail [assunto=" + assunto + ", menssagem=" + menssagem + ", email=" + email + "]";
 	}
 
 }

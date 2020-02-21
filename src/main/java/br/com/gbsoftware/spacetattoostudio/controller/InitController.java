@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 /**
  * <b>Gabriel S. Sofware</b>
@@ -14,10 +15,15 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,12 +47,16 @@ import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 public class InitController {
 
 	private static final String PAGINA_INICIAL = "home";
-
+	private static final String MODAL_ALERTA_EMAIL = "modal/modal-alerta-email-home";
+	private static final String REDIRECIONAR = "redirect:/";
 	@Autowired
 	private ClienteService servicoCliente;
 
 	@Autowired
 	private ServicoService servicoService;
+
+	@Autowired
+	private JavaMailSender mailSender;
 
 	@GetMapping("/")
 	public String home(ModelMap model, Cliente cliente, Servico servico) {
@@ -70,18 +80,40 @@ public class InitController {
 	}
 
 	@RequestMapping(value = "/calendario", method = RequestMethod.GET)
-	public @ResponseBody String getCalendario( ) throws JsonProcessingException {
+	public @ResponseBody String getCalendario() throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-		List<AgendamentoCalendarDTO> calendarioDto = servicoService.buscarTodos().stream().map(x -> converterParaDTO(x)).collect(Collectors.toList());
+		List<AgendamentoCalendarDTO> calendarioDto = servicoService.buscarTodos().stream().map(x -> converterParaDTO(x))
+				.collect(Collectors.toList());
 		String dadosCalendarioIO = mapper.writeValueAsString(calendarioDto);
 		return dadosCalendarioIO;
 	}
-	
+
 	@GetMapping("/login")
 	public String login() {
 		return "login";
+	}
+
+	@GetMapping("enviar-alerta-email/{id}")
+	public String preEnviarAlertaEmail(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("servico", servicoService.buscarPorId(id).orElse(null));
+		return MODAL_ALERTA_EMAIL;
+	}
+
+	@PostMapping("enviar-email-alerta")
+	public String enviarAlertaEmail(Servico servico, SimpleMailMessage msgEmail) {
+		DateTimeFormatter dia = DateTimeFormatter.ofPattern("dd/MM");
+		DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH:mm");
+		Servico s1 = servicoService.buscarPorId(servico.getId()).orElse(null);
+		Cliente c1 = servicoCliente.buscarPorId(s1.getCliente().getId()).orElse(null);
+		msgEmail.setTo(c1.getEmail());
+		msgEmail.setSubject("Confirmação de Agendamento Space Tattoo Studio");
+		msgEmail.setText("Olá " + c1.getNome() + " gostariamos de confirmar seu agendamento de " + s1.getTipoServico()
+				+ " para às " + s1.getHorarioAgendamento().format(hora) + " do dia "
+				+ s1.getHorarioAgendamento().format(dia));
+		mailSender.send(msgEmail);
+		return REDIRECIONAR;
 	}
 
 	@ModelAttribute("statuscliente")
@@ -99,16 +131,16 @@ public class InitController {
 		return StatusServicoEnum.values();
 	}
 
-	private AgendamentoCalendarDTO converterParaDTO(Servico	servico) {
+	private AgendamentoCalendarDTO converterParaDTO(Servico servico) {
 
 		ModelMapper testMapper = new ModelMapper();
 		testMapper.addMappings(new PropertyMap<Servico, AgendamentoCalendarDTO>() {
 
 			@Override
 			protected void configure() {
-			map().setCategoria(source.getCategoria());
-			map().setHorarioAgendamento(source.getHorarioAgendamento());
-			map().setTipoServico(source.getTipoServico());
+				map().setCategoria(source.getCategoria());
+				map().setHorarioAgendamento(source.getHorarioAgendamento());
+				map().setTipoServico(source.getTipoServico());
 			}
 
 		});

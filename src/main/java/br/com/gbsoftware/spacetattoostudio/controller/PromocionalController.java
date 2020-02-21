@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
+import br.com.gbsoftware.spacetattoostudio.domain.model.CorpoEmail;
 import br.com.gbsoftware.spacetattoostudio.domain.model.CorpoWhatsApp;
 import br.com.gbsoftware.spacetattoostudio.domain.vw.VwClienteDadosPiercing;
 import br.com.gbsoftware.spacetattoostudio.domain.vw.VwClienteDadosTattoo;
@@ -30,8 +33,12 @@ public class PromocionalController {
 	private static final String PAGINANA_DETALHAMENTO_PROMOCIONAL = "detalhamento/promocional-detalhado";
 	private static final String ATT_PAGINA = "redirect:detalhamento";
 	private static final String MODAL_ENVIAR_MSG_WPP = "modal/modal-enviar-msg-wpp";
+	private static final String MODAL_ENVIAR_MSG_EMAIL = "modal/modal-enviar-msg-email";
 	private static final String WHATSAPP_URL = "wa.me/55";
 
+	@Autowired
+	private JavaMailSender mailSender;	
+	
 	@Autowired
 	private ClienteService servicoCliente;
 
@@ -75,6 +82,27 @@ public class PromocionalController {
 		return ATT_PAGINA;
 	}
 
+	@GetMapping("email/{id}")
+	public String msgEmail(@PathVariable("id") Long id, Model model, CorpoEmail corpoEmail) throws Exception {
+		Cliente clienteLocalizado = servicoCliente.buscarPorId(id).orElse(null);
+		if (clienteLocalizado == null) {
+			throw new Exception("Cliente com id: " + id + " não existe!");
+		} else {
+			corpoEmail.setAssunto("Olá "+clienteLocalizado.getNome()+" você ganhou uma oferta no Space Tattoo Studio.");
+			corpoEmail.setMenssagem("Você ganhou 10% desconto para ser utilizando em nosso Space, aproveite! "
+					+ "para mais informações entre em contato conosco via Whatsapp!");
+			corpoEmail.setEmail(clienteLocalizado.getEmail());
+			model.addAttribute("corpoEmail", corpoEmail);
+			return MODAL_ENVIAR_MSG_EMAIL;
+		}
+	}
+	
+	@PostMapping("enviar-email")
+	public String enviarEmail(CorpoEmail corpoEmail) {
+		mailSender.send(gerarCorpoEmail(corpoEmail));
+		return ATT_PAGINA;
+	}
+	
 	@GetMapping("whatsapp/{id}")
 	public String msgWhatsApp(@PathVariable("id") Long id, Model model, CorpoWhatsApp corpoWpp) throws Exception {
 		Cliente clienteLocalizado = servicoCliente.buscarPorId(id).orElse(null);
@@ -123,4 +151,12 @@ public class PromocionalController {
 		return menssagem;
 	}
 
+	private SimpleMailMessage gerarCorpoEmail(CorpoEmail corpoEmail) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(corpoEmail.getEmail());
+		message.setSubject(corpoEmail.getAssunto());
+		message.setText(corpoEmail.getMenssagem());
+		return message;
+	}
+	
 }

@@ -11,8 +11,7 @@
 			<div role="document" class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<strong id="titvuloModalNovoCliente" class="modal-title">Novo
-							usuário do sistema</strong>
+						<strong id="titvuloModalNovoCliente" class="modal-title">Editar Usuário</strong>
 						<button type="button" data-dismiss="modal" aria-label="Close"
 							class="close">
 							<span aria-hidden="true">×</span>
@@ -33,7 +32,7 @@
 									th:field="*{email}">
 							</div>
 							<div class="form-group">
-								<input id="confirm_email" type="text"
+								<input id="confirm_email" th:field="*{email}" type="hidden"
 									placeholder="Confirmar Email" class="mr-sm-3 form-control"
 									required="required">
 							</div>
