@@ -2,6 +2,7 @@ package br.com.gbsoftware.spacetattoostudio.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,11 +25,11 @@ public class FinanceiroController {
 	private VwArrecadacaoAnualTipoService vwArrecadacaoService;
 	
 	@GetMapping("detalhamento")
-	public String detalhamentoFinanceiro() {
-
+	public String detalhamentoFinanceiro(Model model) {
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
+	
 	@RequestMapping(value = "/vw-arrecadacao-anual", method = RequestMethod.GET)
 	public @ResponseBody String arrecadacaoAnual(String arrecadacaoAnual) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();

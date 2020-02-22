@@ -8,22 +8,28 @@
 	<li layout:fragment="caminho">Financeiro</li>
 
 	<div layout:fragment="corpo">
-	 <div class="page-header">
-          <div class="container-fluid">
-            <h2 class="h5 no-margin-bottom">Gráfico Mensal de Orçamento</h2>
-          </div>
-        </div>
-	<section class="no-padding-bottom">
+		<div class="page-header">
+			<div class="container-fluid">
+				<h2 class="h5 no-margin-bottom">Gráfico Mensal de Orçamento</h2>
+			</div>
+		</div>
+		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="row">
 							<div class="col-lg-6">
-								<p>O gráfico mostra o resultado financeiro, de cada mês do ano atual de forma individual baseando-se nos valores de orçamento de cada agendamento <strong>ATIVO</strong>. Você pode marcar ou desmarcar 
-								a visualização por categoria.</p>
+								<p>
+									O gráfico mostra o resultado financeiro, de cada mês do ano
+									atual de forma individual baseando-se nos valores de orçamento
+									de cada agendamento <strong>ATIVO</strong>. Você pode marcar ou
+									desmarcar a visualização por categoria.
+								</p>
 							</div>
 							<div class="col-lg-6">
-								<p>Lembre-se, o mês atual corresponde aos ganhos de seviços já agendados do perido de início ao fim do mês podendo variar caso ocorra novos agendamentos ou algum encerramento!</p>
+								<p>Lembre-se, o mês atual corresponde aos ganhos de seviços
+									já agendados do perido de início ao fim do mês podendo variar
+									caso ocorra novos agendamentos ou algum encerramento!</p>
 							</div>
 						</div>
 						<div class="line-cahrt block">
@@ -33,103 +39,187 @@
 				</div>
 			</div>
 		</section>
+		<section class="no-padding-top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<a role="button" href="/caixa/visualizar" title="Fluxo Diário"
+							class="btn btn-warning btn-sm pull-right" > Relátorio Financeiro de <strong id="mesAtual"></strong> </a>
+					</div>
+				</div>
+				<br>
+			</div>
+		</section>
+		<div class="page-header">
+			<div class="container-fluid">
+				<h2 class="h5 no-margin-bottom">Relatório Financeiro Por Tempo
+					Estipulado</h2>
+			</div>
+		</div>
+		<section class="no-padding-bottom">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row">
+							<div class="col-lg-6">
+								<p>
+									A pesquisa abaixo irá gerar o <strong>PDF</strong> com os dados de Entrada, Saida e Lucro Estimado
+									pelo tempo que for especificado nos campos <strong>ABAIXO</strong>.
+								</p>
+							</div>
+							<div class="col-lg-6">
+								<p>Lembre-se, para o  mês atual basta clicar no 'Relatório Financeiro' ...</p>
+							</div>
+						</div>
+						<form class="form-inline">
+							<div class="form-group">
+								<input id="inlineFormInput" type="date" placeholder="Jane Doe"
+									class="mr-sm-3 form-control">
+							</div>
+							<div class="form-group">
+								<input id="inlineFormInputGroup" type="date"
+									placeholder="Username"
+									class="mr-sm-3 form-control form-control">
+							</div>
+							<div class="form-group">
+								<input type="submit" value="Gerar Relatório" class="btn btn-warning">
+							</div>
+						</form>
+						<br> <br> <br>
+					</div>
+				</div>
+			</div>
+		</section>
 	</div>
 
 	<script type="text/javascript" layout:fragment="script">
-$(document).ready(function() {
-	$.ajax({
-		type: "GET",
-		url: "/financeiro/vw-arrecadacao-anual",
-		dataType: 'json',
-		success :function(dado){
-		var arrayPiercing = dado[1];
-		var arrayTattoo = dado[0];
-         
-        function getRangeMeses(){
-        	  var mesAtual =  moment().format('M');
-              var mesesAno = ['Janeiro', 'Fevereiro', 'Marco', "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-              var meses = []
-              for( x = 0; x < mesAtual; x++ )
-              	meses.push(mesesAno[x]);
-              return meses;
-        }
-    var LINECHART = $('#lineCahrt');
-    var myLineChart = new Chart(LINECHART, {
-        type: 'line',
-        options: {
-            scales: {
-                xAxes: [{
-                    display: true,
-                    gridLines: {
-                        display: false
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    gridLines: {
-                        display: false
-                    }
-                }]
-            }
-        },
-        data: {
-            labels: getRangeMeses(),
-            datasets: [
-                {
-                    label: "Tattoo",
-                    fill: true,
-                    lineTension: 0.2,
-                    backgroundColor: "transparent",
-                    borderColor: '#864DD9',
-                    pointBorderColor: '#864DD9',
-                    pointHoverBackgroundColor: '#864DD9',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    borderWidth: 2,
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 5,
-                    pointHoverRadius: 5,
-                    pointHoverBorderColor: "#fff",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 0,
-                    data: [arrayTattoo.jan, arrayTattoo.fev, arrayTattoo.mar, arrayTattoo.abr, arrayTattoo.mai, arrayTattoo.jun, arrayTattoo.jul, arrayTattoo.ago, arrayTattoo.set, arrayTattoo.out, arrayTattoo.nov, arrayTattoo.dez],
-                    spanGaps: false
-                },
-                {
-                    label: "Piercing",
-                    fill: true,
-                    lineTension: 0.2,
-                    backgroundColor: "transparent",
-                    borderColor: "#EF8C99",
-                    pointBorderColor: '#EF8C99',
-                    pointHoverBackgroundColor: "#EF8C99",
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    borderWidth: 2,
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 5,
-                    pointHoverRadius: 5,
-                    pointHoverBorderColor: "#fff",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: [arrayPiercing.jan, arrayPiercing.fev, arrayPiercing.mar, arrayPiercing.abr, arrayPiercing.mai, arrayPiercing.jun, arrayPiercing.jul, arrayPiercing.ago, arrayPiercing.set, arrayPiercing.out, arrayPiercing.nov, arrayPiercing.dez],
-                    spanGaps: false
-                }
-            ]
-        }
-    });
-		},
-		erro: function(){
-			console.log("teste")
-		}
-	});	
-});
-</script>
+		$(document)
+				.ready(
+						function() {
+							$("#mesAtual").text(moment().format(
+							'MMMM').toUpperCase());
+							$
+									.ajax({
+										type : "GET",
+										url : "/financeiro/vw-arrecadacao-anual",
+										dataType : 'json',
+										success : function(dado) {
+											var arrayTattoo = dado[1];
+											var arrayPiercing = dado[0];
+											function getRangeMeses() {
+												var mesAtual = moment().format(
+														'MM');
+												var mesesAno = [ 'Janeiro',
+														'Fevereiro', 'Marco',
+														"Abril", "Maio",
+														"Junho", "Julho",
+														"Agosto", "Setembro",
+														"Outubro", "Novembro",
+														"Dezembro" ];
+												var meses = []
+												for (x = 0; x < mesAtual; x++)
+													meses.push(mesesAno[x]);
+												return meses;
+											}
+											var LINECHART = $('#lineCahrt');
+											var myLineChart = new Chart(
+													LINECHART,
+													{
+														type : 'line',
+														options : {
+															scales : {
+																xAxes : [ {
+																	display : true,
+																	gridLines : {
+																		display : false
+																	}
+																} ],
+																yAxes : [ {
+																	display : true,
+																	gridLines : {
+																		display : false
+																	}
+																} ]
+															}
+														},
+														data : {
+															labels : getRangeMeses(),
+															datasets : [
+																	{
+																		label : "Tattoo",
+																		fill : true,
+																		lineTension : 0.2,
+																		backgroundColor : "transparent",
+																		borderColor : '#864DD9',
+																		pointBorderColor : '#864DD9',
+																		pointHoverBackgroundColor : '#864DD9',
+																		borderCapStyle : 'butt',
+																		borderDash : [],
+																		borderDashOffset : 0.0,
+																		borderJoinStyle : 'miter',
+																		borderWidth : 2,
+																		pointBackgroundColor : "#fff",
+																		pointBorderWidth : 5,
+																		pointHoverRadius : 5,
+																		pointHoverBorderColor : "#fff",
+																		pointHoverBorderWidth : 2,
+																		pointRadius : 1,
+																		pointHitRadius : 0,
+																		data : [
+																				arrayTattoo.jan,
+																				arrayTattoo.fev,
+																				arrayTattoo.mar,
+																				arrayTattoo.abr,
+																				arrayTattoo.mai,
+																				arrayTattoo.jun,
+																				arrayTattoo.jul,
+																				arrayTattoo.ago,
+																				arrayTattoo.set,
+																				arrayTattoo.out,
+																				arrayTattoo.nov,
+																				arrayTattoo.dez ],
+																		spanGaps : false
+																	},
+																	{
+																		label : "Piercing",
+																		fill : true,
+																		lineTension : 0.2,
+																		backgroundColor : "transparent",
+																		borderColor : "#EF8C99",
+																		pointBorderColor : '#EF8C99',
+																		pointHoverBackgroundColor : "#EF8C99",
+																		borderCapStyle : 'butt',
+																		borderDash : [],
+																		borderDashOffset : 0.0,
+																		borderJoinStyle : 'miter',
+																		borderWidth : 2,
+																		pointBackgroundColor : "#fff",
+																		pointBorderWidth : 5,
+																		pointHoverRadius : 5,
+																		pointHoverBorderColor : "#fff",
+																		pointHoverBorderWidth : 2,
+																		pointRadius : 1,
+																		pointHitRadius : 10,
+																		data : [
+																				arrayPiercing.jan,
+																				arrayPiercing.fev,
+																				arrayPiercing.mar,
+																				arrayPiercing.abr,
+																				arrayPiercing.mai,
+																				arrayPiercing.jun,
+																				arrayPiercing.jul,
+																				arrayPiercing.ago,
+																				arrayPiercing.set,
+																				arrayPiercing.out,
+																				arrayPiercing.nov,
+																				arrayPiercing.dez ],
+																		spanGaps : false
+																	} ]
+														}
+													});
+										},
+									});
+						});
+	</script>
 </body>
 </html>
