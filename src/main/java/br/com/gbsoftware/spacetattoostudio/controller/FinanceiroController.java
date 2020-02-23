@@ -23,13 +23,12 @@ public class FinanceiroController {
 
 	@Autowired
 	private VwArrecadacaoAnualTipoService vwArrecadacaoService;
-	
+
 	@GetMapping("detalhamento")
 	public String detalhamentoFinanceiro(Model model) {
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
-	
 	@RequestMapping(value = "/vw-arrecadacao-anual", method = RequestMethod.GET)
 	public @ResponseBody String arrecadacaoAnual(String arrecadacaoAnual) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -37,6 +36,4 @@ public class FinanceiroController {
 		mapper.registerModule(new JavaTimeModule());
 		return arrecadacaoAnual = mapper.writeValueAsString(vwArrecadacaoService.buscarTodos());
 	}
-	
-	
 }

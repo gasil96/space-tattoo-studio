@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.CorpoEmail;
@@ -35,10 +36,13 @@ public class PromocionalController {
 	private static final String MODAL_ENVIAR_MSG_WPP = "modal/modal-enviar-msg-wpp";
 	private static final String MODAL_ENVIAR_MSG_EMAIL = "modal/modal-enviar-msg-email";
 	private static final String WHATSAPP_URL = "wa.me/55";
-
-	@Autowired
-	private JavaMailSender mailSender;	
+	private static final String MSG_SUCCESS = "success";
+	private static final String MSG_ERROR = "error";
+	private static final String MSG_INFO = "info";
 	
+	@Autowired
+	private JavaMailSender mailSender;
+
 	@Autowired
 	private ClienteService servicoCliente;
 
@@ -67,7 +71,7 @@ public class PromocionalController {
 	}
 
 	@PostMapping("add-credito")
-	public String adicionarCredito(Cliente cliente) throws Exception {
+	public String adicionarCredito(Cliente cliente, RedirectAttributes attr) throws Exception {
 		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(null);
 		if (clienteLocalizado != null) {
 			if (clienteLocalizado.getCreditoCliente() != null) {
@@ -76,8 +80,9 @@ public class PromocionalController {
 			} else {
 				servicoCliente.updateCredito(cliente.getCreditoCliente(), cliente.getId());
 			}
+			attr.addFlashAttribute(MSG_SUCCESS, "Credito adicionado!");
 		} else {
-			throw new Exception("Não foi possivel localizar o cliente");
+			attr.addFlashAttribute(MSG_ERROR, "Cliente não localizado");
 		}
 		return ATT_PAGINA;
 	}
@@ -88,7 +93,8 @@ public class PromocionalController {
 		if (clienteLocalizado == null) {
 			throw new Exception("Cliente com id: " + id + " não existe!");
 		} else {
-			corpoEmail.setAssunto("Olá "+clienteLocalizado.getNome()+" você ganhou uma oferta no Space Tattoo Studio.");
+			corpoEmail.setAssunto(
+					"Olá " + clienteLocalizado.getNome() + " você ganhou uma oferta no Space Tattoo Studio.");
 			corpoEmail.setMenssagem("Você ganhou 10% desconto para ser utilizando em nosso Space, aproveite! "
 					+ "para mais informações entre em contato conosco via Whatsapp!");
 			corpoEmail.setEmail(clienteLocalizado.getEmail());
@@ -96,13 +102,14 @@ public class PromocionalController {
 			return MODAL_ENVIAR_MSG_EMAIL;
 		}
 	}
-	
+
 	@PostMapping("enviar-email")
-	public String enviarEmail(CorpoEmail corpoEmail) {
+	public String enviarEmail(RedirectAttributes attr, CorpoEmail corpoEmail) {
 		mailSender.send(gerarCorpoEmail(corpoEmail));
+		attr.addFlashAttribute(MSG_SUCCESS, "Emai de oferta enviado!");
 		return ATT_PAGINA;
 	}
-	
+
 	@GetMapping("whatsapp/{id}")
 	public String msgWhatsApp(@PathVariable("id") Long id, Model model, CorpoWhatsApp corpoWpp) throws Exception {
 		Cliente clienteLocalizado = servicoCliente.buscarPorId(id).orElse(null);
@@ -118,7 +125,7 @@ public class PromocionalController {
 	}
 
 	@PostMapping("consumir-credito")
-	public String removerCredito(Cliente cliente) throws Exception {
+	public String removerCredito(Cliente cliente, RedirectAttributes attr) throws Exception {
 		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(null);
 		if (clienteLocalizado != null) {
 			if (clienteLocalizado.getCreditoCliente() != null) {
@@ -127,8 +134,9 @@ public class PromocionalController {
 			} else {
 				servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), cliente.getId());
 			}
+			attr.addFlashAttribute(MSG_INFO, "Crédito consumido!");
 		} else {
-			throw new Exception("Não foi possivel localizar o cliente");
+			attr.addFlashAttribute(MSG_ERROR, "Cliente não localizado!");
 		}
 
 		return ATT_PAGINA;
@@ -146,8 +154,7 @@ public class PromocionalController {
 		String menssagem = "Olá " + cliente.getNome()
 				+ "  você está na lista dos *MELHORES CLIENTES* do Space Tattoo Studio e "
 				+ "com isso acaba de ganhar uma oferta especial. Responda esssa mensagem para mais informações. "
-				+ " *Oferta válida até:* "
-				+ LocalDateTime.now().plusDays(15).format(dateFormat);
+				+ " *Oferta válida até:* " + LocalDateTime.now().plusDays(15).format(dateFormat);
 		return menssagem;
 	}
 
@@ -158,5 +165,5 @@ public class PromocionalController {
 		message.setText(corpoEmail.getMenssagem());
 		return message;
 	}
-	
+
 }

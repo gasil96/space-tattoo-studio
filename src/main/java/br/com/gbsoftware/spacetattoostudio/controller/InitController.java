@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,6 +50,7 @@ public class InitController {
 	private static final String PAGINA_INICIAL = "home";
 	private static final String MODAL_ALERTA_EMAIL = "modal/modal-alerta-email-home";
 	private static final String REDIRECIONAR = "redirect:/";
+	private static final String MSG_SUCCESS = "success";
 	@Autowired
 	private ClienteService servicoCliente;
 
@@ -102,7 +104,7 @@ public class InitController {
 	}
 
 	@PostMapping("enviar-email-alerta")
-	public String enviarAlertaEmail(Servico servico, SimpleMailMessage msgEmail) {
+	public String enviarAlertaEmail(Servico servico, SimpleMailMessage msgEmail, RedirectAttributes attr) {
 		DateTimeFormatter dia = DateTimeFormatter.ofPattern("dd/MM");
 		DateTimeFormatter hora = DateTimeFormatter.ofPattern("HH:mm");
 		Servico s1 = servicoService.buscarPorId(servico.getId()).orElse(null);
@@ -113,6 +115,7 @@ public class InitController {
 				+ " para às " + s1.getHorarioAgendamento().format(hora) + " do dia "
 				+ s1.getHorarioAgendamento().format(dia));
 		mailSender.send(msgEmail);
+		attr.addFlashAttribute(MSG_SUCCESS, "Email de alerta enviado para "+c1.getNome());
 		return REDIRECIONAR;
 	}
 

@@ -9,7 +9,6 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.Immutable;
 
 import br.com.gbsoftware.spacetattoostudio.domain.EntidadeBase;
-import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 
 @Immutable
 @Entity

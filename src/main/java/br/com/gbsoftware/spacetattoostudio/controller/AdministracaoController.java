@@ -38,7 +38,10 @@ public class AdministracaoController {
 	private static final String MODAL_EDITAR_USUARIO = "modal/modal-editar-usuario";
 	private static final String MODAL_VISUALIZAR_USUARIO = "modal/modal-visualizar-usuario";
 	private static final String MODAL_CONFIMAR_EXCLUSAO = "fragments/modal-confirmar-exclusao";
-
+	private static final String MSG_SUCCESS = "success";
+	private static final String MSG_ERROR = "error";
+	private static final String MSG_INFO = "info";
+	
 	@Autowired
 	private UsuarioService servicoUsuario;
 
@@ -58,41 +61,41 @@ public class AdministracaoController {
 		model.addAttribute("usuario", servicoUsuario.findById(login));
 		return MODAL_EDITAR_USUARIO;
 	}
-	
+
 	@GetMapping("visualizar/{usuario-login}")
 	public String visualizarUsuario(@PathVariable("usuario-login") String login, Model model) {
 		model.addAttribute("usuario", servicoUsuario.findById(login));
 		return MODAL_VISUALIZAR_USUARIO;
 	}
 
-	@PostMapping("/editar-usuario")
+	@PostMapping("editar-usuario")
 	public String editar(@Valid Usuario usuario, RedirectAttributes attr) {
 		servicoUsuario.alterar(usuario);
-		attr.addFlashAttribute("editou", true);
+		attr.addFlashAttribute(MSG_INFO, "Usuário alterado!");
 		return ATT_PAGINA__;
 	}
 
-	@GetMapping("/excluir/{usuario-login}")
+	@GetMapping("excluir/{usuario-login}")
 	public String preExcluir(@PathVariable("usuario-login") String login, Model model) {
 		model.addAttribute("usuario", servicoUsuario.findById(login));
 		return MODAL_CONFIMAR_EXCLUSAO;
 	}
 
-	@PostMapping("/excluir-usuario")
-	public String excluirPorLogin(Usuario usuario, RedirectAttributes attr){
+	@PostMapping("excluir-usuario")
+	public String excluirPorLogin(Usuario usuario, RedirectAttributes attr) {
 		servicoUsuario.deletar(usuario.getLogin());
-		attr.addFlashAttribute("deletou", true);
-		return ATT_PAGINA__;
-	}
-	
-	@PostMapping("/salvar-usuario")
-	public String salvarUsuario(@Valid Usuario usuario, RedirectAttributes attr) {
-		servicoUsuario.salvar(usuario);
-		attr.addFlashAttribute("salvou", true);
+		attr.addFlashAttribute(MSG_ERROR, "Usuário Excluído!");
 		return ATT_PAGINA__;
 	}
 
-	@PostMapping("/salvar-role")
+	@PostMapping("salvar-usuario")
+	public String salvarUsuario(@Valid Usuario usuario, RedirectAttributes attr) {
+		servicoUsuario.salvar(usuario);
+		attr.addFlashAttribute(MSG_SUCCESS, "Novo usuário salvo!");
+		return ATT_PAGINA__;
+	}
+
+	@PostMapping("salvar-role")
 	public String salvarUsuario(@Valid Role role) {
 		servicoRole.salvar(role);
 		return __ADMINISTRACAO;
@@ -104,7 +107,7 @@ public class AdministracaoController {
 	}
 
 	@ModelAttribute("cargo")
-	public CargoUsuarioEnum[] getCargo() {	
+	public CargoUsuarioEnum[] getCargo() {
 		return CargoUsuarioEnum.values();
 	}
 
@@ -120,5 +123,5 @@ public class AdministracaoController {
 			servicoRole.salvar(role);
 		}
 	}
-	
+
 }

@@ -20,10 +20,6 @@
 			</div>
 			<br>
 		</section>
-		<div th:if="${salvou == true}" id="salvouUsuario"></div>
-		<div th:if="${editou == true} " id="clienteEditado"></div>
-		<div th:if="${deletou == true} " id="deletouUsuario"></div>
-		<div th:if="${error == true} " id="error"></div>
 		<section class="no-padding-top">
 			<div class="container-fluid">
 				<div class="row">
@@ -45,17 +41,20 @@
 									</thead>
 									<tbody>
 										<tr th:each="u :${listaUsuarios}">
-											<td>
-											<a th:href="@{/adm/visualizar/{usuario-login} (usuario-login=${u.login})}"><i class="material-icons" title="Visualizar">visibility </i></a>
-														</td>
+											<td><a
+												th:href="@{/adm/visualizar/{usuario-login} (usuario-login=${u.login})}"><i
+													class="material-icons" title="Visualizar">visibility </i></a></td>
 											<th th:text="${u.nomeCompleto}">Gabriel Silva</th>
 											<td th:text="${u.login}">gasil96</td>
 											<td th:text="${u.email}">gasil96@gmail.com</td>
-<!-- 											<td th:text="${u.cargo}">Desenvolvedor</td> -->
-											<td style="text-align: center">
-												 <a th:href="@{/adm/editar/{usuario-login} (usuario-login=${u.login})}" title="Alterar" ><i class="material-icons alterar"> edit </i></a>
-												 <a th:href="@{/adm/excluir/{usuario-login} (usuario-login=${u.login})}" title="Excluir"><i class="material-icons deletar"> delete_forever </i></a>
-											</td>
+											<!-- 											<td th:text="${u.cargo}">Desenvolvedor</td> -->
+											<td style="text-align: center"><a
+												th:href="@{/adm/editar/{usuario-login} (usuario-login=${u.login})}"
+												title="Alterar"><i class="material-icons alterar">
+														edit </i></a> <a
+												th:href="@{/adm/excluir/{usuario-login} (usuario-login=${u.login})}"
+												title="Excluir"><i class="material-icons deletar">
+														delete_forever </i></a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -69,26 +68,9 @@
 
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-		$(document).ready( function() {
-							$('#salvouUsuario').show(function() {
-								Messenger().post({
-									message : 'Usuário salvo com sucesso!',
-									type : 'success'
-								});
-							});
-							$('#deletouUsuario').show(function() {
-								Messenger().post({
-									message : 'Usuário removido!',
-									type : 'error'
-								});
-							});
-							$('#error').show(function() {
-								Messenger().post({
-									message : 'Usuário inexistente !',
-									type : 'error'
-								});
-							});
-
+		$(document)
+				.ready(
+						function() {
 							$('#cargo')
 									.change(
 											function() {
@@ -118,7 +100,7 @@
 																	true);
 												}
 											});
-		});
+						});
 
 		var password = document.getElementById("password"), confirm_password = document
 				.getElementById("confirm_password"), email = document

@@ -85,17 +85,18 @@
 			<div>
 				<!-- 	PRELOADER -->
 				<div id="divCorpo">
-				<div class="spinner-wrapper">
-					<div class="spinner sk-wave">
-						<div class="sk-rect sk-rect1"></div>
-						<div class="sk-rect sk-rect2"></div>
-						<div class="sk-rect sk-rect3"></div>
-						<div class="sk-rect sk-rect4"></div>
-						<div class="sk-rect sk-rect5"></div>
+					<div class="spinner-wrapper">
+						<div class="spinner sk-wave">
+							<div class="sk-rect sk-rect1"></div>
+							<div class="sk-rect sk-rect2"></div>
+							<div class="sk-rect sk-rect3"></div>
+							<div class="sk-rect sk-rect4"></div>
+							<div class="sk-rect sk-rect5"></div>
+						</div>
 					</div>
 				</div>
-				</div>
 				<!-- FIM PRELOEADER -->
+				<div th:replace="fragments/msg-hubspot"></div>
 				<div layout:fragment="corpo">
 					<div>conteudo principal das paginas</div>
 				</div>
@@ -231,13 +232,36 @@
 				}
 			});
 		});
-// 		TODO - AQUI GERENCIAR O PRELOADER DAS REQUISICOES AJAX
+		$(document).ready(function() {
+			var valorMessageSucess = $("#msgValueSuccess").val();
+			var valorMessageError = $("#msgValueError").val();
+			var valorMessageInfo = $("#msgValueInfo").val();
+			$('#success').show(function() {
+				Messenger().post({
+					message : valorMessageSucess,
+					type : 'success'
+				});
+			});
+			$('#error').show(function() {
+				Messenger().post({
+					message : valorMessageError,
+					type : 'error'
+				});
+			});
+			$('#info').show(function() {
+				Messenger().post({
+					message : valorMessageInfo,
+					type : 'info'
+				});
+			});
+		});
+		// 		TODO - AQUI GERENCIAR O PRELOADER DAS REQUISICOES AJAX
 		var $loading = $("#divCorpo").fadeOut(0);
-		$(document).ajaxStart(function () {
-		    $loading.show();
-		  }).ajaxStop(function () {
+		$(document).ajaxStart(function() {
+			$loading.show();
+		}).ajaxStop(function() {
 			$loading.fadeOut();
-		  });
+		});
 	</script>
 	<script layout:fragment="script">
 		

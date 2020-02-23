@@ -110,19 +110,16 @@
 	</div>
 
 	<script type="text/javascript" layout:fragment="script">
-	$(document).ready(function()
-			{
-			    $(".carregando").ajaxStart(function(){
-			        $(this).fadeIn(300);
-			    });
-			    $(".carregando").ajaxStop(function(){
-			        $(this).fadeOut(200);
-			    });
-			    
-			    
-			    
+		$(document).ready(function() {
+			$(".carregando").ajaxStart(function() {
+				$(this).fadeIn(300);
 			});
-	$(function() {
+			$(".carregando").ajaxStop(function() {
+				$(this).fadeOut(200);
+			});
+
+		});
+		$(function() {
 			$('#horarioAgendamento').datetimepicker({
 				format : 'DD-MM-YYYY HH:mm',
 				autoclose : true,
@@ -131,76 +128,107 @@
 			});
 		});
 
-		$(document).ready(function() {
-							$.ajax({
-								type: "GET",
-								url: "/cliente/clientes",
-								dataType: 'json',
-								success :function(dado){
-									 var tabelaCliente = 	$('#tabela-cliente').dataTable( {
-										pageLength: 5,
-										order: 1,
-										ordering: false,
-										destroy: true,
-									    sPaginationType: 'simple_numbers',
-									 	lengthChange: false,
-										deferRender: true,
-										dom : 'lBfrtip',
-										buttons : [
-											{
-												extend : 'excel',
-												text : 'Planilha',
-												className : 'btn-transparent',
-												title : 'SpaceTattooStudio',
-												exportOptions : {
-													columns : ':visible'
-												},
-											},
-											{
-												extend : 'print',
-												text : 'Impressão',
-												className : 'btn-transparent',
-												title : 'SpaceTattooStudio',
-												exportOptions : {
-													columns : ':visible'
-												},
-											},
-											{
-												extend : 'pdf',
-												className : 'btn-transparent',
-												title : 'SpaceTattooStudio',
-												exportOptions : {
-													columns : ':visible'
-												},
-											} ],
-										language : {
-											"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+		$(document)
+				.ready(
+						function() {
+							$
+									.ajax({
+										type : "GET",
+										url : "/cliente/clientes",
+										dataType : 'json',
+										success : function(dado) {
+											var tabelaCliente = $(
+													'#tabela-cliente')
+													.dataTable(
+															{
+																pageLength : 5,
+																order : 1,
+																ordering : false,
+																destroy : true,
+																sPaginationType : 'simple_numbers',
+																lengthChange : false,
+																deferRender : true,
+																dom : 'lBfrtip',
+																buttons : [
+																		{
+																			extend : 'excel',
+																			text : 'Planilha',
+																			className : 'btn-transparent',
+																			title : 'SpaceTattooStudio',
+																			exportOptions : {
+																				columns : ':visible'
+																			},
+																		},
+																		{
+																			extend : 'print',
+																			text : 'Impressão',
+																			className : 'btn-transparent',
+																			title : 'SpaceTattooStudio',
+																			exportOptions : {
+																				columns : ':visible'
+																			},
+																		},
+																		{
+																			extend : 'pdf',
+																			className : 'btn-transparent',
+																			title : 'SpaceTattooStudio',
+																			exportOptions : {
+																				columns : ':visible'
+																			},
+																		} ],
+																language : {
+																	"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+																},
+																data : dado,
+																columns : [
+																		{
+																			data : "id",
+																			render : function(
+																					data,
+																					type,
+																					row,
+																					meta) {
+																				return type === 'display' ? '<a href="/cliente/visualizar/'+ data +'" ><i class="material-icons visualizar" title="visualizar">visibility</i></a>'
+																						: data;
+																			}
+																		},
+																		{
+																			data : 'id'
+																		},
+																		{
+																			data : 'nome'
+																		},
+																		{
+																			data : 'instagram'
+																		},
+																		{
+																			data : "telefone"
+																		},
+																		{
+																			data : "id",
+																			render : function(
+																					data,
+																					type,
+																					row,
+																					meta) {
+																				return type === 'display' ? '<a href="/cliente/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>'
+																						: data;
+																			}
+																		},
+																		{
+																			data : "id",
+																			render : function(
+																					data,
+																					type,
+																					row,
+																					meta) {
+																				return type === 'display' ? '<a href="/agendamento/agendar/'+ data +'" ><i class="material-icons adicionar" title="adicionar agendamento">post_add</i></a>'
+																						: data;
+																			}
+																		}, ]
+															});
 										},
-										data: dado,
-										columns: [
-											{data: "id" , render : function ( data, type, row, meta ) {
-									              return type === 'display'  ?
-									                '<a href="/cliente/visualizar/'+ data +'" ><i class="material-icons visualizar" title="visualizar">visibility</i></a>' :
-									                data;
-									            }},
-											{data: 'id'},
-											{data: 'nome'},
-											{data: 'instagram'},
-											{data: "telefone"},
-											{data: "id" , render : function ( data, type, row, meta ) {
-									              return type === 'display'  ?
-									                '<a href="/cliente/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
-									                data;
-									            }},
-											{data: "id" , render : function ( data, type, row, meta ) {
-									              return type === 'display'  ?
-									                '<a href="/agendamento/agendar/'+ data +'" ><i class="material-icons adicionar" title="adicionar agendamento">post_add</i></a>' :
-									                data;
-									            }},
-										]
 									});
-								},
-							});
 						});
 
 		$(document).ready(function() {

@@ -8,6 +8,8 @@
 	<li layout:fragment="caminho">Promoções</li>
 
 	<div layout:fragment="corpo">
+		<div th:if="${adicionouCred == true} " id="adicionouCred"></div>
+		<div th:if="${removeuCred == true} " id="removeuCred"></div>
 		<section class="no-padding-bottom">
 			<div class="container-fluid">
 				<div class="row">
@@ -30,14 +32,13 @@
 											</div>
 											<input id="creditoAdicionar" type="number"
 												placeholder="valor" required="required"
-												class="form-control form-control-sm" min="0" max="10000" 
-												th:field="*{creditoCliente}"
-												 >
+												class="form-control form-control-sm" min="0" max="10000"
+												th:field="*{creditoCliente}">
 										</div>
 									</div>
 									<div class="form-group">
-										<label>Código do cliente</label> <input type="text" th:field="*{id}"
-											class="form-control form-control-sm"
+										<label>Código do cliente</label> <input type="text"
+											th:field="*{id}" class="form-control form-control-sm"
 											id="typeaheadIdInstaNomeCliente" placeholder="">
 									</div>
 									<div class="form-group">
@@ -56,21 +57,23 @@
 									negativo</span>
 							</div>
 							<div class="block-body">
-								<form th:action="@{/promocao/consumir-credito}" method="POST" th:object="${cliente}">
+								<form th:action="@{/promocao/consumir-credito}" method="POST"
+									th:object="${cliente}">
 									<div class="form-group">
 										<label class="form-control-label">Valor</label>
 										<div class="input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text form-control-sm">R$</span>
 											</div>
-											<input id="consumirCredito" type="number" th:field="*{creditoCliente}"
-												placeholder="valor" required="required"
-												class="form-control form-control-sm" min="0">
+											<input id="consumirCredito" type="number"
+												th:field="*{creditoCliente}" placeholder="valor"
+												required="required" class="form-control form-control-sm"
+												min="0">
 										</div>
 									</div>
 									<div class="form-group">
-										<label>Código do cliente</label> <input type="text" th:field="*{id}"
-											class="form-control form-control-sm"
+										<label>Código do cliente</label> <input type="text"
+											th:field="*{id}" class="form-control form-control-sm"
 											id="typeaheadIdInstaNomeCliente2" placeholder="">
 									</div>
 									<div class="form-group">
@@ -83,29 +86,37 @@
 				</div>
 			</div>
 		</section>
-		 <div class="page-header">
-          <div class="container-fluid">
-            <h2 class="h5 no-margin-bottom">Top 10 - Clientes</h2>
-          </div>
-        </div>
-		  <section class="no-padding-bottom">
-          <div class="container-fluid">
-            <div class="row">
+		<div class="page-header">
+			<div class="container-fluid">
+				<h2 class="h5 no-margin-bottom">Top 10 - Clientes</h2>
+			</div>
+		</div>
+		<section class="no-padding-bottom">
+			<div class="container-fluid">
+				<div class="row">
 					<div class="col-lg-6">
 						<div class="messages-block block">
 							<div class="title">
 								<strong>Tattoo</strong>
 							</div>
 							<div class="messages" th:each="tt :${topTattoo}">
-								<a class="content">
-									<strong class="d-block" th:text="${tt.nome}">Nadia Halsey</strong>
-									<span class="d-block" th:if="${tt.creditoCliente}">Crédito <strong>R$ <strong th:text="${tt.creditoCliente}">20000.00</strong></strong></span>
-									<span class="d-block">Gasto Anual: <strong>R$<strong th:text="${tt.totalGastoAnual}">20000.00</strong></strong></span>
-									<small class="date d-block" th:text="${'Cliente desde:	'+#temporals.format(tt.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
+								<a class="content"> <strong class="d-block"
+									th:text="${tt.nome}">Nadia Halsey</strong> <span
+									class="d-block" th:if="${tt.creditoCliente}">Crédito <strong>R$
+											<strong th:text="${tt.creditoCliente}">20000.00</strong>
+									</strong></span> <span class="d-block">Gasto Anual: <strong>R$<strong
+											th:text="${tt.totalGastoAnual}">20000.00</strong></strong></span> <small
+									class="date d-block"
+									th:text="${'Cliente desde:	'+#temporals.format(tt.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
 								</a>
 								<div class="pull-right">
-								<a th:href="@{/promocao/email/{id} (id=${tt.id})}" th:if="${tt.email != null && tt.email != ''}"><i class="material-icons visualizar">email</i> </a>
-								<a th:href="@{/promocao/whatsapp/{id} (id=${tt.id})}" title="enviar whats" target="_blank" th:if="${tt.telefone != null && tt.telefone != ''}"><i class="material-icons visualizar">mobile_screen_share</i></a>
+									<a th:href="@{/promocao/email/{id} (id=${tt.id})}"
+										th:if="${tt.email != null && tt.email != ''}"><i
+										class="material-icons visualizar">email</i> </a> <a
+										th:href="@{/promocao/whatsapp/{id} (id=${tt.id})}"
+										title="enviar whats" target="_blank"
+										th:if="${tt.telefone != null && tt.telefone != ''}"><i
+										class="material-icons visualizar">mobile_screen_share</i></a>
 								</div>
 								<hr class="my-4">
 							</div>
@@ -117,26 +128,35 @@
 								<strong>Tattoo</strong>
 							</div>
 							<div class="messages" th:each="tp :${topPiercing}">
-								<a class="content">
-									<strong class="d-block" th:text="${tp.nome}">Nadia Halsey</strong>
-									<span class="d-block" th:if="${tp.creditoCliente}">Crédito <strong>R$ <strong th:text="${tp.creditoCliente}">20000.00</strong></strong></span>
-									<span class="d-block">Gasto Anual: <strong>R$<strong th:text="${tp.totalGastoAnual}">20000.00</strong></strong></span>
-									<small class="date d-block" th:text="${'Cliente desde:	'+#temporals.format(tp.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
+								<a class="content"> <strong class="d-block"
+									th:text="${tp.nome}">Nadia Halsey</strong> <span
+									class="d-block" th:if="${tp.creditoCliente}">Crédito <strong>R$
+											<strong th:text="${tp.creditoCliente}">20000.00</strong>
+									</strong></span> <span class="d-block">Gasto Anual: <strong>R$<strong
+											th:text="${tp.totalGastoAnual}">20000.00</strong></strong></span> <small
+									class="date d-block"
+									th:text="${'Cliente desde:	'+#temporals.format(tp.dataCadastro, ' dd/MM/yyyy')}">9:30am</small>
 								</a>
 								<div class="pull-right">
-								<a th:href="@{/promocao/email/{id} (id=${tp.id})}"  th:if="${tp.email != null && tp.email != ''}"><i class="material-icons visualizar">email</i> </a>
-								<a th:href="@{/promocao/whatsapp/{id} (id=${tp.id})}" title="enviar whats" target="_blank" th:if="${tp.telefone != null && tp.telefone != ''}"><i class="material-icons visualizar">mobile_screen_share</i></a>
+									<a th:href="@{/promocao/email/{id} (id=${tp.id})}"
+										th:if="${tp.email != null && tp.email != ''}"><i
+										class="material-icons visualizar">email</i> </a> <a
+										th:href="@{/promocao/whatsapp/{id} (id=${tp.id})}"
+										title="enviar whats" target="_blank"
+										th:if="${tp.telefone != null && tp.telefone != ''}"><i
+										class="material-icons visualizar">mobile_screen_share</i></a>
 								</div>
 								<hr class="my-4">
 							</div>
 						</div>
 					</div>
 				</div>
-          </div>
-        </section>
+			</div>
+		</section>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
 		$(document).ready(function() {
+
 		});
 	</script>
 </body>
