@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -26,4 +27,7 @@ public interface EntradaCaixaService {
 	List<EntradaCaixa> buscarTodosDoDia();
 	
 	Optional<BigDecimal> sumTotalEntrada();
+	
+	List<EntradaCaixa> buscarTodosIntervalo(LocalDateTime inicio, LocalDateTime fim);
+	
 }

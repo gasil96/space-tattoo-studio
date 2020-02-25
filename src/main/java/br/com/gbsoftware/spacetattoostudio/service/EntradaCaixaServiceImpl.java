@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -54,6 +55,11 @@ public class EntradaCaixaServiceImpl implements EntradaCaixaService {
 		return entradaRepository.findByDoDia();
 	}
 
+	@Override
+	public List<EntradaCaixa> buscarTodosIntervalo(LocalDateTime inicio, LocalDateTime fim){
+		return entradaRepository.findByIntervalo(inicio, fim);
+	}
+	
 	private void clienteSemCadastro(EntradaCaixa entradaCaixa) {
 		if (entradaCaixa.getCliente() != null && entradaCaixa.getCliente().getId() == null)
 			entradaCaixa.setCliente(null);
