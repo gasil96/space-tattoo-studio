@@ -43,43 +43,11 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<a role="button" href="/caixa/visualizar" title="Fluxo Diário"
-							class="btn btn-warning btn-sm pull-right"> Relátorio
+						<a role="button" href="/financeiro/relatorio-pdf-mes-atual"
+							title="Fluxo Diário" target="_blank"
+							class="btn btn-warning btn-sm pull-right"> Relatório
 							Financeiro de <strong id="mesAtual"></strong>
 						</a>
-					</div>
-				</div>
-				<br>
-			</div>
-		</section>
-		<section class="no-padding-top">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-12">
-						<form action="/relatorio" method="POST" target="_blank">
-
-							<div class="row">
-								<div class="six columns">
-									<!-- 							<label for="nome">Seu Nome</label> -->
-
-									<!-- 							<input class="u-full-width" type="text" placeholder="João da Silva" id="nome" name="nome"> -->
-									<!-- 						</div> -->
-
-									<!-- 						<div class="six columns"> -->
-									<!-- 							<label for="assinatura">Assinatura</label> -->
-
-									<!-- 							<select class="u-full-width" id="assinatura" name="assinatura"> -->
-									<!-- 								<option value="SIM">Sim</option> -->
-									<!-- 								<option value="NAO">Não</option> -->
-									<!-- 							</select> -->
-									<!-- 						</div> -->
-									<!-- 					</div> -->
-
-									<!-- 					<label for="cabecalho">Cabeçalho do relatório</label> -->
-									<!-- 					<textarea class="u-full-width" placeholder="Relatório impresso para conferência de estoque" id="cabecalho" name="cabecalho"></textarea> -->
-
-									<input class="button-primary" type="submit" value="Imprimir">
-						</form>
 					</div>
 				</div>
 				<br>
@@ -99,16 +67,18 @@
 							<div class="col-lg-6">
 								<p>
 									A pesquisa abaixo irá gerar o <strong>PDF</strong> com os dados
-									de Entrada, Saida e Lucro Estimado pelo tempo que for
+									de Entrada, Saída e Lucro Estimado pelo tempo que for
 									especificado nos campos <strong>ABAIXO</strong>.
 								</p>
 							</div>
 							<div class="col-lg-6">
-								<p>Lembre-se, para o mês atual basta clicar no 'Relatório
-									Financeiro' ...</p>
+								<p>
+									Lembre-se, para o mês atual basta clicar no 'Relatório
+									Financeiro' ... <strong>aqui encima</strong>
+								</p>
 							</div>
 						</div>
-						<form class="form-inline" th:action="@{/financeiro/relatorio-pdf}">
+						<form class="form-inline" th:action="@{/financeiro/relatorio-pdf}" target="_blank">
 							<div class="form-group">
 								<div class="input-group date" id="horarioAgendamento2"
 									data-target-input="nearest">
@@ -123,7 +93,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group" >
 								<div class="input-group date" id="horarioAgendamento"
 									data-target-input="nearest">
 									<input type="text" class="form-control " required="required"
@@ -157,14 +127,12 @@
 							$('#horarioAgendamento').datetimepicker({
 								format : 'DD-MM-YYYY HH:mm',
 								autoclose : true,
-								locale : 'pt-BR',
-								minDate : new Date()
+								locale : 'pt-BR'
 							});
 							$('#horarioAgendamento2').datetimepicker({
 								format : 'DD-MM-YYYY HH:mm',
 								autoclose : true,
-								locale : 'pt-BR',
-								minDate : new Date()
+								locale : 'pt-BR'
 							});
 							$("#mesAtual").text(
 									moment().format('MMMM').toUpperCase());

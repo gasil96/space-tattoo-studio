@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,13 +24,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
 import br.com.gbsoftware.spacetattoostudio.domain.model.SaidaCaixa;
 import br.com.gbsoftware.spacetattoostudio.service.EntradaCaixaService;
+import br.com.gbsoftware.spacetattoostudio.service.SaidaCaixaService;
 import br.com.gbsoftware.spacetattoostudio.service.VwArrecadacaoAnualTipoService;
 
 @Controller
@@ -43,6 +47,9 @@ public class FinanceiroController {
 
 	@Autowired
 	private EntradaCaixaService servicoEntradaCaixa;
+
+	@Autowired
+	private SaidaCaixaService servicoSaidaCaixa;
 
 	@GetMapping("detalhamento")
 	public String detalhamentoFinanceiro(Model model) {
@@ -60,28 +67,48 @@ public class FinanceiroController {
 	@RequestMapping("relatorio-pdf")
 	public void gerarPDF(HttpServletResponse response, @RequestParam("inicio") String inicio,
 			@RequestParam("fim") String fim) {
+		gerarRelatorioPDF(response, inicio, fim);
+	}
+
+	@RequestMapping("relatorio-pdf-mes-atual")
+	public void gerarPdgMesAtual(HttpServletResponse response) {
+		String inicio = LocalDateTime.now().withMonth(LocalDateTime.now().getMonthValue())
+				.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+		String fim = LocalDateTime.now().withMonth(LocalDateTime.now().getMonthValue())
+				.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+		gerarRelatorioPDF(response, inicio, fim);
+	}
+
+	private void gerarRelatorioPDF(HttpServletResponse response, String inicio, String fim) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+		DateTimeFormatter formatterString = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDateTime inicioDate = LocalDateTime.parse(inicio, formatter);
 		LocalDateTime fimDate = LocalDateTime.parse(fim, formatter);
 		List<EntradaCaixa> entradas = servicoEntradaCaixa.buscarTodosIntervalo(inicioDate, fimDate);
+		List<SaidaCaixa> saidas = servicoSaidaCaixa.buscarTodosIntervalo(inicioDate, fimDate);
 		response.setContentType("application/pdf");
 		Document relatorioMensalPDF = new Document();
-		
-		// TODO - MONTAR O DOCUMENTO
+
 		try {
+			float[] pointColumnWidths = { 150F, 150F, 150F };
+			PdfPTable tabela = new PdfPTable(pointColumnWidths);
+			Font linhaComun = FontFactory.getFont(FontFactory.COURIER, 12);
+			Font titulo = FontFactory.getFont(FontFactory.TIMES_BOLD, 16);
 			PdfWriter.getInstance(relatorioMensalPDF, response.getOutputStream());
 			response.getOutputStream().flush();
 			relatorioMensalPDF.open();
-			relatorioMensalPDF
-					.add(new Paragraph("Relatório Financeiro Mensal ( " + LocalDateTime.now().getMonth() + " )"));
-			relatorioMensalPDF.add(new Paragraph("Total Entradas: R$ " + getValorTotalEntrada(entradas),
-					FontFactory.getFont(FontFactory.COURIER, 12)));
-//			relatorioMensalPDF.add(new Paragraph("Total Arrecadado no Crédito: R$ " + relatorio.get(1),
-//					FontFactory.getFont(FontFactory.COURIER, 12)));
-//			relatorioMensalPDF.add(new Paragraph("Total Arrecadado no Débito: R$ " + relatorio.get(2),
-//					FontFactory.getFont(FontFactory.COURIER, 12)));
-//			relatorioMensalPDF.add(new Paragraph("Total Arrecadado À Vista: R$ " + relatorio.get(3),
-//					FontFactory.getFont(FontFactory.COURIER, 12)));
+			relatorioMensalPDF.addTitle("Financeiro STS");
+			relatorioMensalPDF.add(new Paragraph("Relatório Financeiro Simplificado", titulo));
+			relatorioMensalPDF.add(new Paragraph("\n"));
+			tabela.addCell("Total Entradas");
+			tabela.addCell("Total Saídas");
+			tabela.addCell("Receita Líquida");
+			tabela.addCell("R$ " + getValorTotalEntrada(entradas));
+			tabela.addCell("R$ " + getValorTotalSaida(saidas));
+			tabela.addCell("R$ " + getTotalLiquido(getValorTotalEntrada(entradas), getValorTotalSaida(saidas)));
+			relatorioMensalPDF.add(tabela);
+			relatorioMensalPDF.add(new Paragraph("Pesquisa efetuada no intervalo de "
+					+ inicioDate.format(formatterString) + " até " + fimDate.format(formatterString), linhaComun));
 		} catch (DocumentException de) {
 			System.err.println(de.getMessage());
 		} catch (IOException ioe) {

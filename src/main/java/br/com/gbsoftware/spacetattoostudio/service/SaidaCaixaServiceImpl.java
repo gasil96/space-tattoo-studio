@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,5 +51,10 @@ public class SaidaCaixaServiceImpl implements SaidaCaixaService {
 	public Optional<BigDecimal> sumTotalSaida() {
 		return this.buscarTodosDoDia().stream().map(SaidaCaixa::getValor).reduce(BigDecimal::add);
 	}
-	
+
+	@Override
+	public List<SaidaCaixa> buscarTodosIntervalo(LocalDateTime inicio, LocalDateTime fim) {
+		return saidaRepository.findByIntervalo(inicio, fim);
+	}
+
 }
