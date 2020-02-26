@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+
+	<div layout:fragment="corpo">
+		<div id="novoUsuario" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true"
+			class="modal fade text-left">
+			<div role="document" class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<strong id="titvuloModalNovoCliente" class="modal-title">Editar Usuário</strong>
+						<button type="button" data-dismiss="modal" aria-label="Close"
+							class="close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+						<form th:action="@{/adm/editar-usuario}" method="POST"
+							th:object="${usuario}">
+							<div class="form-group">
+								<input placeholder="Nome" id="nome" type="text"
+									class="mr-sm-3 form-control" th:field="*{nomeCompleto}"
+									required="required">
+							</div>
+							<div class="form-group">
+								<input placeholder="Email" id="email" type="text"
+									class="mr-sm-3 form-control" required="required"
+									th:field="*{email}">
+							</div>
+							<div class="form-group">
+								<input id="confirm_email" type="hidden"
+									placeholder="Confirmar Email" class="mr-sm-3 form-control"
+									>
+							</div>
+							<div class="form-group">
+								<input id="login" type="text" class="mr-sm-3 form-control"
+									placeholder="Nome de Usuário" th:field="*{login}"
+									required="required">
+							</div>
+							<div class="form-group">
+								<input id="password" type="password" placeholder="Senha"
+									class="mr-sm-3 form-control form-control" required="required">
+							</div>
+							<div class="form-group">
+								<input id="confirm_password" type="password"
+									placeholder="Confirmar Senha"
+									class="mr-sm-3 form-control form-control" th:field="*{senha}"
+									required="required">
+							</div>
+							<div class="form-group">
+								<select name="select1" id="cargo"
+									class="mr-sm-3 form-control form-control" th:field="*{cargo}"
+									required="required">
+									<option value="" selected="selected">Selecione o
+										Cargo...</option>
+									<option th:each="c : ${cargo}" th:value="${c}"
+										th:text="${c.cargo}">Desenvolvedor</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<select name="select2" id="role" disabled="disabled"
+									class="mr-sm-3 form-control form-control" th:field="*{roles}"
+									required="required">
+									<option value="" selected="selected">Selecione o tipo
+										de Permissão...</option>
+									<option th:each="r : ${tiporole}" th:value="${r}"
+										th:text="${r.role}">ROLE_ADMIN</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="submit" value="Salvar" class="btn btn-primary">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+		$(document)
+				.ready(
+						function() {
+							$('#novoUsuario').modal('show');
+							$('#novoUsuario').on('hide.bs.modal', function() {
+								window.location.href = '/adm/administracao';
+							})
+							$('#cargo')
+									.change(
+											function() {
+												if ($('#cargo').val() == 'GERENTE') {
+													var ident = 'ROLE_GERENTE';
+													$(
+															'select option[value="'
+																	+ ident
+																	+ '"]')
+															.prop("selected",
+																	true);
+												} else if ($('#cargo').val() == 'ADMINISTRADOR') {
+													var ident = 'ROLE_ADMIN';
+													$(
+															'select option[value="'
+																	+ ident
+																	+ '"]')
+															.prop("selected",
+																	true);
+												} else if ($('#cargo').val() == 'FUNCIONARIO') {
+													var ident = 'ROLE_USUARIO';
+													$(
+															'select option[value="'
+																	+ ident
+																	+ '"]')
+															.prop("selected",
+																	true);
+												}
+											});
+						});
+
+		var password = document.getElementById("password"), confirm_password = document
+				.getElementById("confirm_password"), email = document
+				.getElementById("email"), confirm_email = document
+				.getElementById("confirm_email");
+
+		function validatePassword() {
+			if (password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Senhas não correspondem!");
+			} else {
+				confirm_password.setCustomValidity('');
+			}
+		}
+
+		function validateEmail() {
+			if (email.value != confirm_email.value) {
+				confirm_email.setCustomValidity("Emails não correspondem!");
+			} else {
+				confirm_email.setCustomValidity('');
+			}
+		}
+
+		password.onchange = validatePassword;
+		confirm_password.onkeyup = validatePassword;
+		email.onchange = validateEmail;
+		confirm_email.onkeyup = validateEmail;
+	</script>
+</body>
+</html>

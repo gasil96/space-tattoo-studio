@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<div layout:fragment="corpo">
+		<div class="modal fade" tabindex="-1" role="dialog"
+			id="modal-enviar-msg-email">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<strong class="modal-title">Atenção</strong>
+						<button type="button" data-dismiss="modal" aria-label="Close"
+							class="close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>
+							Clique em <strong>Enviar</strong> para proceder com o
+							envio&hellip;
+						</p>
+						<form th:action="@{/promocao/enviar-email}"
+							th:object="${corpoEmail}" method="POST">
+							<div class="form-group">
+								<label>Email</label> <input type="email" id="email"
+									readonly="readonly" placeholder="Email" class="form-control"
+									th:field="*{email}" required="required">
+							</div>
+							<div class="form-group">
+								<label>Assunto</label> <input type="text" id="assunto"
+									placeholder="Assunto" class="form-control"
+									th:field="*{assunto}" required="required">
+							</div>
+							<div class="form-group">
+								<label>Menssagem</label> <input type="text" id="menssagem"
+									placeholder="Mensagem" class="form-control"
+									th:field="*{menssagem}" required="required">
+							</div>
+							<button class="btn btn-primary bt-sm" type="submit">Enviar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+		$(document).ready(function() {
+			$('#modal-enviar-msg-email').modal('show');
+
+			$('#modal-enviar-msg-email').on('hide.bs.modal', function() {
+				window.location.href = '/promocao/detalhamento';
+			});
+		});
+	</script>
+</body>
+</html>

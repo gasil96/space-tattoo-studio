@@ -1,4 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+import java.util.List;
+
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -11,4 +13,5 @@ public interface RoleService {
 
 	void salvar(Role role);
 	
+	List<Role> buscarTodos();
 }

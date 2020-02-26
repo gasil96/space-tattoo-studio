@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<div layout:fragment="corpo">
+		<div class="modal fade" tabindex="-1" role="dialog"
+			id="modal-enviar-msg-wpp">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<strong class="modal-title">Atenção</strong>
+						<button type="button" data-dismiss="modal" aria-label="Close"
+							class="close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>
+							Clique em <strong>Enviar</strong> para proceder com o
+							envio&hellip;
+						</p>
+						<form th:object="${whatsapp}">
+							<div class="form-group">
+							<label>Número</label> <input type="text" id="numero" readonly="readonly"
+								placeholder="Primeiro e ultimo" class="form-control"
+								th:field="*{numero}" required="required">
+							</div>
+							<div class="form-group">
+							<label>Menssagem</label> <input type="text" id="nome" readonly="readonly"
+								placeholder="Primeiro e ultimo" class="form-control" 
+								th:field="*{msg}" required="required">
+							</div>
+							<a class="btn btn-primary bt-sm" th:attr="href=${#strings.concat('http://'+url)}">Enviar</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+		$(document).ready(function() {
+			$('#modal-enviar-msg-wpp').modal('show');
+
+			$('#modal-enviar-msg-wpp').on('hide.bs.modal', function() {
+				window.location.href = '/promocao/detalhamento';
+			});
+		});
+	</script>
+</body>
+</html>

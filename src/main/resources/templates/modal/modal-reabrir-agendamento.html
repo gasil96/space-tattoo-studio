@@ -45,6 +45,16 @@
 							<label>Número de sessões</label> 
 							<input type="number" class="form-control" placeholder="" th:field="*{numeroSessoes}" min="1" max="30">
 						</div>
+						<div class="form-group" id="valor-sessoes">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">R$</span>
+									</div>
+									<input type="number" placeholder="Valor pago na sessão"
+										class="form-control" min="0" max="10000"
+										th:field="*{valorPagoSessao}">
+								</div>
+							</div>
 						<div class="form-group">
 							<label for="tipoServico">Status</label>
 							<select	 id="selectStatusServico" class="form-control" th:field="*{statusAgendamento}">

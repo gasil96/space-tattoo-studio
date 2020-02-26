@@ -1,4 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.repository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -15,4 +18,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, String>{
 
 	Usuario findByLogin(String login);
 	
+	Usuario findByEmail(String email);
+	
+	@Query("select u from Usuario u")
+	List<Usuario> buscarTodosUsuarios();
 }

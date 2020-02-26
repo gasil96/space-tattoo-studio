@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout-principal}">
+<head>
+<meta charset="UTF-8" />
+<body>
+
+	<div layout:fragment="corpo">
+		<div id="visualizarAgendamento" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true"
+			class="modal fade text-left">
+			<div role="document" class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<strong id="titvuloModalNovoCliente" class="modal-title">Informações
+							de Agendamentos</strong>
+						<button type="button" data-dismiss="modal" aria-label="Close"
+							class="close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:object="${agendamento}">
+							<div class="form-group">
+								<label for="nome">Categoria de Serviço</label> <input
+									placeholder="tipo" id="tipo" type="text" disabled="disabled"
+									class="mr-sm-3 form-control" th:field="*{tipoServico}"
+									required="required">
+							</div>
+							<div class="form-group">
+								<label for="nome">Descrição</label> <input
+									placeholder="categoria" id="categoria" type="text"
+									disabled="disabled" class="mr-sm-3 form-control"
+									th:field="*{categoria}" required="required">
+							</div>
+							<div class="form-group">
+								<label for="nome">Data/Hora Agendamento</label> <input
+									placeholder="horarioAgendamento" id="horarioAgendamento"
+									type="text" disabled="disabled" class="mr-sm-3 form-control"
+									th:field="*{horarioAgendamento}" required="required">
+							</div>
+							<div class="form-group">
+								<label for="nome">Data/Hora Encerramento</label> <input
+									placeholder="horarioConclusaoAgendamento"
+									id="horarioConclusaoAgendamento" type="text"
+									disabled="disabled" class="mr-sm-3 form-control"
+									th:field="*{horarioConclusaoAgendamento}" required="required">
+							</div>
+							<div class="form-group">
+								<label for="nome">Status</label> <input placeholder="status"
+									id="status" type="text" disabled="disabled"
+									class="mr-sm-3 form-control" th:field="*{statusAgendamento}"
+									required="required">
+							</div>
+							<div class="form-group">
+								<label for="nome">Valor Orçamento R$</label> <input
+									placeholder="orcamento" id="orcamento" type="text"
+									disabled="disabled" class="mr-sm-3 form-control"
+									th:field="*{orcamento}" required="required">
+							</div>
+							<div class="form-group">
+								<label for="nome">Quantidade Estimada de Sessões </label> <input
+									placeholder="numeroSessoes" id="numeroSessoes" type="text"
+									disabled="disabled" class="mr-sm-3 form-control"
+									th:field="*{numeroSessoes}" required="required">
+							</div>
+							<div class="form-group">
+								<label for="nome">Valor Pago na Sessão R$</label> <input
+									placeholder="valorPagoSessao" id="valorPagoSessao" type="text"
+									disabled="disabled" class="mr-sm-3 form-control"
+									th:field="*{valorPagoSessao}" required="required">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<div th:if="${encerrado}">
+							<a type="button"
+								th:href="@{/agendamento/reabrir/{id} (id=${id})}"
+								class=" btn btn-primary btn-sm">Reabrir</a>
+						</div>
+						<div th:unless="${encerrado}">
+							<a type="button"
+								th:href="@{/agendamento/encerrar/{id} (id=${id})}"
+								class="btn btn-danger btn-sm">Encerrar</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" layout:fragment="script">
+		$(document).ready(function() {
+			$('#visualizarAgendamento').modal('show');
+			$('#visualizarAgendamento').on('hide.bs.modal', function() {
+				window.location.href = '/agendamento/detalhamento';
+			})
+		});
+	</script>
+</body>
+</html>

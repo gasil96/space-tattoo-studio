@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio;
+
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -7,6 +8,7 @@ package br.com.gbsoftware.spacetattoostudio;
  */
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 @SpringBootApplication
 public class SpacetattooApplication {
 
