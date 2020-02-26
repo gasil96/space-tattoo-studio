@@ -29,12 +29,4 @@ public class SpacetattooApplication {
 		System.out.println("############## "+ xpto );
 	}
 
-	public String getXpto() {
-		return xpto;
-	}
-
-	public void setXpto(String xpto) {
-		this.xpto = xpto;
-	}
-	
 }
