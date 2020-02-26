@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ImplementsUserDetailsService userDetailsService;
 
-	@Value("${adminpass}")
+	@Value("${PASSWORD_ADMINSTRADOR}")
 	private String passwordAdministrador;
 	
 	@Override
@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-		auth.inMemoryAuthentication().withUser("administrador").password(passwordAdministrador).roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("administrador").password("{noop}"+passwordAdministrador).roles("ADMIN");
 	}
 
 	@Override
