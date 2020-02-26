@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private ImplementsUserDetailsService userDetailsService;
 
-	@Value("${PASSWORD_ADMINSTRADOR}")
+	@Value("${adminpass}")
 	private String passwordAdministrador;
 	
 	@Override
