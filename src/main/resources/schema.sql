@@ -22,7 +22,6 @@ where
     and (`s`.`status_agendamento` = 'ATIVO'))
 group by
     `s`.`tipo`;
-    
 create or replace
 algorithm = UNDEFINED view `vw_cliente_dados_piercing` as
 select
@@ -43,7 +42,6 @@ where
     and (`s`.`tipo` = 'PIERCING'))
 group by
     `c`.`id`;
-
 create or replace
 algorithm = UNDEFINED view `vw_cliente_dados_tattoo` as
 select
