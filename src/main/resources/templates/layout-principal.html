@@ -215,6 +215,7 @@
 	<!-- 	 script's gerais -->
 	<script type="text/javascript">
 		$(document).ready(function() {
+			$("#anoAtualFixado").text(moment().format('YYYY'));
 			if ($('#selectTipoServico').val() == 'TATTOO') {
 				$('#sessoes').show();
 				$('#valor-sessoes').show();

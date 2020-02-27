@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -92,8 +93,12 @@ public class InitController {
 		return dadosCalendarioIO;
 	}
 
+	@Value("${LINK_FOOTER}")
+	private String linkFooter;
+
 	@GetMapping("/login")
-	public String login() {
+	public String login(Model model) {
+		model.addAttribute("linkFooter", linkFooter);
 		return "login";
 	}
 
@@ -115,7 +120,7 @@ public class InitController {
 				+ " para às " + s1.getHorarioAgendamento().format(hora) + " do dia "
 				+ s1.getHorarioAgendamento().format(dia));
 		mailSender.send(msgEmail);
-		attr.addFlashAttribute(MSG_SUCCESS, "Email de alerta enviado para "+c1.getNome());
+		attr.addFlashAttribute(MSG_SUCCESS, "Email de alerta enviado para " + c1.getNome());
 		return REDIRECIONAR;
 	}
 
