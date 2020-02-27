@@ -78,7 +78,8 @@
 								</p>
 							</div>
 						</div>
-						<form class="form-inline" th:action="@{/financeiro/relatorio-pdf}" target="_blank">
+						<form class="form-inline" th:action="@{/financeiro/relatorio-pdf}"
+							target="_blank">
 							<div class="form-group">
 								<div class="input-group date" id="horarioAgendamento2"
 									data-target-input="nearest">
@@ -93,7 +94,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group" >
+							<div class="form-group">
 								<div class="input-group date" id="horarioAgendamento"
 									data-target-input="nearest">
 									<input type="text" class="form-control " required="required"
@@ -142,8 +143,83 @@
 										url : "/financeiro/vw-arrecadacao-anual",
 										dataType : 'json',
 										success : function(dado) {
-											var arrayTattoo = dado[1];
-											var arrayPiercing = dado[0];
+													if(dado.tipo == 'TATTOO'){
+														console.log("end")
+													}
+													
+											if (dado.lenght <= 0) {
+												var arrayTattoo = null;
+												var arrayPiercing = null;
+											} else {
+												var arrayPiercing = dado[1];
+												var arrayTattoo = dado[0];
+											}
+											
+											
+											function getRandomColor(s) {
+												var hash = 0;
+											    for (var i = 0; i < s.length; i++) {
+											       hash = s.charCodeAt(i) + ((hash << 5) - hash);
+											    }
+											    var c = (hash & 0x00FFFFFF)
+										        .toString(16)
+										        .toUpperCase();
+										    	return "#"+"00000".substring(0, 6 - c.length) + c;
+											}
+											
+											function getDatasetItem(data) {
+												var cor = getRandomColor(data.tipo);												
+												var obj = {
+														label : data.tipo,
+														fill : true,
+														lineTension : 0.2,
+														backgroundColor : "transparent",
+														borderColor : cor,
+														pointBorderColor : cor,
+														pointHoverBackgroundColor : "#fff",
+														borderCapStyle : 'butt',
+														borderDash : [],
+														borderDashOffset : 0.0,
+														borderJoinStyle : 'miter',
+														borderWidth : 2,
+														pointBackgroundColor : "#fff",
+														pointBorderWidth : 5,
+														pointHoverRadius : 5,
+														pointHoverBorderColor : "#fff",
+														pointHoverBorderWidth : 2,
+														pointRadius : 1,
+														pointHitRadius : 0,
+														data : data == null ? null : [
+																data.jan,
+																data.fev,
+																data.mar,
+																data.abr,
+																data.mai,
+																data.jun,
+																data.jul,
+																data.ago,
+																data.set,
+																data.out,
+																data.nov,
+																data.dez ],
+														spanGaps : false
+													};
+												
+												return obj;
+												
+											}
+											
+											function getDataset() {
+												
+												var dataset = []
+												
+												for(i in dado)
+													dataset.push(getDatasetItem(dado[i]))
+													
+												
+												return dataset;
+											}
+											
 											function getRangeMeses() {
 												var mesAtual = moment().format(
 														'MM');
@@ -182,77 +258,7 @@
 														},
 														data : {
 															labels : getRangeMeses(),
-															datasets : [
-																	{
-																		label : "Tattoo",
-																		fill : true,
-																		lineTension : 0.2,
-																		backgroundColor : "transparent",
-																		borderColor : '#864DD9',
-																		pointBorderColor : '#864DD9',
-																		pointHoverBackgroundColor : '#864DD9',
-																		borderCapStyle : 'butt',
-																		borderDash : [],
-																		borderDashOffset : 0.0,
-																		borderJoinStyle : 'miter',
-																		borderWidth : 2,
-																		pointBackgroundColor : "#fff",
-																		pointBorderWidth : 5,
-																		pointHoverRadius : 5,
-																		pointHoverBorderColor : "#fff",
-																		pointHoverBorderWidth : 2,
-																		pointRadius : 1,
-																		pointHitRadius : 0,
-																		data : [
-																				arrayTattoo.jan,
-																				arrayTattoo.fev,
-																				arrayTattoo.mar,
-																				arrayTattoo.abr,
-																				arrayTattoo.mai,
-																				arrayTattoo.jun,
-																				arrayTattoo.jul,
-																				arrayTattoo.ago,
-																				arrayTattoo.set,
-																				arrayTattoo.out,
-																				arrayTattoo.nov,
-																				arrayTattoo.dez ],
-																		spanGaps : false
-																	},
-																	{
-																		label : "Piercing",
-																		fill : true,
-																		lineTension : 0.2,
-																		backgroundColor : "transparent",
-																		borderColor : "#EF8C99",
-																		pointBorderColor : '#EF8C99',
-																		pointHoverBackgroundColor : "#EF8C99",
-																		borderCapStyle : 'butt',
-																		borderDash : [],
-																		borderDashOffset : 0.0,
-																		borderJoinStyle : 'miter',
-																		borderWidth : 2,
-																		pointBackgroundColor : "#fff",
-																		pointBorderWidth : 5,
-																		pointHoverRadius : 5,
-																		pointHoverBorderColor : "#fff",
-																		pointHoverBorderWidth : 2,
-																		pointRadius : 1,
-																		pointHitRadius : 10,
-																		data : [
-																				arrayPiercing.jan,
-																				arrayPiercing.fev,
-																				arrayPiercing.mar,
-																				arrayPiercing.abr,
-																				arrayPiercing.mai,
-																				arrayPiercing.jun,
-																				arrayPiercing.jul,
-																				arrayPiercing.ago,
-																				arrayPiercing.set,
-																				arrayPiercing.out,
-																				arrayPiercing.nov,
-																				arrayPiercing.dez ],
-																		spanGaps : false
-																	} ]
+															datasets : getDataset()
 														}
 													});
 										},
