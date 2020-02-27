@@ -221,6 +221,8 @@
 			} else {
 				$('#sessoes').hide();
 				$('#valor-sessoes').hide();
+				$('input[name=valorPagoSessao]').val("");
+				$('input[name=numeroSessoes]').val("");
 			}
 			$('#selectTipoServico').change(function() {
 				if ($('#selectTipoServico').val() == 'TATTOO') {
@@ -229,6 +231,8 @@
 				} else {
 					$('#valor-sessoes').hide();
 					$('#sessoes').hide();
+					$('input[name=valorPagoSessao]').val("");
+					$('input[name=numeroSessoes]').val("");
 				}
 			});
 		});
