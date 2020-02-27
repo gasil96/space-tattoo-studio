@@ -62,3 +62,72 @@ where
     and (`s`.`tipo` = 'TATTOO'))
 group by
     `c`.`id`;
+CREATE TABLE `cliente` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `data_cadastro` datetime NOT NULL,
+  `instagram` varchar(30) DEFAULT NULL,
+  `nome` varchar(50) NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `credito_cliente` decimal(12,2) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1566 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `entrada_caixa` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descricao_caixa` varchar(65) DEFAULT NULL,
+  `forma_pagamento` varchar(255) NOT NULL,
+  `horario_operacao` datetime DEFAULT NULL,
+  `porcentagem_desconto` int(11) DEFAULT NULL,
+  `servico` varchar(255) NOT NULL,
+  `valor` decimal(12,2) NOT NULL,
+  `id_cliente_fk` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKg628yloues515qcfysc319l5g` (`id_cliente_fk`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `role` (
+  `nome_role` varchar(20) NOT NULL,
+  PRIMARY KEY (`nome_role`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `saida_caixa` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(65) DEFAULT NULL,
+  `forma_pagamento` varchar(255) NOT NULL,
+  `horario_operacao` datetime NOT NULL,
+  `valor` decimal(22,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `servico` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `horario_agendamento` datetime NOT NULL,
+  `horario_conclusao_agendamento` datetime DEFAULT NULL,
+  `status_agendamento` varchar(65) NOT NULL,
+  `tipo` varchar(65) NOT NULL,
+  `id_cliente_fk` bigint(20) NOT NULL,
+  `categoria` varchar(40) DEFAULT NULL,
+  `numero_sessoes` int(11) DEFAULT NULL,
+  `valor_orcamento` decimal(12,2) DEFAULT NULL,
+  `valor_pago_sessao` decimal(19,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKchvigroslfyyyg8m5ynkfm3yj` (`id_cliente_fk`)
+) ENGINE=MyISAM AUTO_INCREMENT=1211 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `usuario` (
+  `login` varchar(20) NOT NULL,
+  `nome_completo` varchar(255) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `cargo` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`login`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `usuarios_roles` (
+  `usuario_id` varchar(20) NOT NULL,
+  `role_id` varchar(20) NOT NULL,
+  KEY `FKefntoswg8cckktsk0ha1wpm0i` (`role_id`),
+  KEY `FKebiaxjbamgu326glxo1fbysuh` (`usuario_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
