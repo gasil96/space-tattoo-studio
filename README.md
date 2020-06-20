@@ -1,4 +1,4 @@
-# Aplaicação Web com Spring / Thymeleaf / Javascript entre outras tecnologias
+# Aplicação Web com Spring / Thymeleaf / Javascript entre outras tecnologias
 
 # Índice 
 + [Tecnologias Utilizadas](#tecnologias-utilizadas)
