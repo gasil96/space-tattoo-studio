@@ -1,4 +1,4 @@
-# Criando uma aplicação web do processo de modelagem/requisitos até a entrega ao cliente.
+# Aplaicação Web com Spring / Thymeleaf / Javascript entre outras tecnologias
 
 # Índice 
 + [Tecnologias Utilizadas](#tecnologias-utilizadas)
@@ -699,11 +699,6 @@ Tambem é possivel criar novos usuários e definir o nível de visualização de
 |DESENVOLVEDOR|SIM|SIM|SIM|SIM|SIM|SIM|SIM|
 |GERENTE|SIM|SIM|SIM|SIM|SIM|NÃO|SIM|
 |FUNCIONÁRIO|SIM|SIM|SIM|SIM|NÃO|NÃO|NÃO|
-
----
-Para outras informações sobre o uso do sistema entre em contato com o *suporte* pelo número:
-**+55 (91) 9 8217-9201** WhatsApp e Ligação
----
 
 ## Créditos
 
