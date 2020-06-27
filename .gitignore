@@ -15,6 +15,8 @@
 **/bin
 /bin
 *.gradle
+*.xml
+*.name
 *.bak
 *.pydevproject
 *.swp
@@ -142,3 +144,5 @@ $RECYCLE.BIN/
 **/WEB-INF/resources/fonts/**
 **/WEB-INF/resources/images/**
 **/WEB-INF/resources/vendor/**
+/spacetattoostudio.iml
+/.idea/modules.xml
