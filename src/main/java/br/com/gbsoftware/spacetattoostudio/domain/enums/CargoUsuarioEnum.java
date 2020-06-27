@@ -7,7 +7,7 @@ package br.com.gbsoftware.spacetattoostudio.domain.enums;
  */
 public enum CargoUsuarioEnum {
 	GERENTE("Gerente"),
-	DESENVOLVEDOR("Desenvolvedor"),
+	ADMINISTRADOR("Administrador"),
 	FUNCIONARIO("Funcionario");
 	
 	

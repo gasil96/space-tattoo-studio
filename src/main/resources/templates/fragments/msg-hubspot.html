@@ -1,0 +1,9 @@
+<div id="success" th:if="${success} != null">
+	<input id="msgValueSuccess" type="hidden" th:value="${success}">
+</div>
+<div id="error" th:if="${error} != null">
+	<input id="msgValueError" type="hidden" th:value="${error}">
+</div>
+<div id="info" th:if="${info} != null">
+	<input id="msgValueInfo" type="hidden" th:value="${info}">
+</div>

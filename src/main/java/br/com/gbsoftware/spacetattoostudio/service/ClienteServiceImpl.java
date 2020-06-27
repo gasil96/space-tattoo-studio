@@ -1,6 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -9,12 +10,16 @@ import java.math.BigDecimal;
  */
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
+import br.com.gbsoftware.spacetattoostudio.dto.ClienteDTO;
 import br.com.gbsoftware.spacetattoostudio.repository.ClienteRepository;
 
 @Service
@@ -24,7 +29,7 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteRepository clienteRepository;
 
 	@Autowired
-	private EntradaSaidaService entradaSaidaServico;
+	private EntradaCaixaService entradaSaidaServico;
 
 	@Override
 	public void salvar(Cliente cliente) {
@@ -53,7 +58,8 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public List<Cliente> buscarTodos() {
-		return clienteRepository.findAll();
+		return clienteRepository.findAll().stream().sorted(Comparator.comparing(Cliente::getDataCadastro).reversed())
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -67,25 +73,11 @@ public class ClienteServiceImpl implements ClienteService {
 		clienteRepository.save(cliente);
 	}
 
-	@Override
-	public List<Cliente> getPorCadastroMes() {
-		return clienteRepository.getPorCadastroMesAtual();
-	}
-
-	@Override
-	public List<Cliente> getPorCadastroMesAnterio() {
-		return clienteRepository.getPorCadastroMesPassado();
-	}
-
-	@Override
-	public List<Cliente> getClienteIdInstaNome() {
-		return clienteRepository.getClienteIdInstaNome();
-	}
 
 	@Override
 	public BigDecimal calcularGastoTotalCliente(Cliente cliente) {
 		BigDecimal gastoTotalCliente = entradaSaidaServico.buscarTodos().stream()
-				.filter(x -> cliente.getId().equals(x.getCliente().getId())).map(EntradaSaida::getValor)
+				.filter(x -> cliente.getId().equals(x.getCliente().getId())).map(EntradaCaixa::getValor)
 				.reduce(BigDecimal::add).orElse(new BigDecimal(0));
 		return gastoTotalCliente;
 	}
@@ -99,4 +91,21 @@ public class ClienteServiceImpl implements ClienteService {
 	public void updateStatus(String statusCliente, Long idCliente) {
 		clienteRepository.updateStatus(statusCliente, idCliente);
 	}
+	
+	@Override
+	public ClienteDTO converterParaDTO(Cliente	cliente) {
+
+		ModelMapper testMapper = new ModelMapper();
+		testMapper.addMappings(new PropertyMap<Cliente, ClienteDTO>() {
+
+			@Override
+			protected void configure() {
+		
+			}
+		});
+
+		ClienteDTO clienteDto = testMapper.map(cliente, ClienteDTO.class);
+		return clienteDto;
+	}
+
 }

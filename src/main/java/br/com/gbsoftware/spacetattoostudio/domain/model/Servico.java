@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -22,8 +23,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
@@ -39,27 +38,24 @@ public class Servico extends EntidadeBase<Long> {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", length = 65)
-	@JsonProperty(value = "title")
 	private TipoServicoEnum tipoServico;
 
 	@Column(length = 40)
-	@JsonProperty(value = "categoria")
 	private String categoria;
 
-	@JsonProperty(value = "start")
 	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
 	@Column(name = "horario_agendamento", nullable = false)
 	private LocalDateTime horarioAgendamento;
 
-	@DateTimeFormat(iso = ISO.DATE_TIME)
+	@DateTimeFormat(iso = ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm", locale = "pt-BR", timezone = "America/Belem")
 	@Column(name = "horario_conclusao_agendamento")
-	@JsonIgnore
 	private LocalDateTime horarioConclusaoAgendamento;
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_agendamento", length = 65)
-	@JsonIgnore
 	private StatusServicoEnum statusAgendamento;
 
 	@Column(name = "valor_orcamento", length = 65, precision = 12, scale = 2)
@@ -68,10 +64,12 @@ public class Servico extends EntidadeBase<Long> {
 	@Column(name = "numero_sessoes", length = 3)
 	private Integer numeroSessoes;
 
+	@Column(name = "valor_pago_sessao")
+	private BigDecimal valorPagoSessao;
+
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cliente_fk")
-	@JsonIgnore
 	private Cliente cliente;
 
 	public Servico() {
@@ -80,7 +78,7 @@ public class Servico extends EntidadeBase<Long> {
 
 	public Servico(@NotNull TipoServicoEnum tipoServico, String categoria, LocalDateTime horarioAgendamento,
 			LocalDateTime horarioConclusaoAgendamento, @NotNull StatusServicoEnum statusAgendamento,
-			BigDecimal orcamento, Integer numeroSessoes, @NotNull Cliente cliente) {
+			BigDecimal orcamento, Integer numeroSessoes, BigDecimal valorPagoSessao, @NotNull Cliente cliente) {
 		super();
 		this.tipoServico = tipoServico;
 		this.categoria = categoria;
@@ -89,7 +87,16 @@ public class Servico extends EntidadeBase<Long> {
 		this.statusAgendamento = statusAgendamento;
 		this.orcamento = orcamento;
 		this.numeroSessoes = numeroSessoes;
+		this.valorPagoSessao = valorPagoSessao;
 		this.cliente = cliente;
+	}
+
+	public BigDecimal getValorPagoSessao() {
+		return valorPagoSessao;
+	}
+
+	public void setValorPagoSessao(BigDecimal valorPagoSessao) {
+		this.valorPagoSessao = valorPagoSessao;
 	}
 
 	public String getCategoria() {

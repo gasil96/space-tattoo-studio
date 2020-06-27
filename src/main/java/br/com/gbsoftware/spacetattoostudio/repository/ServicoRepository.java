@@ -1,5 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.repository;
 
+import java.math.BigDecimal;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -8,6 +9,7 @@ package br.com.gbsoftware.spacetattoostudio.repository;
  */
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,33 +30,9 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
 	List<Servico> findByHorarioConclusaoAgendamento(LocalDateTime horarioConclusaoAgendamento);
 
-	@Query(value = "SELECT * FROM servico WHERE date_format(horario_agendamento, '%Y-%m-%d') = CURDATE()", nativeQuery = true)
-	List<Servico> agendamentosDoDia();
+	@Query("select s.horarioAgendamento, s.categoria, s.tipoServico from Servico s")
+	List<Servico> getCaledarIO();
 
-	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
-			+ "BETWEEN CURDATE() AND DATE_ADD(NOW(), INTERVAL 7 DAY)", nativeQuery = true)
-	List<Servico> agendamentoDaSemana();
-
-	@Query(value = "SELECT * FROM servico WHERE horario_agendamento BETWEEN CURRENT_TIMESTAMP() AND DATE_ADD(NOW(), INTERVAL 1 DAY)"
-			+ " order by horario_agendamento asc limit 3", nativeQuery = true)
-	List<Servico> proximosSeisAgendamentos();
-
-	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
-			+ "BETWEEN CURDATE() AND DATE_ADD(NOW(), INTERVAL 3 MONTH)", nativeQuery = true)
-	List<Servico> agendamentosProximosTresMeses();
-
-	@Query(value = "SELECT * FROM servico WHERE DATE_FORMAT(horario_agendamento, '%Y-%m-%d')"
-			+ " BETWEEN CURDATE() - INTERVAL 3 MONTH AND CURDATE()", nativeQuery = true)
-	List<Servico> agendametnoUltimosTresMeses();
-
-	@Query(value = "select * from servico where month(horario_agendamento) = month(current_timestamp())", nativeQuery = true)
-	List<Servico> agendamentosMesAtual();
-	
-	@Query(value = "SELECT * FROM servico ORDER BY horario_agendamento DESC", nativeQuery = true)
-	List<Servico> findAll();
-	
-	@Query(value = "select * from servico where (month(horario_agendamento) = month(current_timestamp())"
-			+ " and (status_agendamento = 'ENCERRADO'))", nativeQuery = true)
-	List<Servico> encerramentoMesAtual();
-
+	@Query("select c.id, c.nome, sum(s.orcamento) as totalGasto from Servico s, Cliente c where c.id = ?2")
+	Optional<Servico> getCalculoOrcamentoCliente(BigDecimal totalGasto, Long id);
 }

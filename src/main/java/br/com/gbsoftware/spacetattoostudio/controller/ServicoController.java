@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
@@ -48,7 +50,8 @@ public class ServicoController {
 	private static final String MODAL_CONFIRMAR_ENCERRAMENTO = "modal/confirmar-encerramento";
 	private static final String MODAL_REABRIR_AGENDAMENTO = "modal/modal-reabrir-agendamento";
 	private static final String MODAL_NOVO_AGENDAMENTO_CLIENTE = "modal/modal-novo-agendamento-cliente";
-
+	private static final String MODAL_VISUALIZAR_AGENDAMENTO_CLIENTE = "modal/modal-visualizar-agendamento-cliente";
+	
 	@Autowired
 	private ServicoService servicoSevice;
 
@@ -57,20 +60,19 @@ public class ServicoController {
 
 	@GetMapping("detalhamento")
 	public String servico(Servico agendamento, ModelMap model, Cliente cliente) {
-		model.addAttribute("listaServico", servicoSevice.buscarTodos());
 		model.addAttribute("classActiveSubAgendamento", "active");
+		model.addAttribute("listaServico", servicoSevice.buscarTodos());
 		return PAGINA_AGENDAMENTO_DETALHADO;
 	}
 
 	@PostMapping("salvar")
 	public String salvar(Servico servico, RedirectAttributes attr) {
 		if (servicoCliente.buscarPorId(servico.getCliente().getId()).isPresent()) {
-			if(servico.getNumeroSessoes() == null) {
+			if (servico.getNumeroSessoes() == null) {
 				servico.setNumeroSessoes(1);
 				servicoSevice.salvar(servico);
 				attr.addFlashAttribute("salvou", true);
-				System.err.println(servico.toString());
-			}else {
+			} else {
 				servicoSevice.salvar(servico);
 				attr.addFlashAttribute("salvou", true);
 			}
@@ -80,6 +82,18 @@ public class ServicoController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@GetMapping("visualizar/{id}")
+	public String visualizar(@PathVariable("id") Long id, ModelMap model) {
+		Servico servico = servicoSevice.buscarPorId(id).orElse(null);
+		model.addAttribute("agendamento", servico);
+		if(servico.getHorarioConclusaoAgendamento() != null) {
+			model.addAttribute("encerrado", true);
+		}else {
+			model.addAttribute("encerrado", false);
+		}
+		return MODAL_VISUALIZAR_AGENDAMENTO_CLIENTE;
+	}
+	
 	@GetMapping("agendar/{id}")
 	public String preAgendar(@PathVariable("id") Long id, Model model, Servico servico) {
 		model.addAttribute("id_cliente_referente", id);
@@ -134,72 +148,75 @@ public class ServicoController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@RequestMapping(value = "/agendamentos", method = RequestMethod.GET)
+	public @ResponseBody String getAgendamentos(String agendamentos) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+		mapper.registerModule(new JavaTimeModule());
+		return agendamentos = mapper.writeValueAsString(servicoSevice.buscarTodos());
+	}
+
 	@RequestMapping(value = "/dadosMA", method = RequestMethod.GET)
-	public @ResponseBody String getDadosMA(HttpServletResponse response) throws JsonProcessingException {
+	public @ResponseBody String getDadosMA(String servicosMesAtual) throws JsonProcessingException {
 		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosMesAtual();
-		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("barbeariaTotal", agendamentosBarbearia.size());
-		map.put("piercingTotal", agendamentosPiercing.size());
-		map.put("tattooTotal", agendamentosTattoo.size());
-		String listaTotaisAgendamentosJson = new Gson().toJson(map);
-		return listaTotaisAgendamentosJson;
+		map.put("barbeariaTotal", filtroAgendamento(listaAgendamentosMesAtual, TipoServicoEnum.BARBEARIA).size());
+		map.put("piercingTotal", filtroAgendamento(listaAgendamentosMesAtual, TipoServicoEnum.PIERCING).size());
+		map.put("tattooTotal", filtroAgendamento(listaAgendamentosMesAtual, TipoServicoEnum.TATTOO).size());
+
+		return servicosMesAtual = new Gson().toJson(map);
 	}
 
 	@RequestMapping(value = "/dadosUltimosTresM", method = RequestMethod.GET)
-	public @ResponseBody String getDadoUltimosTresM(HttpServletResponse response) throws JsonProcessingException {
-		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosUltimosTresMeses();
-		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
+	public @ResponseBody String getDadoUltimosTresM(String agendamentosUltimosTresMeses)
+			throws JsonProcessingException {
+		List<Servico> listaAgendamentosUltimosTresMeses = servicoSevice.getAgendamentosUltimosTresMeses();
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("barbeariaTotal", agendamentosBarbearia.size());
-		map.put("piercingTotal", agendamentosPiercing.size());
-		map.put("tattooTotal", agendamentosTattoo.size());
-		String listaTotaisAgendamentosJson = new Gson().toJson(map);
-		return listaTotaisAgendamentosJson;
+		map.put("barbeariaTotal",
+				filtroAgendamento(listaAgendamentosUltimosTresMeses, TipoServicoEnum.BARBEARIA).size());
+		map.put("piercingTotal", filtroAgendamento(listaAgendamentosUltimosTresMeses, TipoServicoEnum.PIERCING).size());
+		map.put("tattooTotal", filtroAgendamento(listaAgendamentosUltimosTresMeses, TipoServicoEnum.TATTOO).size());
+
+		return agendamentosUltimosTresMeses = new Gson().toJson(map);
 	}
 
 	@RequestMapping(value = "/dadosProximosTresM", method = RequestMethod.GET)
-	public @ResponseBody String getDadoProximosTresM(HttpServletResponse response) throws JsonProcessingException {
-		List<Servico> listaAgendamentosMesAtual = servicoSevice.getAgendamentosProximosTresMeses();
-		List<Servico> agendamentosBarbearia = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosPiercing = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosTattoo = listaAgendamentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
+	public @ResponseBody String getDadoProximosTresM(String agendamentosProximosTresMeses)
+			throws JsonProcessingException {
+		List<Servico> listaAgendamentosProximosTresMeses = servicoSevice.getAgendamentosProximosTresMeses();
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("barbeariaTotal", agendamentosBarbearia.size());
-		map.put("piercingTotal", agendamentosPiercing.size());
-		map.put("tattooTotal", agendamentosTattoo.size());
-		String listaTotaisAgendamentosJson = new Gson().toJson(map);
-		return listaTotaisAgendamentosJson;
+		map.put("barbeariaTotal",
+				filtroAgendamento(listaAgendamentosProximosTresMeses, TipoServicoEnum.BARBEARIA).size());
+		map.put("piercingTotal",
+				filtroAgendamento(listaAgendamentosProximosTresMeses, TipoServicoEnum.PIERCING).size());
+		map.put("tattooTotal", filtroAgendamento(listaAgendamentosProximosTresMeses, TipoServicoEnum.TATTOO).size());
+
+		return agendamentosProximosTresMeses = new Gson().toJson(map);
 	}
 
 	@RequestMapping(value = "/dadosEncerrados", method = RequestMethod.GET)
-	public @ResponseBody String getDadosEncerrados(HttpServletResponse response) throws JsonProcessingException {
-		List<Servico> encerramentosMesAtual = servicoSevice.encerramentoMesAtual();
-		List<Servico> agendamentosBarbeariaE = encerramentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.BARBEARIA.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosPiercingE = encerramentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.PIERCING.equals(x.getTipoServico())).collect(Collectors.toList());
-		List<Servico> agendamentosTattooE = encerramentosMesAtual.stream()
-				.filter(x -> TipoServicoEnum.TATTOO.equals(x.getTipoServico())).collect(Collectors.toList());
+	public @ResponseBody String getDadosEncerrados(String agendamentosEncerradosMesAtual)
+			throws JsonProcessingException {
+		List<Servico> listaAgendamentosEncerradosMesAtual = servicoSevice.encerramentoMesAtual();
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("barbeariaTotalEncerrado", agendamentosBarbeariaE.size());
-		map.put("piercingTotalEncerrado", agendamentosPiercingE.size());
-		map.put("tattooTotalEncerrado", agendamentosTattooE.size());
-		String listaTotaisAgendamentosJsonEncerrados = new Gson().toJson(map);
-		return listaTotaisAgendamentosJsonEncerrados;
+		map.put("barbeariaTotalEncerrado",
+				filtroAgendamento(listaAgendamentosEncerradosMesAtual, TipoServicoEnum.BARBEARIA).size());
+		map.put("piercingTotalEncerrado",
+				filtroAgendamento(listaAgendamentosEncerradosMesAtual, TipoServicoEnum.PIERCING).size());
+		map.put("tattooTotalEncerrado",
+				filtroAgendamento(listaAgendamentosEncerradosMesAtual, TipoServicoEnum.TATTOO).size());
+
+		return agendamentosEncerradosMesAtual = new Gson().toJson(map);
+	}
+
+	private List<Servico> filtroAgendamento(List<Servico> servicos, TipoServicoEnum tipoServico) {
+		List<Servico> listraFiltrada = servicos.stream().filter(x -> x.getTipoServico().equals(tipoServico))
+				.collect(Collectors.toList());
+		return listraFiltrada;
 	}
 
 	@ModelAttribute("cliente")

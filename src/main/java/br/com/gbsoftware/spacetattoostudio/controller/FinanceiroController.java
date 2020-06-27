@@ -2,9 +2,10 @@ package br.com.gbsoftware.spacetattoostudio.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.HashMap;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,197 +22,112 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.google.gson.Gson;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
-import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
-import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
-import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
-import br.com.gbsoftware.spacetattoostudio.service.EntradaSaidaService;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
+import br.com.gbsoftware.spacetattoostudio.domain.model.SaidaCaixa;
+import br.com.gbsoftware.spacetattoostudio.service.EntradaCaixaService;
+import br.com.gbsoftware.spacetattoostudio.service.SaidaCaixaService;
+import br.com.gbsoftware.spacetattoostudio.service.VwArrecadacaoAnualTipoService;
 
 @Controller
 @RequestMapping("financeiro")
 public class FinanceiroController {
 
 	private static final String PAGINA_DETALHAMENTO_FINANCEIRO = "detalhamento/financeiro-detalhado";
-	private static final String MODAL_DETALHAMENTO_MENSAL = "modal/modal-detalhamento-financeiro-mensal";
 
 	@Autowired
-	private CaixaService servicoCaixa;
+	private VwArrecadacaoAnualTipoService vwArrecadacaoService;
 
 	@Autowired
-	private EntradaSaidaService servicoEntradaSaida;
+	private EntradaCaixaService servicoEntradaCaixa;
+
+	@Autowired
+	private SaidaCaixaService servicoSaidaCaixa;
 
 	@GetMapping("detalhamento")
-	public String detalhamentoFinanceiro(Caixa caixa, Model model) {
-		caixa = servicoCaixa.getDiaAtual();
-		if (caixa == null) {
-			model.addAttribute("caixaAberto", false);
-		} else {
-			model.addAttribute("caixaAberto", servicoCaixa.getDiaAtual().getAberto());
-		}
+	public String detalhamentoFinanceiro(Model model) {
 		return PAGINA_DETALHAMENTO_FINANCEIRO;
 	}
 
-	@RequestMapping("pesquisar-caixa")
-	public String pesquisarCaixaTeste(@RequestParam(value = "dataInicial", required = true) String dataInicial,
-			@RequestParam(value = "dataFinal", required = true) String dataFinal, Model model)
-			throws JsonProcessingException {
-		List<Caixa> caixas = servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal);
-		if (caixas.isEmpty()) {
-			model.addAttribute("vazio", true);
-		} else {
-			model.addAttribute("caixas", caixas);
-			model.addAttribute("consultado", caixas.isEmpty() ? false : true);
-			model.addAttribute("dataInicial", dataInicial);
-			model.addAttribute("dataFinal", dataFinal);
-		}
-		return PAGINA_DETALHAMENTO_FINANCEIRO;
-	}
-
-	@RequestMapping("relatorio-geral-mensal")
-	public String pesquisarRelatorioGeralMes(
-			@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal,
-			HttpServletResponse response, Model model) {
-
-		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
-
-		if (!listaRelatorioGeralMensal.isEmpty()) {
-			List<Object> relatorio = servicoCaixa.relatorio(relGeralMensal);
-			model.addAttribute("totalGeral", relatorio.get(0));
-			model.addAttribute("totalCredito", relatorio.get(1));
-			model.addAttribute("totalDebito", relatorio.get(2));
-			model.addAttribute("totalAvista", relatorio.get(3));
-			model.addAttribute("relGeralMensal", relGeralMensal);
-			return MODAL_DETALHAMENTO_MENSAL;
-
-		} else {
-			model.addAttribute("msgSemRelatorio", true);
-			return PAGINA_DETALHAMENTO_FINANCEIRO;
-		}
-
-	}
-
-	@RequestMapping("relatorio-mensal-pdf")
-	public void gerarPDF(@RequestParam(value = "relGeralMensal", required = true) String relGeralMensal,
-			HttpServletResponse response) {
-		List<Caixa> listaRelatorioGeralMensal = servicoCaixa.buscarTodosMes(relGeralMensal);
-		if (!listaRelatorioGeralMensal.isEmpty()) {
-			List<Object> relatorio = servicoCaixa.relatorio(relGeralMensal);
-			response.setContentType("application/pdf");
-			Document relatorioPDF = new Document();
-			try {
-				PdfWriter.getInstance(relatorioPDF, response.getOutputStream());
-				response.getOutputStream().flush();
-				relatorioPDF.open();
-				relatorioPDF.add(new Paragraph("Relatório Financeiro Mensal ( " + relGeralMensal + " )"));
-				relatorioPDF.add(new Paragraph("Total Geral: R$ " + relatorio.get(0),
-						FontFactory.getFont(FontFactory.COURIER, 12)));
-				relatorioPDF.add(new Paragraph("Total Arrecadado no Crédito: R$ " + relatorio.get(1),
-						FontFactory.getFont(FontFactory.COURIER, 12)));
-				relatorioPDF.add(new Paragraph("Total Arrecadado no Débito: R$ " + relatorio.get(2),
-						FontFactory.getFont(FontFactory.COURIER, 12)));
-				relatorioPDF.add(new Paragraph("Total Arrecadado À Vista: R$ " + relatorio.get(3),
-						FontFactory.getFont(FontFactory.COURIER, 12)));
-			} catch (DocumentException de) {
-				System.err.println(de.getMessage());
-			} catch (IOException ioe) {
-				System.err.println(ioe.getMessage());
-			} finally {
-				relatorioPDF.close();
-			}
-		} else {
-			System.err.println("erro");
-		}
-	}
-
-	@RequestMapping(value = "/pesquisa-intervalo", method = RequestMethod.GET)
-	public @ResponseBody String pesquisaIntervalo(String dataInicial, String dataFinal) throws JsonProcessingException {
+	@RequestMapping(value = "/vw-arrecadacao-anual", method = RequestMethod.GET)
+	public @ResponseBody String arrecadacaoAnual(String arrecadacaoAnual) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-		List<Caixa> caixas = servicoCaixa.buscarPorIntervalo(dataInicial, dataFinal);
-		String lista = mapper.writeValueAsString(caixas);
-		return lista;
+		return arrecadacaoAnual = mapper.writeValueAsString(vwArrecadacaoService.buscarTodos());
 	}
 
-	@RequestMapping(value = "/pesquisa-intervalo-gasto", method = RequestMethod.POST)
-	public @ResponseBody String pesquisaIntervaloGasto(String dataInicial, String dataFinal)
-			throws JsonProcessingException {
-		List<EntradaSaida> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
-
-		BigDecimal gasTotalPercieng = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PIERCING)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
-		BigDecimal gasTotalTattoo = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.TATTOO)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
-		BigDecimal gasTotalBarbearia = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.BARBEARIA)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
-		BigDecimal gasTotalProduto = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PRODUTO)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.SAIDA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("gasTotalPercieng", gasTotalPercieng);
-		map.put("gasTotalTattoo", gasTotalTattoo);
-		map.put("gasTotalBarbearia", gasTotalBarbearia);
-		map.put("gasTotalProduto", gasTotalProduto);
-		map.put("dataInicial", dataInicial);
-		map.put("dataFinal", dataFinal);
-		String listaGasto = new Gson().toJson(map);
-		System.err.println(listaGasto);
-		return listaGasto;
+	@RequestMapping("relatorio-pdf")
+	public void gerarPDF(HttpServletResponse response, @RequestParam("inicio") String inicio,
+			@RequestParam("fim") String fim) {
+		gerarRelatorioPDF(response, inicio, fim);
 	}
 
-	@RequestMapping(value = "/pesquisa-intervalo-arrecadacao", method = RequestMethod.POST)
-	public @ResponseBody String pesquisaIntervaloArrecadacao(String dataInicial, String dataFinal)
-			throws JsonProcessingException {
-		List<EntradaSaida> entradaSaida = servicoEntradaSaida.buscarPorIntervalo(dataInicial, dataFinal);
+	@RequestMapping("relatorio-pdf-mes-atual")
+	public void gerarPdgMesAtual(HttpServletResponse response) {
+		String inicio = LocalDateTime.now().withMonth(LocalDateTime.now().getMonthValue())
+				.with(TemporalAdjusters.firstDayOfMonth()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+		String fim = LocalDateTime.now().withMonth(LocalDateTime.now().getMonthValue())
+				.with(TemporalAdjusters.lastDayOfMonth()).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+		gerarRelatorioPDF(response, inicio, fim);
+	}
 
-		BigDecimal arrTotalPercieng = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PIERCING)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+	private void gerarRelatorioPDF(HttpServletResponse response, String inicio, String fim) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+		DateTimeFormatter formatterString = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		LocalDateTime inicioDate = LocalDateTime.parse(inicio, formatter);
+		LocalDateTime fimDate = LocalDateTime.parse(fim, formatter);
+		List<EntradaCaixa> entradas = servicoEntradaCaixa.buscarTodosIntervalo(inicioDate, fimDate);
+		List<SaidaCaixa> saidas = servicoSaidaCaixa.buscarTodosIntervalo(inicioDate, fimDate);
+		response.setContentType("application/pdf");
+		Document relatorioMensalPDF = new Document();
 
-		BigDecimal arrTotalTattoo = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.TATTOO)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+		try {
+			float[] pointColumnWidths = { 150F, 150F, 150F };
+			PdfPTable tabela = new PdfPTable(pointColumnWidths);
+			Font linhaComun = FontFactory.getFont(FontFactory.COURIER, 12);
+			Font titulo = FontFactory.getFont(FontFactory.TIMES_BOLD, 16);
+			PdfWriter.getInstance(relatorioMensalPDF, response.getOutputStream());
+			response.getOutputStream().flush();
+			relatorioMensalPDF.open();
+			relatorioMensalPDF.addTitle("Financeiro STS");
+			relatorioMensalPDF.add(new Paragraph("Relatório Financeiro Simplificado", titulo));
+			relatorioMensalPDF.add(new Paragraph("\n"));
+			tabela.addCell("Total Entradas");
+			tabela.addCell("Total Saídas");
+			tabela.addCell("Receita Líquida");
+			tabela.addCell("R$ " + getValorTotalEntrada(entradas));
+			tabela.addCell("R$ " + getValorTotalSaida(saidas));
+			tabela.addCell("R$ " + getTotalLiquido(getValorTotalEntrada(entradas), getValorTotalSaida(saidas)));
+			relatorioMensalPDF.add(tabela);
+			relatorioMensalPDF.add(new Paragraph("Pesquisa efetuada no intervalo de "
+					+ inicioDate.format(formatterString) + " até " + fimDate.format(formatterString), linhaComun));
+		} catch (DocumentException de) {
+			System.err.println(de.getMessage());
+		} catch (IOException ioe) {
+			System.err.println(ioe.getMessage());
+		} finally {
+			relatorioMensalPDF.close();
+		}
+	}
 
-		BigDecimal arrTotalBarbearia = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.BARBEARIA)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+	private BigDecimal getValorTotalSaida(List<SaidaCaixa> saidas) {
+		return saidas.stream().map(SaidaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+	}
 
-		BigDecimal arrTotalProduto = entradaSaida.stream()
-				.filter(x -> x.getCategoriaEntrada().equals(CategoriaEntradaEnum.PRODUTO)
-						&& x.getTipoOperacao().equals(TipoOperacaoEnum.ENTRADA))
-				.map(EntradaSaida::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("arrTotalPercieng", arrTotalPercieng);
-		map.put("arrTotalTattoo", arrTotalTattoo);
-		map.put("arrTotalBarbearia", arrTotalBarbearia);
-		map.put("arrTotalProduto", arrTotalProduto);
-		map.put("dataInicial", dataInicial);
-		map.put("dataFinal", dataFinal);
-		String listaArrecadacao = new Gson().toJson(map);
-		System.err.println(listaArrecadacao);
-		return listaArrecadacao;
+	private BigDecimal getValorTotalEntrada(List<EntradaCaixa> entradas) {
+		return entradas.stream().map(EntradaCaixa::getValor).reduce(BigDecimal::add).orElse(new BigDecimal(0));
+	}
+
+	private BigDecimal getTotalLiquido(BigDecimal totalEntrada, BigDecimal totalSaida) {
+		return totalEntrada.subtract(totalSaida);
 	}
 
 }

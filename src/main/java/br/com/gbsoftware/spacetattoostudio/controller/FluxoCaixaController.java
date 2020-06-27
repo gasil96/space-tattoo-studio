@@ -1,13 +1,8 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -16,11 +11,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,183 +26,149 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import br.com.gbsoftware.spacetattoostudio.domain.enums.CategoriaEntradaEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.FormaPagamentoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoOperacaoEnum;
-import br.com.gbsoftware.spacetattoostudio.domain.model.Caixa;
-import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
-import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaSaida;
-import br.com.gbsoftware.spacetattoostudio.service.CaixaService;
-import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
-import br.com.gbsoftware.spacetattoostudio.service.EntradaSaidaService;
-import br.com.gbsoftware.spacetattoostudio.service.UsuarioService;
+import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
+import br.com.gbsoftware.spacetattoostudio.domain.model.EntradaCaixa;
+import br.com.gbsoftware.spacetattoostudio.domain.model.SaidaCaixa;
+import br.com.gbsoftware.spacetattoostudio.service.EntradaCaixaService;
+import br.com.gbsoftware.spacetattoostudio.service.SaidaCaixaService;
 
 @Controller
 @RequestMapping("caixa")
 public class FluxoCaixaController {
 
 	@Autowired
-	private UsuarioService servicoUsuario;
+	private EntradaCaixaService entradaCaixaService;
 
 	@Autowired
-	private ClienteService servicoCliente;
-
-	@Autowired
-	private CaixaService servicoCaixa;
-
-	@Autowired
-	private EntradaSaidaService servicoEntradaSaida;
+	private SaidaCaixaService saidaCaixaService;
 
 	private static final String PAGINA_FLUXO_CAIXA = "caixa/fluxo-caixa";
-	private static final String MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA = "modal/modal-confimar-exclusao-entrada-saida";
-	private static final String MODAL_CONFIRMAR_FECHAMENTO_CAIXA = "modal/modal-confimar-fechamento-caixa";
-	private static final String MODAL_EDITAR_ENTRADA_SAIDA = "modal/modal-editar-entrada-saida";
-	private static final String MODAL_DETALHAMENTO_FECHAMENTO_CAIXA = "modal/modal-detalhamento-fechamento-caixa";
+	private static final String MODAL_FLUXO_DIARIO = "modal/modal-visualizar-fluxo-diario";
 	private static final String ATUALIZAR_PAGINA = "redirect:fluxo";
+	private static final String MODAL_EDITAR_ENTRADA_CAIXA = "modal/modal-editar-entrada-caixa";
+	private static final String MODAL_EDITAR_SAIDA_CAIXA = "modal/modal-editar-saida-caixa";
+	private static final String MODAL_VISUALIZAR_ENTRADA_CAIXA = "modal/modal-visualizar-entrada-caixa";
+	private static final String MODAL_VISUALIZAR_SAIDA_CAIXA = "modal/modal-visualizar-saida-caixa";
+	private static final String MODAL_EXCLUIR_SAIDA_CAIXA = "modal/modal-confirmar-exclusao-saida";
+	private static final String MODAL_EXCLUIR_ENTRADA_CAIXA = "modal/modal-confirmar-exclusao-entrada";
+	private static final String MSG_SUCCESS = "success";
+	private static final String MSG_INFO = "info";
 
 	@GetMapping("fluxo")
-	public String caixa(Model model, Caixa caixa, EntradaSaida entradaSaida, Cliente cliente) {
-		caixa = servicoCaixa.getDiaAtual();
-		model.addAttribute("classActiveCaixa", "active");
-		model.addAttribute("calculoValorTotalDia", servicoCaixa.calculoValorTotalDia());
-		model.addAttribute("sumValorEntradaDia",
-				servicoCaixa.sumValorEntradaDia().isPresent() ? servicoCaixa.sumValorEntradaDia().get() : 0);
-		model.addAttribute("sumValorSaidaDia",
-				servicoCaixa.sumValorSaidaDia().isPresent() ? servicoCaixa.sumValorSaidaDia().get() : 0);
+	public String caixa(Model model, EntradaCaixa entradaCaixa, SaidaCaixa saidaCaixa) {
+		BigDecimal totalSaida = saidaCaixaService.sumTotalSaida().isPresent() ? saidaCaixaService.sumTotalSaida().get()
+				: new BigDecimal(0);
+		BigDecimal totalEntrada = entradaCaixaService.sumTotalEntrada().isPresent()
+				? entradaCaixaService.sumTotalEntrada().get()
+				: new BigDecimal(0);
+		BigDecimal totalDiario = totalEntrada.subtract(totalSaida);
 
-		if (caixa == null) {
-			model.addAttribute("caixaAberto", false);
-		} else {
-			model.addAttribute("teste", servicoEntradaSaida.busarTodosDoDia(servicoCaixa.getDiaAtual().getId()));
-			model.addAttribute("caixaAberto", servicoCaixa.getDiaAtual().getAberto());
-		}
+		model.addAttribute("classActiveCaixa", "active");
+		model.addAttribute("totalSaidaDiario", totalSaida);
+		model.addAttribute("totalEntradaDiario", totalEntrada);
+		model.addAttribute("saldoTotalDiario", totalDiario);
 		return PAGINA_FLUXO_CAIXA;
 	}
 
-	@PostMapping("/adicionar")
-	public String salvarEntradaOuSaida(EntradaSaida entradaSaida, RedirectAttributes attr) {
-		entradaSaida.setHorarioOperacao(LocalDateTime.now());
-		if (servicoCaixa.getDiaAtual().getAberto().booleanValue() == true) {
-			if (servicoCliente.buscarPorId(entradaSaida.getCliente().getId()).isPresent()
-					&& servicoCaixa.buscarPorId(entradaSaida.getCaixa().getId()).isPresent()) {
-				servicoEntradaSaida.salvar(entradaSaida);
-				attr.addFlashAttribute("adicionou", true);
-			} else {
-				attr.addFlashAttribute("erroAdicionar", true);
-			}
-		} else {
+	@GetMapping("visualizar")
+	public String visualizarFluxoDiario() {
+		return MODAL_FLUXO_DIARIO;
+	}
 
-			attr.addFlashAttribute("caixaFechado", true);
-		}
+	@PostMapping("salvar-entrada")
+	public String salvarEntrada(RedirectAttributes attr, EntradaCaixa entradaCaixa) {
+		entradaCaixaService.salvar(entradaCaixa);
+		attr.addFlashAttribute(MSG_SUCCESS, "Lançamento efetuado!");
 		return ATUALIZAR_PAGINA;
 	}
 
-	@PostMapping("/abrir-caixa")
-	public String abriCaixa(Caixa caixa, Cliente cliente, RedirectAttributes attr) {
-		caixa = servicoCaixa.getDiaAtual();
-		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
-		String login = usuarioLogado.getName();
-		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
-		if (caixa == null) {
-			Caixa caixaNovo = new Caixa();
-			caixaNovo.setDataHoraAbertura(LocalDateTime.now());
-			caixaNovo.setOperadorAbertura(usuarioLogadoNome);
-			caixaNovo.setAberto(true);
-			servicoCaixa.salvar(caixaNovo);
-			attr.addFlashAttribute("caixaAbertoSucesso", true);
-		} else {
-			caixa.setAberto(true);
-			caixa.setDataHoraFechamento(null);
-			caixa.setOperadorFechamento(null);
-			servicoCaixa.salvar(caixa);
-			attr.addFlashAttribute("caixaReaberto", true);
-		}
+	@PostMapping("salvar-saida")
+	public String salvarSaida(RedirectAttributes attr, SaidaCaixa saidaCaixa) {
+		saidaCaixaService.salvar(saidaCaixa);
+		attr.addFlashAttribute(MSG_SUCCESS, "Lançamento efetuado!");
 		return ATUALIZAR_PAGINA;
 	}
 
-	@GetMapping("pre-fechar-caixa")
-	public String preFecharCaixa(RedirectAttributes attr, Model model) {
-		if (servicoCaixa.getDiaAtual().getAberto().booleanValue() == true) {
-			Caixa caixa = servicoCaixa.getDiaAtual();
-			if (caixa != null) {
-				return MODAL_CONFIRMAR_FECHAMENTO_CAIXA;
-			} else {
-				attr.addFlashAttribute("caixaNaoLocalizado", true);
-			}
-
-		} else {
-			attr.addFlashAttribute("erroFecharCaixa", true);
-		}
-		return ATUALIZAR_PAGINA;
+	@GetMapping("editar-entrada/{id}")
+	public String preEditarEntradaCaixa(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("entradaCaixa", entradaCaixaService.buscarPorId(id));
+		return MODAL_EDITAR_ENTRADA_CAIXA;
 	}
 
-	@PostMapping("fechar-caixa")
-	public String fecharCaixa(EntradaSaida entradaSaida, Caixa caixa, Cliente cliente, RedirectAttributes attr, Model model) {
-		Authentication usuarioLogado = SecurityContextHolder.getContext().getAuthentication();
-		String login = usuarioLogado.getName();
-		String usuarioLogadoNome = servicoUsuario.findById(login).get().getNomeCompleto();
-		caixa = servicoCaixa.getDiaAtual();
-		if (caixa == null) {
-			attr.addFlashAttribute("erroFecharCaixa", true);
-		} else {
-			caixa.setDataHoraFechamento(LocalDateTime.now());
-			caixa.setOperadorFechamento(usuarioLogadoNome);
-			caixa.setAberto(false);
-
-			attr.addFlashAttribute("caixaFechadoSucesso", true);
-			servicoCaixa.editar(caixa);
-		}
-		
-		model.addAttribute("total", servicoCaixa.calculoValorTotalDia());
-		model.addAttribute("credito", servicoCaixa.calculoTotalCredito());
-		model.addAttribute("debito", servicoCaixa.calculoTotalDebito());
-		model.addAttribute("avista", servicoCaixa.calculoTotalAVista());
-		return MODAL_DETALHAMENTO_FECHAMENTO_CAIXA;
+	@PostMapping("editar-entrada")
+	public String editarEntradaCaixa(RedirectAttributes attr, EntradaCaixa entradaCaixa) {
+		entradaCaixaService.salvar(entradaCaixa);
+		attr.addFlashAttribute(MSG_INFO, "Lançamento alterado!");
+		return MODAL_FLUXO_DIARIO;
 	}
 
-	@GetMapping("editar/{id}")
-	public String preEditarEntradaSaida(@PathVariable("id") Long id, RedirectAttributes attr, Model model) {
-
-		if (servicoEntradaSaida.buscarPorId(id).isPresent()) {
-			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
-			return MODAL_EDITAR_ENTRADA_SAIDA;
-		} else {
-			attr.addFlashAttribute("esNaoEncontrada", true);
-			return ATUALIZAR_PAGINA;
-		}
+	@GetMapping("editar-saida/{id}")
+	public String preEditarSaidaCaixa(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("saidaCaixa", saidaCaixaService.buscarPorId(id));
+		return MODAL_EDITAR_SAIDA_CAIXA;
 	}
 
-	@PostMapping("editar")
-	public String editar(EntradaSaida entradaSaida) {
-		servicoEntradaSaida.editar(entradaSaida);
-		return ATUALIZAR_PAGINA;
+	@PostMapping("editar-saida")
+	public String editarSaidaCaixa(SaidaCaixa saidaCaixa, RedirectAttributes attr) {
+		saidaCaixaService.salvar(saidaCaixa);
+		attr.addFlashAttribute(MSG_INFO, "Lançamento alterado!");
+		return MODAL_FLUXO_DIARIO;
 	}
 
-	@GetMapping("excluir/{id}")
-	public String preExcluirEntradaOuSaida(@PathVariable("id") Long id, RedirectAttributes attr, Model model) {
-		if (servicoEntradaSaida.buscarPorId(id).isPresent()) {
-			model.addAttribute("entradaSaidaLocalizada", servicoEntradaSaida.buscarPorId(id));
-			return MODAL_CONFIRMAR_EXCLUSAO_ENTRADA_SAIDA;
-		} else {
-			attr.addFlashAttribute("esNaoEncontrada", true);
-			return ATUALIZAR_PAGINA;
-		}
+	@GetMapping("visualizar-entrada-caixa/{id}")
+	public String preVisualizarEntradaCaixa(ModelMap model, @PathVariable("id") Long id) {
+		model.addAttribute("entradaCaixa", entradaCaixaService.buscarPorId(id));
+		return MODAL_VISUALIZAR_ENTRADA_CAIXA;
 	}
 
-	@PostMapping("excluir")
-	public String excluirEntradaSaida(EntradaSaida entradaSaida) {
-		servicoEntradaSaida.deletar(entradaSaida.getId());
-		return ATUALIZAR_PAGINA;
+	@GetMapping("visualizar-saida-caixa/{id}")
+	public String preVisualizarSaidaCaixa(ModelMap model, @PathVariable("id") Long id) {
+		model.addAttribute("saidaCaixa", saidaCaixaService.buscarPorId(id));
+		return MODAL_VISUALIZAR_SAIDA_CAIXA;
 	}
 
-	@RequestMapping(value = "/input-clientes")
-	public @ResponseBody String getInputClientes(HttpServletResponse response) throws JsonProcessingException {
+	@GetMapping("excluir-saida/{id}")
+	public String preExcluirSaida(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("saidaCaixa", saidaCaixaService.buscarPorId(id));
+		return MODAL_EXCLUIR_SAIDA_CAIXA;
+	}
+
+	@PostMapping("excluir-saida")
+	public String excluirSaida(SaidaCaixa saidaCaixa, RedirectAttributes attr) {
+		saidaCaixaService.deletar(saidaCaixa.getId());
+		attr.addFlashAttribute(MSG_INFO, "Lançamento excluido!");
+		return MODAL_FLUXO_DIARIO;
+	}
+
+	@GetMapping("excluir-entrada/{id}")
+	public String preExcluirEntrada(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("entradaCaixa", entradaCaixaService.buscarPorId(id));
+		return MODAL_EXCLUIR_ENTRADA_CAIXA;
+	}
+
+	@PostMapping("excluir-entrada")
+	public String excluirEntrada(SaidaCaixa saidaCaixa, RedirectAttributes attr) {
+		entradaCaixaService.deletar(saidaCaixa.getId());
+		attr.addFlashAttribute(MSG_INFO, "Lançamento excluido!");
+		return MODAL_FLUXO_DIARIO;
+	}
+
+	@RequestMapping(value = "saidas-do-dia", method = RequestMethod.GET)
+	public @ResponseBody String getSaidasDiaria(String saidasDiaria) throws JsonProcessingException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
 		mapper.registerModule(new JavaTimeModule());
-		List<Cliente> listaClientesInput = servicoCliente.buscarTodos();
-		String listaClientesInputJson = mapper.writeValueAsString(listaClientesInput);
-		return listaClientesInputJson;
+		return saidasDiaria = mapper.writeValueAsString(saidaCaixaService.buscarTodosDoDia());
+	}
+
+	@RequestMapping(value = "entradas-do-dia", method = RequestMethod.GET)
+	public @ResponseBody String getEntradasDiaria(String entradasDiaria) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+		mapper.registerModule(new JavaTimeModule());
+		return entradasDiaria = mapper.writeValueAsString(entradaCaixaService.buscarTodosDoDia());
 	}
 
 	@ModelAttribute("formapagamento")
@@ -213,26 +176,14 @@ public class FluxoCaixaController {
 		return FormaPagamentoEnum.values();
 	}
 
-	@ModelAttribute("categoriaentrada")
-	public CategoriaEntradaEnum[] getCategoriaEntrada() {
-		return CategoriaEntradaEnum.values();
+	@ModelAttribute("tiposervico")
+	public TipoServicoEnum[] getServicos() {
+		return TipoServicoEnum.values();
 	}
 
 	@ModelAttribute("tipooperacao")
 	public TipoOperacaoEnum[] getOperacao() {
 		return TipoOperacaoEnum.values();
-	}
-
-	@ModelAttribute("idcaixadia")
-	public Long getIdCaixaDia() {
-		Caixa caixa = servicoCaixa.getDiaAtual();
-		if (caixa == null) {
-			long idCaixaDia = 1;
-			return idCaixaDia;
-		} else {
-			Long idCaixaDia = servicoCaixa.getDiaAtual().getId();
-			return idCaixaDia;
-		}
 	}
 
 }

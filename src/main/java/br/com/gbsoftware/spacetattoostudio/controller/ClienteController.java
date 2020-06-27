@@ -1,6 +1,6 @@
 package br.com.gbsoftware.spacetattoostudio.controller;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,12 +24,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusClienteEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Cliente;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
+import br.com.gbsoftware.spacetattoostudio.dto.ClienteDTO;
 import br.com.gbsoftware.spacetattoostudio.service.ClienteService;
 import br.com.gbsoftware.spacetattoostudio.service.ServicoService;
 
@@ -38,6 +49,7 @@ public class ClienteController {
 	private static final String ATUALIZAR_PAGINA = "redirect:detalhamento";
 	private static final String MODAL_EDITAR_CLIENTE = "modal/modal-editar-cliente";
 	private static final String MODAL_NOVO_AGENDAMENTO_CLIENTE = "modal/modal-novo-agendamento-cliente";
+	private static final String MODAL_VISUALIZAR_CLIENTE = "modal/modal-visualizar-cliente";
 
 	@Autowired
 	private ClienteService servicoCliente;
@@ -45,41 +57,48 @@ public class ClienteController {
 	@Autowired
 	private ServicoService servicoServico;
 
-	@GetMapping("agendar/{id}")
-	public String preAgendar(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("servico", servicoServico.buscarPorId(id));
-		model.addAttribute("id_cliente_referente", id);
-		model.addAttribute("clienteNome", servicoCliente.buscarPorId(id).get().getNome());
-		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
-	}
-
 	@GetMapping("detalhamento")
 	public String cliente(Cliente cliente, Servico service, Model model) {
 		model.addAttribute("classActiveSubCliente", "active");
-		model.addAttribute("listaCliente", servicoCliente.buscarTodos());
-		List<Cliente> totalClientes = servicoCliente.buscarTodos();
-		model.addAttribute("totalClientes", totalClientes.size());
-		List<Cliente> totalClientesCM = servicoCliente.getPorCadastroMes();
-		List<Cliente> totalClientesCMA = servicoCliente.getPorCadastroMesAnterio();
-		model.addAttribute("totalCadastroMesAtual", "+" + totalClientesCM.size());
-		model.addAttribute("totalCadastroMesAnterio", "+" + totalClientesCMA.size());
-		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
-		List<Cliente> clientesAtivos = clientesTotal.stream()
-				.filter(x -> StatusClienteEnum.ATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInativos = clientesTotal.stream()
-				.filter(x -> StatusClienteEnum.INATIVO.equals(x.getStatusCliente())).collect(Collectors.toList());
-		List<Cliente> clientesInadimplentes = clientesTotal.stream()
-				.filter(x -> StatusClienteEnum.INADIMPLENTE.equals(x.getStatusCliente())).collect(Collectors.toList());
-		model.addAttribute("totalAtivos", clientesAtivos.size());
-		model.addAttribute("totalInativos", clientesInativos.size());
-		model.addAttribute("totalInadim", clientesInadimplentes.size());
 
-		ModelAndView mav = new ModelAndView("usuario");
-		mav.addObject("totalAtivosTeste", clientesAtivos.size());
+		List<Cliente> clientesTotal = servicoCliente.buscarTodos();
+
+		model.addAttribute("totalClientes", clientesTotal.size());
+
+		model.addAttribute("totalCadastroMesAtual",
+				"+" + clientesTotal.stream()
+						.filter(x -> x.getDataCadastro().getMonthValue() == LocalDate.now().getMonthValue())
+						.collect(Collectors.toList()).size());
+
+		model.addAttribute("totalCadastroMesAnterio", "+" + clientesTotal.stream()
+				.filter(x -> x.getDataCadastro().getMonthValue() == LocalDate.now().plusMonths(-1).getMonthValue())
+				.collect(Collectors.toList()).size());
+
+		model.addAttribute("totalAtivos", ativoInativo(clientesTotal, StatusClienteEnum.ATIVO).size());
+		model.addAttribute("totalInativos", ativoInativo(clientesTotal, StatusClienteEnum.INATIVO).size());
 
 		return PAGINA_CLIENTE_DETALHADO;
 	}
 
+	@RequestMapping(value = "/clientes", method = RequestMethod.GET)
+	public @ResponseBody String getCalendario(String clientes) throws JsonProcessingException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS);
+		mapper.registerModule(new JavaTimeModule());
+		return clientes = mapper.writeValueAsString(servicoCliente.buscarTodos());
+	}
+	
+	@RequestMapping(value = "/clientes-teste", produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET)
+	@JsonIgnore
+	public ResponseEntity<List<ClienteDTO>> listAllProducts() {
+	    List<ClienteDTO> clientesDTO = servicoCliente.buscarTodos().stream().map(x -> servicoCliente.converterParaDTO(x)).collect(Collectors.toList());
+		
+		if (clientesDTO.isEmpty()) {
+	        return new ResponseEntity<List<ClienteDTO>>(HttpStatus.NO_CONTENT);
+	    }
+	    return new ResponseEntity<List<ClienteDTO>>(clientesDTO, HttpStatus.OK);
+	}
+	
 	@PostMapping("salvar")
 	public String salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attr) {
 		if (cliente.getInstagram().isEmpty()) {
@@ -97,6 +116,21 @@ public class ClienteController {
 		return ATUALIZAR_PAGINA;
 	}
 
+	@GetMapping("visualizar/{id}")
+	public String visualizar(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
+		return MODAL_VISUALIZAR_CLIENTE;
+	}
+
+	@GetMapping("agendar/{id}")
+	public String agendar(@PathVariable("id") Long id, Model model) {
+		Servico servico = servicoServico.buscarPorId(id).orElse(null);
+		model.addAttribute("servico", servico);
+		model.addAttribute("id_cliente_referente", id);
+		model.addAttribute("clienteNome", servico.getCliente().getNome());
+		return MODAL_NOVO_AGENDAMENTO_CLIENTE;
+	}
+
 	@GetMapping("editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("cliente", servicoCliente.buscarPorId(id));
@@ -110,43 +144,14 @@ public class ClienteController {
 		return ATUALIZAR_PAGINA;
 	}
 
-	@PostMapping("credito")
-	public String credito(@Valid Cliente cliente, RedirectAttributes attr) {
-		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
-		Long idCliente = cliente.getId();
-		if (clienteLocalizado.getCreditoCliente() == null) {
-			servicoCliente.updateCredito(cliente.getCreditoCliente(), idCliente);
-			attr.addFlashAttribute("creditoAdicionado", true);
-		} else {
-			BigDecimal valorCredito = cliente.getCreditoCliente().add(clienteLocalizado.getCreditoCliente());
-			servicoCliente.updateCredito(valorCredito, idCliente);
-			attr.addFlashAttribute("creditoAdicionado", true);
-		}
-		return ATUALIZAR_PAGINA;
-	}
-
-	@PostMapping("remover-credito")
-	public String removerCredito(@Valid Cliente cliente, RedirectAttributes attr) {
-		Cliente clienteLocalizado = servicoCliente.buscarPorId(cliente.getId()).orElse(new Cliente());
-		Long idCliente = cliente.getId();
-		if (clienteLocalizado.getCreditoCliente() == null) {
-			servicoCliente.updateCredito(new BigDecimal(0).subtract(cliente.getCreditoCliente()), idCliente);
-			attr.addFlashAttribute("creditoRemovido", true);
-		} else {
-			BigDecimal valorCredito = clienteLocalizado.getCreditoCliente().subtract(cliente.getCreditoCliente());
-			servicoCliente.updateCredito(valorCredito, idCliente);
-			attr.addFlashAttribute("creditoRemovido", true);
-		}
-		return ATUALIZAR_PAGINA;
-	}
-
-	@ModelAttribute("servicos")
-	public List<Servico> getServicos() {
-		return servicoServico.buscarTodos();
-	}
-
 	@ModelAttribute("statuscliente")
 	public StatusClienteEnum[] getStatusCliente() {
 		return StatusClienteEnum.values();
 	}
+
+	private List<Cliente> ativoInativo(List<Cliente> listaClientes, StatusClienteEnum statusCliente) {
+		return listaClientes.stream().filter(x -> x.getStatusCliente().equals(statusCliente))
+				.collect(Collectors.toList());
+	}
+
 }

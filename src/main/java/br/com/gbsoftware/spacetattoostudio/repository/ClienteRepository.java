@@ -8,7 +8,6 @@ import java.math.BigDecimal;
  * @version 2019 - Criação
  */
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -26,20 +25,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	List<Cliente> findByInstagram(String instagram);
 
-	@Query(value = "SELECT * FROM cliente WHERE month(data_cadastro) = month(now())", nativeQuery = true)
-	List<Cliente> getPorCadastroMesAtual();
-
-	@Query(value = "SELECT * FROM cliente WHERE MONTH(data_cadastro) = (MONTH(NOW())-1)", nativeQuery = true)
-	List<Cliente> getPorCadastroMesPassado();
-
-	@Query(value = "SELECT * FROM cliente ORDER BY data_cadastro DESC", nativeQuery = true)
-	List<Cliente> findAll();
-
-	@Query(value = "select clt.id, clt.instagram, clt.nome, clt.telefone from cliente clt", nativeQuery = true)
-	List<Cliente> getClienteIdInstaNome();
-
-	Object save(Optional<Cliente> cliente);
-
 	@Transactional
 	@Modifying
 	@Query("UPDATE Cliente SET credito_cliente = ?1 WHERE id = ?2")
@@ -49,4 +34,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	@Modifying
 	@Query("UPDATE Cliente SET status = ?1 WHERE id = ?2")
 	void updateStatus(String statusCliente, Long idCliente);
+
 }
+

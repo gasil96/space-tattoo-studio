@@ -1,4 +1,7 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+
+import java.util.List;
+
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -20,5 +23,10 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void salvar(Role role) {
 		roleReposiotory.save(role);
+	}
+
+	@Override
+	public List<Role> buscarTodos() {
+		return roleReposiotory.findAll();
 	}
 }

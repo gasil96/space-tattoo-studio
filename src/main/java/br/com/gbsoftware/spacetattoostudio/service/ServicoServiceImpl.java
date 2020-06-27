@@ -1,4 +1,5 @@
 package br.com.gbsoftware.spacetattoostudio.service;
+
 /**
  * <b>Gabriel S. Sofware</b>
  * 
@@ -6,8 +7,10 @@ package br.com.gbsoftware.spacetattoostudio.service;
  * @version 2019 - Criação
  */
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import br.com.gbsoftware.spacetattoostudio.domain.enums.StatusServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.enums.TipoServicoEnum;
 import br.com.gbsoftware.spacetattoostudio.domain.model.Servico;
 import br.com.gbsoftware.spacetattoostudio.repository.ServicoRepository;
+
 @Service
 public class ServicoServiceImpl implements ServicoService {
 
@@ -58,42 +62,42 @@ public class ServicoServiceImpl implements ServicoService {
 
 	@Override
 	public List<Servico> buscarTodos() {
-		return servicoRepository.findAll();
-	}
-
-	@Override
-	public List<Servico> getAgendamentoPorDia() {
-		return servicoRepository.agendamentosDoDia();
-	}
-
-	@Override
-	public List<Servico> getAgendamentoPorSemana() {
-		return servicoRepository.agendamentoDaSemana();
+		return servicoRepository.findAll().stream()
+				.sorted(Comparator.comparing(Servico::getHorarioAgendamento).reversed()).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Servico> getAgendamentosProximosTresMeses() {
-		return servicoRepository.agendamentosProximosTresMeses();
+		return buscarTodos().stream()
+				.filter(x -> x.getHorarioAgendamento().isAfter(LocalDateTime.now())
+						&& x.getHorarioAgendamento().isBefore(LocalDateTime.now().plusMonths(3)))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Servico> getAgendamentosUltimosTresMeses() {
-		return servicoRepository.agendametnoUltimosTresMeses();
+		return buscarTodos().stream().filter(x -> x.getHorarioAgendamento().isAfter(LocalDateTime.now().plusMonths(-3))
+				&& x.getHorarioAgendamento().isBefore(LocalDateTime.now())).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Servico> getAgendamentosMesAtual() {
-		return servicoRepository.agendamentosMesAtual();
-	}
-
-	@Override
-	public List<Servico> getProximosSeisAgendamentos() {
-		return servicoRepository.proximosSeisAgendamentos();
+		return this.buscarTodos().stream()
+				.filter(x -> x.getHorarioAgendamento().getMonthValue() == LocalDateTime.now().getMonthValue())
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Servico> encerramentoMesAtual() {
-		return servicoRepository.encerramentoMesAtual();
+		return this.buscarTodos().stream()
+				.filter(x -> x.getHorarioAgendamento().getMonthValue() == LocalDateTime.now().getMonthValue()
+						&& x.getStatusAgendamento().equals(StatusServicoEnum.ENCERRADO))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Servico> getCalendarIO() {
+		return servicoRepository.getCaledarIO();
 	}
 
 }

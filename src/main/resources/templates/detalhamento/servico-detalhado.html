@@ -17,8 +17,8 @@
 							data-target="#novoAgendamento"
 							style="background-color: transparent; border: none; cursor: pointer; overflow: hidden; outline: none;"
 							title="Novo Agendamento">
-							<i class="material-icons" style="font-size: 44px; color: white;"
-								onmouseover="iconOnOver(this)" onmouseout="iconNormal(this)">note_add</i>
+							<i class="material-icons adicionar" style="font-size: 40px; "
+								>post_add</i>
 						</button>
 					</div>
 				</div>
@@ -38,64 +38,19 @@
 					</div>
 					<div class="block-body">
 						<div class="table-responsive">
-							<table id="datatableAgendamento" style="width: 100%;"
-								class="table">
+							<table id="tabela-agendamento" class="table">
 								<thead>
 									<tr>
-										<!-- 										<th>#</th> -->
-										<th>Tipo</th>
-										<th>Categoria</th>
+										<th></th>
+										<th>Status</th>
 										<th>Cliente</th>
-										<th>Inicio</th>
-										<th>Término</th>
-										<th align="center">Status</th>
-										<th>R$ Valor</th>
-<!-- 										<th>Sessões</th> -->
-										<th style="display: none"></th>
+										<th>Serviço</th>
+										<th>R$ Orçamento</th>
+										<th>Data Agendamento</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="a : ${listaServico}">
-										<td th:text="${a.tipoServico}" data-toggle="popover"
-											title="Número de Sessões" data-placement="bottom"
-											data-container="body"
-											th:attr="data-content=${#strings.concat(
-											'Total: ', a.numeroSessoes 
-											)}">TATTOO</td>
-										<td th:text="${a.categoria}">Mahori</td>
-										<td th:text="${a.cliente.nome}" data-toggle="popover"
-											title="Dados Cliente" data-placement="bottom"
-											data-container="body"
-											th:attr="data-content=${#strings.concat(
-											'Telefone: ', a.cliente.telefone,' 
-											',
-											'Instagram: ', a.cliente.instagram,
-	                                    )}">Breno</td>
-
-										<td
-											th:text="${#temporals.format(a.horarioAgendamento, 'dd/MM  HH:mm')}">9:00
-											AM</td>
-										<td
-											th:text="${#temporals.format(a.horarioConclusaoAgendamento, 'dd/MM  HH:mm')}">2</td>
-										<td th:text="${a.statusAgendamento}">Ativo</td>
-										<td>R$ <span th:text="${a.orcamento}"></span></td>
-<!-- 										<td th:text="${a.numeroSessoes}">3</td> -->
-										<td colspan="2"><a
-											th:href="@{/agendamento/editar/{id} (id=${a.id})}"
-											role="button"> <span title="EDITAR" aria-hidden="true"
-												style="color: white;"><i class="material-icons">style</i></span>
-										</a> <a th:href="@{/agendamento/reabrir/{id} (id=${a.id})}"
-											role="button"> <span title="REABRIR" aria-hidden="true"
-												style="color: #ffc107;"
-												th:unless="${a.horarioConclusaoAgendamento == null}"><i
-													class="material-icons">timer</i></span>
-										</a> <a th:href="@{/agendamento/encerrar/{id} (id=${a.id})}"
-											role="button"> <span title="ENCERRAR" aria-hidden="true"
-												style="color: #bb414d;"
-												th:if="${a.horarioConclusaoAgendamento == null}"><i
-													class="material-icons md-48">timer_off</i></span>
-										</a></td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -168,7 +123,78 @@
 			th:replace="fragments/modal-novo-agendamento :: modalNovoAgendamento"></div>
 	</div>
 	<script type="text/javascript" layout:fragment="script">
-	
+	$(document).ready(function() {
+		$.ajax({
+			type: "GET",
+			url: "/agendamento/agendamentos",
+			dataType: 'json',
+			success :function(dado){
+				var tabelaAgendamento = $('#tabela-agendamento').dataTable( {
+					pageLength: 5,
+					order: [6, 'desc'],
+					ordering: false,
+					lengthChange: false,
+					deferRender: true,
+					dom : 'lBfrtip',
+					buttons : [
+						{
+							extend : 'excel',
+							text : 'Planilha',
+							className : 'btn-transparent',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						},
+						{
+							extend : 'print',
+							text : 'Impressão',
+							className : 'btn-transparent',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						},
+						{
+							extend : 'pdf',
+							className : 'btn-transparent',
+							title : 'SpaceTattooStudio Agendamentos',
+							exportOptions : {
+								columns : ':visible'
+							},
+						} ],
+					language : {
+						"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+					},
+					data: dado,
+					columns: [
+						{data: "id" , render : function ( data, type, row, meta ) {
+				              return type === 'display'  ?
+				                '<a href="/agendamento/visualizar/'+ data +'" ><i class="material-icons visualizar" title="visualizer">visibility</i></a>' :
+				                data;
+				            }},
+						{data: "statusAgendamento" , render : function ( data, type, row, meta ) {
+				              return data === 'ENCERRADO'  ?
+				                "<span style='color: red;'>"+data+"</span>" :
+				                data;
+				            }},
+						{data: 'cliente.nome'},
+						{data: 'tipoServico'},
+						{data: "orcamento" , render : function ( data, type, row, meta ) {
+				              return type === 'display'  ?
+				                'R$ '+ data +',00': data;
+				            }},
+						{data: "horarioAgendamento"},
+						{data: "id" , render : function ( data, type, row, meta ) {
+				              return type === 'display'  ?
+				                '<a href="/agendamento/editar/'+ data +'" ><i class="material-icons alterar" title="editar">edit</i></a>' :
+				                data;
+				            }},
+					]
+				});
+			},
+		});
+	});
 		$(document).ready(function() {
 			$('#agendamentoSalvou').show(function() {
 				Messenger().post({
@@ -214,47 +240,6 @@
 			});
 		});
 
-		$(document)
-				.ready(
-						function() {
-							$('#datatableAgendamento')
-									.DataTable(
-											{
-												dom : 'lBfrtip',
-												order : [],
-												buttons : [
-														{
-															extend : 'excel',
-															text : 'Planilha',
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio Agendamentos',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'print',
-															text : 'Impressão',
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio Agendamentos',
-															exportOptions : {
-																columns : ':visible'
-															},
-														},
-														{
-															extend : 'pdf',
-															className : 'btn btn-primary btn-sm',
-															title : 'SpaceTattooStudio Agendamentos',
-															exportOptions : {
-																columns : ':visible'
-															},
-														} ],
-												language : {
-													"url" : "//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
-												}
-											});
-						});
-
 		$(function() {
 			$('#horarioAgendamento').datetimepicker({
 				format : 'DD-MM-YYYY HH:mm',
@@ -263,23 +248,13 @@
 				minDate : new Date()
 			});
 		});
-
-		//-------------------------------------------------------------------------------------------------------------
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							var mesAtual = (moment().format('MMMM'));
 							var anoAtual = (moment().format('YYYY'));
-							var mesAnoAtual = "Nº de agendamentos em "
-									+ (moment().format('MMMM')) + " de "
-									+ (moment().format('YYYY'));
-							var titleLabelComparativo = "(Período) "
-									+ moment().subtract(90, 'days').calendar()
-									+ " até "
-									+ moment().subtract(1, 'minute').calendar();
+							var mesAnoAtual = "Nº de agendamentos em "+ (moment().format('MMMM')) + " de "+ (moment().format('YYYY'));
+							var titleLabelComparativo = "(Período) "+ moment().subtract(90, 'days').calendar()+ " até "+ moment().subtract(1, 'minute').calendar();
 							document.getElementById("mesAnoAtual").innerHTML = mesAnoAtual;
-							$
-									.ajax({
+							$.ajax({
 										type : "GET",
 										url : "/agendamento/dadosUltimosTresM",
 										dataType : 'json',
@@ -339,24 +314,14 @@
 											alert("Ocorreu um erro ao buscar os eventos!");
 										}
 									});
-
 						});
-
-		$(document)
-				.ready(
-						function() {
+		$(document).ready(function() {
 							var mesAtual = (moment().format('MMMM'));
 							var anoAtual = (moment().format('YYYY'));
-							var mesAnoAtual = "Nº de agendamentos em "
-									+ (moment().format('MMMM')) + " de "
-									+ (moment().format('YYYY'));
-							var titleLabelComparativoProximo = "(Período) "
-									+ moment().subtract(1, 'minute').calendar()
-									+ " até "
-									+ moment().add(90, 'days').calendar();
+							var mesAnoAtual = "Nº de agendamentos em "+(moment().format('MMMM')) + " de " +(moment().format('YYYY'));
+							var titleLabelComparativoProximo = "(Período) "+ moment().subtract(1, 'minute').calendar()+ " até "	+ moment().add(90, 'days').calendar();
 							document.getElementById("mesAnoAtual").innerHTML = mesAnoAtual;
-							$
-									.ajax({
+							$.ajax({
 										type : "GET",
 										url : "/agendamento/dadosProximosTresM",
 										dataType : 'json',
@@ -418,10 +383,7 @@
 									});
 
 						});
-
-		//-------------------------------------------------------------------------------------------------------------
-		$(document).ready(
-				function() {
+		$(document).ready(function() {
 					$.ajax({
 						type : "GET",
 						url : "/agendamento/dadosMA",
@@ -448,7 +410,7 @@
 												"#4682B4", "#f0f8ff" ],
 										hoverBackgroundColor : [ '#864dd9',
 												"#4682B4", "#f0f8ff" ]
-									} ]
+									}]
 								}
 							});
 						},
@@ -456,12 +418,8 @@
 							alert("Ocorreu um erro ao buscar os eventos!");
 						}
 					});
-
 				});
-
-		//-------------------------------------------------------------------------------------------------------------
-		$(document).ready(
-				function() {
+		$(document).ready(function() {
 					var mesAtual = (moment().format('MMMM'));
 					document.getElementById("mesAtual").innerHTML = mesAtual;
 
@@ -499,7 +457,6 @@
 							alert("Ocorreu um erro ao buscar os eventos!");
 						}
 					});
-
 				});
 	</script>
 </body>
